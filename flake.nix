@@ -23,7 +23,7 @@
         vm = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit system; };
           modules = [
-            ./configuration-vm.nix
+            ./nixos/hosts/vm/configuration.nix
           ];
         };
 
@@ -31,7 +31,7 @@
         desktop = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit system; };
           modules = [
-            ./configuration-desktop.nix
+            ./nixos/hosts/desktop/configuration.nix
           ];
         };
       };

@@ -37,7 +37,6 @@ function gabyx::copy_images_to_podman() {
         return 1
     }
 
-
     echo "Copying images with regex '$1' from docker to podman."
     images=$(docker images --format "$transport:{{.Repository}}:{{.Tag}}" | grep -v '<none>' | grep -xE "$transport:$1")
 
@@ -50,6 +49,10 @@ function gabyx::file_regex_replace() {
 }
 
 function gabyx::nixos_rebuild() {
+    local what="${1:?Specify how? 'switch,boot,test'}"
+    shift 1
     local host="${1:?Specify a host to build}"
-    nixos-rebuild --flake "$HOME/.local/share/chezmoi/nixos#$host" "$@"
+    shift 1
+
+    sudo nixos-rebuild "$what" --flake "$HOME/.local/share/chezmoi#$host" "$@"
 }

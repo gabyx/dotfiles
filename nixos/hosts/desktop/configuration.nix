@@ -4,7 +4,7 @@
 
 { config, pkgs, ... }:
 let
-    modules = ../..;
+    modules = "../../modules";
 in
 {
   imports =
@@ -14,28 +14,28 @@ in
       ./boot.nix
 
       # Include all other specifications.
-      ${modules}/windowing.nix
-      ${modules}/display.nix
-      ${modules}/keyboard.nix
-      ${modules}/fonts.nix
-      ${modules}/time.nix
-      ${modules}/environment.nix
-      ${modules}/networking.nix
-      ${modules}/security.nix
+      ./${modules}/windowing.nix
+      ./${modules}/display.nix
+      ./${modules}/keyboard.nix
+      ./${modules}/fonts.nix
+      ./${modules}/time.nix
+      ./${modules}/environment.nix
+      ./${modules}/networking.nix
+      ./${modules}/security.nix
 
-      ${modules}/services.nix
+      ./${modules}/services.nix
 
-      ${modules}/sound.nix
-      ${modules}/printing.nix
+      ./${modules}/sound.nix
+      ./${modules}/printing.nix
 
-      ${modules}/virtualization.nix
+      ./${modules}/virtualization.nix
 
-      ${modules}/packages.nix
-      ${modules}/programs.nix
+      ./${modules}/packages.nix
+      ./${modules}/programs.nix
 
-      ${modules}/user.nix
+      ./${modules}/user.nix
 
-      ${modules}/nix.nix
+      ./${modules}/nix.nix
   ];
 
   ### NixOS Release Settings===================================================

@@ -16,14 +16,14 @@
   };
     
   # Logitech Receiver and Solaar Gui
-  hardware.logitech.wireless {
+  hardware.logitech.wireless = {
     enable = true;
     enableGraphical = true;
   };
 
   environment.systemPackages = with pkgs; [
-    solaar;
-  ]
+    solaar
+  ];
 
   console = {
     keyMap = "us";
