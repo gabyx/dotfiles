@@ -3,7 +3,7 @@
 set -e
 set -u
 
-DIR=$(cd "$(dirname "$0")" && pwd)
+DIR=$(cd "$(dirname "$0")" && pwd)/..
 . "$DIR/.env"
 
 echo "Generations in 'test' profile:"
