@@ -48,6 +48,14 @@ function gabyx::file_regex_replace() {
     "$HOME/.config/shell/file-regex-replace.py" "$@"
 }
 
+function gabyx::print_keycode_table {
+    xmodmap -pke
+}
+
+function gabyx::get_keycode {
+    xev 
+}
+
 function gabyx::nixos_rebuild() {
     local what="${1:?Specify how? 'switch,boot,test'}"
     shift 1
