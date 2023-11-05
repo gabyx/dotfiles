@@ -55,7 +55,7 @@ smart_gaps on
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /run/current-system/sw/share/backgrounds/sway/)
-output * bg ~/.local/share/chezmoi/backgrounds/background-space.jpg fill
+output * bg ~/.local/share/chezmoi/config/backgrounds/background-space.jpg fill
 
 #
 # Example configuration:
