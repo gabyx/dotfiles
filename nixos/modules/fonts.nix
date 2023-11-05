@@ -11,7 +11,7 @@
       ubuntu_font_family
       fira
       meslo-lgs-nf
-      (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" ];})
+      (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" ]; })
     ];
   };
 

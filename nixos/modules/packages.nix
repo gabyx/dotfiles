@@ -18,7 +18,7 @@
     fzf
     killall
     libGL
-    libGLU 
+    libGLU
     lshw
     mkpasswd
     mlocate
@@ -26,9 +26,9 @@
     openvpn
     pciutils
     ripgrep
-    # (pkgs.ripgrep-all.overrideAttrs (old: { 
-    # 	doInstallCheck = false; 
-    # })) 
+    # (pkgs.ripgrep-all.overrideAttrs (old: {
+    # 	doInstallCheck = false;
+    # }))
     git
     git-lfs
     gnome.seahorse

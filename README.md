@@ -27,5 +27,5 @@ chezmoi apply
 All together:
 
 ```shell
-chezmoi init --apply --verbose https://github.com/gabyx/chezmoi.git
+chezmoi init --apply --verbose https://github.com/gabyx/dotfiles.git
 ```

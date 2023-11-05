@@ -10,8 +10,8 @@
     package = pkgs.nixFlakes;
 
     extraOptions = ''
-    experimental-features = nix-command flakes
-    # use-xgd-base-directories = true
+      experimental-features = nix-command flakes
+      # use-xgd-base-directories = true
     '';
 
     # Garbage collector
@@ -28,7 +28,8 @@
       permittedInsecurePackages = [
         "electron-12.2.3"
         "electron-19.1.9"
-      ]; };
+      ];
+    };
   };
   # ===========================================================================
 }

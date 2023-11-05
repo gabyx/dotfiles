@@ -1,12 +1,11 @@
-
 { config, pkgs, ... }: {
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.autorun = true;
-  
+
   # Display Manager ===========================================================
-  services.xserver.displayManager = { 
+  services.xserver.displayManager = {
     sddm.enable = false;
     gdm = { enable = true; wayland = true; };
     autoLogin.enable = false;
@@ -24,21 +23,21 @@
   #   enable = true;
   #   xwayland.enable = true; # Bridge to Wayland API for X11 apps.
   # };
-  # 
+  #
   # hardware = {
   #   opengl.enable = true;
   # };
-  # 
+  #
   # # Handle desktop interaction.
   # xdg.portal = {
   #   enable = true;
   #   extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
   # };
-  # 
+  #
   # # Useful packages.
   # environment.systemPackages = with pkgs; [
   #   hyprland
-  #   
+  #
   #   (
   #     waybar.overrideAttrs (oldAttrs: {
   #       mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
@@ -48,7 +47,7 @@
   #   dunst # Notification daemon (needs libnotify).
   #   libnotify
   #
-  #   swww # Wallpaper daemon for wayland. 
+  #   swww # Wallpaper daemon for wayland.
   #
   #   rofi-wayland # Window switcher.
   #   networkmanagerapplet # Networkmanager applet.
@@ -74,7 +73,7 @@
   #   XDG_SESSION_TYPE = "wayland";
   # };
   # ===========================================================================
-  
+
   # Sway Window Manager
   programs.sway = {
     enable = true;
@@ -105,12 +104,12 @@
 
   programs.waybar.enable = true;
 
-  fonts.fonts= with pkgs; [
-      # Waybar
-      font-awesome
-      cantarell-fonts
-      noto-fonts
-      noto-fonts-emoji
+  fonts.fonts = with pkgs; [
+    # Waybar
+    font-awesome
+    cantarell-fonts
+    noto-fonts
+    noto-fonts-emoji
   ];
 
 }

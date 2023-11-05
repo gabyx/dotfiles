@@ -9,7 +9,7 @@
 
   virtualisation.libvirtd = {
     enable = true;
-    qemu = { 
+    qemu = {
       ovmf.enable = true;
       runAsRoot = true;
     };
@@ -20,7 +20,7 @@
   # Docker
   virtualisation.docker.enable = true;
   virtualisation.docker.enableOnBoot = true;
-  
+
   # Virtualbox
   # virtualisation.virtualbox.guest.enable = true;
   # virtualisation.virtualbox.host.enable = true;
