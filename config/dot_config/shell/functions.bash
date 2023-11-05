@@ -48,3 +48,8 @@ function gabyx::copy_images_to_podman() {
 function gabyx::file_regex_replace() {
     "$HOME/.config/shell/file-regex-replace.py" "$@"
 }
+
+function gabyx::nixos_rebuild() {
+    local host="${1:?Specify a host to build}"
+    nixos-rebuild --flake "$HOME/.local/share/chezmoi/nixos#$host" "$@"
+}
