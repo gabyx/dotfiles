@@ -4,16 +4,20 @@
 The file [`configuration.nix`](configuration.nix) contains the whole NixOS
 configuration and will be used to install the complete system.
 
-The following steps describe how to end up with a QEMU NixOS installation.
-
-Also we want to build a
-[NixOS Installer](https://nixos.wiki/wiki/Creating_a_NixOS_live_CD) at then end
-out of the working NixOS.
-
-**Note: This setup is by far kick-ass, its more to get you started on an initial
-NixOS, which you then can drive further and even install on real hardware.**
+The following steps describe how to end up with a NixOS installation. The best
+starting point is to test the VM inside `qemu` before installing it into
+bare-metal.
 
 ![Screenshot](./docs/screenshot.png)
+
+**Specs:**
+
+- **Display Manager: Gnome Display Manager**
+- **Window Manager: [`sway`](https://swaywm.org)**
+- **Menu Bar: [`waybar`](https://github.com/Alexays/Waybar)**
+- **Menu Display & Application Launcher:
+  [`rofi`](https://github.com/davatorium/rofi)**
+- **Terminal: `wezterm`**
 
 ## Prerequisites
 
@@ -107,7 +111,7 @@ useful information when going through these steps:
 ## Install NixOs on Desktop Hardware
 
 We follow the tutorial from
-[Pablo Ovelleiro [@pinpox](https://github.com/pinpox)](https://pablo.tools/blog/computers/nixos-encrypted-install)
+[Pablo Ovelleiro [@pinpox](https://github.com/pinpox)](<https://pablo.tools/blog/computers/nixos-encrypted-install>)
 and
 [mt-caret](https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html).
 
@@ -307,14 +311,21 @@ cp /mnt/etc/nixos/hardware-configuration.nix /mnt/persist/repos/nixos-configurat
 and **finally run the install command** by doing:
 
 ```shell
-nixos-install --root /mnt --system /mnt/persist/repos/nixos-configuration/configuration-desktop.nix
+nixos-install --root /mnt --flake /mnt/persist/repos/dotfiles#desktop
+
+reboot
 ```
 
-or by using the flake syntax:
+Install all configuration files by running inside a terminal
+(`CTRL + ALT + F1`):
 
 ```shell
-nixos-install --root /mnt --flake /mnt/persist/repos/nixos-configuration#desktop
+./scripts/install-home.sh
+
+reboot
 ```
+
+To install them with the home manager is still WIP.
 
 ## Modify NixOS
 
