@@ -11,7 +11,7 @@
     extraLayouts.programmer = {
       description = "Programmer (US)";
       languages = [ "eng" ];
-      symbolsFile = ../configs/keyboard/symbols/programmer;
+      symbolsFile = ../../config/keyboard/linux/symbols/programmer;
     };
   };
 

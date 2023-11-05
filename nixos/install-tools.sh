@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1091
 # Some minimal tools to get you started in the VM
 
 set -e

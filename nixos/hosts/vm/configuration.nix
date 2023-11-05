@@ -3,41 +3,41 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
+let
+    modules = ../..;
+in
 {
   imports =
-    [ 
+    [
       # Include the results of the hardware scan.
-      ./modules/hardware/desktop.nix
-      
+      ./hardware-configuration.nix
+      ./boot.nix
+
       # Include all other specifications.
-      ./modules/boot-desktop.nix
+      ${modules}/windowing.nix
+      ${modules}/display.nix
+      ${modules}/keyboard.nix
+      ${modules}/fonts.nix
+      ${modules}/time.nix
+      ${modules}/environment.nix
+      ${modules}/networking.nix
+      ${modules}/security.nix
 
-      ./modules/windowing.nix
-      ./modules/display.nix
-      # ./modules/display-resolution.nix
-      ./modules/keyboard.nix
+      ${modules}/services.nix
 
-      ./modules/fonts.nix
-      ./modules/time.nix
+      ${modules}/sound.nix
+      ${modules}/printing.nix
 
-      ./modules/environment.nix
-      ./modules/networking.nix
-      ./modules/security.nix
-      ./modules/services.nix
+      ${modules}/virtualization.nix
 
-      ./modules/sound.nix
-      ./modules/printing.nix
-      ./modules/virtualization.nix
+      ${modules}/packages.nix
+      ${modules}/programs.nix
 
-      ./modules/packages.nix
-      ./modules/programs.nix
+      ${modules}/user.nix
 
-      ./modules/user.nix
+      ${modules}/nix.nix
+  ];
 
-      ./modules/nix.nix
-    ];
-  
   ### NixOS Release Settings===================================================
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
