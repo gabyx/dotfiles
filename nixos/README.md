@@ -74,12 +74,12 @@ useful information when going through these steps:
 
 ### Create VM with Script
 
-1. Create the VM by doing `create-vm.sh` and clicking through the installer. Use
-   an LUKS encrypted disk.
+1. Create the VM by doing `scripts/create-vm.sh` and clicking through the
+   installer. Use an LUKS encrypted disk.
 
 ### Install Base Tools
 
-1. Start the virtual machine with [`start-vm.sh`](start-vm.sh).
+1. Start the virtual machine with [`scripts/start-vm.sh`](scripts/start-vm.sh).
 
 1. Clone this repo (we install git and google-chrome to access passwords)
 
@@ -92,12 +92,12 @@ useful information when going through these steps:
    `/etc/configuration.nix`:
 
    ```shell
-   ./install-tools.sh
+   ./scripts/install-tools.sh
    ```
 
 ## Connect to VM over SSH
 
-1. Start the virtual machine with [`start-vm.sh`](start-vm.sh).
+1. Start the virtual machine with [`scripts/start-vm.sh`](scripts/start-vm.sh).
 2. On the host inside a terminal connect over SSH with
 
    ```shell
@@ -113,7 +113,7 @@ and
 
 Boot the NixOS ISO installer of the flashed USB.
 
-### Partioning
+### Partitioning
 
 Partitioning in NixOS is manual and mostly the same as you would do in Arch or
 any other "minimal" distribution. You can use gparted if you decided to boot the
@@ -232,7 +232,7 @@ sudo mount "${MYDISK}1" /mnt/boot
 sudo swapon /mnt/swap/swapfile
 ```
 
-Then, let NixOS figure out the hardware config:
+Then, let NixOS figure out the hardware configuration:
 
 ```
 sudo nixos-generate-config --root /mnt
@@ -321,7 +321,7 @@ nixos-install --root /mnt --flake /mnt/persist/repos/nixos-configuration#desktop
 1. Modify the [`configuration.nix`](configuration.nix) in this repo and use
 
    ```shell
-   ./rebuild-nixos.sh [boot|switch] [--force] vm
+   ./scripts/rebuild-nixos.sh [boot|switch] [--force] vm
    ```
 
    Use `boot` to build the NixOS (a new generation) and add a new entry in the
@@ -331,9 +331,9 @@ nixos-install --root /mnt --flake /mnt/persist/repos/nixos-configuration#desktop
 
    **We leave the system initial `/etc/nixos/configuration.nix` untouched.**
 
-   **Note: Make sure you use your disk id in `boot.initrd.luks.devices`.**
+## Troubleshooting
 
-## Resizing the _LUKS Encrypted_ Disk (if disk is full)
+### Resizing the _LUKS Encrypted_ Disk (if disk is full)
 
 If `nixos-rebuild` fails due to too little disk space, use the following easy
 fix. On the host do the following:
@@ -363,7 +363,7 @@ fix. On the host do the following:
 1. Use `Partition -> Check` which does an automatic resize to fill the
    partition.
 
-## Running Root GUI Application in Sway
+### Running Root GUI Application in Sway
 
 See
 [documentation here](https://wiki.archlinux.org/title/Running_GUI_applications_as_root#Using_xhost).

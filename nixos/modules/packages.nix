@@ -29,27 +29,30 @@
     # (pkgs.ripgrep-all.overrideAttrs (old: { 
     # 	doInstallCheck = false; 
     # })) 
+    git
+    git-lfs
     gnome.seahorse
     gnutar
     unzip
     wget
     zsh
+    wezterm
+    tmux
+    #
     # Editors
     neovim
     vscode
     #
     # Tools
-    dunst
+    appimage-run
+    chezmoi
     delta
+    dunst
     etcher
     gparted
     kdiff3
-    rofi # Window Switcher
-    tmux
-    wezterm
-    chezmoi
+    lazygit
     silver-searcher
-    appimage-run
     #
     # Devices (Wacom)
     libwacom
@@ -64,13 +67,14 @@
     spice # For automatic window resize if this conf is used as OS in VM
     spice-vdagent
     virt-manager
+    #
     # Programming
+    jq
+    yq
     llvmPackages_16.clang-unwrapped
     cmake
     gcc
     gdb
-    git
-    git-lfs
     gnumake
     go
     libclang
@@ -96,17 +100,18 @@
     zoom-us
     firefox
     google-chrome
+    #
     # Dictionaries
     aspell
     aspellDicts.en
     aspellDicts.en-computers
     hunspell
     hunspellDicts.en-us
-    # GTK Engins (GUI Library)
-    gtk-engine-murrine
-    gtk_engines
-    gsettings-desktop-schemas
-    lxappearance
+    # # GTK Engins (GUI Library)
+    # gtk-engine-murrine
+    # gtk_engines
+    # gsettings-desktop-schemas
+    # lxappearance
     # Nix
     nixpkgs-lint
     stdenv.cc
