@@ -14,6 +14,16 @@
       symbolsFile = ../../config/keyboard/linux/symbols/programmer;
     };
   };
+    
+  # Logitech Receiver and Solaar Gui
+  hardware.logitech.wireless {
+    enable = true;
+    enableGraphical = true;
+  };
+
+  environment.systemPackages = with pkgs; [
+    solaar;
+  ]
 
   console = {
     keyMap = "us";

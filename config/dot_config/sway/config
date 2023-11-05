@@ -55,7 +55,7 @@ smart_gaps on
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /run/current-system/sw/share/backgrounds/sway/)
-output * bg ~/.local/share/chezmoi/config/backgrounds/background-space.jpg fill
+output * bg ~/backgrounds/background-space.jpg fill
 
 #
 # Example configuration:
@@ -63,18 +63,28 @@ output * bg ~/.local/share/chezmoi/config/backgrounds/background-space.jpg fill
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
+# Home Setup
+output "Philips Consumer Electronics Company PHL 275E2F UHB2307008083" {
+    mode 2560x1440@74.968Hz
+    pos 0 0
+}
+output "Dell Inc. DELL P2418HT 32MPJ87E177L" {
+    mode 1920x1080@60.000Hz
+    pos 2560 0
+}
 
 # If running in a VM, use the following.
 output Virtual-1 resolution 1600x900
+
 
 ### Idle configuration
 #
 # Example configuration:
 #
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-#          before-sleep 'swaylock -f -c 000000'
+exec swayidle -w \
+         timeout 300 'swaylock -f -c 000000' \
+         timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+         before-sleep 'swaylock -f -c 000000'
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -176,7 +186,7 @@ input type:keyboard {
     bindcode $mod+Shift+19 move container to workspace number 10
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
-#
+
 # Layout stuff:
 #
     # You can "split" the current object of your focus with

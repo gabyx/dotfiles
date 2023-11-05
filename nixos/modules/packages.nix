@@ -26,6 +26,7 @@
     openvpn
     pciutils
     ripgrep
+    xorg.xev # Keyboard Key Press Properties
     # (pkgs.ripgrep-all.overrideAttrs (old: {
     # 	doInstallCheck = false;
     # }))
