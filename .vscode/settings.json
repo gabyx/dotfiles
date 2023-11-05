@@ -1,0 +1,31 @@
+{
+  "editor.trimAutoWhitespace": true,
+  "fileHeaderComment.parameter": {
+    "*": {
+      "bar": "=========================================================================================",
+      "barComment": "# ---------------------------------------------------------------------------------------",
+      "commentbeg": "#"
+    }
+  },
+  "fileHeaderComment.template": {
+    "*": [
+      "${commentbeg} ${bar}",
+      "${commentbeg} Chezmoi Setup",
+      "${commentbeg}",
+      "${commentbeg} @date ${day}.${month}.${year}",
+      "${commentbeg} @author Gabriel Nützi, gnuetzi@gmail.com",
+      "${commentbeg} ${bar}"
+    ]
+  },
+  "files.autoGuessEncoding": false,
+  "files.encoding": "utf8",
+  "files.exclude": {
+    "**/.git": false
+  },
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "markdown.extension.toc.updateOnSave": true,
+  "shellcheck.enable": true,
+  "shellcheck.run": "onType",
+  "shellformat.useEditorConfig": true
+}

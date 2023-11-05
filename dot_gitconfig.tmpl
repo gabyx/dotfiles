@@ -1,0 +1,77 @@
+[user]
+	name = {{ .git.userName | quote }}
+	email = {{ .git.userEmail | quote }}
+[core]
+	editor = nvim
+	ignorecase = false
+	autocrlf = false
+	symlinks = true
+	longpaths = true
+	abbrev = 10
+	fsmonitor = false
+	pager = delta
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+[delta]
+    navigate = true
+    light = false
+    side-by-side = true
+    line-numbers = true
+    wrap-max-lines = 1000
+[push]
+	autoSetupRemote = true
+	default = simple
+	followTags = true
+[include]
+	path = {{ .git.configPath }}/gitconfig-shared
+	path = {{ .git.configPath }}/gitconfig-tools
+[alias]
+	hooks = !\"{{ .chezmoi.homeDir }}/.githooks/bin/cli\"
+[githooks]
+	installDir = {{ .chezmoi.homeDir }}/.githooks
+	cloneUrl = {{ .git.githooksCloneURL }}
+	cloneBranch = {{ .git.githooksCloneBranch }}
+	useManual = false
+	useCoreHooksPath = false
+	runner = {{ .chezmoi.homeDir }}/.githooks/bin/runner
+	dialog = {{ .chezmoi.homeDir }}/.githooks/bin/dialog
+	maintainedHooks = !all, applypatch-msg, pre-applypatch, post-applypatch, pre-commit, pre-merge-commit, prepare-commit-msg, commit-msg, post-commit, pre-rebase, post-checkout, post-merge, pre-push, post-rewrite
+	autoUpdateEnabled = true
+	autoUpdateCheckTimestamp = 0
+	containerizedHooksEnabled = true
+[init]
+	defaultBranch = main
+	templateDir = {{ .chezmoi.homeDir }}/.githooks/templates
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[diff]
+	tool = {{ .git.diffTool }}
+	guitool = {{ .git.diffTool }}
+	colorMoved = default
+[difftool]
+	prompt = false
+[merge]
+	tool = {{ .git.mergeTool }}
+	guitool = {{ .git.mergeTool }}
+	conflictstyle = diff3
+[mergetool]
+	prompt = false
+[pull]
+	ff = only
+[color]
+	ui = true
+[status]
+	showUntrackedFiles = all
+[branch "main"]
+	mergeoptions = --no-ff
+[branch "stable"]
+	mergeoptions = --no-ff
+
+# Work Related Stuff
+{{- if contains .workspace "work-ds" }}
+[credential "bitbucket.dentsplysirona.com"]
+	provider = generic
+{{- end }}

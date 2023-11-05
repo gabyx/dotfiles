@@ -1,0 +1,53 @@
+####### Shortcut Hotkeys #############
+# open terminal
+alt - return : open /Applications/iTerm.app
+
+# restart Yabi, SpaceBar, and SKHD
+alt + shift + cmd - r : \
+    launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"; \
+    skhd --reload
+
+
+####### Application Blacklists #############
+.blacklist [
+ "IntelliJ IDEA"
+]
+
+####### Window Management Hotkeys #############
+# Change focus within space
+alt - h : yabai -m window --focus west
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - l : yabai -m window --focus east
+
+# Change focus external monitors
+alt - s : yabai -m display --focus west
+alt - d : yabai -m display --focus east
+
+# Change Layout
+
+# shift window in current workspace
+alt + shift - h : yabai -m window --swap west || $(yabai -m window --display west; yabai -m display --focus west)
+alt + shift - j : yabai -m window --swap south || $(yabai -m window --display south; yabai -m display --focus south)
+alt + shift - k : yabai -m window --swap north || $(yabai -m window --display north; yabai -m display --focus north)
+alt + shift - l : yabai -m window --swap east || $(yabai -m window --display east; yabai -m display --focus east)
+
+# rotate layout clockwise
+alt + shift - r : yabai -m space --rotate 270
+# mirror tree y-axis
+alt + shift - y : yabai -m space --mirror y-axis
+# mirror tree x-axis
+alt + shift - x : yabai -m space --mirror x-axis
+# balance size of windows
+alt + shift - e : yabai -m space --balance
+
+# float / unfloat window and center on screen
+alt + shift - space : yabai -m window --toggle float --grid 4:4:1:1:2:2
+
+# close focused window
+alt - w : yabai -m window --close
+
+# enter fullscreen mode for the focused container
+alt - f : yabai -m window --toggle zoom-fullscreen
+# toggle window native fullscreen
+alt + shift - f : yabai -m window --toggle native-fullscreen

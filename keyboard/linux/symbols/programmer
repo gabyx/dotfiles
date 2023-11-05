@@ -1,0 +1,29 @@
+partial alphanumeric_keys
+xkb_symbols "basic" {
+
+    include "us"
+    name[Group1] = "Programmer (US)";
+    
+    // To see the symbold corresponding to the keycode generated check
+    // `xev` and grep inside `/usr/share/X11/xkb/keycodes directory`.
+
+    key <AE01> { [  exclam,      1,          U1F600,  U1F4A9 ]  };     // !  1  😀   💩
+    key <AE02> { [  at,          2,          U1F601,  U1F4AF ]  };     // @  2  😁   💯
+    key <AE03> { [  numbersign,  3,          U1F602          ]  };     // #  3  😂   🎉
+    key <AE04> { [  dollar,      4,          U1F606,  U1F4A3 ]  };     // $  4  😆   💣
+    key <AE05> { [  percent,     5,          U1F605          ]  };     // %  5  😅
+    key <AE06> { [  asciicircum, 6,          U1F607          ]  };     // ^  6  😇
+    key <AE07> { [  ampersand,   7,          U1F61D          ]  };     // &  7  😝
+    key <AE08> { [  asterisk,    8,          U1F914,  U1F680 ]  };     // *  8  🤔   🚀
+    key <AE09> { [  parenleft,   9,          U1F62B          ]  };     // (  9  😫
+    key <AE10> { [  parenright,  0,          U1F616          ]  };     // )  0  😖
+    key <AE11> { [  minus,       underscore, U1F631          ]  };     // -  _  😱
+    key <AE12> { [  equal,       plus,       U1F62D          ]  };     // =  +  😭
+
+    // Switch Tilde and GreateThan (next to L-Shift)
+    key <TLDE>  { [  U1F606,     U1F914  ]  };
+    key <LSGT>  { [  grave,      asciitilde  ]  };
+    
+    // Right alt acts as compose key.
+    key <RALT> { [ Multi_key ] };
+};

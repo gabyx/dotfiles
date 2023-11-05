@@ -1,0 +1,145 @@
+# Runs only on interactive ZSH.
+# echo "Sourcing .zshrc ..."
+[ -n "$ZDOTDIR" ] || {
+    echo "You must set '$ZDOTDIR' to use this file."
+    return 0
+}
+
+# Load completion system
+autoload -U compinit; compinit
+
+# Zsh options: http://zsh.sourceforge.net/Doc/Release/Options.html
+HISTFILE="$ZDOTDIR/.zsh_history"
+HISTSIZE=10000000                # How many lines of history to keep in memory
+SAVEHIST=10000000                # Number of history entries to save to disk
+setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
+setopt HIST_BEEP                 # Beep when accessing nonexistent history.
+
+# Directory stack.
+setopt AUTO_PUSHD                # Push the current directory visited on the stack.
+setopt PUSHD_IGNORE_DUPS         # Do not store duplicates in the stack.
+setopt PUSHD_SILENT              # Do not print the directory stack after pushd or popd.
+
+# Set default editors.
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+# Source wezterm shell integration script
+if [ -f "$HOME/.config/shell/integration-wezterm.sh" ]; then
+    source "$HOME/.config/shell/integration-wezterm.sh"
+fi
+
+# Settings for plugins.
+local ZSH_AUTOSUGGEST_USE_ASYNC=true
+local ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=247'
+local ZVM_LAZY_KEYBINDINGS=true
+local ZVM_INIT_MODE=sourcing # Somehow zsh-vi-mode overwrites CTRL+R. https://github.com/jeffreytse/zsh-vi-mode/issues/242
+
+# Installing plugins ===========================================================
+# Setup antidote if not yet setup.
+ANTIDOTE_HOME=$ZDOTDIR/.antidote/.plugins
+zstyle ':antidote:bundle' use-friendly-names 'yes'
+zstyle ':antidote:bundle' file "$ZDOTDIR/.zplugins"
+fpath+=("$ZDOTDIR/.antidote")
+autoload -Uz "$fpath[-1]/antidote"
+
+function install_plugins() {
+    zstyle -s ':antidote:bundle' file zsh_plugins_src
+    local zsh_plugins="$ZDOTDIR/.zsh_plugins.zsh"
+
+    local force_bundle="false"
+    if [ "$1" = "--force" ]; then
+        force_bundle="true"
+    fi
+
+    # Ensure you have a plugins.txt file
+    # where you can add plugins.
+    [[ -f "$zsh_plugins_src" ]] || {
+        mkdir -p "$(dirname "$zsh_plugins_src")" &&
+        touch "$zsh_plugins_src"
+    }
+
+    # Generate static file in a subshell when
+    # source plugin list is updated.
+    if [[ "$zsh_plugins_src" -nt "$zsh_plugins" ]] ||
+        [ "$force_bundle" = "true" ]; then
+        echo "Generate static plugins file '$zsh_plugins' ..."
+        antidote bundle <"$zsh_plugins_src" >"$zsh_plugins"
+    fi
+}
+
+# Set the name of the static .zsh plugins file antidote will generate.
+if [ ! -d "$ZDOTDIR/.antidote" ]; then
+    git clone --depth=1 https://github.com/mattmc3/antidote.git "$ZDOTDIR/.antidote"
+    install_plugins --force
+else
+   install_plugins
+fi
+
+# Loading plugins
+source "$ZDOTDIR/.zsh_plugins.zsh"
+# ==============================================================================
+
+# To see the key characters press `CTRL+V` and afterwards the combination in
+# a normal shell.
+# Del/Home/End
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
+bindkey "^[[3~" delete-char
+
+# Ctrl+ Left/right, and Alt+h, Alt+l for word back and forward movement.
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+bindkey "^[l" forward-word
+bindkey "^[h" backward-word
+export WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
+
+# Keybindings for substring search plugin.
+# Maps up and down arrows and Alt+k, Alt+j
+bindkey -M main '^[[A' history-substring-search-up
+bindkey -M main '^[[B' history-substring-search-down
+bindkey -M main '^[k' history-substring-search-up
+bindkey -M main '^[j' history-substring-search-down
+
+zmodload zsh/complist
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+
+# Keybindings for autosuggestions plugin
+bindkey '^ ' autosuggest-accept
+bindkey '^f' autosuggest-accept
+
+# Map CTRL+R to history, Ctrl+Alt+D to cd witchet and
+# Ctrl+Alt+K to the kill witched.
+autoload znt-history-widget
+zle -N znt-history-widget
+bindkey "^R" znt-history-widget
+zle -N znt-cd-widget
+bindkey "^[D" znt-cd-widget
+zle -N znt-kill-widget
+bindkey "^[K" znt-kill-widget
+
+# To customize prompt, run 'p10k configure' or edit $ZDOTDIR/.p10k.zsh.
+[[ ! -f "$ZDOTDIR/.p10k.zsh" ]] || source "$ZDOTDIR/.p10k.zsh"
+
+# Aliases
+source "$HOME/.config/shell/aliases.bash"
+source "$HOME/.config/shell/aliases.zsh"
+source "$HOME/.config/shell/functions.bash"
+
+if [ -f "$HOME/python-envs/default/bin/activate" ]; then
+    source "$HOME/python-envs/default/bin/activate"
+fi

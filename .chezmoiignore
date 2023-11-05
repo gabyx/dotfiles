@@ -1,0 +1,22 @@
+README.md
+.editorconfig
+.prettierrc
+.gitignore
+
+keyboard
+common
+docs
+
+{{- if ne .chezmoi.os "darwin" }}
+.config/skhd
+.config/spacebar
+.config/karabiner
+.config/yabai
+{{- end }}
+
+{{- if ne .chezmoi.os "linux" }}
+.config/rofi
+.config/waybar
+.config/sway
+.config/hypr
+{{- end }}

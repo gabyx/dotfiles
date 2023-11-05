@@ -1,0 +1,11 @@
+[alias]
+    is-lfs-tracked = ! \"{{ .git.toolsPath }}/git-scripts/is-lfs-tracked.sh\"
+
+    make-executable = ! git add --chmod=+x -- \"$@\"
+    sw = switch --recurse-submodule
+    ch = checkout --recurse-submodule
+    sm-branches = "!git submodule foreach --quiet 'echo \"$name :: $(git symbolic-ref -q --short HEAD || git describe --tags --exact-match)\";' #"
+
+    # Quote / unquote a sh command, converting it to / from a git alias string
+    quote-string = "!read -r l; printf \\\"!; printf %s \"$l\" | sed 's/\\([\\\"]\\)/\\\\\\1/g'; printf \" #\\\"\\n\" #"
+    quote-string-undo = "!read -r l; printf %s \"$l\" | sed 's/\\\\\\([\\\"]\\)/\\1/g'; printf \"\\n\" #"

@@ -1,0 +1,36 @@
+# DiffTools
+[difftool "vscode"]
+	cmd = \"{{ .git.toolsPath }}//diff-tools/launch.sh\" vscode \"$LOCAL\" \"$REMOTE\"
+	path = code
+
+[difftool "bcompare"]
+	cmd = \"{{ .git.toolsPath }}/diff-tools/launch.sh\" bcompare \"$LOCAL\" \"$REMOTE\"
+	path = bcomp
+	useUnixVariant = {{ if eq .chezmoi.os "windows" }}false{{ else }}true{{ end }}
+
+[difftool "nvim"]
+	cmd = \"{{ .git.toolsPath }}/diff-tools/launch.sh\" nvim \"$LOCAL\" \"$REMOTE\"
+	path = nvim
+
+[difftool "vimdiff"]
+    path = nvim
+
+# MergeTools
+[mergetool "vscode"]
+	cmd = \"{{ .git.toolsPath }}/merge-tools/launch.sh\" vscode \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+	keepBackup = false
+	trustExitCode = false
+	path = code
+[mergetool "bcompare"]
+	cmd = \"{{ .git.toolsPath }}/merge-tools/launch.sh\" bcompare \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+	keepBackup = false
+	trustExitCode = true
+	path = bcomp
+[mergetool "nvim"]
+	cmd = \"{{ .git.toolsPath }}/merge-tools/launch.sh\" nvim \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+	keepBackup = false
+	trustExitCode = false
+	path = nvim
+
+[mergetool "vimdiff"]
+    path = nvim
