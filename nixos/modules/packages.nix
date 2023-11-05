@@ -87,6 +87,8 @@
     texlive.combined.scheme-full
     #
     # MultiMedia
+    signal-desktop
+    slack
     pandoc
     transmission
     transmission-gtk
