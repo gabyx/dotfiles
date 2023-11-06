@@ -34,10 +34,9 @@ set $launcher-menu ~/.config/rofi/show-launcher-menu.sh
 set $power-menu ~/.config/rofi/show-power-menu.sh
 set $network-menu ~/.config/rofi/show-network-menu.sh
 
-# set $clipboard-menu-sel ~/.config/rofi/show-clipboard-select-menu.sh
-# set $clipboard-menu-del ~/.config/rofi/show-clipboard-delete-menu.sh
-set $clipboard-menu-sel copyq show
-
+set $mail "workspace '8 Mail'; exec thunderbird;"
+set $web "workspace '9 Web'; exec firefox;"
+set $comm "workspace '7 Comm'; exec signal-desktop;"
 ### ===========================================================================
 
 ## Visual Theme ===============================================================
@@ -102,6 +101,7 @@ workspace "7 Comm" output $secondDispHome
 workspace "8 Mail" output $secondDispHome
 workspace "9 Web" output  $secondDispHome
 
+
 # If running in a VM, use the following.
 output Virtual-1 resolution 1600x900
 ### ===========================================================================
@@ -135,30 +135,15 @@ input type:keyboard {
     xkb_layout programmer,us,de
     xkb_options caps:ctrl_modifier
 }
-
 ### ===========================================================================
 
 ### Clipboard =================================================================
-# Wipe clipboard on start.
-# exec cliphist wipe
-# Listen to clipboard changes on the primary keyboard.
-# exec wl-paste --watch cliphist store
-
-# TODO: Remove, not used anymore
-# set $cliphist_watch '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliphist)" ] && wl-paste --watch pkill -RTMIN+9 waybar'
-# set $cliphist_store '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliphist)" ] && wl-paste --watch cliphist store -max-items 2'
 set $clipboard 'copyq --start-server'
-
-exec {
-    $clipboard
-}
+set $clipboard-menu copyq toggle
 ### ===========================================================================
 
 ### Notifications =================================================================
 set $mako "mako -c ~/.config/mako/config"
-# exec {
-#    $mako
-# }
 ### ===========================================================================
 
 ### Key Bindings ==============================================================
@@ -171,15 +156,11 @@ set $mako "mako -c ~/.config/mako/config"
     # Kill focused window
     bindsym $mod+Shift+q kill
     bindsym $mod+Control+Shift+q focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, kill
-    
-    # Start the power-menu.
+
     bindsym $mod+p exec $power-menu
-    # Show the launcher.
-    bindsym $mod+d exec $menu
-    # Show the network-menu.
+    bindsym $mod+d exec $launcher-menu
     bindsym $mod+n exec $network-menu
-    # Show clipboard menu.
-    bindsym $mod+c exec $clipboard-menu-sel
+    bindsym $mod+c exec $clipboard-menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -321,8 +302,8 @@ for_window [window_type="dialog"] floating enable
 for_window [window_type="menu"] floating enable
 ### ===========================================================================
 
-### Startup ===================================================================
-exec '~/.config/sway/start-up.sh'
-### ===========================================================================
-
 bar swaybar_command waybar
+
+### Startup ===================================================================
+exec ~/.config/sway/scripts/start-up.sh
+### ===========================================================================

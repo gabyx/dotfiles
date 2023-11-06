@@ -10,24 +10,20 @@ echo "Start" > $LOG
 # Save stdout and stderr to file 
 exec 3>&1 4>&2 >"$LOG" 2>&1
 
+sleep 1
 echo "Starting copyq."
-# waybar &
-copyq --start-server
+swaymsg exec "\$clipboard"
 
 # Startup when launching sway.
 echo "Starting mail."
-swaymsg "workspace '8 Mail'; exec thunderbird;"
-sleep 3
+swaymsg exec "\$mail" 
+sleep 2
 
 echo "Starting web."
-swaymsg "workspace '9 Web'; exec firefox;"
-sleep 3
+swaymsg exec "\$web" 
+sleep 2
 
 echo "Starting comm."
-swaymsg "workspace '7 Comm'; exec signal-desktop;"
-
-echo "Waiting"
-# Block script
-cat
+swaymsg exec "\$comm" 
 
 echo "Finished"
