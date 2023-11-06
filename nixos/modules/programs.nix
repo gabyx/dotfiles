@@ -5,6 +5,10 @@
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs = {
+    # This ensures downloaded binaries not managed with NixOS
+    # can be run by forwarding the /lib64/ld-linux-x86-64.so.2 to the NixOS one.
+    nix-ld.enable = true;
+
     zsh.enable = true;
 
     mtr.enable = true;
