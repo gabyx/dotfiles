@@ -314,8 +314,7 @@ for_window [window_type="menu"] floating enable
 ### ===========================================================================
 
 ### Startup ===================================================================
-exec --no-startup-id ~/.config/sway/startup.sh
+exec ~/.config/sway/startup.sh
 ### ===========================================================================
-
 
 bar swaybar_command waybar

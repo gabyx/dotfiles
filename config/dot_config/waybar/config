@@ -85,7 +85,7 @@
         "format-alt": "  {percentage}% ",
         "format-alt-click": "click-right",
         "return-type": "json",
-        "on-click": "swaymsg exec \\$storage-menu"
+        "on-click": "swaymsg exec \\$storage-menu",
         "interval": 60,
         "exec": "~/.config/waybar/storage.sh"
     },
