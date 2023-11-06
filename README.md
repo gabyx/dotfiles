@@ -14,8 +14,8 @@
 <a href="https://github.com/gabyx/dotfiles"><img src="https://img.shields.io/github/stars/gabyx/dotfiles?style=social" alt="Give me a Star"></a>
 </p>
 
-These are my dotfiles managed with [chezmoi.io](https://www.chezmoi.io) and
-NixOS configurations.
+These are my [dotfiles](config) managed with
+[chezmoi.io](https://www.chezmoi.io) and [NixOS](nixos) configurations.
 
 | Program                    | Name                                                                          |
 | :------------------------- | :---------------------------------------------------------------------------- |
