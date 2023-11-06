@@ -1,6 +1,16 @@
-<img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/4c449b822779d9f3fca2e0eed36c95b07d623fd9/ng/out/nix.svg" style="margin-left: 20pt; width: 150px" align="right">
-<img src="config/docs/logo.svg" style="margin-left: 20pt; width:150px" align="right">
-<h1>Dotfiles and NixOS Installation</h1>
+<h1 align="center">
+    <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/4c449b822779d9f3fca2e0eed36c95b07d623fd9/ng/out/nix.svg" style="margin-left: 20pt; width: 150px" align="right"/>
+    <img src="config/docs/logo.svg" style="margin-left: 20pt; width:150px" align="right"/>
+    <br>
+    Gabyx's Dotfiles and NixOS Configuration
+    <br>
+</h1>
+
+<p align="center">
+<a href="./LICENSE"><img src="https://img.shields.io/badge/license-GPL-3.svg" alt="License"></a>
+<a href="https://www.buymeacoffee.com/gabyx" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 20px !important;width: 87px;" ></a>
+<a href="https://github.com/gabyx/dotfiles"><img src="https://img.shields.io/github/stars/gabyx/dotfiles?style=social" alt="Give me a Star"></a>
+</p>
 
 These are my dotfiles managed with [chezmoi.io](https://www.chezmoi.io) and
 NixOS configurations.
