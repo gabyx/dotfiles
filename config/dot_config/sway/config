@@ -169,10 +169,13 @@ exec {
     # Kill focused window
     bindsym $mod+Shift+q kill
     bindsym $mod+Control+Shift+q focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, kill
-
-    # Start your launcher
-    bindsym $mod+d exec $menu
     
+    # Start the power-menu.
+    bindsym $mod+p exec $power-menu
+    # Show the launcher.
+    bindsym $mod+d exec $menu
+    # Show the network-menu.
+    bindsym $mod+n exec $network-menu
     # Show clipboard menu.
     bindsym $mod+c exec $clipboard-menu-sel
 
