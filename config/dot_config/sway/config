@@ -147,17 +147,18 @@ input type:keyboard {
 # TODO: Remove, not used anymore
 # set $cliphist_watch '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliphist)" ] && wl-paste --watch pkill -RTMIN+9 waybar'
 # set $cliphist_store '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliphist)" ] && wl-paste --watch cliphist store -max-items 2'
+set $clipboard 'copyq --start-server'
 
 exec {
-    copyq
+    $clipboard
 }
 ### ===========================================================================
 
 ### Notifications =================================================================
 set $mako "mako -c ~/.config/mako/config"
-exec {
-    $mako
-}
+# exec {
+#    $mako
+# }
 ### ===========================================================================
 
 ### Key Bindings ==============================================================
@@ -305,13 +306,13 @@ mode "resize" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym $mod+r mode "resize"
 
+bindsym $mod+r mode "resize"
 ### ===========================================================================
 
 ### Applications ==============================================================
 # Set floating mode for generated windows
-for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable;
+for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="bubble"] floating enable
 for_window [window_role="task_dialog"] floating enable
@@ -321,7 +322,7 @@ for_window [window_type="menu"] floating enable
 ### ===========================================================================
 
 ### Startup ===================================================================
-exec ~/.config/sway/startup.sh
+exec '~/.config/sway/start-up.sh'
 ### ===========================================================================
 
 bar swaybar_command waybar
