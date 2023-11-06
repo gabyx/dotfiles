@@ -1,8 +1,10 @@
 <h1 align="center">
-    <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/4c449b822779d9f3fca2e0eed36c95b07d623fd9/ng/out/nix.svg" style="margin-left: 20pt; width: 150px" align="right"/>
-    <img src="config/docs/logo.svg" style="margin-left: 20pt; width:150px" align="right"/>
+    <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/4c449b822779d9f3fca2e0eed36c95b07d623fd9/ng/out/nix.svg" style="margin-left: 20pt; width: 150px" align="center"/>
+    <span style="width:100px;display:inline-block;">+</span>
+    <img src="config/docs/logo.svg" style="margin-left: 20pt; width:150px" align="center"/>
     <br>
-    Gabyx's Dotfiles and NixOS Configuration
+    <br>
+    Gabyx's Dotfiles & <br>NixOS Configuration
     <br>
 </h1>
 
