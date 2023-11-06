@@ -36,7 +36,7 @@ set $network-menu ~/.config/rofi/show-network-menu.sh
 
 # set $clipboard-menu-sel ~/.config/rofi/show-clipboard-select-menu.sh
 # set $clipboard-menu-del ~/.config/rofi/show-clipboard-delete-menu.sh
-set $clipboard-menu-sel copyq 
+set $clipboard-menu-sel copyq show
 
 ### ===========================================================================
 

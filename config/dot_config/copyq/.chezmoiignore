@@ -1,0 +1,7 @@
+*
+!themes
+!themes/**/*
+!copyq.conf
+!copyq-commands.ini
+!copyq-filter.ini
+

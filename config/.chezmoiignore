@@ -19,4 +19,6 @@ docs
 .config/waybar
 .config/sway
 .config/hypr
+.config/copyq
+.config/mako
 {{- end }}
