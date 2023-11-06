@@ -53,10 +53,11 @@ client.background        $base
 font pango:Noto Sans Bold 10
 
 # Border
-hide_edge_borders both
+# hide_edge_borders vertical
 default_border pixel 1
+for_window [instance = "__focused__"] border pixel 2
 # No border for browsers
-# for_window [class="(?i).*(chrome|firefox)"] default_border pixel 1
+# for_window [app_id="(?i).*(firefox)"] default_border pixel 1
 
 # Configure 5px of space between windows and to the screen edges.
 gaps inner 8
@@ -300,10 +301,13 @@ for_window [window_role="task_dialog"] floating enable
 for_window [window_role="Preferences"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_type="menu"] floating enable
+for_window [app_id="com.github.hluk.copyq"] floating enable; resize set 800 600; default_border normal;
 ### ===========================================================================
 
 bar swaybar_command waybar
 
 ### Startup ===================================================================
+exec_always --no-startup-id $clipboard
+exec_always --no-startup-id flashfocus
 exec ~/.config/sway/scripts/start-up.sh
 ### ===========================================================================

@@ -18,7 +18,7 @@ function gabyx::remove_docker_images() {
         echo "Empty regex given."
         return 1
     }
-    images=$("$builder" images --format '{{.ID}}|{{.Repository}}:{{.Tag}}' | grep -v '<none>' | \
+    images=$("$builder" images --format '{{.ID}}|{{.Repository}}:{{.Tag}}' | grep -v '<none>' |
         grep -xE "(\w+)\|$1" | sed -E "s/(\w+)\|.*/\1/g")
     [ -z "$images" ] && {
         echo "No images found."
@@ -40,7 +40,7 @@ function gabyx::copy_images_to_podman() {
     echo "Copying images with regex '$1' from docker to podman."
     images=$(docker images --format "$transport:{{.Repository}}:{{.Tag}}" | grep -v '<none>' | grep -xE "$transport:$1")
 
-    echo "$images" | xargs printf "  - '%s'\n" 
+    echo "$images" | xargs printf "  - '%s'\n"
     echo "$images" | xargs podman pull
 }
 
@@ -53,11 +53,11 @@ function gabyx::print_keycode_table {
 }
 
 function gabyx::get_keycode {
-    xev 
+    xev
 }
 
 function gabyx::get_window_properties {
-    swayprop
+    swaymsg -t get_tree | jq
 }
 
 function gabyx::nixos_rebuild() {

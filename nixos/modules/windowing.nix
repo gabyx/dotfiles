@@ -86,6 +86,7 @@
       wl-clipboard
       wf-recorder
       xdg-utils
+      flashfocus # Flash focus animations.
       copyq # Clipboard Manager.
       mako # Notification Daemon.
       grim # Screenshot in Wayland.
