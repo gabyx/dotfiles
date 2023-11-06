@@ -144,13 +144,12 @@ input type:keyboard {
 # Listen to clipboard changes on the primary keyboard.
 # exec wl-paste --watch cliphist store
 
-set $cliphist_watch '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliphist)" ] && wl-paste --watch pkill -RTMIN+9 waybar'
-set $cliphist_store '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliphist)" ] && wl-paste --watch cliphist store -max-items 2'
+# TODO: Remove, not used anymore
+# set $cliphist_watch '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliphist)" ] && wl-paste --watch pkill -RTMIN+9 waybar'
+# set $cliphist_store '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliphist)" ] && wl-paste --watch cliphist store -max-items 2'
 
 exec {
     copyq
-    # $cliphist_store
-    # $cliphist_watch
 }
 ### ===========================================================================
 
