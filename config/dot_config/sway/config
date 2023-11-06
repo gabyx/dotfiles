@@ -34,8 +34,9 @@ set $launcher-menu ~/.config/rofi/show-launcher-menu.sh
 set $power-menu ~/.config/rofi/show-power-menu.sh
 set $network-menu ~/.config/rofi/show-network-menu.sh
 
-set $clipboard-menu-sel ~/.config/rofi/show-clipboard-select-menu.sh
-set $clipboard-menu-del ~/.config/rofi/show-clipboard-delete-menu.sh
+# set $clipboard-menu-sel ~/.config/rofi/show-clipboard-select-menu.sh
+# set $clipboard-menu-del ~/.config/rofi/show-clipboard-delete-menu.sh
+set $clipboard-menu-sel copyq 
 
 ### ===========================================================================
 
@@ -147,8 +148,9 @@ set $cliphist_watch '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliph
 set $cliphist_store '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliphist)" ] && wl-paste --watch cliphist store -max-items 2'
 
 exec {
-    $cliphist_store
-    $cliphist_watch
+    copyq
+    # $cliphist_store
+    # $cliphist_watch
 }
 ### ===========================================================================
 

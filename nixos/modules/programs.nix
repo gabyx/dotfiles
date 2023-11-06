@@ -25,7 +25,13 @@
       config.credential.helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
     };
 
-    thunar.enable = true;
+    thunar = {
+      enable = true;
+      plugins = with pkgs; [
+        xfce.thunar-archive-plugin
+      ];
+    };
+
     seahorse.enable = true;
   };
   # ===========================================================================
