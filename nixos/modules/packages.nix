@@ -97,7 +97,7 @@
     vlc
     inkscape
     krita
-    xclip
+    zathura
     screenfetch
     scrot
     redshift

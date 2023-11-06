@@ -17,6 +17,20 @@
 These are my dotfiles managed with [chezmoi.io](https://www.chezmoi.io) and
 NixOS configurations.
 
+| Program                    | Name                                                                          |
+| :------------------------- | :---------------------------------------------------------------------------- |
+| Linux Distribution         | [NixOS](https://www.nixos.org/)                                               |
+| Window Manager             | [sway](https://github.com/swaywm/sway)                                        |
+| Bar                        | [waybar](https://github.com/Alexays/Waybar)                                   |
+| Program Launcher & Menu    | [rofi](https://github.com/DaveDavenport/rofi)                                 |
+| Wallpaper Setter           | [sway](https://github.com/swaywm/sway)                                        |
+| Web Browser                | [Firefox](https://firefox.com)                                                |
+| Code Editor                | [Nvim](https://neovim.io/) with [Astrovim](https://github.com/gabyx/astrovim) |
+| Text editors/Terminal font | [JetBrainsMono Nerd Font](https://www.jetbrains.com/lp/mono)                  |
+| Shell                      | [zsh](https://www.zsh.org/)                                                   |
+| Terminal Emulator          | [wezterm](https://wezfurlong.org)                                             |
+| Document Viewer            | [Zathura](https://pwmt.org/projects/zathura/)                                 |
+
 ## NixOS Configurations
 
 See the [documentation](nixos/README.md).
