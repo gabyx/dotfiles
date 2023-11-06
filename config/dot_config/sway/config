@@ -21,10 +21,8 @@ set $right l
 # Your preferred terminal emulator
 set $term wezterm
 
-# Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu 'rofi -modi run,drun,window -show drun -show-icons'
 
 # set $brightness ~/.config/sway/scripts/brightness.sh
 # set $brightness_up $brightness up | $onscreen_bar
@@ -34,9 +32,12 @@ set $launcher-menu ~/.config/rofi/show-launcher-menu.sh
 set $power-menu ~/.config/rofi/show-power-menu.sh
 set $network-menu ~/.config/rofi/show-network-menu.sh
 
-set $mail "workspace '8 Mail'; exec thunderbird;"
-set $web "workspace '9 Web'; exec firefox;"
-set $comm "workspace '7 Comm'; exec signal-desktop;"
+set $comm-ws 7 Comm
+set $comm signal-desktop
+set $mail-ws 8 Mail
+set $mail thunderbird
+set $web-ws 9 Web
+set $web firefox
 ### ===========================================================================
 
 ## Visual Theme ===============================================================
@@ -53,9 +54,8 @@ client.background        $base
 font pango:Noto Sans Bold 10
 
 # Border
-# hide_edge_borders vertical
+hide_edge_borders vertical
 default_border pixel 1
-for_window [instance = "__focused__"] border pixel 2
 # No border for browsers
 # for_window [app_id="(?i).*(firefox)"] default_border pixel 1
 
@@ -301,14 +301,13 @@ for_window [window_role="task_dialog"] floating enable
 for_window [window_role="Preferences"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_type="menu"] floating enable
-for_window [app_id="com.github.hluk.copyq"] floating enable; resize set 800 600; default_border normal; title_format "Clipboard";
+for_window [app_id="com.github.hluk.copyq"] floating enable; resize set 800 600;
 
 ### ===========================================================================
 
 bar swaybar_command waybar
 
 ### Startup ===================================================================
-exec_always --no-startup-id $clipboard
 exec_always --no-startup-id flashfocus
 exec ~/.config/sway/scripts/start-up.sh
 ### ===========================================================================

@@ -11,19 +11,19 @@ echo "Start" > $LOG
 exec 3>&1 4>&2 >"$LOG" 2>&1
 
 sleep 1
-# echo "Starting copyq."
-# swaymsg "\$clipboard"
+echo "Starting copyq."
+swaymsg "exec \$clipboard"
 
 # Startup when launching sway.
 echo "Starting mail."
-swaymsg "\$mail" 
+swaymsg "workspace \$mail-ws; exec \$mail" 
 sleep 2
 
 echo "Starting web."
-swaymsg "\$web" 
+swaymsg "workspace \$web-ws; exec \$web" 
 sleep 2
 
 echo "Starting comm."
-swaymsg "\$comm" 
+swaymsg "workspace \$comm-ws; exec \$comm" 
 
 echo "Finished"
