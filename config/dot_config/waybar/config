@@ -30,6 +30,8 @@
 
     "modules-right": [
         "tray",
+        "custom/clipboard",
+        "backlight",
         "memory",
         "cpu",
         "temperature",
@@ -45,6 +47,18 @@
     // -------------------------------------------------------------------------
     // Modules
     // -------------------------------------------------------------------------
+
+    "custom/clipboard": {
+        "format": "󰨸",
+        "interval": "once",
+        "return-type": "json",
+        "on-click": "swaymsg -q exec '$clipboard-menu-sel'; pkill -RTMIN+9 waybar",
+        "on-click-right": "swaymsg -q exec '$clipboard-menu-del'; pkill -RTMIN+9 waybar",
+        "on-click-middle": "rm -f ~/.cache/cliphist/db; pkill -RTMIN+9 waybar",
+        "exec": "printf '{\"tooltip\":\"%s\"}' $(cliphist list | wc -l)' item(s) in the clipboard\r(Mid click to clear)'",
+        "exec-if": "[ -x \"$(command -v cliphist)\" ] && [ $(cliphist list | wc -l) -gt 0 ]",
+        "signal": 9
+    },
 
     "battery": {
         "interval": 10,
@@ -68,9 +82,10 @@
 
     "custom/storage": {
         "format": "  {}",
-        "format-alt": "{percentage}% ",
+        "format-alt": "  {percentage}% ",
         "format-alt-click": "click-right",
         "return-type": "json",
+        "on-click": "swaymsg exec \\$storage-menu"
         "interval": 60,
         "exec": "~/.config/waybar/storage.sh"
     },
@@ -108,20 +123,27 @@
 
     "memory": {
         "interval": 5,
-        "format": "  {}%", // Icon: memory
+        "format": "󰍛  {}%", // Icon: memory
         "states": {
             "warning": 70,
             "critical": 90
         }
     },
 
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": ["󰃞", "󰃟", "󰃠"],
+        "on-scroll-up": "swaymsg exec \\$brightness_up",
+        "on-scroll-down": "swaymsg exec \\$brightness_down"
+    },
+
     "network": {
         "interval": 5,
         "format-wifi": "  {essid} ({signalStrength}%)", // Icon: wifi
-        "format-ethernet": "  {ifname}: {ipaddr}/{cidr}", // Icon: ethernet
-        "format-disconnected": "⚠  Disconnected",
+        "format-ethernet": "󰈀  {ifname}: {ipaddr}/{cidr}", // Icon: ethernet
+        "format-disconnected": "󰖪 ",
         "tooltip-format": "{ifname}: {ipaddr}",
-        "on-click": "bash ~/.config/rofi/show-network-menu.sh"
+        "on-click": "swaymsg exec \\$network-menu" 
     },
 
     "sway/mode": {
@@ -164,7 +186,7 @@
             "car": "",
             "default": ["", ""]
         },
-        "on-click": "pavucontrol"
+        "on-click": "swaymsg exec \\$sound-menu"
     },
 
     "temperature": {
@@ -183,13 +205,13 @@
 
     "custom/powermenu": {
       "format": " ",
-      "on-click": "bash ~/.config/rofi/show-power-menu.sh",
+      "on-click": "swaymsg exec \\$power-menu",
       "tooltip": false
     },
 
     "custom/launcher": {
       "format": " ",
-      "on-click": "bash ~/.config/rofi/show-launcher-menu.sh",
+      "on-click": "swaymsg exec \\$launcher",
       "tooltip": false
     },
 

@@ -7,7 +7,7 @@
 # Include default configs.
 include /etc/sway/config.d/*
 
-### Variables
+### Variables =================================================================
 #
 # Logo key. Use Mod1 for Alt.
 set $mod Mod1
@@ -26,8 +26,22 @@ set $term wezterm
 # on the original workspace that the command was run on.
 set $menu 'rofi -modi run,drun,window -show drun -show-icons'
 
-## Visual theme.
+# set $brightness ~/.config/sway/scripts/brightness.sh
+# set $brightness_up $brightness up | $onscreen_bar
+# set $brightness_down $brightness down | $onscreen_bar
+
+set $launcher-menu ~/.config/rofi/show-launcher-menu.sh
+set $power-menu ~/.config/rofi/show-power-menu.sh
+set $network-menu ~/.config/rofi/show-network-menu.sh
+
+set $clipboard-menu-sel ~/.config/rofi/show-clipboard-select-menu.sh
+set $clipboard-menu-del ~/.config/rofi/show-clipboard-delete-menu.sh
+
+### ===========================================================================
+
+## Visual Theme ===============================================================
 include themes/catppuccin-frappe
+
 client.focused           $lavender $base $text  $rosewater $lavender
 client.focused_inactive  $overlay0 $base $text  $rosewater $overlay0
 client.unfocused         $overlay0 $base $text  $rosewater $overlay0
@@ -51,8 +65,9 @@ gaps inner 8
 gaps outer 5
 # Only enable outer gaps when there is exactly one window or split container on the workspace.
 smart_gaps on
+### ===========================================================================
 
-### Output configuration
+### Output Configuration ======================================================
 #
 # Default wallpaper (more resolutions are available in /run/current-system/sw/share/backgrounds/sway/)
 output * bg ~/backgrounds/background-space.jpg fill
@@ -64,23 +79,33 @@ output * bg ~/backgrounds/background-space.jpg fill
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 # Home Setup
-output "Philips Consumer Electronics Company PHL 275E2F UHB2307008083" {
+set $primaryDispHome "Philips Consumer Electronics Company PHL 275E2F UHB2307008083"
+set $secondaryDispHome "Dell Inc. DELL P2418HT 32MPJ87E177L"
+
+output $primaryDispHome {
     mode 2560x1440@74.968Hz
     pos 0 0
 }
-output "Dell Inc. DELL P2418HT 32MPJ87E177L" {
+output $secondaryDispHome {
     mode 1920x1080@60.000Hz
     pos 2560 0
 }
 
+workspace "1" output $primaryDispHome
+workspace "2" output $primaryDispHome
+workspace "3" output $primaryDispHome
+workspace "4" output $primaryDispHome
+workspace "5" output $primaryDispHome
+workspace "6" output $primaryDispHome
+workspace "7 Comm" output $secondDispHome
+workspace "8 Mail" output $secondDispHome
+workspace "9 Web" output  $secondDispHome
+
 # If running in a VM, use the following.
 output Virtual-1 resolution 1600x900
+### ===========================================================================
 
-
-### Idle configuration
-#
-# Example configuration:
-#
+### Idle Configuration ========================================================
 exec swayidle -w \
          timeout 300 'swaylock -f -c 000000' \
          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
@@ -90,7 +115,9 @@ exec swayidle -w \
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
 
-### Input configuration
+### ===========================================================================
+
+### Input Configuration =======================================================
 #
 # Example configuration:
 #
@@ -106,9 +133,33 @@ exec swayidle -w \
 input type:keyboard {
     xkb_layout programmer,us,de
     xkb_options caps:ctrl_modifier
-} 
+}
 
-### Key bindings
+### ===========================================================================
+
+### Clipboard =================================================================
+# Wipe clipboard on start.
+# exec cliphist wipe
+# Listen to clipboard changes on the primary keyboard.
+# exec wl-paste --watch cliphist store
+
+set $cliphist_watch '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliphist)" ] && wl-paste --watch pkill -RTMIN+9 waybar'
+set $cliphist_store '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliphist)" ] && wl-paste --watch cliphist store'
+
+exec {
+    $cliphist_store
+    $cliphist_watch
+}
+### ===========================================================================
+
+### Notifications =================================================================
+set $mako "mako -c ~/.config/mako/config"
+exec {
+    $mako
+}
+### ===========================================================================
+
+### Key Bindings ==============================================================
 #
 # Basics:
 #
@@ -223,6 +274,7 @@ input type:keyboard {
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
     bindsym $mod+minus scratchpad show
+
 #
 # Resizing containers:
 #
@@ -248,9 +300,22 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-#
-# Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
-bar swaybar_command waybar
+### ===========================================================================
 
+### Applications ==============================================================
+# Set floating mode for generated windows
+for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable;
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+### ===========================================================================
+
+### Startup ===================================================================
+exec --no-startup-id ~/.config/sway/startup.sh
+### ===========================================================================
+
+
+bar swaybar_command waybar

@@ -12,10 +12,5 @@ fi
 # Launch the bar.
 waybar &
 
-# Launch the network manager applet.
-nm-applet --indicator &
-
-# Start notification daemon.
-dunst
 
 

@@ -56,6 +56,10 @@ function gabyx::get_keycode {
     xev 
 }
 
+function gabyx::get_window_properties {
+    swayprop
+}
+
 function gabyx::nixos_rebuild() {
     local what="${1:?Specify how? 'switch,boot,test'}"
     shift 1

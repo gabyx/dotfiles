@@ -48,7 +48,6 @@
     appimage-run
     chezmoi
     delta
-    dunst
     etcher
     gparted
     kdiff3
@@ -84,6 +83,8 @@
     nodejs
     openjdk
     rustup
+    python311
+    python311Packages.pip
     texlive.combined.scheme-full
     #
     # MultiMedia
@@ -103,6 +104,7 @@
     zoom-us
     firefox
     google-chrome
+    thunderbird
     #
     # Dictionaries
     aspell

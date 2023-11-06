@@ -11,6 +11,7 @@ DIR=$(cd "$(dirname "$0")" && pwd)/..
 # Install dotfiles.
 if [ "$DOTFILES_ENABLE" = "true" ]; then
     chezmoi init https://github.com/gabyx/dotfiles.git
+    chezmoi git lfs pull origin
     chezmoi apply
 fi
 

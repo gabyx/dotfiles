@@ -84,11 +84,15 @@
       swayidle
       wl-clipboard
       wf-recorder
+      xdg-utils
+      cliphist # Clipboard Manager.
       mako # Notification Daemon.
       grim # Screenshot in Wayland.
       slurp # Wayland region selector.
       rofi # Application Launcher for waybar.
       playerctl # Player control in waybar.
+      python311 
+      python311Packages.i3ipc # For sway-tool-wait.
     ];
 
     extraSessionCommands = ''
