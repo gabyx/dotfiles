@@ -49,7 +49,7 @@
     // -------------------------------------------------------------------------
 
     "custom/clipboard": {
-        "format": "󰨸",
+        "format": "󰨸 ",
         "interval": "once",
         "return-type": "json",
         "on-click": "swaymsg -q exec '$clipboard-menu-sel'; pkill -RTMIN+9 waybar",

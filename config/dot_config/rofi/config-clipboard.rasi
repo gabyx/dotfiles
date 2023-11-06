@@ -1,3 +1,13 @@
 // Look at https://github.com/newmanls/rofi-themes-collection/tree/master
 @import "rounded-blue-dark.rasi"
+
+* {
+    font: "JetBrainsMono Nerd Font 12";
+}
+
+window {
+    width: 1000;
+}
+
 @import "settings.rasi"
+

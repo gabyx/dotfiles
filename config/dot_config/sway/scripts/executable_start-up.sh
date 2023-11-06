@@ -3,15 +3,13 @@
 set -e
 set -u
 
-if [ ! -f ~/python-envs/sway/bin/activate ]; then
-    python3 -m venv ~/python-envs/sway
-    source ~/python-envs/sway/bin/activate
-    pip install i3ipc
-else
-    source ~/python-envs/sway/bin/activate
-fi
-
-sway_toolwait=~/.config/sway/scripts/sway-toolwait
+# if [ ! -f ~/python-envs/sway/bin/activate ]; then
+#     python3 -m venv ~/python-envs/sway
+#     source ~/python-envs/sway/bin/activate
+#     pip install i3ipc
+# else
+#     source ~/python-envs/sway/bin/activate
+# fi
 
 # Startup when launching sway.
 echo "Starting mail."

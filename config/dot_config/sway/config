@@ -144,7 +144,7 @@ input type:keyboard {
 # exec wl-paste --watch cliphist store
 
 set $cliphist_watch '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliphist)" ] && wl-paste --watch pkill -RTMIN+9 waybar'
-set $cliphist_store '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliphist)" ] && wl-paste --watch cliphist store'
+set $cliphist_store '[ -x "$(command -v wl-paste)" ] && [ -x "$(command -v cliphist)" ] && wl-paste --watch cliphist store -max-items 2'
 
 exec {
     $cliphist_store
@@ -172,6 +172,9 @@ exec {
 
     # Start your launcher
     bindsym $mod+d exec $menu
+    
+    # Show clipboard menu.
+    bindsym $mod+c exec $clipboard-menu-sel
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
