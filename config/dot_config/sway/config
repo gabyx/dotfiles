@@ -301,7 +301,8 @@ for_window [window_role="task_dialog"] floating enable
 for_window [window_role="Preferences"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_type="menu"] floating enable
-for_window [app_id="com.github.hluk.copyq"] floating enable; resize set 800 600; default_border normal;
+for_window [app_id="com.github.hluk.copyq"] floating enable; resize set 800 600; default_border normal; title_format "Clipboard";
+
 ### ===========================================================================
 
 bar swaybar_command waybar
