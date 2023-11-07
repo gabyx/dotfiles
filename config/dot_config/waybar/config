@@ -145,7 +145,8 @@
         "format-ethernet": "󰈀  {ifname}: {ipaddr}/{cidr}", // Icon: ethernet
         "format-disconnected": "󰖪 ",
         "tooltip-format": "{ifname}: {ipaddr}",
-        "on-click": "swaymsg exec \\$network-menu" 
+        "on-click": "swaymsg exec \\$wireless-menu",
+        "on-click-right": "swaymsg exec \\$network-menu" 
     },
 
     "sway/mode": {
@@ -232,9 +233,9 @@
         "interval": 30,
         "format-icons": {
              "enabled": "",
-             "disabled": ""
+             "disabled": "disabled"
         },
-        "on-click-right": "swaymsg exec \\$bluetooth-menu",
+        "on-right-click": "swaymsg exec \\$bluetooth-menu",
         "tooltip-format": "{status}"
     },
 
