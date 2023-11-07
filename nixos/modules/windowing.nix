@@ -83,12 +83,13 @@
       rose-pine-gtk-theme
       swaylock
       swayidle
+      swaynotificationcenter
       wl-clipboard
       wf-recorder
       xdg-utils
       flashfocus # Flash focus animations.
       copyq # Clipboard Manager.
-      mako # Notification Daemon.
+      # mako # Notification Daemon.
       grim # Screenshot in Wayland.
       slurp # Wayland region selector.
       rofi # Application Launcher for waybar.
@@ -116,6 +117,7 @@
     cantarell-fonts
     noto-fonts
     noto-fonts-emoji
+    (nerdfonts.override { fonts = [ "Noto" "JetBrainsMono" ]; })
   ];
 
 }

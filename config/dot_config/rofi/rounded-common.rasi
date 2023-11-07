@@ -5,7 +5,7 @@
  *******************************************************************************/
 
 * {
-    font:   "Noto Sans 12";
+    font:   "NotoSans Nerd Font 12";
 
     background-color:   transparent;
     text-color:         @fg1;

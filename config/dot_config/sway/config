@@ -48,6 +48,13 @@ assign [app_id="(?i).*firefox.*"] $web-ws
 set $creds-ws 10 
 set $creds bitwarden
 assign [class="(?i).*bitwarden.*"] $creds-ws
+
+# Clipboard
+set $clipboard 'copyq --start-server'
+set $clipboard-menu copyq toggle
+
+# Notifications
+set $notifications "mako -c ~/.config/mako/config"
 ### ===========================================================================
 
 ## Visual Theme ===============================================================
@@ -61,7 +68,7 @@ client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
 client.background        $base
 
 # Font
-font pango:Noto Sans Bold 10
+font pango:NotoSans Nerd Font Bold 10
 
 # Border
 hide_edge_borders both
@@ -111,6 +118,10 @@ workspace "5" output $primaryDispHome
 workspace "6" output $primaryDispHome
 
 # Assign the special workspaces to second monitor.
+workspace 7 output $secondaryDispHome
+workspace 8 output $secondaryDispHome
+workspace 9 output $secondaryDispHome
+workspace 10 output $secondaryDispHome
 workspace $comm-ws output $secondaryDispHome
 workspace $mail-ws output $secondaryDispHome
 workspace $web-ws output  $secondaryDispHome
@@ -149,15 +160,6 @@ input type:keyboard {
     xkb_layout programmer,us,de
     xkb_options caps:ctrl_modifier
 }
-### ===========================================================================
-
-### Clipboard =================================================================
-set $clipboard 'copyq --start-server'
-set $clipboard-menu copyq toggle
-### ===========================================================================
-
-### Notifications =================================================================
-set $mako "mako -c ~/.config/mako/config"
 ### ===========================================================================
 
 ### Key Bindings ==============================================================
@@ -246,8 +248,8 @@ set $mako "mako -c ~/.config/mako/config"
     # You can "split" the current object of your focus with
     # $mod+b or $mod+v, for horizontal and vertical splits
     # respectively.
-    bindsym $mod+b splith
-    bindsym $mod+v splitv
+    bindsym $mod+| splith
+    bindsym $mod+- splitv
 
     # Switch the current container between different layout styles
     bindsym $mod+s layout stacking
@@ -323,7 +325,7 @@ bar swaybar_command waybar
 
 ### Startup ===================================================================
 exec_always --no-startup-id flashfocus
-
+# exec $notifications
 exec $mail
 exec $web
 exec $comm
