@@ -88,6 +88,7 @@
     texlive.combined.scheme-full
     #
     # MultiMedia
+    bitwarden # Password Manager
     signal-desktop
     slack
     pandoc

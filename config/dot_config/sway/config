@@ -19,7 +19,7 @@ set $up k
 set $right l
 
 # Your preferred terminal emulator
-set $term wezterm
+set $term wezterm start
 
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -32,12 +32,22 @@ set $launcher-menu ~/.config/rofi/show-launcher-menu.sh
 set $power-menu ~/.config/rofi/show-power-menu.sh
 set $network-menu ~/.config/rofi/show-network-menu.sh
 
-set $comm-ws 7 Comm
+# Special workspaces
+set $comm-ws 7 
 set $comm signal-desktop
-set $mail-ws 8 Mail
+assign [class="(?i).*signal.*"] $comm-ws
+
+set $mail-ws 8 
 set $mail thunderbird
-set $web-ws 9 Web
+assign [app_id="(?i).*thunderbird.*"] $mail-ws
+
+set $web-ws 9 
 set $web firefox
+assign [app_id="(?i).*firefox.*"] $web-ws
+
+set $creds-ws 10 
+set $creds bitwarden
+assign [class="(?i).*bitwarden.*"] $creds-ws
 ### ===========================================================================
 
 ## Visual Theme ===============================================================
@@ -54,7 +64,7 @@ client.background        $base
 font pango:Noto Sans Bold 10
 
 # Border
-hide_edge_borders vertical
+hide_edge_borders both
 default_border pixel 1
 # No border for browsers
 # for_window [app_id="(?i).*(firefox)"] default_border pixel 1
@@ -79,7 +89,7 @@ output * bg ~/backgrounds/background-space.jpg fill
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
-# Home Setup
+# Home Setup ==============================================
 set $primaryDispHome "Philips Consumer Electronics Company PHL 275E2F UHB2307008083"
 set $secondaryDispHome "Dell Inc. DELL P2418HT 32MPJ87E177L"
 
@@ -91,6 +101,7 @@ output $secondaryDispHome {
     mode 1920x1080@60.000Hz
     pos 2560 0
 }
+# =========================================================
 
 workspace "1" output $primaryDispHome
 workspace "2" output $primaryDispHome
@@ -98,10 +109,12 @@ workspace "3" output $primaryDispHome
 workspace "4" output $primaryDispHome
 workspace "5" output $primaryDispHome
 workspace "6" output $primaryDispHome
-workspace "7 Comm" output $secondDispHome
-workspace "8 Mail" output $secondDispHome
-workspace "9 Web" output  $secondDispHome
 
+# Assign the special workspaces to second monitor.
+workspace $comm-ws output $secondaryDispHome
+workspace $mail-ws output $secondaryDispHome
+workspace $web-ws output  $secondaryDispHome
+workspace $creds-ws output  $secondaryDispHome
 
 # If running in a VM, use the following.
 output Virtual-1 resolution 1600x900
@@ -301,13 +314,21 @@ for_window [window_role="task_dialog"] floating enable
 for_window [window_role="Preferences"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_type="menu"] floating enable
-for_window [app_id="com.github.hluk.copyq"] floating enable; resize set 800 600;
 
+# Copyq Window should be floating.
+for_window [app_id="com.github.hluk.copyq"] floating enable; resize set 800 600;
 ### ===========================================================================
 
 bar swaybar_command waybar
 
 ### Startup ===================================================================
 exec_always --no-startup-id flashfocus
+
+exec $mail
+exec $web
+exec $comm
+exec $creds
+
+# workspace 1; exec $term tmux;
 exec ~/.config/sway/scripts/start-up.sh
 ### ===========================================================================
