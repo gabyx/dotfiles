@@ -31,6 +31,7 @@ set $term wezterm start
 set $launcher-menu ~/.config/rofi/show-launcher-menu.sh
 set $power-menu ~/.config/rofi/show-power-menu.sh
 set $network-menu ~/.config/rofi/show-network-menu.sh
+set $bluetooth-menu ~/.config/rofi/show-bluetooth-menu.sh
 
 # Special workspaces
 set $comm-ws 7 
@@ -56,6 +57,7 @@ set $clipboard-menu copyq toggle
 # Notifications
 # set $notifications "mako -c ~/.config/mako/config"
 set $notifications "swaync"
+set $notification-menu "swaync-client -t -sw"
 ### ===========================================================================
 
 ## Visual Theme ===============================================================
@@ -89,7 +91,7 @@ smart_gaps on
 ### Output Configuration ======================================================
 #
 # Default wallpaper (more resolutions are available in /run/current-system/sw/share/backgrounds/sway/)
-output * bg ~/backgrounds/background-space.jpg fill
+output * bg ~/.config/wallpapers/background-space.jpg fill
 
 #
 # Example configuration:
@@ -180,6 +182,7 @@ seat * hide_cursor when-typing enable
     bindsym $mod+d exec $launcher-menu
     bindsym $mod+n exec $network-menu
     bindsym $mod+c exec $clipboard-menu
+    bindsym $mod+n exec $notification-menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -309,11 +312,6 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-#
-# Notifications
-#
-    # Toggle notifications center
-    bindsym $mod+Shift+n exec swaync-client -t -sw
 
 ### ===========================================================================
 
@@ -335,6 +333,7 @@ bar swaybar_command waybar
 
 ### Startup ===================================================================
 exec_always --no-startup-id flashfocus
+
 exec $notifications
 exec $mail
 exec $web

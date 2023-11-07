@@ -38,6 +38,7 @@
         "custom/storage",
         "custom/keyboard-layout",
         "network",
+        "bluetooth",
         "pulseaudio",
         "battery",
         "custom/notification",
@@ -223,6 +224,18 @@
         "on-click": "swaync-client -t -sw",
         "on-click-right": "swaync-client -d -sw",
         "escape": true
+    },
+
+    "bluetooth": {
+        "format": "{icon}",
+        "format-alt": "bluetooth: {status}",
+        "interval": 30,
+        "format-icons": {
+             "enabled": "",
+             "disabled": ""
+        },
+        "on-click-right": "swaymsg exec \\$bluetooth-menu",
+        "tooltip-format": "{status}"
     },
 
     "custom/powermenu": {
