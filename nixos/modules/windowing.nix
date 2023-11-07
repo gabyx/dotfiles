@@ -81,6 +81,7 @@
 
     extraPackages = with pkgs; [
       rose-pine-gtk-theme
+      power-profiles-daemon
       swaylock
       swayidle
       swaynotificationcenter

@@ -21,4 +21,5 @@ docs
 .config/hypr
 .config/copyq
 .config/mako
+.config/swaync
 {{- end }}

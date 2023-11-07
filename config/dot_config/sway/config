@@ -54,7 +54,8 @@ set $clipboard 'copyq --start-server'
 set $clipboard-menu copyq toggle
 
 # Notifications
-set $notifications "mako -c ~/.config/mako/config"
+# set $notifications "mako -c ~/.config/mako/config"
+set $notifications "swaync"
 ### ===========================================================================
 
 ## Visual Theme ===============================================================
@@ -160,6 +161,8 @@ input type:keyboard {
     xkb_layout programmer,us,de
     xkb_options caps:ctrl_modifier
 }
+
+seat * hide_cursor when-typing enable
 ### ===========================================================================
 
 ### Key Bindings ==============================================================
@@ -246,10 +249,10 @@ input type:keyboard {
 # Layout stuff:
 #
     # You can "split" the current object of your focus with
-    # $mod+b or $mod+v, for horizontal and vertical splits
+    # $mod+\ or $mod+-, for vertical and horizontal splits
     # respectively.
-    bindsym $mod+| splith
-    bindsym $mod+- splitv
+    bindcode $mod+51 splith
+    bindcode $mod+20 splitv
 
     # Switch the current container between different layout styles
     bindsym $mod+s layout stacking
@@ -305,6 +308,13 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+
+#
+# Notifications
+#
+    # Toggle notifications center
+    bindsym $mod+Shift+n exec swaync-client -t -sw
+
 ### ===========================================================================
 
 ### Applications ==============================================================
@@ -325,7 +335,7 @@ bar swaybar_command waybar
 
 ### Startup ===================================================================
 exec_always --no-startup-id flashfocus
-# exec $notifications
+exec $notifications
 exec $mail
 exec $web
 exec $comm

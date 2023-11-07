@@ -12,6 +12,7 @@ in
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./boot.nix
+      ./hardware.nix
 
       # Include all other specifications.
       ./${modules}/windowing.nix

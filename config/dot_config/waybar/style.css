@@ -52,6 +52,7 @@
     color: white;
     font-family: NotoSans Nerd Font, Noto Sans, sans-serif;
     font-size: 13px;
+    font-weight: bold;
 }
 
 /* Each module */
@@ -69,6 +70,7 @@
 #custom-clipboard,
 #custom-powermenu,
 #custom-launcher,
+#custom-notification,
 #tray {
     padding-left: 10px;
     padding-right: 10px;

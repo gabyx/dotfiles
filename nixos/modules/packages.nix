@@ -88,21 +88,22 @@
     texlive.combined.scheme-full
     #
     # MultiMedia
-    bitwarden # Password Manager
-    signal-desktop
-    slack
-    pandoc
-    transmission
+    bitwarden # Password manager
+    signal-desktop # Messaging app
+    slack # Messaging app
+    pandoc # Markdown processor
+    transmission # Bittorent
     transmission-gtk
-    ffmpeg
-    vlc
-    inkscape
-    krita
-    zathura
+    ffmpeg # Movie converter
+    vlc # Movie player
+    inkscape # Vector graphics
+    krita # Painting
+    zathura # Simple document viewer
+    ymuse # Sound player
     screenfetch
     scrot
     redshift
-    zoom-us
+    zoom-us # Video calls
     firefox
     google-chrome
     thunderbird

@@ -2,16 +2,16 @@
 
 {
   ### Sound Settings ==========================================================
-  sound.enable = true;
+  sound.enable = false; # Only meant for ALSA-based configurations.
 
   security.rtkit.enable = true;
-  
+
   # Disable Pulseaudio because Pipewire is used.
   hardware.pulseaudio.enable = false;
 
   environment.systemPackages = with pkgs; [
-		pavucontrol pulseaudio
-	];
+    pavucontrol
+  ];
 
   services.pipewire = {
     enable = true;

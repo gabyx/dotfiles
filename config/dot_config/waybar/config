@@ -40,7 +40,7 @@
         "network",
         "pulseaudio",
         "battery",
-        "custom/notifications",
+        "custom/notification",
         "custom/powermenu",
     ],
 
