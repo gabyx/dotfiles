@@ -10,15 +10,6 @@ bare-metal.
 
 ![Screenshot](./docs/screenshot.png)
 
-**Specs:**
-
-- **Display Manager: Gnome Display Manager**
-- **Window Manager: [`sway`](https://swaywm.org)**
-- **Menu Bar: [`waybar`](https://github.com/Alexays/Waybar)**
-- **Menu Display & Application Launcher:
-  [`rofi`](https://github.com/davatorium/rofi)**
-- **Terminal: `wezterm`**
-
 ## Prerequisites
 
 Some key insights to ease understanding when working through the below NixOS
@@ -38,14 +29,19 @@ install.
 
   for package names and options.
 
+- Consider also reading the awesome book
+  [NixOS and Flakes](https://github.com/ryan4yin/nixos-and-flakes-book) to learn
+  more about Nix flakes.
+
 - This NixOS is using the `sway` (Wayland not X11) window manager. To get you
   started when the VM is booted up:
 
   - `Alt+d` to start a program or
   - press `Alt+Enter` to open `wezterm` terminal with `zsh`.
 
-- The NixOS install is customized with my `.`-files over `chezmoi` which are not
-  yet public. [Todo]
+- The NixOS install is customized with my [`dotfiles`](../config) over `chezmoi`
+  it is not yet built into Nix's
+  [`homemanager`](https://github.com/nix-community/home-manager).
 
 ## Install NixOS into QEMU Virtual Machine
 

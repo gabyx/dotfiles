@@ -24,30 +24,32 @@ set $term wezterm start
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 
-# set $brightness ~/.config/sway/scripts/brightness.sh
-# set $brightness_up $brightness up | $onscreen_bar
-# set $brightness_down $brightness down | $onscreen_bar
-
 set $launcher-menu ~/.config/rofi/show-launcher-menu.sh
 set $power-menu ~/.config/rofi/show-power-menu.sh
-set $wireless-menu ~/.config/rofi/show-network-menu.sh --wireless
-set $network-menu ~/.config/rofi/show-network-menu.sh --editor
-set $bluetooth-menu ~/.config/rofi/show-bluetooth-menu.sh
+set $wireless-menu ~/.config/rofi/show-network-menu.sh
+set $network-menu nm-connection-editor
+set $bluetooth-menu rofi-bluetooth
+set $emoji-menu rofimoji
+set $systemd-menu rofi-systemd
+set $procs-menu wezterm start btop
+set $sound-menu pavucontrol
+set $calculator-menu qalculate-gtk 
+set $password-menu swaymsg workspace \\$creds-ws
 
 # Special workspaces
-set $comm-ws 7 
+set $comm-ws 7  
 set $comm signal-desktop
 assign [class="(?i).*signal.*"] $comm-ws
 
-set $mail-ws 8 
+set $mail-ws 8  
 set $mail thunderbird
 assign [app_id="(?i).*thunderbird.*"] $mail-ws
 
-set $web-ws 9 
-set $web firefox
-assign [app_id="(?i).*firefox.*"] $web-ws
+set $web-ws 9  
+set $web google-chrome-stable
+assign [class="(?i).*chrome.*"] $web-ws
 
-set $creds-ws 10 
+set $creds-ws 10  󱕴
 set $creds bitwarden
 assign [class="(?i).*bitwarden.*"] $creds-ws
 
@@ -56,7 +58,6 @@ set $clipboard 'copyq --start-server'
 set $clipboard-menu copyq toggle
 
 # Notifications
-# set $notifications "mako -c ~/.config/mako/config"
 set $notifications "swaync"
 set $notification-menu "swaync-client -t -sw"
 ### ===========================================================================
@@ -176,13 +177,17 @@ seat * hide_cursor when-typing enable
     bindsym $mod+Return exec $term
 
     # Kill focused window
-    bindsym $mod+Shift+q kill
+    bindsym $mod+q kill
     bindsym $mod+Control+Shift+q focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, kill
 
     bindsym $mod+Shift+p exec $power-menu
     bindsym $mod+Shift+w exec $wireless-menu
     bindsym $mod+Shift+i exec $network-menu
     bindsym $mod+Shift+n exec $notification-menu
+    bindsym $mod+Shift+s exec $sound-menu
+    bindsym $mod+Shift+d exec $systemd-menu
+    bindsym $mod+Shift+t exec $procs-menu
+    bindsym $mod+Shift+m exec $emoji-menu
     bindsym $mod+d exec $launcher-menu
     bindsym $mod+c exec $clipboard-menu
 
@@ -327,8 +332,10 @@ for_window [window_role="Preferences"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_type="menu"] floating enable
 
-# Copyq Window should be floating.
-for_window [app_id="com.github.hluk.copyq"] floating enable; resize set 800 600;
+# This windows should be floating.
+for_window [app_id="(?i).*copyq.*"] floating enable; resize set 800 600;
+for_window [app_id="(?i).*qalculate-gtk.*"] floating enable; resize set 800 600;
+for_window [app_id="(?i).*font-manager.*"] floating enable; resize set 800 600;
 ### ===========================================================================
 
 bar swaybar_command waybar

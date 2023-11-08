@@ -10,10 +10,13 @@ echo "Start" > $LOG
 # Save stdout and stderr to file 
 exec 3>&1 4>&2 >"$LOG" 2>&1
 
-# Place here special things.
 sleep 1
+# Start the clipboard manager.
 swaymsg exec \$clipboard
 
-swaymsg "workspace 1; exec \$term tmux;"
+# Start tmux and make terminal on workspace 1.
+tmux start-server
+sleep 1
+swaymsg "workspace 1; exec \$term tmux a"
 
 echo "Finished"

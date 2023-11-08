@@ -13,6 +13,7 @@
     direnv
     dmidecode
     fd
+    tree
     file
     findutils
     fzf
@@ -26,6 +27,8 @@
     openvpn
     pciutils
     ripgrep
+    usbutils
+    btop
     xorg.xev # Keyboard Key Press Properties
     # (pkgs.ripgrep-all.overrideAttrs (old: {
     # 	doInstallCheck = false;
@@ -53,6 +56,7 @@
     kdiff3
     lazygit
     silver-searcher
+    qalculate-gtk
     #
     # Devices (Wacom)
     libwacom
