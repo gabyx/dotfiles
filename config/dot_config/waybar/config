@@ -35,6 +35,7 @@
         "custom/password",
         "custom/systemd",
         "custom/procs",
+        "custom/screenshot",
         "backlight",
         "memory",
         "cpu",
@@ -55,6 +56,7 @@
     // -------------------------------------------------------------------------
     "custom/systemd" : {
         "format": " ",
+        "return-type": "json",
         "exec": "~/.config/waybar/scripts/tooltip.sh 'Systemd'",
         "interval": "once",
         "on-click": "swaymsg exec \\$systemd-menu",
@@ -63,6 +65,7 @@
 
     "custom/procs" : {
         "format": "󰜎",
+        "return-type": "json",
         "exec": "~/.config/waybar/scripts/tooltip.sh 'Processes'",
         "interval": "once",
         "on-click": "swaymsg exec \\$procs-menu",
@@ -71,6 +74,7 @@
 
     "custom/calculator" : {
         "format": " ",
+        "return-type": "json",
         "exec": "~/.config/waybar/scripts/tooltip.sh 'Calculator'",
         "interval": "once",
         "on-click": "swaymsg exec \\$calculator-menu",
@@ -79,6 +83,7 @@
 
     "custom/emoji" : {
         "format": " ",
+        "return-type": "json",
         "exec": "~/.config/waybar/scripts/tooltip.sh 'Symbols/Emojis'",
         "interval": "once",
         "on-click": "swaymsg exec \\$emoji-menu",
@@ -87,9 +92,19 @@
 
     "custom/password" : {
         "format": "󱕴",
+        "return-type": "json",
         "exec": "~/.config/waybar/scripts/tooltip.sh 'Passwords'",
         "interval": "once",
         "on-click": "swaymsg exec \\$password-menu",
+        "tooltip": true
+    },
+
+    "custom/screenshot" : {
+        "format": "󰄀 ",
+        "return-type": "json",
+        "exec": "~/.config/waybar/scripts/tooltip.sh 'Screenshot'",
+        "interval": "once",
+        "on-click": "swaymsg exec \\$screenshot-menu",
         "tooltip": true
     },
 

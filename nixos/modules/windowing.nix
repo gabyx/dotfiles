@@ -80,27 +80,29 @@
     wrapperFeatures.gtk = true; # so that gtk works properly
 
     extraPackages = with pkgs; [
-      rose-pine-gtk-theme
       power-profiles-daemon
+
       swaylock
       swayidle
       swaynotificationcenter
-      wl-clipboard
-      wf-recorder
+      libnotify
+
       xdg-utils
       flashfocus # Flash focus animations.
       copyq # Clipboard Manager.
-      # mako # Notification Daemon.
+
+      wl-clipboard
+      wf-recorder
       grim # Screenshot in Wayland.
       slurp # Wayland region selector.
+      sway-contrib.grimshot # Screenshot tool.
+
       rofi # Application Launcher for waybar.
       rofi-power-menu
       rofi-bluetooth
       rofi-systemd
       rofimoji
       playerctl # Player control in waybar.
-      python311
-      python311Packages.i3ipc # For sway-tool-wait.
     ];
 
     extraSessionCommands = ''

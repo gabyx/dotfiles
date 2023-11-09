@@ -35,6 +35,7 @@ set $procs-menu wezterm start btop
 set $sound-menu pavucontrol
 set $calculator-menu qalculate-gtk 
 set $password-menu swaymsg workspace \\$creds-ws
+set $screenshot-menu ~/.config/rofi/scripts/rofi-screenshot.sh
 
 # Special workspaces
 set $comm-ws 7  
@@ -127,10 +128,15 @@ workspace 7 output $secondaryDispHome
 workspace 8 output $secondaryDispHome
 workspace 9 output $secondaryDispHome
 workspace 10 output $secondaryDispHome
-workspace $comm-ws output $secondaryDispHome
-workspace $mail-ws output $secondaryDispHome
-workspace $web-ws output  $secondaryDispHome
-workspace $creds-ws output  $secondaryDispHome
+# workspace $comm-ws  output $secondaryDispHome
+# workspace $mail-ws  output $secondaryDispHome
+# workspace $web-ws   output $secondaryDispHome
+# workspace $creds-ws output $secondaryDispHome
+
+workspace $comm-ws  output $primaryDispHome
+workspace $mail-ws  output $primaryDispHome
+workspace $web-ws   output $primaryDispHome
+workspace $creds-ws output $primaryDispHome
 
 # If running in a VM, use the following.
 output Virtual-1 resolution 1600x900
@@ -180,14 +186,15 @@ seat * hide_cursor when-typing enable
     bindsym $mod+q kill
     bindsym $mod+Control+Shift+q focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, kill
 
-    bindsym $mod+Shift+p exec $power-menu
+    bindsym $mod+Shift+Escape exec $power-menu
     bindsym $mod+Shift+w exec $wireless-menu
     bindsym $mod+Shift+i exec $network-menu
     bindsym $mod+Shift+n exec $notification-menu
-    bindsym $mod+Shift+s exec $sound-menu
+    bindsym $mod+Shift+a exec $sound-menu
     bindsym $mod+Shift+d exec $systemd-menu
     bindsym $mod+Shift+t exec $procs-menu
     bindsym $mod+Shift+m exec $emoji-menu
+    bindsym $mod+Shift+s exec $screenshot-menu
     bindsym $mod+d exec $launcher-menu
     bindsym $mod+c exec $clipboard-menu
 
