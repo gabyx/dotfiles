@@ -41,7 +41,7 @@
 * {
     border: none;
     border-radius: 0;
-    min-height: 0;
+    min-height: 24pt;
     margin: 0;
     padding: 0;
 }
@@ -51,7 +51,7 @@
     background: #323232;
     color: white;
     font-family: NotoSans Nerd Font, Noto Sans, sans-serif;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: bold;
 }
 
@@ -67,7 +67,7 @@
 #backlight,
 #bluetooth,
 #disk,
-#sway-keyboard
+#sway-language,
 #custom-emoji,
 #custom-procs,
 #custom-systemd,

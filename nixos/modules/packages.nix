@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable,... }:
 
 {
   # List packages installed in system profile. To search, run:
@@ -44,7 +44,7 @@
     tmux
     #
     # Editors
-    neovim
+    pkgs-unstable.neovim
     vscode
     #
     # Tools
@@ -131,7 +131,7 @@
   ];
 
 
-  # Install Neovim nightly if needed. Carefull with Astrovim Setup.
+  # # Install Neovim nightly if needed. Carefull with Astrovim Setup.
   # nixpkgs.overlays = [
   #   (import (builtins.fetchTarball {
   #     url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;

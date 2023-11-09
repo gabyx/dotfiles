@@ -2,9 +2,10 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 let
-    modules = "../../modules";
+  modules = "../../modules";
+  packages = import ./${modules}/packages.nix { inherit config pkgs pkgs-unstable; };
 in
 {
   imports =
@@ -30,14 +31,13 @@ in
       ./${modules}/printing.nix
 
       ./${modules}/virtualization.nix
-
-      ./${modules}/packages.nix
+      packages
       ./${modules}/programs.nix
 
       ./${modules}/user.nix
 
       ./${modules}/nix.nix
-  ];
+    ];
 
   ### NixOS Release Settings===================================================
   # This value determines the NixOS release from which the default

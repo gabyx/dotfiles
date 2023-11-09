@@ -41,7 +41,7 @@
         "cpu",
         "temperature",
         "disk",
-        "sway/keyboard",
+        "sway/language",
         "network",
         "bluetooth",
         "pulseaudio",
@@ -55,7 +55,7 @@
     // Modules
     // -------------------------------------------------------------------------
     "custom/systemd" : {
-        "format": " ",
+        "format": "",
         "return-type": "json",
         "exec": "~/.config/waybar/scripts/tooltip.sh 'Systemd'",
         "interval": "once",
@@ -64,7 +64,7 @@
     },
 
     "custom/procs" : {
-        "format": "󰜎",
+        "format": "󰜎 ",
         "return-type": "json",
         "exec": "~/.config/waybar/scripts/tooltip.sh 'Processes'",
         "interval": "once",
@@ -160,7 +160,7 @@
     },
 
     "sway/language": {
-        "format": "   {}",
+        "format": "   {long} {variant}",
         "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
     },
 
@@ -216,8 +216,8 @@
         }
     },
 
-    "wireplumber": {
-        //"scroll-step": 1,
+    "pulseaudio": {
+        "scroll-step": 10,
         "format": "{icon}  {volume}%",
         "format-bluetooth": "{icon}  {volume}%",
         "format-muted": "",

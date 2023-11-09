@@ -24,6 +24,11 @@ xkb_symbols "basic" {
     key <TLDE>  { [  U1F606,     U1F914  ]  };
     key <LSGT>  { [  grave,      asciitilde  ]  };
     
-    // Right alt acts as compose key.
+    // Right Alt acts as compose key.
     key <RALT> { [ Multi_key ] };
+    
+    // Left Ctrl acts as Hyper key.
+    // key <LCTL> { [ Hyper_L ] };
+    // modifier_map Mod3 { <HYPR>, Hyper_L };
+
 };
