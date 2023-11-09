@@ -1,43 +1,64 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, pkgs-unstable, ... }:
-let
-  modules = "../../modules";
-  packages = import ./${modules}/packages.nix { inherit config pkgs pkgs-unstable; };
-in
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./boot.nix
-      ./hardware.nix
+  config,
+  pkgs,
+  inputs,
+  outputs,
+  ...
+}: let
+  modules = "../../modules";
+in {
+  imports = [
+    # If you want to use modules your own flake exports (from modules/nixos):
+    # outputs.nixosModules.example
 
-      # Include all other specifications.
-      ./${modules}/windowing.nix
-      ./${modules}/display.nix
-      ./${modules}/keyboard.nix
-      ./${modules}/fonts.nix
-      ./${modules}/time.nix
-      ./${modules}/environment.nix
-      ./${modules}/networking.nix
-      ./${modules}/security.nix
+    # Or modules from other flakes (such as nixos-hardware):
+    # inputs.hardware.nixosModules.common-cpu-amd
+    # inputs.hardware.nixosModules.common-ssd
 
-      ./${modules}/services.nix
+    # You can also split up your configuration and import pieces of it here:
+    # ./users.nix
 
-      ./${modules}/sound.nix
-      ./${modules}/printing.nix
+    # Import your generated (nixos-generate-config) hardware configuration
+    ./hardware-configuration.nix
+    ./boot.nix
+    ./hardware.nix
 
-      ./${modules}/virtualization.nix
-      packages
-      ./${modules}/programs.nix
+    # Include all other specifications.
+    ./${modules}/windowing.nix
+    ./${modules}/display.nix
+    ./${modules}/keyboard.nix
+    ./${modules}/fonts.nix
+    ./${modules}/time.nix
+    ./${modules}/environment.nix
+    ./${modules}/networking.nix
+    ./${modules}/security.nix
 
-      ./${modules}/user.nix
+    ./${modules}/services.nix
 
-      ./${modules}/nix.nix
+    ./${modules}/sound.nix
+    ./${modules}/printing.nix
+
+    ./${modules}/virtualization.nix
+    ./${modules}/packages.nix
+    ./${modules}/programs.nix
+
+    ./${modules}/user.nix
+
+    ./${modules}/nix.nix
+  ];
+
+  nixpkgs = {
+    # You can add overlays here.
+    overlays = [
+      # Add overlays of your own flake exports (from overlays and pkgs dir):
+      outputs.overlays.additions
+      outputs.overlays.modifications
+      outputs.overlays.unstable-packages
     ];
+  };
 
   ### NixOS Release Settings===================================================
   # This value determines the NixOS release from which the default

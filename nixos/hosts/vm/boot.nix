@@ -1,10 +1,12 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   boot = {
     # Bootloader ================================================================
     loader = {
-      grub = { 
+      grub = {
         enable = true;
         device = "/dev/sda";
         useOSProber = false; # Do not detect other operating systems.

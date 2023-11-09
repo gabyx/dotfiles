@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   networking = {
     ### Networking ==============================================================
     hostName = "linux-nixos"; # Define your hostname.
@@ -21,7 +23,7 @@
 
     ### Firewall ================================================================
     # Open ports in the firewall.
-    firewall.allowedTCPPorts = [ 22 ];
+    firewall.allowedTCPPorts = [22];
     # firewall.allowedUDPPorts = [ ... ];
     # ===========================================================================
   };
@@ -30,5 +32,4 @@
     wirelesstools
     networkmanagerapplet
   ];
-
 }

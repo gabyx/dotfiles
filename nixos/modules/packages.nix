@@ -1,6 +1,8 @@
-{ config, pkgs, pkgs-unstable,... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -30,9 +32,6 @@
     usbutils
     btop
     xorg.xev # Keyboard Key Press Properties
-    # (pkgs.ripgrep-all.overrideAttrs (old: {
-    # 	doInstallCheck = false;
-    # }))
     git
     git-lfs
     gnome.seahorse
@@ -44,7 +43,7 @@
     tmux
     #
     # Editors
-    pkgs-unstable.neovim
+    unstable.neovim
     vscode
     #
     # Tools
@@ -123,13 +122,13 @@
     # gtk_engines
     # gsettings-desktop-schemas
     # lxappearance
+
     # Nix
     nixpkgs-lint
     stdenv.cc
-    nixpkgs-fmt
+    alejandra
     nixfmt
   ];
-
 
   # # Install Neovim nightly if needed. Carefull with Astrovim Setup.
   # nixpkgs.overlays = [

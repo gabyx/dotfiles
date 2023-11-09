@@ -1,5 +1,8 @@
-{ config, pkgs, ... }: {
-
+{
+  config,
+  pkgs,
+  ...
+}: {
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.autorun = true;
@@ -7,7 +10,10 @@
   # Display Manager ===========================================================
   services.xserver.displayManager = {
     sddm.enable = false;
-    gdm = { enable = true; wayland = true; };
+    gdm = {
+      enable = true;
+      wayland = true;
+    };
     autoLogin.enable = false;
     autoLogin.user = "nixos";
   };
@@ -124,7 +130,6 @@
     cantarell-fonts
     noto-fonts
     noto-fonts-emoji
-    (nerdfonts.override { fonts = [ "Noto" "JetBrainsMono" ]; })
+    (nerdfonts.override {fonts = ["Noto" "JetBrainsMono"];})
   ];
-
 }

@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   ### Sound Settings ==========================================================
   sound.enable = false; # Only meant for ALSA-based configurations.
 

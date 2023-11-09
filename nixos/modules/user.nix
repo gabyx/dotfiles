@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   ### User Settings ==========================================================
   users = {
     users.nixos = {

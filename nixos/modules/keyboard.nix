@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   ### Keyboard Settings =================================================
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -10,11 +12,11 @@
     xkbOptions = "caps:ctrl_modifier";
     extraLayouts.programmer = {
       description = "Programmer (US)";
-      languages = [ "eng" ];
+      languages = ["eng"];
       symbolsFile = ../../config/keyboard/linux/symbols/programmer;
     };
   };
-    
+
   # Logitech Receiver and Solaar Gui
   hardware.logitech.wireless = {
     enable = true;

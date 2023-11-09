@@ -1,41 +1,41 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-let
-    modules = ../../modules;
-in
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./boot.nix
+  config,
+  pkgs,
+  ...
+}: let
+  modules = ../../modules;
+in {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./boot.nix
 
-      # Include all other specifications.
-      ./${modules}/windowing.nix
-      ./${modules}/display.nix
-      ./${modules}/keyboard.nix
-      ./${modules}/fonts.nix
-      ./${modules}/time.nix
-      ./${modules}/environment.nix
-      ./${modules}/networking.nix
-      ./${modules}/security.nix
+    # Include all other specifications.
+    ./${modules}/windowing.nix
+    ./${modules}/display.nix
+    ./${modules}/keyboard.nix
+    ./${modules}/fonts.nix
+    ./${modules}/time.nix
+    ./${modules}/environment.nix
+    ./${modules}/networking.nix
+    ./${modules}/security.nix
 
-      ./${modules}/services.nix
+    ./${modules}/services.nix
 
-      ./${modules}/sound.nix
-      ./${modules}/printing.nix
+    ./${modules}/sound.nix
+    ./${modules}/printing.nix
 
-      ./${modules}/virtualization.nix
+    ./${modules}/virtualization.nix
 
-      ./${modules}/packages.nix
-      ./${modules}/programs.nix
+    ./${modules}/packages.nix
+    ./${modules}/programs.nix
 
-      ./${modules}/user.nix
+    ./${modules}/user.nix
 
-      ./${modules}/nix.nix
+    ./${modules}/nix.nix
   ];
 
   ### NixOS Release Settings===================================================

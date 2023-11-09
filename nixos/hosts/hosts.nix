@@ -1,11 +1,12 @@
-{ inputs, system, pkgs, pkgs-unstable, ... }:
-
-with inputs;
-
 {
+  inputs,
+  outputs,
+  ...
+}:
+with inputs; {
   # The NixOs for the virtual machine.
   vm = nixpkgs.lib.nixosSystem {
-    specialArgs = { inherit system pkgs-unstable; };
+    specialArgs = {inherit inputs outputs;};
     modules = [
       ./vm/configuration.nix
     ];
@@ -13,7 +14,7 @@ with inputs;
 
   # The NixOs running on bare metal.
   desktop = nixpkgs.lib.nixosSystem {
-    specialArgs = { inherit system pkgs-unstable; };
+    specialArgs = {inherit inputs outputs;};
     modules = [
       ./desktop/configuration.nix
     ];

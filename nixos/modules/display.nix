@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   ### Color Shifting ==========================================================
   services.redshift = {
     enable = true;

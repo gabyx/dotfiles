@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   boot = {
     # Your `hardware-configuration.nix` should configure the LUKS device setup.
     # It should not be included here.
@@ -27,7 +29,6 @@
       };
     };
     # ===========================================================================
-
 
     ### Temp Files ==============================================================
     tmp.useTmpfs = true;
