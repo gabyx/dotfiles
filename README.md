@@ -15,21 +15,27 @@
 </p>
 
 These are my [dotfiles](config) managed with
-[chezmoi.io](https://www.chezmoi.io) and [NixOS](nixos) configurations.
+[chezmoi.io](https://www.chezmoi.io) for Linux and MacOS and [NixOS](nixos)
+configurations for Desktop and VM.
 
-| Program                    | Name                                                                          |
-| :------------------------- | :---------------------------------------------------------------------------- |
-| Linux Distribution         | [NixOS](https://www.nixos.org/)                                               |
-| Window Manager             | [sway](https://github.com/swaywm/sway)                                        |
-| Bar                        | [waybar](https://github.com/Alexays/Waybar)                                   |
-| Program Launcher & Menu    | [rofi](https://github.com/DaveDavenport/rofi)                                 |
-| Wallpaper Setter           | [sway](https://github.com/swaywm/sway)                                        |
-| Web Browser                | [Firefox](https://firefox.com)                                                |
-| Code Editor                | [Nvim](https://neovim.io/) with [Astrovim](https://github.com/gabyx/astrovim) |
-| Text editors/Terminal font | [JetBrainsMono Nerd Font](https://www.jetbrains.com/lp/mono)                  |
-| Shell                      | [zsh](https://www.zsh.org/)                                                   |
-| Terminal Emulator          | [wezterm](https://wezfurlong.org)                                             |
-| Document Viewer            | [Zathura](https://pwmt.org/projects/zathura/)                                 |
+![Screenshot](./docs/screenshot.png)
+
+| Program                    | Name                                                                                                                                              |
+| :------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Linux Distribution         | [NixOS](https://www.nixos.org/)                                                                                                                   |
+| Window Manager             | [sway](https://github.com/swaywm/sway)                                                                                                            |
+| Bar                        | [waybar](https://github.com/Alexays/Waybar)                                                                                                       |
+| Program Launcher & Menu    | [rofi](https://github.com/DaveDavenport/rofi)                                                                                                     |
+| Wallpaper Setter           | [sway](https://github.com/swaywm/sway)                                                                                                            |
+| Screenshot                 | [grimshot](https://search.nixos.org/packages?channel=23.05&show=sway-contrib.grimshot&from=0&size=50&sort=relevance&type=packages&query=grimshot) |
+| Clipboard                  | [copyq](https://hluk.github.io/CopyQ/) with special password ignore command                                                                       |
+| Notification               | [swaync](https://github.com/ErikReider/SwayNotificationCenter) with special password ignore command                                               |
+| Web Browser                | [Chrome](https://www.google.com/intl/de/chrome/)                                                                                                  |
+| Code Editor                | [Nvim](https://neovim.io/) with [Astrovim](https://github.com/gabyx/astrovim)                                                                     |
+| Normal Font                | [NotoSans Nerd Font](https://www.nerdfonts.com/)                                                                                                  |
+| Text editors/Terminal font | [JetBrainsMono Nerd Font](https://www.jetbrains.com/lp/mono)                                                                                      |
+| Shell                      | [zsh](https://www.zsh.org/)                                                                                                                       |
+| Terminal Emulator          | [wezterm](https://wezfurlong.org)                                                                                                                 |
 
 ## NixOS Configurations
 
