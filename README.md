@@ -18,7 +18,7 @@ These are my [dotfiles](config) managed with
 [chezmoi.io](https://www.chezmoi.io) for Linux and MacOS and [NixOS](nixos)
 configurations for Desktop and VM.
 
-![Screenshot](./docs/screenshot.png)
+![Screenshot](./nixos/docs/screenshot.png)
 
 | Program                    | Name                                                                                                                                              |
 | :------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
