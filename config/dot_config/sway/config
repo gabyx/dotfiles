@@ -128,15 +128,10 @@ workspace 7 output $secondaryDispHome
 workspace 8 output $secondaryDispHome
 workspace 9 output $secondaryDispHome
 workspace 10 output $secondaryDispHome
-# workspace $comm-ws  output $secondaryDispHome
-# workspace $mail-ws  output $secondaryDispHome
-# workspace $web-ws   output $secondaryDispHome
-# workspace $creds-ws output $secondaryDispHome
-
-workspace $comm-ws  output $primaryDispHome
-workspace $mail-ws  output $primaryDispHome
-workspace $web-ws   output $primaryDispHome
-workspace $creds-ws output $primaryDispHome
+workspace $comm-ws  output $secondaryDispHome
+workspace $mail-ws  output $secondaryDispHome
+workspace $web-ws   output $secondaryDispHome
+workspace $creds-ws output $secondaryDispHome
 
 # If running in a VM, use the following.
 output Virtual-1 resolution 1600x900
