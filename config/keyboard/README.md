@@ -40,6 +40,34 @@ xev -event keyboard
 and press a key and grep inside `/usr/share/X11/xkb/keycodes` directory to find
 the symbol of this key press.
 
+## Modifier Keys
+
+`Meta`, `Super` and `Hyper` are modifier keys that modify the key's function.
+They are specific to the Symbolics Space Cadet Keyboard used on Lisp machines
+back in the day. Their function is sometimes emulated using other keys.
+
+![http://en.wikipedia.org/wiki/File:Space-cadet.jpg]
+
+- **`Meta`**
+
+  The Meta key is not found on modern keyboards. Its use is sometimes emulated
+  with `AltGr` (on some international layouts) or the right `Alt` key on the
+  others. In addition:
+
+  - Sun keyboards have a meta key (`◆`) as well.
+  - Emacs calls `Esc` the Meta key.
+
+- **`Super`**
+
+  The Super key is equivalent to `Win` or the `⌘` (command) key. In Ubuntu, it's
+  just another name for `Win`.
+
+- **`Hyper`**
+
+  Hyper is the fourth (counting `Ctrl`) and last modifier on the Space cadet
+  keyboard. In Ubuntu, its function is undefined (I think), but it can be
+  mapped, as in the screen shot above, to `Win`, should it be needed.
+
 ## Creating a New Keyboard Layout
 
 ### Find Base `kbd_symbols` Layout

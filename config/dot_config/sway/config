@@ -124,14 +124,14 @@ workspace "5" output $primaryDispHome
 workspace "6" output $primaryDispHome
 
 # Assign the special workspaces to second monitor.
-workspace 7 output $secondaryDispHome
-workspace 8 output $secondaryDispHome
-workspace 9 output $secondaryDispHome
-workspace 10 output $secondaryDispHome
 workspace $comm-ws  output $secondaryDispHome
 workspace $mail-ws  output $secondaryDispHome
 workspace $web-ws   output $secondaryDispHome
 workspace $creds-ws output $secondaryDispHome
+workspace 7 output $secondaryDispHome
+workspace 8 output $secondaryDispHome
+workspace 9 output $secondaryDispHome
+workspace 10 output $secondaryDispHome
 
 # If running in a VM, use the following.
 output Virtual-1 resolution 1600x900
