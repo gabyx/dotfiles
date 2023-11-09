@@ -2,7 +2,9 @@
 <h1>NixOS Installation</h1>
 
 The file [`configuration.nix`](configuration.nix) contains the whole NixOS
-configuration and will be used to install the complete system.
+configuration and will be used to install the complete system. It is influenced
+by
+[`nixos-starter-configs`](https://github.com/Misterio77/nix-starter-configs/tree/main).
 
 The following steps describe how to end up with a NixOS installation. The best
 starting point is to test the VM inside `qemu` before installing it into
