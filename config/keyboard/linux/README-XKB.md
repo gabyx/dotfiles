@@ -1,27 +1,15 @@
+# German: Explanations for XKB
+
+[Read here](docs/own-keyboard-in-x11-german.html).
+
+# English: A simple, humble but comprehensive guide to XKB for linux
+
+[Read here](./docs/a-simple-humble-but-comprehensive-guide-to-xkb-for-linux.html).
+
+or here as markdown
+
 > medium-to-markdown@0.0.3 convert node index.js
 > <https://medium.com/@damko/a-simple-humble-but-comprehensive-guide-to-xkb-for-linux-6f1ad5e13450>
-
-# A simple, humble but comprehensive guide to XKB for linux
-
-[![Damiano Venturin](https://miro.medium.com/v2/resize:fill:88:88/0*KReUCCpTsoSHXI6x.png)
-
-](https://medium.com/@damko?source=post_page-----6f1ad5e13450--------------------------------)
-
-[Damiano Venturin](https://medium.com/@damko?source=post_page-----6f1ad5e13450--------------------------------)
-
-·
-
-[Follow](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fsubscribe%2Fuser%2F8e1f458cf650&operation=register&redirect=https%3A%2F%2Fmedium.com%2F%40damko%2Fa-simple-humble-but-comprehensive-guide-to-xkb-for-linux-6f1ad5e13450&user=Damiano+Venturin&userId=8e1f458cf650&source=post_page-8e1f458cf650----6f1ad5e13450---------------------post_header-----------)
-
-13 min read·Jun 12, 2016
-
-\--
-
-22
-
-Listen
-
-Share
 
 - Are you a linux user?
 - Would you like to remap some keys of your keyboard? (any keyboard)

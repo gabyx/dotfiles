@@ -32,7 +32,8 @@
     ripgrep
     usbutils
     btop
-    xorg.xev # Keyboard Key Press Properties
+    xorg.xev # For keyboard key press properties.
+    xorg.xkbcomp # For checking xkb keyboard symbol tables.
     git
     git-lfs
     gnome.seahorse
@@ -75,6 +76,8 @@
     # Programming
     jq
     yq
+    shfmt
+    shellcheck
     llvmPackages_16.clang-unwrapped
     cmake
     gcc

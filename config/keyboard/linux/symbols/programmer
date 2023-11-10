@@ -1,4 +1,4 @@
-partial alphanumeric_keys
+partial alphanumeric_keys modifier_keys
 xkb_symbols "basic" {
 
     include "us"
@@ -25,7 +25,7 @@ xkb_symbols "basic" {
     key <LSGT>  { [  grave,      asciitilde  ]  };
 
     // Right Alt acts as compose key.
-    key <RALT> { [ Multi_key ] };
+    key <RCTL> { [ Multi_key ] };
 
     // Left Ctrl acts as Super key.
     // key <LCTL> { [ Hyper_L ] };

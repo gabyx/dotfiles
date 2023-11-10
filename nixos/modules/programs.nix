@@ -35,6 +35,7 @@
       enable = true;
       plugins = with pkgs; [
         xfce.thunar-archive-plugin
+        xfce.tumbler
       ];
     };
 

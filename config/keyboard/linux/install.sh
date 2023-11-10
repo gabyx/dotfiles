@@ -108,13 +108,13 @@ if ! command -v xmlstarlet &>/dev/null; then
     fi
 fi
 
-setxkbmap "-I$DIR/keyboard/linux" programmer -print |
-    xkbcomp "-I$DIR/keyboard/linux" - "$DISPLAY" 2>/dev/null || 
+setxkbmap "-I$DIR/symbols" programmer -print |
+    xkbcomp "-I$DIR" - "$DISPLAY" 2>/dev/null ||
 # Test if the layout works
-    die "The layout '$DIR/keyboard/linux/programmer' is invalid." \
+    die "The layout '$DIR/symbols/programmer' is invalid." \
     "Check with:" \
-        "setxkbmap \"-I$DIR/keyboard/linux\" programmer -print \|" \
-        "xkbcomp \"-I$DIR/keyboard/linux\" - \"$DISPLAY\""
+        "setxkbmap \"-I$DIR/symbols\" programmer -print \|" \
+        "xkbcomp \"-I$DIR/symbols\" - \"$DISPLAY\""
 
 target="/usr/share/X11/xkb/symbols/programmer"
 printInfo "Move layout to '$target'"
