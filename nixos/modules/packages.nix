@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: {
   # List packages installed in system profile. To search, run:
@@ -39,11 +40,11 @@
     unzip
     wget
     zsh
-    wezterm
+    pkgs-unstable.wezterm
     tmux
     #
     # Editors
-    unstable.neovim
+    pkgs-unstable.neovim
     vscode
     #
     # Tools
@@ -88,6 +89,10 @@
     rustup
     python311
     python311Packages.pip
+    python311Packages.black
+    nodePackages.pyright
+    stylua
+    nodePackages.prettier
     texlive.combined.scheme-full
     #
     # MultiMedia

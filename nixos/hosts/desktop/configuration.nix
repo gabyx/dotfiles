@@ -9,6 +9,13 @@
   ...
 }: let
   modules = "../../modules";
+
+  pkgs-unstable = import inputs.nixpkgs-unstable {
+    system = pkgs.system;
+    config = {
+      allowUnfree = true;
+    };
+  };
 in {
   imports = [
     # If you want to use modules your own flake exports (from modules/nixos):
@@ -42,7 +49,7 @@ in {
     ./${modules}/printing.nix
 
     ./${modules}/virtualization.nix
-    ./${modules}/packages.nix
+    (import ./${modules}/packages.nix {inherit config pkgs pkgs-unstable;})
     ./${modules}/programs.nix
 
     ./${modules}/user.nix

@@ -35,6 +35,10 @@ install.
   [NixOS and Flakes](https://github.com/ryan4yin/nixos-and-flakes-book) to learn
   more about Nix flakes.
 
+- Passing inputs to modules can be done in different ways, best is to not use
+  overlays, but just using plain old functions.
+  [Read more here](docs/pass-inputs-to-modules.md).
+
 - This NixOS is using the `sway` (Wayland not X11) window manager. To get you
   started when the VM is booted up:
 
@@ -109,7 +113,7 @@ useful information when going through these steps:
 ## Install NixOs on Desktop Hardware
 
 We follow the tutorial from
-[Pablo Ovelleiro [@pinpox](https://github.com/pinpox)](<https://pablo.tools/blog/computers/nixos-encrypted-install>)
+[Pablo Ovelleiro [@pinpox](https://github.com/pinpox)](https://pablo.tools/blog/computers/nixos-encrypted-install)
 and
 [mt-caret](https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html).
 

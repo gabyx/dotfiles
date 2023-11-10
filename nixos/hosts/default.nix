@@ -14,6 +14,7 @@ with inputs; {
 
   # The NixOs running on bare metal.
   desktop = nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
     specialArgs = {inherit inputs outputs;};
     modules = [
       ./desktop/configuration.nix
