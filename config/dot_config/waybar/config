@@ -129,7 +129,7 @@
     },
 
     "disk": {
-        "format": "  {}%",
+        "format": "  {percentage_used}%",
         "format-alt": "  {percentage_used}% ",
         "format-alt-click": "click-right",
         "return-type": "json",
@@ -137,7 +137,7 @@
         "interval": 60,
         "path": "/"
     },
-  
+
     "clock#time": {
         "interval": 1,
         "format": "󰅐  {:%H:%M}",
@@ -187,7 +187,7 @@
         "format-disconnected": "󰖪 ",
         "tooltip-format": "{ifname}: {ipaddr}",
         "on-click": "swaymsg exec \\$wireless-menu",
-        "on-click-right": "swaymsg exec \\$network-menu" 
+        "on-click-right": "swaymsg exec \\$network-menu"
     },
 
     "sway/mode": {

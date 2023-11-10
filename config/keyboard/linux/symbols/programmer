@@ -3,7 +3,7 @@ xkb_symbols "basic" {
 
     include "us"
     name[Group1] = "Programmer (US)";
-    
+
     // To see the symbold corresponding to the keycode generated check
     // `xev` and grep inside `/usr/share/X11/xkb/keycodes directory`.
 
@@ -23,12 +23,28 @@ xkb_symbols "basic" {
     // Switch Tilde and GreateThan (next to L-Shift)
     key <TLDE>  { [  U1F606,     U1F914  ]  };
     key <LSGT>  { [  grave,      asciitilde  ]  };
-    
+
     // Right Alt acts as compose key.
     key <RALT> { [ Multi_key ] };
-    
-    // Left Ctrl acts as Hyper key.
-    // key <LCTL> { [ Hyper_L ] };
-    // modifier_map Mod3 { <HYPR>, Hyper_L };
 
+    // Left Ctrl acts as Super key.
+    // key <LCTL> { [ Hyper_L ] };
+
+    //// Beginning of modifier mappings.
+    //modifier_map Shift  { Shift_L, Shift_R };
+    //modifier_map Control{ Control_L, Control_R };
+    //modifier_map Mod4   { Super_L, Super_R };
+
+    //key <ALT>  {	[ NoSymbol, Alt_L	]	};
+    //include "altwin(meta_alt)"
+
+    //key <META> {	[ NoSymbol, Meta_L	]	};
+    //modifier_map Mod1   { <META> };
+
+    //key <SUPR> {	[ NoSymbol, Super_L	]	};
+    //modifier_map Mod4   { <SUPR> };
+
+    //key <HYPR> {	[ NoSymbol, Hyper_L	]	};
+    //modifier_map Mod4   { <HYPR> };
+    //// End of modifier mappings.
 };
