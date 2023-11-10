@@ -34,8 +34,8 @@
     thunar = {
       enable = true;
       plugins = with pkgs; [
-        xfce.thunar-archive-plugin
-        xfce.tumbler
+        xfce.thunar-archive-plugin # for archives.
+        xfce.tumbler # for image thumbnails.
       ];
     };
 
