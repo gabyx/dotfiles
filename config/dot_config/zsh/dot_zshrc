@@ -144,4 +144,4 @@ if [ -f "$HOME/python-envs/default/bin/activate" ]; then
     source "$HOME/python-envs/default/bin/activate"
 fi
 
-source "$HOME/.config/zsh/.zshrc_tmux"
+source "$HOME/.config/zsh/.zshrc-tmux"

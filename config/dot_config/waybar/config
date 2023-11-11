@@ -33,8 +33,6 @@
         "custom/calculator",
         "custom/emoji",
         "custom/password",
-        "custom/systemd",
-        "custom/procs",
         "custom/screenshot",
         "backlight",
         "memory",
@@ -54,23 +52,6 @@
     // -------------------------------------------------------------------------
     // Modules
     // -------------------------------------------------------------------------
-    "custom/systemd" : {
-        "format": "",
-        "return-type": "json",
-        "exec": "~/.config/waybar/scripts/tooltip.sh 'Systemd'",
-        "interval": "once",
-        "on-click": "swaymsg exec \\$systemd-menu",
-        "tooltip": true
-    },
-
-    "custom/procs" : {
-        "format": "󰜎 ",
-        "return-type": "json",
-        "exec": "~/.config/waybar/scripts/tooltip.sh 'Processes'",
-        "interval": "once",
-        "on-click": "swaymsg exec \\$procs-menu",
-        "tooltip": true
-    },
 
     "custom/calculator" : {
         "format": " ",
@@ -91,7 +72,7 @@
     },
 
     "custom/password" : {
-        "format": "󱕴",
+        "format": "󱕴 ",
         "return-type": "json",
         "exec": "~/.config/waybar/scripts/tooltip.sh 'Passwords'",
         "interval": "once",
@@ -100,7 +81,7 @@
     },
 
     "custom/screenshot" : {
-        "format": "󰄀 ",
+        "format": "󰄀  ",
         "return-type": "json",
         "exec": "~/.config/waybar/scripts/tooltip.sh 'Screenshot'",
         "interval": "once",
@@ -156,7 +137,9 @@
         "states": {
           "warning": 70,
           "critical": 90
-        }
+        },
+        "on-click": "swaymsg exec \\$procs-menu",
+        "on-click-right": "swaymsg exec \\$systemd-menu"
     },
 
     "sway/language": {

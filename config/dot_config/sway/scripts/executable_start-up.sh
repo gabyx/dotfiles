@@ -14,25 +14,14 @@ echo "Start clipboard."
 swaymsg exec \$clipboard
 
 # Start tmux and make terminal on workspace 1.
-echo "Start tmux."
+echo "Start tmux, let it recreate the workspaces with resurrec (?)"
 swaymsg exec tmux
-sleep 1
+sleep 2
 
 echo "Start workspaces"
-
-export RUN_TMUX_SESSION="Dotfiles"
-swaymsg "workspace \$ws-1; exec \$term"
-sleep 0.5
-
-export RUN_TMUX_SESSION="Astrovim"
-swaymsg "workspace \$ws-2; exec \$term"
-sleep 0.5
-
-export RUN_TMUX_SESSION="Main"
-swaymsg "workspace \$ws-3; exec \$term"
-sleep 0.5
-
-export RUN_TMUX_SESSION="Main"
-swaymsg "workspace \$ws-4; exec \$term"
+swaymsg "workspace \$ws-1; exec \$term-start Dotfiles \$term-start-cmd"
+swaymsg "workspace \$ws-2; exec \$term-start Astrovim \$term-start-cmd"
+swaymsg "workspace \$ws-3; exec \$term-start Main \$term-start-cmd"
+swaymsg "workspace \$ws-4; exec \$term-start Main \$term-start-cmd"
 
 echo "Finished"
