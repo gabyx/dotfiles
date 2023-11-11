@@ -97,5 +97,18 @@ EOF
     esac
 fi
 
-wl-copy <"$FILENAME"
+# Copyq if available has some trouble when
+# copying to big images, therefore disable it an load it manually
+if command -v "copyq" 2>/dev/null; then
+    copyq disable
+fi
+
+# Write to wayland clibboard
+wl-copy -t image/png <"$FILENAME"
+
+if command -v "copyq" 2>/dev/null; then
+    copyq write image/png - <"$FILENAME"
+    copyq enable
+fi
+
 notify-send "Screenshot" "File saved as <i>'$FILENAME'</i> and copied to the clipboard." -i "$FILENAME"

@@ -111,9 +111,6 @@
     krita # Painting
     zathura # Simple document viewer
     ymuse # Sound player
-    screenfetch
-    scrot
-    redshift
     zoom-us # Video calls
     firefox
     google-chrome

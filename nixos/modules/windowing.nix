@@ -88,20 +88,22 @@
     extraPackages = with pkgs; [
       power-profiles-daemon
 
+      redshift # Redshift monitor colors.
       swaylock
       swayidle
       swaynotificationcenter
       libnotify
 
       xdg-utils
-      flashfocus # Flash focus animations.
-      copyq # Clipboard Manager.
+      flashfocus # Flash focus animations in sway.
+      copyq # Clipboard manager.
 
-      wl-clipboard
-      wf-recorder
-      grim # Screenshot in Wayland.
+      wl-clipboard # Wayland clipboard.
+      wf-recorder # Wayland screen recorder.
+      grim # Screenshot tool in Wayland.
       slurp # Wayland region selector.
-      sway-contrib.grimshot # Screenshot tool.
+      sway-contrib.grimshot # Main screenshot tool.
+      swappy # Edit tool for screenshots.
 
       rofi # Application Launcher for waybar.
       rofi-power-menu

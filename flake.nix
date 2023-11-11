@@ -1,6 +1,21 @@
 {
   description = "My NixOS Configurations";
 
+  nixConfig = {
+    substituters = [
+      # Replace the official cache with a mirror located in China
+      # Add here some other mirror if needed.
+      "https://cache.nixos.org/"
+    ];
+    extra-substituters = [
+      # Nix community's cache server
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
+
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
