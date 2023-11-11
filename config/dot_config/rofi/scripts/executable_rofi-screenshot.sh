@@ -26,7 +26,7 @@ if ! out=$(grimshot check 2>&1); then
 fi
 
 CHOICE=$(
-rofi -dmenu -p 'Screenshot' << EOF
+    rofi -dmenu -p 'Screenshot' <<EOF
 Active Window
 Manual Area
 Manual Window
@@ -36,7 +36,7 @@ EOF
 )
 
 WITH_CURSOR=$(
-rofi -dmenu -p 'With Cursor?' -lines 2 << EOF
+    rofi -dmenu -p 'With Cursor?' -lines 2 <<EOF
 yes
 no
 EOF
@@ -55,48 +55,47 @@ FILENAME="$SAVEDIR/$(date +'%Y-%m-%d-%H%M%S-screenshot.png')"
 mkdir -p -- "$(dirname "$FILENAME")"
 
 case "$CHOICE" in
-    "Active Window")
-        grimshot $CURSOR_ARG --notify save active "$FILENAME"
+"Active Window")
+    grimshot $CURSOR_ARG --notify save active "$FILENAME"
     ;;
-    "Manual Area")
-        grimshot $CURSOR_ARG --notify save area "$FILENAME"
+"Manual Area")
+    grimshot $CURSOR_ARG --notify save area "$FILENAME"
     ;;
-    "Manual Window")
-        grimshot $CURSOR_ARG --notify save window "$FILENAME"
+"Manual Window")
+    grimshot $CURSOR_ARG --notify save window "$FILENAME"
     ;;
-    "Current Screen")
-        grimshot $CURSOR_ARG --notify save output "$FILENAME"
+"Current Screen")
+    grimshot $CURSOR_ARG --notify save output "$FILENAME"
     ;;
-    "All Screens")
-        grimshot $CURSOR_ARG --notify save screen "$FILENAME"
+"All Screens")
+    grimshot $CURSOR_ARG --notify save screen "$FILENAME"
     ;;
-    '')
-        notify-send "Screenshot" "Cancelled"
-        exit 0
-        ;;
-    *)
-        notify-send "Screenshot" "Cancelled"
-        exit 0
-        ;;
+'')
+    notify-send "Screenshot" "Cancelled"
+    exit 0
+    ;;
+*)
+    notify-send "Screenshot" "Cancelled"
+    exit 0
+    ;;
 esac
 
 # If swappy is installed, prompt the user to edit the captured screenshot
-if command -v swappy $>/dev/null
-then
-    EDIT_CHOICE=$(rofi -dmenu -p 'Edit the shot?' -lines 2 << EOF
+if command -v swappy $ >/dev/null; then
+    EDIT_CHOICE=$(
+        rofi -dmenu -p 'Edit the shot?' -lines 2 <<EOF
 yes
 no
-EOF)
+EOF
+    )
     case "$EDIT_CHOICE" in
-        yes)
-            swappy -f "$FILENAME" -o "$FILENAME"
-            ;;
-        no)
-            ;;
-        '')
-            ;;
+    yes)
+        swappy -f "$FILENAME" -o "$FILENAME"
+        ;;
+    no) ;;
+    '') ;;
     esac
 fi
 
-wl-copy < "$FILENAME"
+wl-copy <"$FILENAME"
 notify-send "Screenshot" "File saved as <i>'$FILENAME'</i> and copied to the clipboard." -i "$FILENAME"
