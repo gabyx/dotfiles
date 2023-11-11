@@ -26,31 +26,41 @@ set $term wezterm start
 
 set $launcher-menu ~/.config/rofi/show-launcher-menu.sh
 set $power-menu ~/.config/rofi/show-power-menu.sh
-set $wireless-menu ~/.config/rofi/show-network-menu.sh
-set $network-menu nm-connection-editor
+set $wireless-menu ~/.config/rofi/show-network-menu.sh --wireless
+set $network-menu ~/.config/rofi/show-network-menu.sh --editor
 set $bluetooth-menu rofi-bluetooth
 set $emoji-menu rofimoji
 set $systemd-menu rofi-systemd
 set $procs-menu wezterm start btop
 set $sound-menu pavucontrol
-set $calculator-menu qalculate-gtk 
+set $calculator-menu qalculate-gtk
 set $password-menu swaymsg workspace \\$creds-ws
 set $screenshot-menu ~/.config/rofi/scripts/rofi-screenshot.sh
 
 # Special workspaces
-set $comm-ws 7  
+# Icons can be found at:
+# https://www.nerdfonts.com/cheat-sheet
+
+# Tmux workspaces
+set $ws-1 1: 
+set $ws-2 2: 
+set $ws-3 3: 
+# Shell workspaces
+set $ws-4 4:  
+
+set $comm-ws 7:  
 set $comm signal-desktop
 assign [class="(?i).*signal.*"] $comm-ws
 
-set $mail-ws 8  
+set $mail-ws 8:  
 set $mail thunderbird
 assign [app_id="(?i).*thunderbird.*"] $mail-ws
 
-set $web-ws 9  
+set $web-ws 9:  
 set $web google-chrome-stable
 assign [class="(?i).*chrome.*"] $web-ws
 
-set $creds-ws 10  󱕴
+set $creds-ws 10:  󱕴
 set $creds bitwarden
 assign [class="(?i).*bitwarden.*"] $creds-ws
 
@@ -351,6 +361,5 @@ exec $web
 exec $comm
 exec $creds
 
-# workspace 1; exec $term tmux;
 exec ~/.config/sway/scripts/start-up.sh
 ### ===========================================================================
