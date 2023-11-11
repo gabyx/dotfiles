@@ -54,7 +54,7 @@ FILENAME="$SAVEDIR/$(date +'%Y-%m-%d-%H%M%S-screenshot.png')"
 
 mkdir -p -- "$(dirname "$FILENAME")"
 
-case $CHOICE in
+case "$CHOICE" in
     "Active Window")
         grimshot $CURSOR_ARG --notify save active "$FILENAME"
     ;;
@@ -67,7 +67,7 @@ case $CHOICE in
     "Current Screen")
         grimshot $CURSOR_ARG --notify save output "$FILENAME"
     ;;
-    "All Screen")
+    "All Screens")
         grimshot $CURSOR_ARG --notify save screen "$FILENAME"
     ;;
     '')
@@ -87,7 +87,7 @@ then
 yes
 no
 EOF)
-    case $EDIT_CHOICE in
+    case "$EDIT_CHOICE" in
         yes)
             swappy -f "$FILENAME" -o "$FILENAME"
             ;;
