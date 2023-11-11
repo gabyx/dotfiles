@@ -2,6 +2,5 @@
 if [ -f ~/.cargo/env ]; then
     . ~/.cargo/env
 elif [ -d ~/.cargo/bin ]; then
-    export PATH="~/.cargo/bin:$PATH"
+    export PATH="$HOME/.cargo/bin:$PATH"
 fi
-

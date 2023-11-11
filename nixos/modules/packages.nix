@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  pkgs-unstable,
+  pkgsUnstable,
   ...
 }: {
   # List packages installed in system profile. To search, run:
@@ -41,11 +41,11 @@
     unzip
     wget
     zsh
-    pkgs-unstable.wezterm
+    pkgsUnstable.wezterm
     tmux
     #
     # Editors
-    pkgs-unstable.neovim
+    pkgsUnstable.neovim
     vscode
     #
     # Tools

@@ -78,7 +78,7 @@
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations =
-      import ./nixos/hosts {inherit inputs outputs;};
+      import ./nixos {inherit inputs outputs;};
 
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'

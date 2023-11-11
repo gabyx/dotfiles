@@ -1,5 +1,10 @@
 # This file defines overlays
 {inputs, ...}: {
+  # NOTE: we are not using these overlays, they are here for reference only.
+  # Why: Passing inputs to modules can be done in different ways, best is to not use
+  # overlays, but just using plain old functions.
+  # [Read more here](docs/pass-inputs-to-modules.md).
+
   # This one brings our custom packages from the 'pkgs' directory
   additions = final: _prev: import ../pkgs {pkgs = final;};
 

@@ -1,12 +1,14 @@
 {
   config,
   pkgs,
+  settings,
   ...
 }: {
   ### User Settings ==========================================================
   users = {
-    users.nixos = {
+    users.${settings.user.name} = {
       shell = pkgs.zsh;
+
       useDefaultShell = false;
 
       initialPassword = "nixos";

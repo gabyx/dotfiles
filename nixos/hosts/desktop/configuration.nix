@@ -6,11 +6,12 @@
   pkgs,
   inputs,
   outputs,
+  settings,
   ...
 }: let
-  modules = "../../modules";
+  modules = inputs.self + /nixos/modules;
 
-  pkgs-unstable = import inputs.nixpkgs-unstable {
+  pkgsUnstable = import inputs.nixpkgs-unstable {
     system = pkgs.system;
     config = {
       allowUnfree = true;
@@ -34,36 +35,39 @@ in {
     ./hardware.nix
 
     # Include all other specifications.
-    ./${modules}/windowing.nix
-    ./${modules}/display.nix
-    ./${modules}/keyboard.nix
-    ./${modules}/fonts.nix
-    ./${modules}/time.nix
-    ./${modules}/environment.nix
-    ./${modules}/networking.nix
-    ./${modules}/security.nix
+    "${modules}/windowing.nix"
+    "${modules}/display.nix"
+    "${modules}/keyboard.nix"
+    "${modules}/fonts.nix"
+    "${modules}/time.nix"
+    "${modules}/environment.nix"
+    "${modules}/networking.nix"
+    "${modules}/security.nix"
 
-    ./${modules}/services.nix
+    "${modules}/services.nix"
 
-    ./${modules}/sound.nix
-    ./${modules}/printing.nix
+    "${modules}/sound.nix"
+    "${modules}/printing.nix"
 
-    ./${modules}/virtualization.nix
-    (import ./${modules}/packages.nix {inherit config pkgs pkgs-unstable;})
-    ./${modules}/programs.nix
+    "${modules}/virtualization.nix"
+    (import "${modules}/packages.nix" {inherit config pkgs pkgsUnstable;})
+    "${modules}/programs.nix"
 
-    ./${modules}/user.nix
+    (import "${modules}/user.nix" {inherit config pkgs settings;})
 
-    ./${modules}/nix.nix
+    "${modules}/nix.nix"
   ];
 
   nixpkgs = {
     # You can add overlays here.
     overlays = [
+      # NOTE: We are not using overlays so far, we pass inputs directly to modules.
+      #       Overlays is a recursive mechanism.
+
       # Add overlays of your own flake exports (from overlays and pkgs dir):
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.unstable-packages
+      # outputs.overlays.additions
+      # outputs.overlays.modifications
+      # outputs.overlays.unstable-packages
     ];
   };
 

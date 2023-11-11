@@ -9,8 +9,8 @@ include /etc/sway/config.d/*
 
 ### Variables =================================================================
 #
-# Logo key. Use Mod1 for Alt.
-set $mod Mod1
+# Logo key. Use Mod2 for Super. See `programmer` file.
+set $mod Mod2
 
 # Home row direction keys, like vim
 set $left h
