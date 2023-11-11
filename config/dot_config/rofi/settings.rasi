@@ -36,7 +36,8 @@ configuration {
 /*	combi-modes: "window,run";*/
 /*	matching: "normal";*/
 /*	tokenize: true;*/
-/*	m: "-5";*/
+/* Somehow the -? optionas does not work: see https://github.com/lbonn/rofi/issues/98 */
+m: "primary";
 /*	filter: ;*/
 /*	dpi: -1;*/
 /*	threads: 0;*/
