@@ -41,8 +41,9 @@
     unzip
     wget
     zsh
+    pkgsUnstable.kitty
     pkgsUnstable.wezterm
-    tmux
+    pkgsUnstable.tmux
     #
     # Editors
     pkgsUnstable.neovim

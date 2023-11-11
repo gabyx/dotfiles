@@ -70,6 +70,8 @@ bind-key r \
 #############################
 # Settings
 #############################
+# Allow the tmux server to exist without any sessions!
+set exit-empty off
 
 # Escape time. https://superuser.com/a/942704/257360
 set-option -g escape-time 150
@@ -228,7 +230,9 @@ if-shell 'test -n "$SSH_CONNECTION"' \
 run '~/.config/tmux/scripts/install-tpm.sh'
 
 set -g @plugin 'tmux-plugins/tpm'
+
 set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @resurrect-strategy-nvim 'session'
 
 set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @continuum-restore 'on'

@@ -24,27 +24,28 @@ xkb_symbols "basic" {
     key <TLDE>  { [  U1F606,     U1F914  ]  };
     key <LSGT>  { [  grave,      asciitilde  ]  };
 
-    // Right Alt acts as compose key.
+    // Switch modifiers.
+
+    // CapsLock acts as left Ctrl.
+    // Taken from /nix/store/.../xkeyboard-config/share/X11/xkb/symbols/capslock
+    replace key <CAPS> {
+        type[Group1] = "ONE_LEVEL",
+        symbols[Group1] = [ Caps_Lock ],
+        actions[Group1] = [ SetMods(modifiers=Control) ]
+    };
+    modifier_map Control { <CAPS> };
+
+    // Right Ctrl acts as compose key.
     key <RCTL> { [ Multi_key ] };
+    // Left Ctrl acts as left Meta key.
+    key <LCTL> { [ Meta_L ] };
 
-    // Left Ctrl acts as Super key.
-    // key <LCTL> { [ Hyper_L ] };
+    // Right Alt acts as right Meta.
+    key <RALT> { [ Meta_R ] };
 
-    //// Beginning of modifier mappings.
-    //modifier_map Shift  { Shift_L, Shift_R };
-    //modifier_map Control{ Control_L, Control_R };
-    //modifier_map Mod4   { Super_L, Super_R };
+    // Beginning of modifier mappings.
+    modifier_map Mod1 { Alt_L };
+    modifier_map Mod2 { Super_L };
+    modifier_map Mod3 { Meta_L };
 
-    //key <ALT>  {	[ NoSymbol, Alt_L	]	};
-    //include "altwin(meta_alt)"
-
-    //key <META> {	[ NoSymbol, Meta_L	]	};
-    //modifier_map Mod1   { <META> };
-
-    //key <SUPR> {	[ NoSymbol, Super_L	]	};
-    //modifier_map Mod4   { <SUPR> };
-
-    //key <HYPR> {	[ NoSymbol, Hyper_L	]	};
-    //modifier_map Mod4   { <HYPR> };
-    //// End of modifier mappings.
 };

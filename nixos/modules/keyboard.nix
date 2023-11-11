@@ -9,7 +9,7 @@
   services.xserver = {
     layout = "programmer";
     xkbVariant = "";
-    xkbOptions = "caps:ctrl_modifier";
+    xkbOptions = "";
     extraLayouts.programmer = {
       description = "Programmer (US)";
       languages = ["eng"];
@@ -25,6 +25,7 @@
 
   environment.systemPackages = with pkgs; [
     solaar
+    xorg.xmodmap
   ];
 
   console = {

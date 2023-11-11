@@ -4,9 +4,11 @@ set -u
 
 terminal=("$@")
 
-# Launch terminal into tmux.
-export RUN_TMUX=true
-export RUN_TMUX_SESSION_ID="$1"
+# Launch terminal into tmux if first argument is given.
+if [ -n "${1:-}" ]; then
+    export RUN_TMUX=true
+    export RUN_TMUX_SESSION_ID="$1"
+fi
 shift 1
 
 terminal=("$@")

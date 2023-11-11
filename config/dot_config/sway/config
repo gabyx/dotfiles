@@ -9,8 +9,12 @@ include /etc/sway/config.d/*
 
 ### Variables =================================================================
 #
-# Logo key. Use Mod2 for Super. See `programmer` file.
-set $mod Mod2
+
+# Main modification key:
+# See `programmer` file.
+# Use Mod1 for Alt.
+# Use Mod2 for Super.
+set $mod Mod1
 
 # Home row direction keys, like vim
 set $left h
@@ -19,11 +23,21 @@ set $up k
 set $right l
 
 # Your preferred terminal emulator
-set $term wezterm start
+# ==================================================
+# Wezterm
+# set $term wezterm start
+# # A wrapper script to start the terminal with additional env. variables.
+# # e.g. to jump directly into Tmux session.
+# set $term-start-cmd wezterm start --always-new-process
+# set $term-start ~/.config/sway/scripts/start-term.sh
+
+# Kitty
+set $term kitty --single-instance
 # A wrapper script to start the terminal with additional env. variables.
 # e.g. to jump directly into Tmux session.
-set $term-start-cmd wezterm start --always-new-process
+set $term-start-cmd kitty
 set $term-start ~/.config/sway/scripts/start-term.sh
+# ==================================================
 
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
