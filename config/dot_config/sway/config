@@ -71,18 +71,22 @@ set $ws-6 6:6:  
 
 # Applications workspaces.
 set $comm-ws 7:7:  
+set $ws-7 7:7:  
 set $comm signal-desktop
 assign [class="(?i).*signal.*"] $comm-ws
 
 set $mail-ws 8:8:  
+set $ws-8 8:8:  
 set $mail thunderbird
 assign [app_id="(?i).*thunderbird.*"] $mail-ws
 
 set $web-ws 9:9:  
+set $ws-9 9:9:  
 set $web google-chrome-stable
 assign [class="(?i).*chrome.*"] $web-ws
 
 set $creds-ws 10:0:  󱕴
+set $ws-10 10:0:  󱕴
 set $creds bitwarden
 assign [class="(?i).*bitwarden.*"] $creds-ws
 
@@ -261,28 +265,28 @@ seat * hide_cursor when-typing enable
 # Workspaces:
 #
     # Switch to workspace
-    bindcode $mod+10 workspace number 1
-    bindcode $mod+11 workspace number 2
-    bindcode $mod+12 workspace number 3
-    bindcode $mod+13 workspace number 4
-    bindcode $mod+14 workspace number 5
-    bindcode $mod+15 workspace number 6
-    bindcode $mod+16 workspace number 7
-    bindcode $mod+17 workspace number 8
-    bindcode $mod+18 workspace number 9
-    bindcode $mod+19 workspace number 10
+    bindcode $mod+10 workspace number $ws-1
+    bindcode $mod+11 workspace number $ws-2
+    bindcode $mod+12 workspace number $ws-3
+    bindcode $mod+13 workspace number $ws-4
+    bindcode $mod+14 workspace number $ws-5
+    bindcode $mod+15 workspace number $ws-6
+    bindcode $mod+16 workspace number $ws-7
+    bindcode $mod+17 workspace number $ws-8
+    bindcode $mod+18 workspace number $ws-9
+    bindcode $mod+19 workspace number $ws-10
 
     # Move focused container to workspace
-    bindcode $mod+Shift+10 move container to workspace number 1
-    bindcode $mod+Shift+11 move container to workspace number 2
-    bindcode $mod+Shift+12 move container to workspace number 3
-    bindcode $mod+Shift+13 move container to workspace number 4
-    bindcode $mod+Shift+14 move container to workspace number 5
-    bindcode $mod+Shift+15 move container to workspace number 6
-    bindcode $mod+Shift+16 move container to workspace number 7
-    bindcode $mod+Shift+17 move container to workspace number 8
-    bindcode $mod+Shift+18 move container to workspace number 9
-    bindcode $mod+Shift+19 move container to workspace number 10
+    bindcode $mod+Shift+10 move container to workspace number $ws-1
+    bindcode $mod+Shift+11 move container to workspace number $ws-2
+    bindcode $mod+Shift+12 move container to workspace number $ws-3
+    bindcode $mod+Shift+13 move container to workspace number $ws-4
+    bindcode $mod+Shift+14 move container to workspace number $ws-5
+    bindcode $mod+Shift+15 move container to workspace number $ws-6
+    bindcode $mod+Shift+16 move container to workspace number $ws-7
+    bindcode $mod+Shift+17 move container to workspace number $ws-8
+    bindcode $mod+Shift+18 move container to workspace number $ws-9
+    bindcode $mod+Shift+19 move container to workspace number $ws-10
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
 

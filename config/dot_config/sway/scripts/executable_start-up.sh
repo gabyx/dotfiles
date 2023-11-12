@@ -17,22 +17,36 @@ swaymsg exec \$clipboard
 echo "Start tmux, let it recreate the workspaces with resurrect"
 tmux start-server
 echo "Server started."
+sleep 3
 
-tmux new-session -d -A -s Main
+tmux list-sessions || {
+  echo "ERROR: The exit-empty is not set to off, so the server directly exits!" >&2
+}
+
+# Create all sessions if not yet existing
+tmux new-session -D -s Main
+tmux new-session -D -s Astrovim
+tmux new-session -D -s Dotfiles
 
 echo "Sessions are:"
 tmux list-sessions || {
-    echo "The exit-empty is not set to off, so the server directly exits!" >&2
+  echo "ERROR: Sessions should now be available!" >&2
 }
 echo "-----------"
 
-tmux send-keys -t Main "$HOME/.config/tmux/plugins/tmux-resurrect/scripts/restore.sh" Enter
-sleep 3
-echo "Sent resurrect command."
-
+# tmux send-keys -t Main "$HOME/.config/tmux/plugins/tmux-resurrect/scripts/restore.sh" Enter
+# echo "Sent resurrect command."
+#
+# sleep 10
+# # tmux send-keys -t Main.0 nvim Enter
+# # tmux send-keys -t Astrovim.0 nvim Enter
+# # tmux send-keys -t Dotfiles.0 nvim Enter
+# # echo "Started nvim in all sessions"
+#
 echo "Start workspaces"
 swaymsg "workspace \$ws-1; exec \$term-start Dotfiles \$term-start-cmd"
 swaymsg "workspace \$ws-2; exec \$term-start Astrovim \$term-start-cmd"
 swaymsg "workspace \$ws-3; exec \$term-start Main \$term-start-cmd"
 swaymsg "workspace \$ws-4; exec \$term-start Main \$term-start-cmd"
+
 echo "Finished"
