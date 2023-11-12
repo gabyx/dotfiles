@@ -35,7 +35,7 @@ in {
     ./hardware.nix
 
     # Include all other specifications.
-    "${modules}/windowing.nix"
+    (import "${modules}/windowing.nix" {inherit config pkgs pkgsUnstable;})
     "${modules}/display.nix"
     "${modules}/keyboard.nix"
     "${modules}/fonts.nix"

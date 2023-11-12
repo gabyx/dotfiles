@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgsUnstable,
   ...
 }: {
   # Enable the X11 windowing system.
@@ -120,6 +121,12 @@
       export _JAVA_AWT_WM_NONREPARENTING=1
       export MOZ_ENABLE_WAYLAND=1
     '';
+  };
+
+  # To make screencasting work in Chrome
+  xdg.portal = {
+    enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal pkgs.xdg-desktop-portal-gtk];
   };
 
   security.polkit.enable = true; # https://discourse.nixos.org/t/sway-does-not-start/22354/5
