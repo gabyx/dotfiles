@@ -97,6 +97,9 @@
     firefox
     google-chrome
     thunderbird
+    ## Sonos Device
+    pkgsUnstable.noson
+    pkgsUnstable.mkchromecast
 
     # Dictionaries
     aspell
