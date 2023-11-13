@@ -90,7 +90,7 @@
       power-profiles-daemon
 
       redshift # Redshift monitor colors.
-      swaylock
+      swaylock-effects # Swaylock but with more effects.
       swayidle
       swaynotificationcenter
       libnotify
@@ -123,10 +123,14 @@
     '';
   };
 
-  # To make screencasting work in Chrome
+  # To make screencasting work in Chrome and other Apps communicating
+  # over DBus.
   xdg.portal = {
     enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal pkgs.xdg-desktop-portal-gtk];
+    extraPortals = [
+      pkgs.xdg-desktop-portal
+      pkgs.xdg-desktop-portal-gtk
+    ];
   };
 
   security.polkit.enable = true; # https://discourse.nixos.org/t/sway-does-not-start/22354/5

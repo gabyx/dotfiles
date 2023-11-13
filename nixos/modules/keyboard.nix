@@ -9,7 +9,7 @@
   services.xserver = {
     layout = "programmer";
     xkbVariant = "";
-    xkbOptions = "";
+    xkbOptions = "ctrl:nocaps,grp:shifts_toggle";
     extraLayouts.programmer = {
       description = "Programmer (US)";
       languages = ["eng"];

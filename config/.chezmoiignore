@@ -18,6 +18,7 @@ docs
 .config/rofi
 .config/waybar
 .config/sway
+.config/swaylock
 .config/hypr
 .config/copyq
 .config/mako
