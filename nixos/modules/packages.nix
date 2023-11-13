@@ -55,11 +55,5 @@
     spice # For automatic window resize if this conf is used as OS in VM
     spice-vdagent
     virt-manager
-
-    # Nix
-    nixpkgs-lint
-    stdenv.cc
-    alejandra
-    nixfmt
   ];
 }

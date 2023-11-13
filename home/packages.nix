@@ -35,6 +35,7 @@
     shfmt
     shellcheck
 
+    ## C
     gnumake
     autoconf
     libtool
@@ -42,24 +43,39 @@
     gcc
     gdb
 
+    ## C++
     cmake
     (lib.meta.hiPrio clang_16)
     clang-tools_16
 
+    ## Go
     go
 
+    ## Node
     nodejs
+
+    ## Java
     openjdk
 
+    ## Rust
     rustup
 
+    ## Python
     python311
     python311Packages.pip
     python311Packages.black
     nodePackages.pyright
 
+    ## Nix
+    nixpkgs-lint
+    stdenv.cc
+    alejandra
+    nixfmt
+
+    ## Lua
     stylua
 
+    # Config Files
     nodePackages.prettier
 
     # Writing
