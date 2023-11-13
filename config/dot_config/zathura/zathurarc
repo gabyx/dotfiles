@@ -1,6 +1,3 @@
-# Use tabbed zathura
-tabbed -c zathura -e
-
 set font "NotoSans Nerd Font Bold 14"
 
 set selection-clipboard clipboard
