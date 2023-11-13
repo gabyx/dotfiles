@@ -6,7 +6,6 @@
   pkgs,
   inputs,
   outputs,
-  settings,
   ...
 }: let
   modules = inputs.self + /nixos/modules;
@@ -43,9 +42,13 @@ in {
     (import "${modules}/packages.nix" {inherit config pkgs pkgsUnstable;})
     "${modules}/programs.nix"
 
-    (import "${modules}/user.nix" {inherit config pkgs settings;})
+    (import "${modules}/user.nix" {inherit config pkgs;})
 
     "./${modules}/nix.nix"
+
+    # Load home-manager as a part of the NixOS configuration.
+    inputs.home-manager.nixosModules.home-manager
+    (import "${modules}/home-manager.nix" {inherit config inputs outputs pkgsUnstable;})
   ];
 
   ### NixOS Release Settings===================================================

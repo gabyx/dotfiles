@@ -1,12 +1,11 @@
 {
   config,
   pkgs,
-  settings,
   ...
 }: {
   ### User Settings ==========================================================
   users = {
-    users.${settings.user.name} = {
+    users.${config.settings.user.name} = {
       shell = pkgs.zsh;
 
       useDefaultShell = false;

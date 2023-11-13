@@ -56,6 +56,10 @@ in {
     (import "${modules}/user.nix" {inherit config pkgs settings;})
 
     "${modules}/nix.nix"
+
+    # Load home-manager as a part of the NixOS configuration.
+    inputs.home-manager.nixosModules.home-manager
+    (import "${modules}/home-manager.nix" {inherit config inputs outputs pkgsUnstable;})
   ];
 
   nixpkgs = {

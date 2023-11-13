@@ -3,20 +3,12 @@
 # Search for all options using: https://mipmip.github.io/home-manager-option-search
 {
   lib,
-  config,
   pkgs,
+  pkgsUnstable,
+  osConfig,
   inputs,
-  outputs,
-  settings,
   ...
-}: let
-  pkgsUnstable = import inputs.nixpkgs-unstable {
-    system = pkgs.system;
-    config = {
-      allowUnfree = true;
-    };
-  };
-in {
+}: {
   # You can import other home-manager modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/home-manager):
@@ -27,11 +19,13 @@ in {
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
+
+    (import ./packages.nix {inherit lib pkgs pkgsUnstable;})
   ];
 
   home = {
-    username = settings.user.name;
-    homeDirectory = "/home/${settings.user.name}";
+    username = osConfig.settings.user.name;
+    homeDirectory = "/home/${osConfig.settings.user.name}";
   };
 
   # Add stuff for your user as you see fit:
