@@ -7,6 +7,7 @@
   services = {
     dbus.enable = true;
     upower.enable = true;
+    locate.enable = true;
 
     # Keyring Service
     gnome.gnome-keyring.enable = true;
