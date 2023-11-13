@@ -63,7 +63,6 @@
     ## Python
     python311
     python311Packages.pip
-    python311Packages.black
     nodePackages.pyright
 
     ## Nix
@@ -99,7 +98,7 @@
     thunderbird
     ## Sonos Device
     pkgsUnstable.noson
-    pkgsUnstable.mkchromecast
+    (pkgs.mkchromecast.override {enableSonos = true;})
 
     # Dictionaries
     aspell
