@@ -12,17 +12,14 @@ type="${1}" && shift
 force="false"
 [ "${1:-}" = "--force" ] && force="true" && shift
 
-config="-vm"
-[ -n "${1:-}" ] && config="-$1" && shift
+host="$1" && shift
 
 export NIXPGKS_ALLOW_INSECURE=1
 
 if [ "$force" = "true" ]; then
-    echo "Rebuild with '$type' system '$config' (default boot entry)."
-    sudo nixos-rebuild -I "nixos-config=./configuration$config.nix" \
-        "$@" "$type"
+    echo "Rebuild with '$type' system '$host' (default boot entry)."
+    sudo nixos-rebuild "$type" --flake "$DIR#$host"
 else
-    echo "Rebuild with '$type' system '$config' with boot entry name 'test'."
-    sudo nixos-rebuild -I "nixos-config=./configuration$config.nix" \
-        "$@" "$type" -p test
+    echo "Rebuild with '$type' system '$host' with boot entry name 'test'."
+    sudo nixos-rebuild "$type" --flake "$DIR#$host" -p test
 fi

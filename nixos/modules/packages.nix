@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  pkgsUnstable,
+  pkgsStable,
   ...
 }: {
   # List packages installed in system profile. To search, run:

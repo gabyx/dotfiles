@@ -4,7 +4,7 @@
 {
   lib,
   pkgs,
-  pkgsUnstable,
+  pkgsStable,
   osConfig,
   inputs,
   ...
@@ -20,7 +20,7 @@
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
 
-    (import ./packages.nix {inherit lib pkgs pkgsUnstable;})
+    (import ./packages.nix {inherit lib pkgs pkgsStable;})
   ];
 
   home = {

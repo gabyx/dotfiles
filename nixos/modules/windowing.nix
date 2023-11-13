@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  pkgsUnstable,
+  pkgsStable,
   ...
 }: {
   # Enable the X11 windowing system.

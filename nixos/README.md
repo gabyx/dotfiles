@@ -104,7 +104,7 @@ useful information when going through these steps:
 ## Connect to VM over SSH
 
 1. Start the virtual machine with [`scripts/start-vm.sh`](scripts/start-vm.sh).
-2. On the host inside a terminal connect over SSH with
+1. On the host inside a terminal connect over SSH with
 
    ```shell
    ssh nixos@127.0.0.1 -p 60022
@@ -122,8 +122,8 @@ Boot the NixOS ISO installer of the flashed USB.
 ### Partitioning
 
 Partitioning in NixOS is manual and mostly the same as you would do in Arch or
-any other "minimal" distribution. You can use gparted if you decided to boot the
-graphical installer, but I find the process simpler with good-old `gdisk`.
+any other "minimal" distribution. You can use `gparted` if you decided to boot
+the graphical installer, but I find the process simpler with good-old `gdisk`.
 
 We will be creating two partitions:
 
@@ -136,213 +136,222 @@ adding (100% + `sqrt(100%)) of my ram as a swap partition (e.g. 64GB = 72GB) if
 we want proper hibernation. For the thoroughly-paranoid this has the added
 benefit, that the swap partition will also be encrypted.
 
-Assuming the drive you want to install to is `/dev/sda`, run `gdisk` and create
-the partitions: To not make mistakes run the following in the terminal
-(**replace the disk**):
+1. Assuming the drive you want to install to is `/dev/sda`, run `gdisk` and
+   create the partitions: To not make mistakes run the following in the terminal
+   (**replace the disk**):
 
-```shell
-MYDISK=/dev/sda
-gdisk $MYDISK
-```
+   ```shell
+   MYDISK=/dev/sda
+   gdisk $MYDISK
+   ```
 
-Then do the following:
+1. Then do the following:
 
-- `o` : Create empty gpt partition table.
-- `n` : Add partition, first sector: default, last sector: +500M, type ef00 EFI
-  (this is `/dev/sda1`).
-- `n` : Add partition, remaining space, type 8e00 Linux LVM (this is
-  `/dev/sda2`).
-- `w` : Write partition table and exit.
+   - `o` : Create empty `gpt` partition table.
+   - `n` : Add partition, first sector: default, last sector: `+500M`, type
+     `ef00 EFI` (this is `/dev/sda1`).
+   - `n` : Add partition, remaining space, type `8e00` Linux LVM (this is
+     `/dev/sda2`).
+   - `w` : Write partition table and exit.
 
-We can now set up the encrypted LUKS partition and open it using cryptsetup
+1. We can now set up the encrypted LUKS partition and open it using `cryptsetup`
 
-```shell
-sudo cryptsetup luksFormat ${MYDISK}2
-sudo cryptsetup luksOpen ${MYDISK}2 enc-physical-vol
-```
+   ```shell
+   sudo cryptsetup luksFormat ${MYDISK}2
+   sudo cryptsetup luksOpen ${MYDISK}2 enc-physical-vol
+   ```
 
-Format the partitions with:
+1. Format the partitions with:
 
-```
-sudo mkfs.fat -F 32 ${MYDISK}1
-DISKMAP=/dev/mapper/enc-physical-vol
-sudo mkfs.btrfs $DISKMAP
-```
+   ```
+   sudo mkfs.fat -F 32 ${MYDISK}1
+   DISKMAP=/dev/mapper/enc-physical-vol
+   sudo mkfs.btrfs $DISKMAP
+   ```
 
-Create subvolumes as follows:
+1. Create subvolumes as follows:
 
-- `root`: The subvolume for `/`, which will be cleared on every boot.
-- `home`: The subvolume for `/home`, which should be backed up.
-- `nix`: The subvolume for `/nix`, which needs to be persistent but is not worth
-  backing up, as it’s trivial to reconstruct.
-- `persist`: The subvolume for `/persist`, containing system state which should
-  be persistent across reboots and possibly backed up.
-- `log`: The subvolume for `/var/log`. I’m not so interested in backing up logs
-  but I want them to be preserved across reboots, so I’m dedicating a subvolume
-  to logs rather than using the persist subvolume.
-- `swap`: A swap volume which is also encrypted because we are paranoid.
+   - `root`: The subvolume for `/`, which will be cleared on every boot.
+   - `home`: The subvolume for `/home`, which should be backed up.
+   - `nix`: The subvolume for `/nix`, which needs to be persistent but is not
+     worth backing up, as it’s trivial to reconstruct.
+   - `persist`: The subvolume for `/persist`, containing system state which
+     should be persistent across reboots and possibly backed up.
+   - `log`: The subvolume for `/var/log`. I’m not so interested in backing up
+     logs but I want them to be preserved across reboots, so I’m dedicating a
+     subvolume to logs rather than using the persist subvolume.
+   - `swap`: A swap volume which is also encrypted because we are paranoid.
 
-```shell
-DISKMAP=/dev/mapper/enc-physical-vol
-sudo mount -t btrfs $DISKMAP /mnt
-sudo btrfs subvolume create /mnt/root
-sudo btrfs subvolume create /mnt/home
-sudo btrfs subvolume create /mnt/nix
-sudo btrfs subvolume create /mnt/persist
-sudo btrfs subvolume create /mnt/log
+   ```shell
+   DISKMAP=/dev/mapper/enc-physical-vol
+   sudo mount -t btrfs $DISKMAP /mnt
+   sudo btrfs subvolume create /mnt/root
+   sudo btrfs subvolume create /mnt/home
+   sudo btrfs subvolume create /mnt/nix
+   sudo btrfs subvolume create /mnt/persist
+   sudo btrfs subvolume create /mnt/log
 
-sudo btrfs subvolume create /mnt/swap
-sudo btrfs filesystem mkswapfile --size 72g --uuid clear /mnt/swap/swapfile
+   sudo btrfs subvolume create /mnt/swap
+   sudo btrfs filesystem mkswapfile --size 72g --uuid clear /mnt/swap/swapfile
 
-sudo btrfs subvolume snapshot -r /mnt/root /mnt/root-blank
-sudo umount /mnt
-```
+   sudo btrfs subvolume snapshot -r /mnt/root /mnt/root-blank
+   sudo umount /mnt
+   ```
 
-Above we also created an empty snapshot of the root volume. Later we might use
-it to reset to it when booting.
+   Above we also created an empty snapshot of the root volume. Later we might
+   use it to reset to it when booting.
 
 ### Installing NixOS
 
 The partitions just created have to be mounted, e.g. to `/mnt` so we can install
 NixOS on them. At this point activating the swap (if you created one) is a good
-idea. The `/boot` partion is mounted in a new folder `/mnt/boot` inside the root
-partition.
+idea. The `/boot` partition is mounted in a new folder `/mnt/boot` inside the
+root partition.
 
-Mount all filesystems by doing:
+1. Mount all filesystems by doing:
 
-```shell
-DISKMAP=/dev/mapper/enc-physical-vol
-sudo mkdir -p /mnt
-sudo mount -o subvol=root,compress=zstd,noatime $DISKMAP /mnt
+   ```shell
+   DISKMAP=/dev/mapper/enc-physical-vol
+   sudo mkdir -p /mnt
+   sudo mount -o subvol=root,compress=zstd,noatime $DISKMAP /mnt
 
-sudo mkdir -p /mnt/home
-sudo mount -o subvol=home,compress=zstd,noatime $DISKMAP /mnt/home
+   sudo mkdir -p /mnt/home
+   sudo mount -o subvol=home,compress=zstd,noatime $DISKMAP /mnt/home
 
-sudo mkdir -p /mnt/nix
-sudo mount -o subvol=nix,compress=zstd,noatime $DISKMAP /mnt/nix
+   sudo mkdir -p /mnt/nix
+   sudo mount -o subvol=nix,compress=zstd,noatime $DISKMAP /mnt/nix
 
-sudo mkdir -p /mnt/persist
-sudo mount -o subvol=persist,compress=zstd,noatime $DISKMAP /mnt/persist
+   sudo mkdir -p /mnt/persist
+   sudo mount -o subvol=persist,compress=zstd,noatime $DISKMAP /mnt/persist
 
-sudo mkdir -p /mnt/var/log
-sudo mount -o subvol=log,compress=zstd,noatime $DISKMAP /mnt/var/log
+   sudo mkdir -p /mnt/var/log
+   sudo mount -o subvol=log,compress=zstd,noatime $DISKMAP /mnt/var/log
 
-sudo mkdir -p /mnt/swap
-sudo mount -o subvol=swap,defaults,noatime $DISKMAP /mnt/swap
+   sudo mkdir -p /mnt/swap
+   sudo mount -o subvol=swap,defaults,noatime $DISKMAP /mnt/swap
 
-# Don't forget this!
-sudo mkdir -p /mnt/boot
-sudo mount "${MYDISK}1" /mnt/boot
+   # Don't forget this!
+   sudo mkdir -p /mnt/boot
+   sudo mount "${MYDISK}1" /mnt/boot
 
-# Enable swap
-sudo swapon /mnt/swap/swapfile
-```
+   # Enable swap
+   sudo swapon /mnt/swap/swapfile
+   ```
 
-Then, let NixOS figure out the hardware configuration:
+1. Then, let NixOS figure out the hardware configuration:
 
-```
-sudo nixos-generate-config --root /mnt
-```
+   ```
+   sudo nixos-generate-config --root /mnt
+   ```
 
-which will generate two files `/mnt/etc/nixos/hardware-configuration.nix` and a
-default NixOs configuration as `/mnt/etc/nixos/configuration.nix` (which we will
-not use to install our system).
+   which will generate two files `/mnt/etc/nixos/hardware-configuration.nix` and
+   a default NixOs configuration as `/mnt/etc/nixos/configuration.nix` (which we
+   will not use to install our system).
 
-Now your hardware configuration should contain the following:
+   Now your hardware configuration should contain the following:
 
-```nix
- fileSystems."/" =
-    { device = "/dev/disk/by-uuid/a9504076-ec13-41e9-adb6-5385eb464a9f";
-      fsType = "btrfs";
-      options = [ "subvol=root" "compress=zstd" "noatime" ];
-    };
+   ```nix
+   fileSystems."/" =
+     { device = "/dev/disk/by-uuid/a9504076-ec13-41e9-adb6-5385eb464a9f";
+       fsType = "btrfs";
+       options = [ "subvol=root" "compress=zstd" "noatime" ];
+     };
 
-  boot.initrd.luks.devices."enc-physical-vol".device = "/dev/disk/by-uuid/9cfdf03f-6872-499d-afd4-78fd74bd2e6b";
+   boot.initrd.luks.devices."enc-physical-vol".device = "/dev/disk/by-uuid/9cfdf03f-6872-499d-afd4-78fd74bd2e6b";
 
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/a9504076-ec13-41e9-adb6-5385eb464a9f";
-      fsType = "btrfs";
-      options = [ "subvol=home" "compress=zstd" "noatime" ];
-    };
+   fileSystems."/home" =
+     { device = "/dev/disk/by-uuid/a9504076-ec13-41e9-adb6-5385eb464a9f";
+       fsType = "btrfs";
+       options = [ "subvol=home" "compress=zstd" "noatime" ];
+     };
 
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/a9504076-ec13-41e9-adb6-5385eb464a9f";
-      fsType = "btrfs";
-      options = [ "subvol=nix" "compress=zstd" "noatime" ];
-    };
+   fileSystems."/nix" =
+     { device = "/dev/disk/by-uuid/a9504076-ec13-41e9-adb6-5385eb464a9f";
+       fsType = "btrfs";
+       options = [ "subvol=nix" "compress=zstd" "noatime" ];
+     };
 
-  fileSystems."/persist" =
-    { device = "/dev/disk/by-uuid/a9504076-ec13-41e9-adb6-5385eb464a9f";
-      fsType = "btrfs";
-      options = [ "subvol=persist" "compress=zstd" "noatime" ];
-    };
+   fileSystems."/persist" =
+     { device = "/dev/disk/by-uuid/a9504076-ec13-41e9-adb6-5385eb464a9f";
+       fsType = "btrfs";
+       options = [ "subvol=persist" "compress=zstd" "noatime" ];
+     };
 
-  fileSystems."/var/log" =
-    { device = "/dev/disk/by-uuid/a9504076-ec13-41e9-adb6-5385eb464a9f";
-      fsType = "btrfs";
-      options = [ "subvol=log" "compress=zstd" "noatime" ];
-      neededForBoot = true;
-    };
+   fileSystems."/var/log" =
+     { device = "/dev/disk/by-uuid/a9504076-ec13-41e9-adb6-5385eb464a9f";
+       fsType = "btrfs";
+       options = [ "subvol=log" "compress=zstd" "noatime" ];
+       neededForBoot = true;
+     };
 
-  fileSystems."/swap" =
-    { device = "/dev/disk/by-uuid/a9504076-ec13-41e9-adb6-5385eb464a9f";
-      fsType = "btrfs";
-      options = [ "subvol=swap" "defaults" "noatime" ];
-    };
+   fileSystems."/swap" =
+     { device = "/dev/disk/by-uuid/a9504076-ec13-41e9-adb6-5385eb464a9f";
+       fsType = "btrfs";
+       options = [ "subvol=swap" "defaults" "noatime" ];
+     };
 
-  swapDevices = [ { device = "/swap/swapfile"; } ];
-```
+   swapDevices = [ { device = "/swap/swapfile"; } ];
+   ```
 
-**Note the `neededForBoot = true;` for `/var/log`.**
+   **Note the `neededForBoot = true;` for `/var/log`.**
 
-Finally clone this repo into `/mnt/persist`:
+1. Copy the hardware configuration to the repo for the installation:
 
-```shell
-NIXPGS_ALLOW_UNFREE=1 nix-env --install --attr nixos.git
-mkdir -p /mnt/persist/repos
-sudo chown -R nixos:users /mnt/persist/repos
-sudo git clone https://github.com/gabyx/nixos-configuration.git /mnt/persist/repos/nixos-configuration
-```
+   ```shell
+   cp /mnt/etc/nixos/hardware-configuration.nix /mnt/persist/repos/dotfiles/modules/hardware/desktop.nix
+   ```
 
-and copy the hardware configuration to the repo for the installation:
+1. Finally run the install command\*\* by doing:
 
-```shell
-cp /mnt/etc/nixos/hardware-configuration.nix /mnt/persist/repos/nixos-configuration/modules/hardware/desktop.nix
-```
+   ```shell
+   nixos-install --root /mnt --flake github:gabyx/dotfiles#desktop
 
-and **finally run the install command** by doing:
+   reboot
+   ```
 
-```shell
-nixos-install --root /mnt --flake /mnt/persist/repos/dotfiles#desktop
+1. Login with the initial login `nixos` and default password `nixos`.
 
-reboot
-```
+1. Install all configuration files by running inside a terminal
+   (`CTRL + ALT + F1`), (To install them with the home manager is still WIP.):
 
-Install all configuration files by running inside a terminal
-(`CTRL + ALT + F1`):
+   ```shell
+   ./scripts/install-home.sh
+   ```
 
-```shell
-./scripts/install-home.sh
+1. Move the initial configuration out of the way and point to the new
+   configuration.
 
-reboot
-```
+   ```shell
+   sudo mv /etc/nixos /etc/nixos.bak # Backup the original configuration
+   ln -s ~/nixos-config ~/.local/share/chezmoi
+   sudo ln -s ~/nixos-config/ /etc/nixos
+   ```
 
-To install them with the home manager is still WIP.
+1. Change the password
+
+   ```shell
+   passwd
+   ```
+
+1. and reboot
+
+   ```shell
+   reboot
+   ```
 
 ## Modify NixOS
 
 1. Modify the [`configuration.nix`](configuration.nix) in this repo and use
 
    ```shell
-   ./scripts/rebuild-nixos.sh [boot|switch] [--force] vm
+   ./scripts/rebuild-nixos.sh [build|boot|switch] [--force] [vm|desktop]
    ```
 
-   Use `boot` to build the NixOS (a new generation) and add a new entry in the
-   bootloader with the profile `test` and use `switch` to switch live to the new
-   generation to it and make it the boot default. Use `--force` to make a new
-   generation for the system profile and not `test`.
-
-   **We leave the system initial `/etc/nixos/configuration.nix` untouched.**
+   Use `build` to just build the NixOS system. Use `boot` to build the NixOS (a
+   new generation) and add a new entry in the bootloader with the profile `test`
+   and use `switch` to additionally switch live to the new generation. Use
+   `--force` to make a new generation for the system profile and not using the
+   default `test` (because of safety).
 
 ## Troubleshooting
 

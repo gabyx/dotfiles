@@ -10,7 +10,7 @@
 }: let
   modules = inputs.self + /nixos/modules;
 
-  pkgsUnstable = import inputs.nixpkgs-unstable {
+  pkgsStable = import inputs.nixpkgsStable {
     system = pkgs.system;
     config = {
       allowUnfree = true;
@@ -39,7 +39,7 @@ in {
 
     "./${modules}/virtualization.nix"
 
-    (import "${modules}/packages.nix" {inherit config pkgs pkgsUnstable;})
+    (import "${modules}/packages.nix" {inherit config pkgs pkgsStable;})
     "${modules}/programs.nix"
 
     (import "${modules}/user.nix" {inherit config pkgs;})
@@ -48,7 +48,7 @@ in {
 
     # Load home-manager as a part of the NixOS configuration.
     inputs.home-manager.nixosModules.home-manager
-    (import "${modules}/home-manager.nix" {inherit config inputs outputs pkgsUnstable;})
+    (import "${modules}/home-manager.nix" {inherit config inputs outputs pkgsStable;})
   ];
 
   ### NixOS Release Settings===================================================

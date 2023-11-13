@@ -1,7 +1,7 @@
 {
   lib,
   pkgs,
-  pkgsUnstable,
+  pkgsStable,
   ...
 }: {
   # List packages installed in system profile. To search, run:
@@ -13,12 +13,12 @@
 
     gnome.seahorse
 
-    pkgsUnstable.kitty
-    pkgsUnstable.wezterm
-    pkgsUnstable.tmux
+    kitty
+    wezterm
+    tmux
 
     # Editors
-    pkgsUnstable.neovim
+    pkgsStable.neovim
     vscode
 
     # Tools
@@ -97,8 +97,8 @@
     google-chrome
     thunderbird
     ## Sonos Device
-    pkgsUnstable.noson
-    (pkgs.mkchromecast.override {enableSonos = true;})
+    noson
+    (mkchromecast.override {enableSonos = true;})
 
     # Dictionaries
     aspell
