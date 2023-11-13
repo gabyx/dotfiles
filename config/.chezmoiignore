@@ -8,6 +8,7 @@ common
 docs
 
 {{- if ne .chezmoi.os "darwin" }}
+# Only on darwin
 .config/skhd
 .config/spacebar
 .config/karabiner
@@ -15,12 +16,13 @@ docs
 {{- end }}
 
 {{- if ne .chezmoi.os "linux" }}
+# Only on linux
+.config/flashfocus
+.config/hypr
+.config/mako
 .config/rofi
-.config/waybar
 .config/sway
 .config/swaylock
-.config/hypr
-.config/copyq
-.config/mako
 .config/swaync
+.config/wallpapers
 {{- end }}

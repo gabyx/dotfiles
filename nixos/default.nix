@@ -54,11 +54,13 @@ in
       modules = [
         ./hosts/desktop/configuration.nix
 
+        # Use home manager to deploy the home user and its
+        # configuration.
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.${settings.user.name} = import (inputs.self + /home-manager/home.nix);
+          home-manager.users.${settings.user.name} = import (inputs.self + /home/home.nix);
           home-manager.extraSpecialArgs = {inherit inputs outputs settings;};
         }
       ];
