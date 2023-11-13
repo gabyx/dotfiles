@@ -55,6 +55,12 @@ set $calculator-menu qalculate-gtk
 set $password-menu swaymsg workspace \\$creds-ws
 set $screenshot-menu ~/.config/rofi/scripts/rofi-screenshot.sh
 
+set $clipboard 'copyq --start-server'
+set $clipboard-menu copyq toggle
+
+set $notifications "swaync"
+set $notification-menu "swaync-client -t -sw"
+
 # Special workspaces
 # Icons can be found at:
 # https://www.nerdfonts.com/cheat-sheet
@@ -90,13 +96,6 @@ set $ws-10 10:0:  󱕴
 set $creds bitwarden
 assign [class="(?i).*bitwarden.*"] $creds-ws
 
-# Clipboard
-set $clipboard 'copyq --start-server'
-set $clipboard-menu copyq toggle
-
-# Notifications
-set $notifications "swaync"
-set $notification-menu "swaync-client -t -sw"
 ### ===========================================================================
 
 ## Visual Theme ===============================================================
