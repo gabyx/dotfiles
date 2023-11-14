@@ -5,6 +5,7 @@ clock
 timestr=%R
 datestr=%a, %x
 
+grace=3
 screenshots
 fade-in=0.1
 

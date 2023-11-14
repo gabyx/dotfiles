@@ -36,6 +36,7 @@
       plugins = with pkgs; [
         xfce.thunar-archive-plugin # for archives.
         xfce.tumbler # for image thumbnails.
+        xfce.thunar-volman
       ];
     };
 

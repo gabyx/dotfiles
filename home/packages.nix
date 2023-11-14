@@ -2,6 +2,7 @@
   lib,
   pkgs,
   pkgsStable,
+  inputs,
   ...
 }: {
   # List packages installed in system profile. To search, run:
@@ -28,12 +29,16 @@
     lazygit
     delta
 
+    # FHS Environment with nix-alien
+    inputs.nixAlien.packages.${pkgs.system}.nix-alien
+
     # Programming
     kdiff3
     jq
     yq
     shfmt
     shellcheck
+    go-task
 
     ## C
     gnumake
@@ -50,6 +55,8 @@
 
     ## Go
     go
+    goreleaser
+    golangci-lint
 
     ## Node
     nodejs

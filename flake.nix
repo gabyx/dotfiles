@@ -28,6 +28,9 @@
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    # Nix-Alien
+    nixAlien.url = "github:thiagokokada/nix-alien";
+
     # TODO: Add any other flake you might need
     # hardware.url = "github:nixos/nixos-hardware";
 

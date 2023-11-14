@@ -25,18 +25,18 @@ set $right l
 # Your preferred terminal emulator
 # ==================================================
 # Wezterm
-# set $term wezterm start
+set $term wezterm start
 # # A wrapper script to start the terminal with additional env. variables.
 # # e.g. to jump directly into Tmux session.
-# set $term-start-cmd wezterm start --always-new-process
-# set $term-start ~/.config/sway/scripts/start-term.sh
+set $term-start-cmd wezterm start --always-new-process
+set $term-start ~/.config/sway/scripts/start-term.sh
 
 # Kitty
-set $term kitty --single-instance
+# set $term kitty --single-instance
 # A wrapper script to start the terminal with additional env. variables.
 # e.g. to jump directly into Tmux session.
-set $term-start-cmd kitty
-set $term-start ~/.config/sway/scripts/start-term.sh
+# set $term-start-cmd kitty
+# set $term-start ~/.config/sway/scripts/start-term.sh
 # ==================================================
 
 # Note: pass the final command to swaymsg so that the resulting window can be opened

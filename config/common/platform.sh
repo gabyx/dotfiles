@@ -93,10 +93,10 @@ function getPlatformArch() {
     if uname -m | grep -q "x86_64" &>/dev/null; then
         _arch="amd64"
         return 0
-    elif uname -m | grep -q "aarch64" &>/dev/null; then
+    elif uname -m | grep -q -E "aarch64|arm64" &>/dev/null; then
         _arch="arm64"
         return 0
-    elif uname -p | grep -q "arm64" &>/dev/null; then
+    elif uname -a | grep -q -E "aarch64|arm64" &>/dev/null; then
         _arch="arm64"
     else
         die "Architecture: '$(uname -m)' not supported."

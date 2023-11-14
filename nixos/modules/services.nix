@@ -12,6 +12,9 @@
     # Keyring Service
     gnome.gnome-keyring.enable = true;
 
+    gvfs.enable = true; # Mount, trash, and other functionalities.
+    tumbler.enable = true; # Thumbnailing DBus service.
+
     # services.xrdp.enable = true;
     # services.xrdp.defaultWindowManager = "startplasma-x11";
     # List services that you want to enable:

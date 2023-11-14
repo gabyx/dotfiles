@@ -7,7 +7,7 @@ import re
 import subprocess
 from multiprocessing import Pool
 from typing import Optional
-
+import os.path as path
 
 def replace(file, regexes: list[str], force: bool = False) -> list[str]:
     cmd = ["perl", "-i", "-0777pe", ";".join(regexes), file]
@@ -42,8 +42,8 @@ def replace_files(
         )
 
     files: list[str] = []
-    for _, _, fs in os.walk(dir):
-        files += list(filter(is_included, fs))
+    for d, _, fs in os.walk(dir):
+        files += list(filter(is_included, [path.join(d, f) for f in fs]))
 
     if not force:
         print(f"Dry-run: replacing in '{len(files)}' files.")
@@ -82,14 +82,14 @@ def main():
         help="Perl regex to replace.",
     )
     parser.add_argument(
-        "-i",
+        "-e",
         "--exclude",
         default=[],
         action="append",
         help="Exclude path regex for files.",
     )
     parser.add_argument(
-        "-e",
+        "-i",
         "--include",
         default=None,
         action="append",

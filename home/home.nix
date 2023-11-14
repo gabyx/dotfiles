@@ -20,7 +20,7 @@
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
 
-    (import ./packages.nix {inherit lib pkgs pkgsStable;})
+    (import ./packages.nix {inherit lib pkgs pkgsStable inputs;})
   ];
 
   home = {
