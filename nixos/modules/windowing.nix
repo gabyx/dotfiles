@@ -137,7 +137,7 @@
 
   programs.waybar.enable = true;
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     # Waybar
     font-awesome
     cantarell-fonts
