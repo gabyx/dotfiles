@@ -31,9 +31,9 @@ install.
 
   for package names and options.
 
-- Consider also reading the awesome book
+- **Read the first chapters in book
   [NixOS and Flakes](https://github.com/ryan4yin/nixos-and-flakes-book) to learn
-  more about Nix flakes.
+  more about Nix flakes. Give him a star!.**
 
 - Passing inputs to modules can be done in different ways, best is to not use
   overlays, but just using plain old functions.
@@ -113,8 +113,8 @@ useful information when going through these steps:
 ## Install NixOs on Desktop Hardware
 
 We follow the tutorial from
-[Pablo Ovelleiro [@pinpox](https://github.com/pinpox)](https://pablo.tools/blog/computers/nixos-encrypted-install)
-and
+[Pablo Ovelleiro](https://pablo.tools/blog/computers/nixos-encrypted-install)
+[@pinpox](https://github.com/pinpox) and
 [mt-caret](https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html).
 
 Boot the NixOS ISO installer of the flashed USB.

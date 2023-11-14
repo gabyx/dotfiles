@@ -15,8 +15,9 @@
 </p>
 
 These are my [dotfiles](config) managed with
-[chezmoi.io](https://www.chezmoi.io) for Linux and MacOS and [NixOS](nixos)
-configurations for Desktop and VM.
+[chezmoi.io](https://www.chezmoi.io) for Linux and MacOS (and partially the
+other shit OS which desperately tries to convert itself into a \*nix OS) and
+[NixOS](nixos) configurations for Desktop and VM.
 
 ![Screenshot](./nixos/docs/screenshot.png)
 
@@ -35,15 +36,16 @@ configurations for Desktop and VM.
 | Normal Font                | [NotoSans Nerd Font](https://www.nerdfonts.com/)                                                                                                  |
 | Text editors/Terminal font | [JetBrainsMono Nerd Font](https://www.jetbrains.com/lp/mono)                                                                                      |
 | Shell                      | [zsh](https://www.zsh.org/)                                                                                                                       |
-| Terminal Emulator          | [wezterm](https://wezfurlong.org)                                                                                                                 |
+| Terminal Emulator          | [wezterm](https://wezfurlong.org) [kitty](https://sw.kovidgoyal.net/kitty)                                                                        |
 
 ## NixOS Configurations
 
-See the [documentation](nixos/README.md).
+See the [documentation](nixos/README.md) to learn how to install NixOS on to
+your system or in a VM.
 
-## Dotfiles
+## Configuration Files
 
-To install all files use [chezmoi.io](https://www.chezmoi.io):
+To install configuration files we use [`chezmoi`](https://www.chezmoi.io):
 
 ```shell
 chezmoi init https://github.com/gabyx/chezmoi.git
