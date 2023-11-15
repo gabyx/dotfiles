@@ -24,6 +24,9 @@
     nixpkgsStable.url = "github:nixos/nixpkgs/nixos-23.05";
     # Also see the 'stable-packages' overlay at 'overlays/default.nix'.
 
+    # Some hardware modules.
+    hardware.url = "github:NixOS/nixos-hardware";
+
     # Home manager
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";

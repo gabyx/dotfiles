@@ -23,32 +23,32 @@ in {
     ./boot.nix
 
     # Include all other specifications.
-    "./${modules}/windowing.nix"
-    "./${modules}/display.nix"
-    "./${modules}/keyboard.nix"
-    "./${modules}/fonts.nix"
-    "./${modules}/time.nix"
-    "./${modules}/environment.nix"
-    "./${modules}/networking.nix"
-    "./${modules}/security.nix"
+    (outputs.nixosModules.windowing {inherit config pkgs pkgsStable;})
+    outputs.nixosModules.display
+    outputs.nixosModules.keyboard
+    outputs.nixosModules.fonts
+    outputs.nixosModules.time
+    outputs.nixosModules.environment
+    outputs.nixosModules.networking
+    outputs.nixosModules.security
 
-    "./${modules}/services.nix"
+    outputs.nixosModules.services
 
-    "./${modules}/sound.nix"
-    "./${modules}/printing.nix"
+    outputs.nixosModules.sound
+    outputs.nixosModules.printing
 
-    "./${modules}/virtualization.nix"
+    outputs.nixosModules.virtualization
 
-    (import "${modules}/packages.nix" {inherit config pkgs pkgsStable;})
-    "${modules}/programs.nix"
+    (outputs.nixosModules.packages {inherit config pkgs pkgsStable;})
+    outputs.nixosModules.programs
 
-    (import "${modules}/user.nix" {inherit config pkgs;})
+    (outputs.nixosModules.user {inherit config pkgs settings;})
 
-    "./${modules}/nix.nix"
+    outputs.nixosModules.nix
 
     # Load home-manager as a part of the NixOS configuration.
     inputs.home-manager.nixosModules.home-manager
-    (import "${modules}/home-manager.nix" {inherit config inputs outputs pkgsStable;})
+    (outputs.nixosModules.home-manager {inherit config inputs outputs pkgsStable;})
   ];
 
   ### NixOS Release Settings===================================================

@@ -9,8 +9,6 @@
   settings,
   ...
 }: let
-  modules = inputs.self + /nixos/modules;
-
   pkgsStable = import inputs.nixpkgsStable {
     system = pkgs.system;
     config = {
@@ -23,8 +21,9 @@ in {
     # outputs.nixosModules.example
 
     # Or modules from other flakes (such as nixos-hardware):
-    # inputs.hardware.nixosModules.common-cpu-amd
-    # inputs.hardware.nixosModules.common-ssd
+    inputs.hardware.nixosModules.common-cpu-amd
+    inputs.hardware.nixosModules.common-gpu-amd
+    inputs.hardware.nixosModules.common-pc-ssd
 
     # You can also split up your configuration and import pieces of it here:
     # ./users.nix
@@ -35,31 +34,32 @@ in {
     ./hardware.nix
 
     # Include all other specifications.
-    (import "${modules}/windowing.nix" {inherit config pkgs pkgsStable;})
-    "${modules}/display.nix"
-    "${modules}/keyboard.nix"
-    "${modules}/fonts.nix"
-    "${modules}/time.nix"
-    "${modules}/environment.nix"
-    "${modules}/networking.nix"
-    "${modules}/security.nix"
+    (outputs.nixosModules.windowing {inherit config pkgs pkgsStable;})
+    outputs.nixosModules.display
+    outputs.nixosModules.keyboard
+    outputs.nixosModules.fonts
+    outputs.nixosModules.time
+    outputs.nixosModules.environment
+    outputs.nixosModules.networking
+    outputs.nixosModules.security
 
-    "${modules}/services.nix"
+    outputs.nixosModules.services
 
-    "${modules}/sound.nix"
-    "${modules}/printing.nix"
+    outputs.nixosModules.sound
+    outputs.nixosModules.printing
 
-    "${modules}/virtualization.nix"
-    (import "${modules}/packages.nix" {inherit config pkgs pkgsStable;})
-    "${modules}/programs.nix"
+    outputs.nixosModules.virtualization
 
-    (import "${modules}/user.nix" {inherit config pkgs settings;})
+    (outputs.nixosModules.packages {inherit config pkgs pkgsStable;})
+    outputs.nixosModules.programs
 
-    "${modules}/nix.nix"
+    (outputs.nixosModules.user {inherit config pkgs settings;})
+
+    outputs.nixosModules.nix
 
     # Load home-manager as a part of the NixOS configuration.
     inputs.home-manager.nixosModules.home-manager
-    (import "${modules}/home-manager.nix" {inherit config inputs outputs pkgsStable;})
+    (outputs.nixosModules.home-manager {inherit config inputs outputs pkgsStable;})
   ];
 
   nixpkgs = {

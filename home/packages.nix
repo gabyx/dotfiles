@@ -5,6 +5,17 @@
   inputs,
   ...
 }: {
+  programs = {
+    neovim = {
+      viAlias = true;
+      vimAlias = true;
+      plugins = [
+        pkgs.vimPlugins.nvim-treesitter
+        pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+      ];
+    };
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   home.packages = with pkgs; [
@@ -38,7 +49,7 @@
     yq
     shfmt
     shellcheck
-    go-task
+    just
 
     ## C
     gnumake
@@ -50,13 +61,13 @@
 
     ## C++
     cmake
-    (lib.meta.hiPrio clang_16)
-    clang-tools_16
+    llvmPackages_16.clang-unwrapped
 
     ## Go
     go
     goreleaser
     golangci-lint
+    gotools
 
     ## Node
     nodejs

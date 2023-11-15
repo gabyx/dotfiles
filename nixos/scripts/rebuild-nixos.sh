@@ -14,12 +14,10 @@ force="false"
 
 host="$1" && shift
 
-export NIXPGKS_ALLOW_INSECURE=1
-
 if [ "$force" = "true" ]; then
     echo "Rebuild with '$type' system '$host' (default boot entry)."
-    sudo nixos-rebuild "$type" --flake "$DIR#$host"
+    nixos-rebuild "$type" --flake "$DIR#$host" --use-remote-sudo
 else
     echo "Rebuild with '$type' system '$host' with boot entry name 'test'."
-    sudo nixos-rebuild "$type" --flake "$DIR#$host" -p test
+    nixos-rebuild "$type" --flake "$DIR#$host" -p test --use-remote-sudo
 fi

@@ -2,6 +2,7 @@
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 # Search for all options using: https://mipmip.github.io/home-manager-option-search
 {
+  config,
   lib,
   pkgs,
   pkgsStable,
@@ -20,12 +21,15 @@
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
 
-    (import ./packages.nix {inherit lib pkgs pkgsStable inputs;})
+    ./packages.nix
+    ./chezmoi.nix
   ];
 
-  home = {
+  home = rec {
     username = osConfig.settings.user.name;
     homeDirectory = "/home/${osConfig.settings.user.name}";
+    # Add support for .local/bin
+    sessionPath = ["${homeDirectory}/.local/bin"];
   };
 
   # Add stuff for your user as you see fit:
@@ -34,9 +38,14 @@
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
-
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
+
+  # Enable chezmoi and its config files.
+  chezmoi = {
+    enable = true;
+    sourceDir = inputs.self;
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.05";
