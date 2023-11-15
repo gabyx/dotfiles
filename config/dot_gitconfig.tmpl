@@ -23,25 +23,25 @@
 	default = simple
 	followTags = true
 [include]
-	path = {{ .git.configPath }}/gitconfig-shared
-	path = {{ .git.configPath }}/gitconfig-tools
+	path = ~/.config/git/gitconfig-shared
+	path = ~/.config/git/gitconfig-tools
 [alias]
-	hooks = !\"{{ .chezmoi.homeDir }}/.githooks/bin/cli\"
+	hooks = !\"~/.githooks/bin/cli\"
 [githooks]
-	installDir = {{ .chezmoi.homeDir }}/.githooks
-	cloneUrl = {{ .git.githooksCloneURL }}
-	cloneBranch = {{ .git.githooksCloneBranch }}
+	installDir = ~/.githooks
+	cloneUrl = https://github.com/gabyx/Githooks.git
+	cloneBranch = main
 	useManual = true
 	useCoreHooksPath = false
-	runner = {{ .chezmoi.homeDir }}/.githooks/bin/runner
-	dialog = {{ .chezmoi.homeDir }}/.githooks/bin/dialog
+	runner = ~/.githooks/bin/runner
+	dialog = ~/.githooks/bin/dialog
 	maintainedHooks = !all, applypatch-msg, pre-applypatch, post-applypatch, pre-commit, pre-merge-commit, prepare-commit-msg, commit-msg, post-commit, pre-rebase, post-checkout, post-merge, pre-push, post-rewrite
 	autoUpdateEnabled = true
 	autoUpdateCheckTimestamp = 0
 	containerizedHooksEnabled = true
 [init]
 	defaultBranch = main
-	templateDir = {{ .chezmoi.homeDir }}/.githooks/templates
+	templateDir = ~/.githooks/templates
 [filter "lfs"]
 	process = git-lfs filter-process
 	required = true
@@ -69,9 +69,3 @@
 	mergeoptions = --no-ff
 [branch "stable"]
 	mergeoptions = --no-ff
-
-# Work Related Stuff
-{{- if contains .workspace "work-ds" }}
-[credential "bitbucket.dentsplysirona.com"]
-	provider = generic
-{{- end }}

@@ -22,7 +22,7 @@
     # ./nvim.nix
 
     ./packages.nix
-    ./chezmoi.nix
+    # ./chezmoi.nix
   ];
 
   home = rec {
@@ -42,10 +42,14 @@
   systemd.user.startServices = "sd-switch";
 
   # Enable chezmoi and its config files.
-  chezmoi = {
-    enable = true;
-    sourceDir = inputs.self;
-  };
+  # chezmoi = {
+  #   enable = true;
+  #   sourceDir = inputs.self;
+  #   extraArgsInit = [
+  #     "--promptChoice"
+  #     "What type of workspace are you on=private"
+  #   ];
+  # };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.05";

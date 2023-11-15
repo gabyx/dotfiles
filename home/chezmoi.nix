@@ -13,24 +13,40 @@ with lib; let
   # configFile =
   #   settingsFormat.generate "chezmoi.yaml" cfg.settings;
 
+  sep =
+    if length cfg.extraArgsInit != 0
+    then "\\"
+    else "";
+  addArgsInit = lib.strings.concatStringsSep " " (map (a: "'${a}'") cfg.extraArgsInit);
+
   # Write the chezmoi config file `chezmoi.yaml` to the Nix store (derivation).
-  configFile = pkgs.runCommand "chezmoi-init" {preferLocalBuild = true;} ''
-    HOME=${config.home.homeDirectory}
-    mkdir -p $out
-    ${cfg.package}/bin/chezmoi init \
-      --config-path "$out/chezmoi.yaml" \
-      --promptChoice workspace=${cfg.workspace} \
-      --source ${cfg.sourceDir}
-  '';
+  configFile =
+    pkgs.runCommand "chezmoi-init" {preferLocalBuild = true;} ''
+    '';
 
   # Write the chezmoi configuration to the Nix store (derivation).
-  destDir = pkgs.runCommand "chezmoi-directory" {preferLocalBuild = true;} ''
-    HOME=${config.home.homeDirectory}
-    mkdir -p $out
+  destDir = pkgs.runCommandLocal "chezmoi-directory" {preferLocalBuild = true;} ''
+    tempHome="$out"
+    mkdir -p "$tempHome/.local/share"
+
+    # Copy source to the default writable directory.
+    srcDir="$tempHome/.local/share/chezmoi"
+    cp -rf "${cfg.sourceDir}" "$srcDir"
+    chmod +w "$srcDir"
+
+    export HOME="$tempHome"
+
+    # Init chezmoi with default prompts
+    ${cfg.package}/bin/chezmoi init \
+      -C "$out/chezmoi.yaml" \
+      --promptChoice "What type of workspace are you on=private"
+
+    uname -a
+    ${cfg.package}/bin/chezmoi execute-template "{{ .chezmoi.osRelease }}"
+    cat /etc/os-release
+    exit 1
     ${cfg.package}/bin/chezmoi apply \
-      --config ${configFile} \
-      --source ${cfg.sourceDir} \
-      --destination $out
+      --destination "$tempHome"
   '';
 in {
   # Options for chezmoi configuration
@@ -48,14 +64,20 @@ in {
       description = "The source directory to use for generating dotfiles.";
     };
 
-    workspace = mkOption {
-      type = type.string;
-      default = "private";
+    extraArgsInit = mkOption {
+      type = types.listOf types.str;
+      default = [];
+      description = "Additional chezmoi init arguments, e.g. to fill default prompts.";
+    };
+
+    dest = mkOption {
+      type = types.package;
       description = "The chezmoi workspace option in .chezmoi.yaml.tmpl";
     };
   };
 
   config = lib.mkIf cfg.enable {
+    chezmoi.dest = destDir;
     # This defines the home-manager file settings, which will
     # symlink the `destDir` store path from `chezmoi apply` into
     # the home folder

@@ -53,7 +53,7 @@ in {
     (outputs.nixosModules.packages {inherit config pkgs pkgsStable;})
     outputs.nixosModules.programs
 
-    (outputs.nixosModules.user {inherit config pkgs settings;})
+    outputs.nixosModules.user
 
     outputs.nixosModules.nix
 
