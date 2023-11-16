@@ -1,17 +1,1 @@
 
-# WezTerm Inegration
-# Only on macOS and Linux (not `ubuntu` or `fedora`)
-{{ if or (eq .chezmoi.os "darwin") (and (eq .chezmoi.os "linux") (not (or (eq .chezmoi.osRelease.id "ubuntu") (eq .chezmoi.osRelease.id "fedora")))) }}
-".shell-integration-wezterm.sh":
-  type: file
-  executable: true
-  url: https://raw.githubusercontent.com/wez/wezterm/main/assets/shell-integration/wezterm.sh
-  checksum.sha256: 7098cd58562c1cfd67fc58d5f9616d262eaa84f25cce430045d401970866cd42
-{{ end }}
-
-".config/rofi/scripts/nmcli-rofi.sh":
-  type: file
-  executable: true
-  url: https://raw.githubusercontent.com/sineto/nmcli-rofi/master/nmcli-rofi
-  checksum.sha256: b5c0f5e27c43b01d41455d5179878d7f54c2e810caae06087e2b13add1c12d2a
-
