@@ -46,9 +46,10 @@ in {
     # replace the url of remote `origin`.
     home.activation.install-nvim = hm.dag.entryAfter ["installPackages"] ''
       export PATH="${pkgs.git-lfs}/bin:${pkgs.gitFull}/bin:${pkgs.chezmoi}/bin:$PATH"
-      ${builtin.toPath ./scripts/setup-astronvim.sh} \
+
+      ${builtins.toPath ./scripts/setup-astronvim.sh} \
         "${cfg.astroVimUrl}" "${cfg.astroVimRef}" \
-        "${cfg.astroVimUserUrl}" "${cfg.gastroVimUserRef}"
+        "${cfg.astroVimUserUrl}" "${cfg.astroVimUserRef}"
     '';
   };
 }

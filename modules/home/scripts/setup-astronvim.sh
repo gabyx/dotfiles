@@ -6,31 +6,29 @@ set -e
 set -u
 
 if [ -n "${DRY_RUN:-}" ]; then
-    echo "Dry-run: No nvim install."
+    echo "Dry-run: No astronvim install."
     exit 0
 fi
 
 # Change to home.
 cd ~
 
-astroVimStore="$1"
-astroVimURL="$2"
+astroVimUrl="$1"
+astroVimRef="$2"
 
-astroVimUserStore="$3"
-astroVimUserURL="$4"
+astroVimUserUrl="$3"
+astroVimUserRef="$4"
 
 if [ ! -d ~/.config/nvim ]; then
-    echo "Copy Astrovim into place from store '$astroVimStore'."
-    cp -r "$astroVimStore" ~/.config/nvim
-    git -C ~/.config/nvim remote set-url origin "${astroVimURL}"
+    echo "Clone Astrovim into place."
+    git clone --branch "$astroVimRef" "$astroVimUrl" ~/.config/nvim/lua/user
 else
     echo "Astrovim already setup"
 fi
 
-if [ -d ~/.config/nvim/lua/user ]; then
-    echo "Copy Astrovim User repo into place from store '$astroVimUserStore'."
-    cp -r "$astroVimUserStore" ~/.config/nvim/lua/user
-    git -C ~/.config/nvim/lua/user remote set-url origin "${astroVimUserURL}"
+if [ ! -d ~/.config/nvim/lua/user ]; then
+    echo "Copy Astrovim User repo into place."
+    git clone --branch "$astroVimUserRef" "$astroVimUserUrl" ~/.config/nvim/lua/user
 else
     echo "Astrovim User repo already setup."
 fi

@@ -3,5 +3,5 @@
 {
   # List your module files here
   chezmoi = import ./chezmoi.nix;
-  nvim = import ./nvim.nix;
+  astronvim = import ./astronvim.nix;
 }

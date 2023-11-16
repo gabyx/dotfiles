@@ -18,7 +18,7 @@ force="false"
     force="true"
 }
 
-chezmoiURL="$1"
+chezmoiUrl="$1"
 chezmoiRef="$2"
 workspace="$3"
 dest=~/.local/share/chezmoi
@@ -32,15 +32,17 @@ if [ ! -d "$dest" ]; then
     echo "Clone chezmoi for workspae '$workspace'."
     rm -rf ~/.config/chezmoi || true
 
-    git clone --branch "$chezmoiRef" "$chezmoiURL" "$dest"
+    git clone --branch "$chezmoiRef" "$chezmoiUrl" "$dest"
 
     # Make the init pass with the prompt in `.chezmoi.yaml.tmpl`.
     chezmoi init --promptChoice "Workspace?=$workspace"
 else
     echo "Chezmoi already setup. To forcefully rerun use:"
-    echo " \$ $dest/modules/home/scripts/setup-configs.sh --force '$chezmoiURL' '$chezmoiRef' '$workspace'"
+    echo " \$ $dest/modules/home/scripts/setup-configs.sh --force '$chezmoiUrl' '$chezmoiRef' '$workspace'"
 fi
 
 echo "Apply chezmoi config files."
-chezmoi --force --no-tty --no-pager --refresh-externals=never --verbose \
+chezmoi --force --no-tty \
+    --no-pager \
+    --refresh-externals=never \
     apply
