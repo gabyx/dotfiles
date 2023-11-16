@@ -66,5 +66,5 @@ function gabyx::nixos_rebuild() {
     local host="${1:?Specify a host to build}"
     shift 1
 
-    nixos-rebuild "$what" --flake "$HOME/.local/share/chezmoi#$host" --use-remote-sudo "$@"
+    nixos-rebuild "$what" --flake "$HOME/nixos-config#$host" --use-remote-sudo "$@"
 }

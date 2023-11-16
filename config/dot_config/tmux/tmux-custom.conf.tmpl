@@ -227,18 +227,15 @@ if-shell 'test -n "$SSH_CONNECTION"' \
 ##############################
 # Plugins
 ##############################
+{{- if eq .chezmoi.osRelease.id "nixos" }}
+# On NixOS we do not auto install plugins they are managed in
+# the NixOS config and loaded in `/etc/tmux.conf`.
 run '~/.config/tmux/scripts/install-tpm.sh'
 
 set -g @plugin 'tmux-plugins/tpm'
-
 set -g @plugin 'tmux-plugins/tmux-resurrect'
-set -g @resurrect-strategy-nvim 'session'
-
 set -g @plugin 'tmux-plugins/tmux-continuum'
-set -g @continuum-restore 'on'
-set -g @continuum-save-interval '5'
-
-set -g @plugin 'thewtex/tmux-mem-cpu-load'
+set -g @plugin 'tmux-plugins/tmux-cpu'
 
 # Seamless navigation with `C-h/j/k/l` switching vim windows and tmux panes
 # Needs 'christoomey/vim-tmux-navigator' as Vim plugin.
@@ -246,3 +243,9 @@ set -g @plugin 'christoomey/vim-tmux-navigator'
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.config/tmux/plugins/tpm/tpm'
+{{- end }}
+
+# Plugins settings
+set -g @resurrect-strategy-nvim 'session'
+set -g @continuum-restore 'on'
+set -g @continuum-save-interval '5'

@@ -93,13 +93,6 @@ function applyToGnome() {
 dist=""
 getPlatformOS os dist
 
-if [ "$dist" = "nixos" ]; then
-    printWarning "Not going to install keyboard layout in NixOS." \
-        "Install keyboard in NixOS over the" \
-        "'https://nixos.org/manual/nixos/stable/#custom-xkb-layouts'."
-    exit 0
-fi
-
 if ! command -v xmlstarlet &>/dev/null; then
     if [ "$dist" = "ubuntu" ]; then
         sudo apt-get install -y xmlstarlet
@@ -110,9 +103,9 @@ fi
 
 setxkbmap "-I$DIR/symbols" programmer -print |
     xkbcomp "-I$DIR" - "$DISPLAY" 2>/dev/null ||
-# Test if the layout works
+    # Test if the layout works
     die "The layout '$DIR/symbols/programmer' is invalid." \
-    "Check with:" \
+        "Check with:" \
         "setxkbmap \"-I$DIR/symbols\" programmer -print \|" \
         "xkbcomp \"-I$DIR/symbols\" - \"$DISPLAY\""
 

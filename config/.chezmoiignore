@@ -26,3 +26,7 @@ docs
 .config/swaync
 .config/wallpapers
 {{- end }}
+
+{{- if eq .chezmoi.osRelease.id "nixos" }}
+.config/tmux/tmux.conf
+{{- end }}
