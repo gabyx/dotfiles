@@ -64,7 +64,6 @@ useful information when going through these steps:
 1. Download the NixOS ISO file from
    [here](https://nixos.org/download#download-nixos).
 
-1. Adjust `.env` file from `.env.tmpl` for your variables.
 1. Adjust `.env-os-vm` file from `.env-os.tmpl` for your variables.
 
 ### Create VM with `virt-manager` (not recommended)
@@ -83,25 +82,20 @@ useful information when going through these steps:
 1. Create the VM by doing `scripts/create-vm.sh` and clicking through the
    installer. Use an LUKS encrypted disk.
 
-### Install Base Tools
+### Install VM NixOS Configuration.
 
-1. Start the virtual machine with [`scripts/start-vm.sh`](scripts/start-vm.sh).
+1. Start the virtual machine with [`scripts/start-vm.sh`](scripts/start-vm.sh)
+   and switch to the VM NixOS configuration by doing
 
-1. Clone this repo (we install git and google-chrome to access passwords)
+```shell
+  nixos-install switch --flake github:gabyx/dotfiles#vm
 
-   ```shell
-   NIXPGS_ALLOW_UNFREE=1 nix-env --install --attr nixos.git nixos.google-chrome
-   git clone https://github.com/gabyx/nixos-configuration.git
-   ```
+  reboot
+```
 
-1. Install some base tools to start working in the fresh NixOS on the
-   `/etc/configuration.nix`:
+Go to the section [first login](#first-login) for further instructions.
 
-   ```shell
-   ./scripts/install-tools.sh
-   ```
-
-## Connect to VM over SSH
+### Connect to VM over SSH
 
 1. Start the virtual machine with [`scripts/start-vm.sh`](scripts/start-vm.sh).
 1. On the host inside a terminal connect over SSH with
@@ -309,14 +303,9 @@ root partition.
    reboot
    ```
 
+## First Login
+
 1. Login with the initial login `nixos` and default password `nixos`.
-
-1. Install all configuration files by running inside a terminal
-   (`CTRL + ALT + F1`), (To install them with the home manager is still WIP.):
-
-   ```shell
-   ./scripts/install-home.sh
-   ```
 
 1. Move the initial configuration out of the way and point to the new
    configuration.
@@ -344,7 +333,7 @@ root partition.
 1. Modify the [`configuration.nix`](configuration.nix) in this repo and use
 
    ```shell
-   ./scripts/rebuild-nixos.sh [build|boot|switch] [--force] [vm|desktop]
+   just deploy [desktop|vm]
    ```
 
    Use `build` to just build the NixOS system. Use `boot` to build the NixOS (a

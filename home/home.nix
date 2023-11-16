@@ -53,6 +53,7 @@
     workspace = "private";
   };
 
+  # Enable astronmvim setup.
   astronvim = {
     enable = true;
     astroVimUserUrl = "https://github.com/gabyx/astrovim.git";

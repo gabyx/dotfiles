@@ -4,7 +4,6 @@ set -e
 set -u
 
 DIR=$(cd "$(dirname "$0")" && pwd)/..
-. "$DIR/.env"
 
 type="not-defined"
 type="${1}" && shift
