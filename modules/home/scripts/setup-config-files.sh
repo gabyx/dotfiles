@@ -25,9 +25,9 @@ if [ -d ~/.local/share/chezmoi ] && [ "$force" = "true" ]; then
     chezmoi purge --force
 fi
 
-if [ ! -d ~/.local/share/chezmoi ]; then
+if [ ! -d ~/nixos-config ]; then
     echo "Install chezmoi for workspae '$workspace'."
-    chezmoi init "$url" --promptChoice "Workspace?=$workspace"
+    chezmoi init -S ~/nixos-config --promptChoice "Workspace?=$workspace" "$url"
     chezmoi git lfs pull origin
 else
     echo "Chezmoi already setup. To forcefully rerun use:"
