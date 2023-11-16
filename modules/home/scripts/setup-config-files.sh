@@ -30,7 +30,6 @@ fi
 if [ ! -d "$dest" ]; then
     echo "Install chezmoi for workspae '$workspace'."
     chezmoi init --promptChoice "Workspace?=$workspace" "$url"
-
     chezmoi git lfs pull origin
 else
     echo "Chezmoi already setup. To forcefully rerun use:"
