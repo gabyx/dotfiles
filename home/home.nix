@@ -8,6 +8,7 @@
   pkgsStable,
   osConfig,
   inputs,
+  outputs,
   ...
 }: {
   # You can import other home-manager modules here
@@ -22,7 +23,9 @@
     # ./nvim.nix
 
     ./packages.nix
-    # ./chezmoi.nix
+
+    outputs.homeManagerModules.chezmoi
+    outputs.homeManagerModules.nvim
   ];
 
   home = rec {
