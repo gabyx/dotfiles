@@ -32,7 +32,6 @@ if [ ! -d "$dest" ]; then
     chezmoi init --promptChoice "Workspace?=$workspace" "$url"
 
     chezmoi git lfs pull origin
-    git -C "$dest" hooks install --non-interactive
 else
     echo "Chezmoi already setup. To forcefully rerun use:"
     echo " \$ $dest/modules/home/scripts/install-chezmoi.sh --force '$workspace'"
