@@ -13,19 +13,24 @@ fi
 # Change to home.
 cd ~
 
+astroVimStore="$1"
+astroVimURL="$2"
+
+astroVimUserStore="$3"
+astroVimUserURL="$4"
+
 if [ ! -d ~/.config/nvim ]; then
-    echo "Clone Astrovim into place."
-    git clone --depth 1 --branch stable \
-        "https://github.com/AstroNvim/AstroNvim" \
-        ~/.config/nvim
+    echo "Copy Astrovim into place from store '$astroVimStore'."
+    cp -r "$astroVimStore" ~/.config/nvim
+    git -C ~/.config/nvim remote set-url origin "${astroVimURL}"
 else
     echo "Astrovim already setup"
 fi
 
 if [ -d ~/.config/nvim/lua/user ]; then
-    echo "Clone Astrovim User repo into place."
-    git clone "https://github.com/gabyx/astrovim.git" \
-        ~/.config/nvim/lua/user
+    echo "Copy Astrovim User repo into place from store '$astroVimUserStore'."
+    cp -r "$astroVimUserStore" ~/.config/nvim/lua/user
+    git -C ~/.config/nvim/lua/user remote set-url origin "${astroVimUserURL}"
 else
     echo "Astrovim User repo already setup."
 fi

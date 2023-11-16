@@ -18,8 +18,9 @@ force="false"
     force="true"
 }
 
-workspace="$1"
-url="https://github.com/gabyx/dotfiles"
+chezmoiStore="$1"
+chezmoiURL="$2"
+workspace="$3"
 dest=~/.local/share/chezmoi
 
 if [ -d "$dest" ] && [ "$force" = "true" ]; then
@@ -28,13 +29,16 @@ if [ -d "$dest" ] && [ "$force" = "true" ]; then
 fi
 
 if [ ! -d "$dest" ]; then
-    echo "Install chezmoi for workspae '$workspace'."
-    chezmoi init --promptChoice "Workspace?=$workspace" "$url"
-    chezmoi git lfs pull origin
+    echo "Copy chezmoi for workspae '$workspace' from store '$chezmoiStore'."
+    cp -r "$chezmoiStore" "$dest"
+    git -C "$dest" remote set-url origin "${chezmoiURL}"
+
+    # Make the init pass with the prompt in `.chezmoi.yaml.tmpl`.
+    chezmoi init --promptChoice "Workspace?=$workspace"
 else
     echo "Chezmoi already setup. To forcefully rerun use:"
-    echo " \$ $dest/modules/home/scripts/install-chezmoi.sh --force '$workspace'"
+    echo " \$ $dest/modules/home/scripts/install-chezmoi.sh --force '$chezmoiStore' '$chezmoiURL' '$workspace'"
 fi
 
 echo "Apply chezmoi config files."
-chezmoi --refresh-externals=always apply
+chezmoi --refresh-externals=never --verbose apply
