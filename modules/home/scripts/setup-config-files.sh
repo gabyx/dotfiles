@@ -20,17 +20,19 @@ force="false"
 
 workspace="$1"
 url="https://github.com/gabyx/dotfiles"
-dest=~/nixos-config
+dest=~/.local/share/chezmoi
 
 if [ -d "$dest" ] && [ "$force" = "true" ]; then
-    rm -rf "$dest"
+    rm -rf "$dest" || true
+    rm -rf ~/.config/chezmoi || true
 fi
 
 if [ ! -d "$dest" ]; then
     echo "Install chezmoi for workspae '$workspace'."
-    chezmoi init -S "$dest" --promptChoice "Workspace?=$workspace" "$url"
+    chezmoi init --promptChoice "Workspace?=$workspace" "$url"
+
     chezmoi git lfs pull origin
-    git -C "$dest" hooks install
+    git -C "$dest" hooks install --non-interactive
 else
     echo "Chezmoi already setup. To forcefully rerun use:"
     echo " \$ $dest/modules/home/scripts/install-chezmoi.sh --force '$workspace'"

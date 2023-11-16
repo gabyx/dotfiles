@@ -1,5 +1,5 @@
-## {{- $choices := list "private" "work" -}}
-## {{- $workspace:= promptChoiceOnce . "workspace" "Workspace?" $choices "private" -}}
+{{- $choices := list "private" "work" -}}
+{{- $workspace:= promptChoiceOnce . "workspace" "Workspace?" $choices "private" -}}
 
 data:
   # Any of `private`, `work`
