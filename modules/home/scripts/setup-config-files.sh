@@ -30,6 +30,8 @@ fi
 
 if [ ! -d "$dest" ]; then
     echo "Copy chezmoi for workspae '$workspace' from store '$chezmoiStore'."
+    rm -rf ~/.config/chezmoi || true
+
     cp -r "$chezmoiStore" "$dest"
     git -C "$dest" remote set-url origin "${chezmoiURL}"
 
