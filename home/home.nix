@@ -22,10 +22,11 @@
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
 
+    ./environment.nix
     ./packages.nix
 
     outputs.homeManagerModules.chezmoi
-    outputs.homeManagerModules.nvim
+    outputs.homeManagerModules.astronvim
   ];
 
   home = rec {
@@ -45,14 +46,18 @@
   systemd.user.startServices = "sd-switch";
 
   # Enable chezmoi and its config files.
-  # chezmoi = {
-  #   enable = true;
-  #   sourceDir = inputs.self;
-  #   extraArgsInit = [
-  #     "--promptChoice"
-  #     "What type of workspace are you on=private"
-  #   ];
-  # };
+  chezmoi = {
+    enable = true;
+    url = "https://github.com/gabyx/dotfiles.git";
+    ref = "main";
+    workspace = "private";
+  };
+
+  astronvim = {
+    enable = true;
+    astroVimUserUrl = "https://github.com/gabyx/astrovim.git";
+    astroVimUserRef = "main";
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.05";

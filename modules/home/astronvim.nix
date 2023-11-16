@@ -7,31 +7,17 @@
   ...
 }:
 with lib; let
-  cfg = config.nvim;
-
-  astroVimURL = "https://github.com/AstroNvim/AstroNvim.git";
-  astroVimRef = cfg.astroVimRef;
-
-  astroVim = lib.fetchGit {
-    url = astroVimUser;
-    ref = astroVimRef;
-    shallow = true;
-    leaveDotGit = true;
-  };
-
-  astroVimUserURL = "https://github.com/gabyx/astrovim.git";
-  astroVimUserRef = cfg.astroVimUserRef;
-
-  astroVimUser = lib.fetchGit {
-    url = astroVimUserRef;
-    ref = astroVimUserRef;
-    shallow = true;
-    leaveDotGit = true;
-  };
+  cfg = config.astronvim;
 in {
   # Options for nvim configuration repositories.
-  options.nvim = {
+  options.astronvim = {
     enable = mkEnableOption "nvim";
+
+    astroVimUrl = mkOption {
+      type = types.str;
+      description = "AstroVim Git repo url.";
+      default = "https://github.com/AstroNvim/AstroNvim.git";
+    };
 
     astroVimRef = mkOption {
       type = types.enum ["stable" "nightly"];
@@ -59,9 +45,10 @@ in {
     # Let home-manager clone the repos from the store and
     # replace the url of remote `origin`.
     home.activation.install-nvim = hm.dag.entryAfter ["installPackages"] ''
-      ${builtin.toPath ./scripts/setup-nvim.sh} \
-        "${astroVim}" "${astroVimURL}" \
-        "${astroVimUser}" "${astroVimUserURL}"
+      export PATH="${pkgs.git-lfs}/bin:${pkgs.gitFull}/bin:${pkgs.chezmoi}/bin:$PATH"
+      ${builtin.toPath ./scripts/setup-astronvim.sh} \
+        "${cfg.astroVimUrl}" "${cfg.astroVimRef}" \
+        "${cfg.astroVimUserUrl}" "${cfg.gastroVimUserRef}"
     '';
   };
 }

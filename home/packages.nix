@@ -6,13 +6,17 @@
   ...
 }: {
   programs = {
-    neovim = {
-      viAlias = true;
-      vimAlias = true;
-      plugins = [
-        pkgs.vimPlugins.nvim-treesitter
-        pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+    tmux = {
+      enable = true;
+      plugins = with pkgs.tmuxPlugins; [
+        continuum
+        resurrect
+        vim-tmux-navigator
+        cpu
       ];
+      extraConfig = ''
+        source-file ~/.config/tmux/tmux-custom.conf
+      '';
     };
   };
 
@@ -27,11 +31,10 @@
 
     kitty
     wezterm
-    tmux
 
     # Editors
-    pkgsStable.neovim
     vscode
+    pkgsStable.neovim
 
     # Tools
     chezmoi

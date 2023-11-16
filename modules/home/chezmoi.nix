@@ -7,13 +7,6 @@
 }:
 with lib; let
   cfg = config.chezmoi;
-
-  chezmoi = lib.fetchGit {
-    url = cfg.url;
-    ref = cfg.ref;
-    shallow = true;
-    leaveDotGit = true;
-  };
 in {
   # Options for chezmoi configuration
   options.chezmoi = {
@@ -26,7 +19,7 @@ in {
     };
 
     url = mkOption {
-      type = types.path;
+      type = types.str;
       description = "The source directory to use for generating dotfiles.";
     };
 
@@ -48,8 +41,9 @@ in {
     ];
 
     home.activation.install-chezmoi = hm.dag.entryAfter ["installPackages"] ''
-      ${builtin.toPath ./scripts/setup-config-files.sh} \
-        "${chezmoi}" "${cfg.url}" ${cfg.workspace}"
+      export PATH="${pkgs.git-lfs}/bin:${pkgs.gitFull}/bin:${pkgs.chezmoi}/bin:$PATH"
+      ${builtins.toPath ./scripts/setup-configs.sh} \
+        "${cfg.url}" "${cfg.ref}" "${cfg.workspace}"
     '';
   };
 }
