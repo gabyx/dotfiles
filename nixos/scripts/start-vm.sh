@@ -8,9 +8,9 @@
 set -e
 set -u
 
-DIR=$(cd "$(dirname "$0")" && pwd)/..
+ROOT=$(git rev-parse --show-toplevel)
 
-. "$DIR/.env-os-vm"
+. "$ROOT/nixos/.env-os-vm"
 
 # Port Forwarding for SSH
 # with -nic user,hostfwd=tcp::60022-:22
