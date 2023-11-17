@@ -8,7 +8,13 @@
 # makes sure to fix the tmux_resurrect_* files so they can be parsed by
 # the tmux-resurrect plugin and successfully restored.
 set -g @resurrect-hook-post-save-all 'target=$(readlink -f $resurrect_dir/last); sed "s| --cmd .*-vim-pack-dir||g; s|/etc/profiles/per-user/$USER/bin/||g; s|/home/$USER/.nix-profile/bin/||g" $target | sponge $target'
+
+
 {{- end }}
+
+# Set location of the resurrect files.
+resurrectDir=$HOME/.local/share/tmux/resurrect
+set -g @resurrect-dir $resurrectDir
 
 set -g @resurrect-capture-pane-contents 'on'
 set -g @resurrect-strategy-nvim 'session'

@@ -60,7 +60,7 @@ function gabyx::get_window_properties {
     swaymsg -t get_tree | jq
 }
 
-function gabyx::home_manager_log() {
+function gabyx::nixos_hm_log() {
     journalctl -u home-manager-nixos.service -e
 }
 
@@ -70,5 +70,6 @@ function gabyx::nixos_rebuild() {
     local host="${1:?Specify a host to build}"
     shift 1
 
-    nixos-rebuild "$what" --flake "$HOME/nixos-config#$host" --use-remote-sudo "$@"
+    (cd "$(readlink ~/nixos-config)" &&
+        nixos-rebuild "$what" --flake ".#$host" --use-remote-sudo "$@")
 }

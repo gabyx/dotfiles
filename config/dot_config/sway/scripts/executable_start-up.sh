@@ -27,7 +27,7 @@ tmux list-sessions || {
 tmux new-session -D -s Main-1
 tmux new-session -D -s Main-2
 tmux new-session -D -s Astrovim
-tmux new-session -D -s Dotfiles
+tmux new-session -D -s NixOS
 
 echo "Sessions are:"
 tmux list-sessions || {
@@ -48,7 +48,7 @@ echo "-----------"
 # echo "Started nvim in all sessions"
 
 echo "Start workspaces"
-swaymsg "workspace \$ws-1; exec \$term-start Dotfiles \$term-start-cmd"
+swaymsg "workspace \$ws-1; exec \$term-start NixOS \$term-start-cmd"
 swaymsg "workspace \$ws-2; exec \$term-start Astrovim \$term-start-cmd"
 swaymsg "workspace \$ws-3; exec \$term-start Main-1 \$term-start-cmd"
 swaymsg "workspace \$ws-4; exec \$term-start Main-2 \$term-start-cmd"
