@@ -10,8 +10,8 @@ data:
     diffTool: nvim
     mergeTool: vscode
 
-    configPath: ~/.config/git
-    toolsPath: ~/.config/git/tools
+    configPath: {{ .chezmoi.homeDir }}/.config/git
+    toolsPath: {{ .chezmoi.homeDir }}/.config/git/tools
 
     githooksCloneURL: https://github.com/gabyx/Githooks.git
     githooksCloneBranch: main
