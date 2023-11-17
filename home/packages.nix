@@ -9,11 +9,22 @@
     tmux = {
       enable = true;
       plugins = with pkgs.tmuxPlugins; [
-        continuum
-        resurrect
         vim-tmux-navigator
         cpu
+        {
+          plugin = continuum;
+          extraConfig = ''
+            source-file ~/.config/tmux/tmux-plugin-resurrect.conf
+          '';
+        }
+        {
+          plugin = resurrect;
+          extraConfig = ''
+            source-file ~/.config/tmux/tmux-plugin-resurrect.conf
+          '';
+        }
       ];
+
       extraConfig = ''
         source-file ~/.config/tmux/tmux-custom.conf
       '';

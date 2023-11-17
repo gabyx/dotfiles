@@ -225,9 +225,17 @@ if-shell 'test -n "$SSH_CONNECTION"' \
     'source-file ~/.config/tmux/tmux-remote.conf'
 
 ##############################
+# Plugins Settings
+##############################
+{{- if ne .chezmoi.osRelease.id "nixos" }}
+source-file '~/.config/tmux/tmux-plugin-resurrect.conf'
+source-file '~/.config/tmux/tmux-plugin-continuum.conf'
+{{- end}}
+
+##############################
 # Plugins
 ##############################
-{{- if eq .chezmoi.osRelease.id "nixos" }}
+{{- if ne .chezmoi.osRelease.id "nixos" }}
 # On NixOS we do not auto install plugins they are managed in
 # the NixOS config and loaded in `/etc/tmux.conf`.
 run '~/.config/tmux/scripts/install-tpm.sh'
@@ -244,8 +252,3 @@ set -g @plugin 'christoomey/vim-tmux-navigator'
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.config/tmux/plugins/tpm/tpm'
 {{- end }}
-
-# Plugins settings
-set -g @resurrect-strategy-nvim 'session'
-set -g @continuum-restore 'on'
-set -g @continuum-save-interval '5'
