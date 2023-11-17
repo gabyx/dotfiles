@@ -60,6 +60,10 @@ function gabyx::get_window_properties {
     swaymsg -t get_tree | jq
 }
 
+function gabyx::home_manager_log() {
+    journalctl -u home-manager-nixos.service -e
+}
+
 function gabyx::nixos_rebuild() {
     local what="${1:?Specify how? 'switch,boot,test'}"
     shift 1

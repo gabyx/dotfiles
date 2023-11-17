@@ -19,14 +19,18 @@ astroVimRef="$2"
 astroVimUserUrl="$3"
 astroVimUserRef="$4"
 
-if [ ! -d ~/.config/nvim ]; then
+function isRepo() {
+    git -C "$1" rev-parse --git-dir &>/dev/null
+}
+
+if ! isRepo ~/.config/nvim; then
     echo "Clone Astrovim into place."
-    git clone --branch "$astroVimRef" "$astroVimUrl" ~/.config/nvim/lua/user
+    git clone --branch "$astroVimRef" "$astroVimUrl" ~/.config/nvim
 else
     echo "Astrovim already setup"
 fi
 
-if [ ! -d ~/.config/nvim/lua/user ]; then
+if  ! isRepo ~/.config/nvim/lua/user ; then
     echo "Copy Astrovim User repo into place."
     git clone --branch "$astroVimUserRef" "$astroVimUserUrl" ~/.config/nvim/lua/user
 else
