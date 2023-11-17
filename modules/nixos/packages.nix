@@ -17,6 +17,7 @@
     coreutils-full
     findutils
     binutils
+    moreutils
 
     dmidecode # BIOS read tool.
     lshw

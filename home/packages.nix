@@ -9,12 +9,13 @@
     tmux = {
       enable = true;
       plugins = with pkgs.tmuxPlugins; [
-        vim-tmux-navigator
-        cpu
         {
           plugin = continuum;
           extraConfig = ''
-            source-file ~/.config/tmux/tmux-plugin-resurrect.conf
+            # Todo should go to `extraConfigBeforePlugins` see
+            # https://github.com/nix-community/home-manager/pull/4670
+            source-file ~/.config/tmux/tmux-custom.conf
+            source-file ~/.config/tmux/tmux-plugin-continuum.conf
           '';
         }
         {
@@ -23,11 +24,9 @@
             source-file ~/.config/tmux/tmux-plugin-resurrect.conf
           '';
         }
+        vim-tmux-navigator
+        cpu
       ];
-
-      extraConfig = ''
-        source-file ~/.config/tmux/tmux-custom.conf
-      '';
     };
   };
 
