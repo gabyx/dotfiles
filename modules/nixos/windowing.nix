@@ -98,6 +98,7 @@
       xdg-utils
       flashfocus # Flash focus animations in sway.
       copyq # Clipboard manager.
+      qalculate-gtk # Calculator menu.
 
       wl-clipboard # Wayland clipboard.
       wf-recorder # Wayland screen recorder.
@@ -107,10 +108,10 @@
       swappy # Edit tool for screenshots.
 
       rofi # Application Launcher for waybar.
+      rofimoji
       rofi-power-menu
       rofi-bluetooth
       rofi-systemd
-      rofimoji
       playerctl # Player control in waybar.
     ];
 

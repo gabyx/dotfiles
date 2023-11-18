@@ -47,7 +47,7 @@ set $power-menu ~/.config/rofi/show-power-menu.sh
 set $wireless-menu ~/.config/rofi/show-network-menu.sh --wireless
 set $network-menu ~/.config/rofi/show-network-menu.sh --editor
 set $bluetooth-menu rofi-bluetooth
-set $emoji-menu rofimoji
+set $emoji-menu rofimoji --clipboarder wl-copy --action type copy --keybinding-copy y
 set $systemd-menu rofi-systemd
 set $procs-menu wezterm start btop
 set $sound-menu pavucontrol

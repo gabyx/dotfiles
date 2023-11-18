@@ -5,7 +5,16 @@
 }: {
   ### Fonts ================================================================
   fonts = {
-    fontconfig.enable = true;
+    fontconfig = {
+      enable = true;
+      allowBitmaps = false;
+      defaultFonts = {
+        serif = ["NotoSerif Nerd Font"];
+        sansSerif = ["Noto Sans Nerd Font"];
+        monospace = ["JetBrainsMono Nerd Font"];
+        emoji = ["Noto Emoji"];
+      };
+    };
     fontDir.enable = true;
 
     packages = with pkgs; [
@@ -14,8 +23,8 @@
       fira
       meslo-lgs-nf
       noto-fonts
-      eb-garamond
-      zilla-slab
+      noto-fonts-emoji
+      emojione
       google-fonts
       (nerdfonts.override {fonts = ["FiraCode" "JetBrainsMono" "SourceCodePro"];})
     ];
