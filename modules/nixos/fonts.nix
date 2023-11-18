@@ -10,9 +10,9 @@
       allowBitmaps = false;
       defaultFonts = {
         serif = ["NotoSerif Nerd Font"];
-        sansSerif = ["Noto Sans Nerd Font"];
+        sansSerif = ["NotoSans Nerd Font"];
         monospace = ["JetBrainsMono Nerd Font"];
-        emoji = ["Noto Emoji"];
+        emoji = ["Noto Color Emoji"];
       };
     };
     fontDir.enable = true;
@@ -21,12 +21,10 @@
       corefonts
       ubuntu_font_family
       fira
-      meslo-lgs-nf
       noto-fonts
       noto-fonts-emoji
-      emojione
       google-fonts
-      (nerdfonts.override {fonts = ["FiraCode" "JetBrainsMono" "SourceCodePro"];})
+      (nerdfonts.override {fonts = ["FiraCode" "Noto" "JetBrainsMono" "SourceCodePro"];})
     ];
   };
 
