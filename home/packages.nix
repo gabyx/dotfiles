@@ -97,6 +97,7 @@
     inkscape # Vector graphics
     krita # Painting
     zathura # Simple document viewer
+    pdfarranger # PDF arranger
     ymuse # Sound player
     zoom-us # Video calls
     firefox
