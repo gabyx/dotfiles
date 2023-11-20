@@ -144,7 +144,7 @@ if [ -f "$HOME/python-envs/default/bin/activate" ]; then
     source "$HOME/python-envs/default/bin/activate"
 fi
 
-source "$HOME/.config/zsh/.zshrc-tmux"
+source "$HOME/.config/zsh/.zshrc-tmux.zsh"
 
 if [ -n "$WEZTERM_EXECUTABLE" ]; then
     # Shell integration for Wezterm.

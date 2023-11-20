@@ -23,18 +23,18 @@
 	default = simple
 	followTags = true
 [include]
-	path = ~/.config/git/gitconfig-shared
-	path = ~/.config/git/gitconfig-tools
+	path = {{ .git.configPath }}/gitconfig-shared
+	path = {{ .git.configPath }}/gitconfig-tools
 [alias]
-	hooks = !~/.githooks/bin/cli
+	hooks = !\"{{ .chezmoi.homeDir }}/.githooks/bin/cli\"
 [githooks]
-	installDir = ~/.githooks
-	cloneUrl = https://github.com/gabyx/Githooks.git
-	cloneBranch = main
+	installDir = {{ .chezmoi.homeDir }}/.githooks
+	cloneUrl = {{ .git.githooksCloneURL }}
+	cloneBranch = {{ .git.githooksCloneBranch }}
 	useManual = true
 	useCoreHooksPath = false
-	runner = ~/.githooks/bin/runner
-	dialog = ~/.githooks/bin/dialog
+	runner = {{ .chezmoi.homeDir }}/.githooks/bin/runner
+	dialog = {{ .chezmoi.homeDir }}/.githooks/bin/dialog
 	maintainedHooks = !all, applypatch-msg, pre-applypatch, post-applypatch, pre-commit, pre-merge-commit, prepare-commit-msg, commit-msg, post-commit, pre-rebase, post-checkout, post-merge, pre-push, post-rewrite
 	autoUpdateEnabled = true
 	autoUpdateCheckTimestamp = 0
