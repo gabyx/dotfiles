@@ -1,14 +1,14 @@
-{ config
-, pkgs
-, pkgsStable
-, lib
-, inputs
-, ...
+{
+  config,
+  pkgs,
+  pkgsStable,
+  lib,
+  inputs,
+  ...
 }:
 with lib; let
   cfg = config.astronvim;
-in
-{
+in {
   # Options for nvim configuration repositories.
   options.astronvim = {
     enable = mkEnableOption "nvim";
@@ -20,7 +20,7 @@ in
     };
 
     astroVimRef = mkOption {
-      type = types.enum [ "main" "nightly" ];
+      type = types.enum ["main" "nightly"];
       default = "main";
       description = "AstroVim Git branch.";
     };
@@ -31,7 +31,7 @@ in
     };
 
     astroVimUserRef = mkOption {
-      type = types.enum [ "main" ];
+      type = types.enum ["main"];
       default = "main";
       description = "AstroVimUser Git branch.";
     };
@@ -39,12 +39,12 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      pkgsStable.neovim
+      neovim
     ];
 
     # Let home-manager clone the repos from the store and
     # replace the url of remote `origin`.
-    home.activation.install-nvim = hm.dag.entryAfter [ "installPackages" ] ''
+    home.activation.install-nvim = hm.dag.entryAfter ["installPackages"] ''
       export PATH="${pkgs.git-lfs}/bin:${pkgs.gitFull}/bin:${pkgs.chezmoi}/bin:$PATH"
 
       ${builtins.toPath ./scripts/setup-astronvim.sh} \

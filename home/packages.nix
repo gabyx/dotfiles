@@ -19,9 +19,18 @@
 
     # Editors
     vscode
-    pkgsStable.neovim
+    # neovim configured in `astronvim.nix`
 
     # Tools
+    lf # File manager
+    chafa # For Sixel pictures in terminal
+    exiftool # For image meta preview.
+    atool # For archive preview
+    bat # For text preview with syntax highlight and Git integration.
+    poppler_utils # For image conversions.
+    ffmpegthumbnailer # For video thumbnails.
+
+    trash-cli
     chezmoi
     etcher
     gparted
@@ -103,6 +112,7 @@
     firefox
     google-chrome
     thunderbird
+    libreoffice
     ## Sonos Device
     noson
     (mkchromecast.override {enableSonos = true;})

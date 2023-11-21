@@ -26,6 +26,8 @@ set $right l
 # ==================================================
 # Wezterm
 set $term wezterm start
+set $file-manager $term -- zsh -c lf
+
 # # A wrapper script to start the terminal with additional env. variables.
 # # e.g. to jump directly into Tmux session.
 set $term-start-cmd wezterm start --always-new-process
@@ -209,6 +211,7 @@ seat * hide_cursor when-typing enable
 #
     # Start a terminal
     bindsym $mod+Return exec $term
+    bindsym $mod+Shift+Return exec $file-manager
 
     # Kill focused window
     bindsym $mod+q kill
