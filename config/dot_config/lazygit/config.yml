@@ -20,7 +20,7 @@ gui:
       - "#0046b8"
       - bold
     inactiveBorderColor:
-      - default
+      - "#AAAAAA"
     searchingActiveBorderColor:
       - cyan
       - bold

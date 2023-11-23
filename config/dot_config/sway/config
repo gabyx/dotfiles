@@ -26,12 +26,10 @@ set $right l
 # ==================================================
 # Wezterm
 set $term wezterm start
-set $file-manager wezterm start --always-new-process -- zsh "-c" "lf"
 
 # # A wrapper script to start the terminal with additional env. variables.
 # # e.g. to jump directly into Tmux session.
 set $term-start-cmd wezterm start --always-new-process
-set $term-start ~/.config/sway/scripts/start-term.sh
 
 # Kitty
 # set $term kitty --single-instance
@@ -39,11 +37,15 @@ set $term-start ~/.config/sway/scripts/start-term.sh
 # e.g. to jump directly into Tmux session.
 # set $term-start-cmd kitty
 # set $term-start ~/.config/sway/scripts/start-term.sh
+
+# Terminal start.
+set $term-start ~/.config/sway/scripts/start-term.sh
 # ==================================================
 
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 
+set $file-manager kitty -- zsh "-c" "lf"
 set $launcher-menu ~/.config/rofi/show-launcher-menu.sh
 set $power-menu ~/.config/rofi/show-power-menu.sh
 set $wireless-menu ~/.config/rofi/show-network-menu.sh --wireless
@@ -339,16 +341,16 @@ mode "resize" {
     # right will grow the containers width
     # up will shrink the containers height
     # down will grow the containers height
-    bindsym $left resize shrink width 10px
-    bindsym $down resize grow height 10px
-    bindsym $up resize shrink height 10px
-    bindsym $right resize grow width 10px
+    bindsym $left resize shrink width 50px
+    bindsym $down resize grow height 50px
+    bindsym $up resize shrink height 50px
+    bindsym $right resize grow width 50px
 
     # Ditto, with arrow keys
-    bindsym Left resize shrink width 10px
-    bindsym Down resize grow height 10px
-    bindsym Up resize shrink height 10px
-    bindsym Right resize grow width 10px
+    bindsym Left resize shrink width 50px
+    bindsym Down resize grow height 50px
+    bindsym Up resize shrink height 50px
+    bindsym Right resize grow width 50px
 
     # Return to default mode
     bindsym Return mode "default"
