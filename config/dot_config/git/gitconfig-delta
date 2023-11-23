@@ -41,5 +41,5 @@
     paging                        = always
     side-by-side                  = true
     syntax-theme                  = Monokai Extended
-    width                         = 80
+    # width                         = 80
     tabs                          = 4
