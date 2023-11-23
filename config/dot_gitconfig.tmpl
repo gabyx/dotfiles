@@ -12,12 +12,6 @@
 	pager = delta
 [interactive]
     diffFilter = delta --color-only --features=interactive
-[delta]
-    navigate = true
-    light = false
-    side-by-side = true
-    line-numbers = true
-    wrap-max-lines = 1000
 [push]
 	autoSetupRemote = true
 	default = simple
@@ -25,6 +19,9 @@
 [include]
 	path = {{ .git.configPath }}/gitconfig-shared
 	path = {{ .git.configPath }}/gitconfig-tools
+	path = {{ .git.configPath }}/gitconfig-delta
+[delta]
+    features = gabyx
 [alias]
 	hooks = !\"{{ .chezmoi.homeDir }}/.githooks/bin/cli\"
 [githooks]
@@ -33,11 +30,11 @@
 	cloneBranch = {{ .git.githooksCloneBranch }}
 	useManual = true
 	useCoreHooksPath = false
+	manualTemplateDir = {{ .chezmoi.homeDir }}/.githooks/templates
 	runner = {{ .chezmoi.homeDir }}/.githooks/bin/runner
 	dialog = {{ .chezmoi.homeDir }}/.githooks/bin/dialog
 	maintainedHooks = !all, applypatch-msg, pre-applypatch, post-applypatch, pre-commit, pre-merge-commit, prepare-commit-msg, commit-msg, post-commit, pre-rebase, post-checkout, post-merge, pre-push, post-rewrite
 	autoUpdateEnabled = true
-	autoUpdateCheckTimestamp = 0
 	containerizedHooksEnabled = true
 [init]
 	defaultBranch = main

@@ -62,8 +62,8 @@ gui:
 git:
   paging:
     colorArg: always
-    pager: delta --dark --paging=never
-    useConfig: false
+    pager: delta --paging=never
+
   commit:
     signOff: false
   merging:
