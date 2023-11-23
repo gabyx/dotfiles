@@ -34,6 +34,18 @@
     # Nix-Alien
     nixAlien.url = "github:thiagokokada/nix-alien";
 
+    # WezTerm Nightly
+    wezterm = {
+      url = "github:happenslol/wezterm/add-nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Neovim nigthtly
+    neovim-nightly = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # TODO: Add any other flake you might need
     # hardware.url = "github:nixos/nixos-hardware";
 

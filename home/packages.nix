@@ -4,7 +4,15 @@
   pkgsStable,
   inputs,
   ...
-}: {
+}: let
+  # Define some special packages.
+  wezterm-nightly = inputs.wezterm.packages."${pkgs.system}".default;
+
+  # llvm 16 packages have a problem:
+  # https://github.com/NixOS/nixpkgs/issues/244609
+  llvmPkgs = pkgs.llvmPackages_15;
+  clangTools = pkgs.clang-tools_15;
+in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   home.packages = with pkgs; [
@@ -15,7 +23,7 @@
     gnome.seahorse
 
     kitty
-    wezterm
+    wezterm-nightly
 
     # Editors
     vscode
@@ -53,12 +61,22 @@
     autoconf
     libtool
     pkgconf
-    gcc
-    gdb
 
     ## C++
     cmake
-    llvmPackages_16.clang-unwrapped
+    valgrind
+    cppcheck
+    gdb
+    llvmPkgs.bintools
+    llvmPkgs.openmp
+    llvmPkgs.lld
+    llvmPkgs.llvm
+    llvmPkgs.lldb
+    # llvmPkgs.libclc
+    llvmPkgs.libclang
+    llvmPkgs.libllvm
+    llvmPkgs.libcxx
+    (hiPrio llvmPkgs.libstdcxxClang)
 
     ## Go
     go

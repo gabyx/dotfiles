@@ -8,6 +8,11 @@
 }:
 with lib; let
   cfg = config.astronvim;
+
+  # Add the nightly neovim too.
+  neovim-nightly = let
+    neovim-n = inputs.neovim-nightly.packages.${pkgs.system}.neovim;
+  in (pkgs.writeShellScriptBin "nvim-nightly" "exec -a $0 ${neovim-n}/bin/nvim $@");
 in {
   # Options for nvim configuration repositories.
   options.astronvim = {
@@ -40,6 +45,7 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       neovim
+      neovim-nightly
     ];
 
     # Let home-manager clone the repos from the store and

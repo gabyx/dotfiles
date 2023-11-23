@@ -36,9 +36,9 @@ xkb_symbols "basic" {
     // modifier_map Control { <CAPS> };
 
     // Right Ctrl acts as compose key.
-    // replace key <RCTL> { [ Multi_key ] };
+    key <RCTL> { [ Multi_key ] };
     // Left Ctrl acts as left Meta key.
-    // key <LCTL> { [ Meta_L ] };
+    key <LCTL> { [ Meta_L ] };
 
     // Right Alt acts as right Meta.
     // key <RALT> { [ Meta_R ] };
