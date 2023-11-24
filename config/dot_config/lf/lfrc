@@ -19,6 +19,12 @@ cmd mkfile ${{
   $EDITOR $ans
 }}
 
+cmd movefile ${{
+  printf "File Name: "
+  read ans
+  $EDITOR $ans
+}}
+
 # Archive bindings
 cmd unarchive ${{
   case "$f" in
@@ -55,7 +61,13 @@ map m
 
 map au unarchive
 
+cmd showEditor ${{
+    printf "%s\n" "$EDITOR" "$f"
+    read ans
+}}
+
 # Basic Functions
+map e showEditor
 map . set hidden!
 map dd trash
 map dr restore_trash

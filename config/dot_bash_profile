@@ -16,5 +16,9 @@ source "$HOME/python-envs/default/bin/activate"
 
 if [ -n "$WEZTERM_EXECUTABLE" ]; then
     # Shell integration for Wezterm.
-    source "$HOME/.config/shell/wezterm.sh"
+    if [ -f "$HOME/.config/wezterm/shell-integration.sh" ]; then
+        source "$HOME/.config/wezterm/shell-integration.sh"
+    elif [ -f "$HOME/.config/wezterm/shell-integration-backup.sh" ]; then
+        source "$HOME/.config/wezterm/shell-integration-backup.sh"
+    fi
 fi

@@ -1,1 +1,16 @@
+# WezTerm Integration
+# Only on macOS and Linux (not `ubuntu` or `fedora` or `nixos` (already installed))
+{{ if or (eq .chezmoi.os "darwin") (and (eq .chezmoi.os "linux") (not (or (eq .chezmoi.osRelease.id "ubuntu") (eq .chezmoi.osRelease.id "fedora") (eq .chezmoi.osRelease.id "nixos")))) }}
+".config/wezterm/shell-integration-wezterm.sh":
+  type: file
+  executable: true
+  url: https://raw.githubusercontent.com/wez/wezterm/main/assets/shell-integration/wezterm.sh
+  checksum.sha256: 7098cd58562c1cfd67fc58d5f9616d262eaa84f25cce430045d401970866cd42
+{{ end }}
 
+# Wezterm Terminfo
+".config/wezterm/wezterm.terminfo":
+  type: file
+  executable: false
+  url: https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo
+  checksum.sha256: 3fe994c818c2bdb942b6a3a635995cd9ba94537dad30d5a960ef60db928080db

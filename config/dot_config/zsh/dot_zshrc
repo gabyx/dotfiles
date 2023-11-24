@@ -35,11 +35,6 @@ setopt PUSHD_SILENT              # Do not print the directory stack after pushd 
 export EDITOR="nvim"
 export VISUAL="nvim"
 
-# Source wezterm shell integration script
-if [ -f "$HOME/.config/shell/integration-wezterm.sh" ]; then
-    source "$HOME/.config/shell/integration-wezterm.sh"
-fi
-
 # Settings for plugins.
 local ZSH_AUTOSUGGEST_USE_ASYNC=true
 local ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=247'
@@ -146,7 +141,11 @@ fi
 
 source "$HOME/.config/zsh/.zshrc-tmux.zsh"
 
+# Wezterm shell integration.
 if [ -n "$WEZTERM_EXECUTABLE" ]; then
-    # Shell integration for Wezterm.
-    source "$HOME/.config/shell/wezterm.sh"
+    if [ -f "$HOME/.config/wezterm/shell-integration.sh" ]; then
+        source "$HOME/.config/wezterm/shell-integration.sh"
+    elif [ -f "$HOME/.config/wezterm/shell-integration-backup.sh" ]; then
+        source "$HOME/.config/wezterm/shell-integration-backup.sh"
+    fi
 fi
