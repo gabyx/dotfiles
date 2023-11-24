@@ -23,7 +23,7 @@ in {
     gnome.seahorse
 
     kitty
-    wezterm-nightly
+    wezterm
 
     # Editors
     vscode
@@ -66,6 +66,7 @@ in {
     cmake
     valgrind
     cppcheck
+    # gcc13
     gdb
     llvmPkgs.bintools
     llvmPkgs.openmp

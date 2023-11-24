@@ -44,5 +44,5 @@ fi
 echo "Apply chezmoi config files."
 chezmoi --force --no-tty \
     --no-pager \
-    --refresh-externals=always \
+    --refresh-externals=never \
     apply
