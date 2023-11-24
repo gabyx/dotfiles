@@ -145,7 +145,5 @@ source "$HOME/.config/zsh/.zshrc-tmux.zsh"
 if [ -n "$WEZTERM_EXECUTABLE" ]; then
     if [ -f "$HOME/.config/wezterm/shell-integration.sh" ]; then
         source "$HOME/.config/wezterm/shell-integration.sh"
-    elif [ -f "$HOME/.config/wezterm/shell-integration-backup.sh" ]; then
-        source "$HOME/.config/wezterm/shell-integration-backup.sh"
     fi
 fi

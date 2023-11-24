@@ -61,13 +61,7 @@ map m
 
 map au unarchive
 
-cmd showEditor ${{
-    printf "%s\n" "$EDITOR" "$f"
-    read ans
-}}
-
 # Basic Functions
-map e showEditor
 map . set hidden!
 map dd trash
 map dr restore_trash
