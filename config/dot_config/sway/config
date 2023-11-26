@@ -53,7 +53,7 @@ set $network-menu ~/.config/rofi/show-network-menu.sh --editor
 set $bluetooth-menu rofi-bluetooth
 set $emoji-menu rofimoji --clipboarder wl-copy --action type copy --keybinding-copy y
 set $systemd-menu rofi-systemd
-set $procs-menu wezterm start btop
+set $procs-menu kitty btop
 set $sound-menu pavucontrol
 set $calculator-menu qalculate-gtk
 set $password-menu swaymsg workspace \\$creds-ws

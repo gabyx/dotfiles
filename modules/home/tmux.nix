@@ -36,6 +36,6 @@
   # to be able to properly start tmux because these variables are not
   # yet sourced.
   xdg.configFile."tmux/.tmux-env".text = ''
-    TMUX_TMPDIR="${config.home.sessionVariables.TMUX_TMPDIR}"
+    export TMUX_TMPDIR="${config.home.sessionVariables.TMUX_TMPDIR}"
   '';
 }

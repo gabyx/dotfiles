@@ -8,6 +8,10 @@ LOG=~/.sway-startup.log
 # Save stdout and stderr to file
 exec 3>&1 4>&2 >"$LOG" 2>&1
 
+env
+
+echo "============"
+
 sleep 0.5
 # Start the clipboard manager.
 echo "Start clipboard."
@@ -22,9 +26,18 @@ if [ ! -f "$tmuxEnv" ]; then
     echo "file is not here to source 'TMUX_TMPDIR'." >&2
     exit 1
 fi
+
 source "$tmuxEnv"
 
+[ -n "$TMUX_TMPDIR" ] || {
+    echo "Env. TMUX_TMPDIR is not set!" >&2
+    exit 1
+}
+echo "TMUX_TMPDIR: '$TMUX_TMPDIR'"
+
+# Start the server and make sure it uses the correct TERM= variable.
 tmux start-server
+tmux display-message -p 'Tmux: socket path: #{socket_path}'
 echo "Server started."
 sleep 4
 
@@ -45,9 +58,9 @@ tmux list-sessions || {
 echo "-----------"
 
 echo "Start workspaces"
-swaymsg "workspace \$ws-1; exec \$term-start NixOS \$term-start-cmd"
 swaymsg "workspace \$ws-2; exec \$term-start AstroNVim \$term-start-cmd"
 swaymsg "workspace \$ws-3; exec \$term-start Main-1 \$term-start-cmd"
 swaymsg "workspace \$ws-4; exec \$term-start Main-2 \$term-start-cmd"
+swaymsg "workspace \$ws-1; exec \$term-start NixOS \$term-start-cmd"
 
 echo "Finished"

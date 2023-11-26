@@ -23,7 +23,7 @@ in {
     gnome.seahorse
 
     kitty
-    wezterm
+    wezterm-nightly
 
     # Editors
     vscode
