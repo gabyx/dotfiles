@@ -200,7 +200,7 @@ bindsym --locked $mod+Space input '*' xkb_switch_layout next
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 input type:keyboard {
-    xkb_layout programmer,us,de
+    xkb_layout programmer,programmer-defy,us,de
     xkb_options ctrl:nocaps,grp:shifts_toggle
 }
 

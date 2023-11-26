@@ -28,6 +28,7 @@
     outputs.homeManagerModules.tmux
     outputs.homeManagerModules.chezmoi
     outputs.homeManagerModules.astronvim
+    outputs.homeManagerModules.bazecor
   ];
 
   home = rec {

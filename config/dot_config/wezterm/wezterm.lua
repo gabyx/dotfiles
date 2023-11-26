@@ -21,7 +21,8 @@ config.set_environment_variables = {
     TERMINFO_DIRS = os.getenv("HOME") .. "/.terminfo" .. ":" .. os.getenv("TERMINFO_DIRS"),
     WSLENV = "TERMINFO_DIRS",
 }
-config.term = "wezterm"
+-- Setting it to `wezterm` disable cursor small/bold in the vim plugin.
+config.term = "xterm-256color"
 
 -- This is where you actually apply your config choices
 config.color_scheme = "Cobalt2"

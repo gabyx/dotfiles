@@ -20,9 +20,15 @@ exec 3>&1 4>&2 >"$LOG" 2>&1
 echo "Replacing tmux resurrect last file..."
 
 resurrectDir=~/.local/share/tmux/resurrect
+echo "Before ============="
+cat "$resurrectDir/last"
+
 target=$(readlink -f $resurrectDir/last) &&
     sed -E \
         -e "s|nvim --cmd.*ruby.|nvim|g;" \
         -e "s|/etc/profiles/per-user/$USER/bin/||g" \
         -e "s|/home/$USER/.nix-profile/bin/||g" \
         "$target" | sponge "$target"
+
+echo "After  ============="
+cat "$resurrectDir/last"

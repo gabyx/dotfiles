@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1091,SC2034
+# shellcheck disable=SC1091,SC2034,SC1090
 # set -e
 # set -u
 
@@ -13,11 +13,20 @@ sleep 0.5
 echo "Start clipboard."
 swaymsg exec \$clipboard
 
-# Start tmux and make terminal on workspace 1.
+# Start tmux and make sessions.
 echo "Start tmux, let it recreate the workspaces with resurrect"
+
+tmuxEnv=~/.config/tmux/.tmux-env
+if [ ! -f "$tmuxEnv" ]; then
+    echo "Cannot start tmux because the '~/.config/tmux/.tmux-env' " >&2
+    echo "file is not here to source 'TMUX_TMPDIR'." >&2
+    exit 1
+fi
+source "$tmuxEnv"
+
 tmux start-server
 echo "Server started."
-sleep 3
+sleep 4
 
 tmux list-sessions || {
     echo "ERROR: The exit-empty is not set to off, so the server directly exits!" >&2
@@ -26,7 +35,7 @@ tmux list-sessions || {
 # Create all sessions if not yet existing
 tmux new-session -D -s Main-1
 tmux new-session -D -s Main-2
-tmux new-session -D -s Astrovim
+tmux new-session -D -s AstroNVim
 tmux new-session -D -s NixOS
 
 echo "Sessions are:"
@@ -35,21 +44,9 @@ tmux list-sessions || {
 }
 echo "-----------"
 
-# Currently the above tmux start restores the panes
-# by tmux-resurrect itself, so the below is not needed.
-# tmux send-keys -t Main "$HOME/.config/tmux/plugins/tmux-resurrect/scripts/restore.sh" Enter
-# echo "Sent resurrect command."
-# sleep 10
-
-# Currently we do not send a nvim command to the window.
-# tmux send-keys -t Main.0 nvim Enter
-# tmux send-keys -t Astrovim.0 nvim Enter
-# tmux send-keys -t Dotfiles.0 nvim Enter
-# echo "Started nvim in all sessions"
-
 echo "Start workspaces"
 swaymsg "workspace \$ws-1; exec \$term-start NixOS \$term-start-cmd"
-swaymsg "workspace \$ws-2; exec \$term-start Astrovim \$term-start-cmd"
+swaymsg "workspace \$ws-2; exec \$term-start AstroNVim \$term-start-cmd"
 swaymsg "workspace \$ws-3; exec \$term-start Main-1 \$term-start-cmd"
 swaymsg "workspace \$ws-4; exec \$term-start Main-2 \$term-start-cmd"
 

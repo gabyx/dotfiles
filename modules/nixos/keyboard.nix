@@ -14,8 +14,15 @@
     layout = "programmer";
     xkbVariant = "";
     xkbOptions = "ctrl:nocaps";
+
+    extraLayouts.programmer-defy = {
+      description = "Prog. Defy (US)"; # Must have the same naming as in the file !!!
+      languages = ["eng"];
+      symbolsFile = ../../config/keyboard/linux/symbols/programmer-defy;
+    };
+
     extraLayouts.programmer = {
-      description = "Programmer (US)";
+      description = "Prog. Mx (US)"; # Must have the same naming as in the file !!!
       languages = ["eng"];
       symbolsFile = ../../config/keyboard/linux/symbols/programmer;
     };

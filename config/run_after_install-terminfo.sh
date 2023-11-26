@@ -11,8 +11,10 @@ fi
 
 file=~/.config/wezterm/wezterm.terminfo
 if [ -f "$file" ] && command -v "tic" &>/dev/null; then
-    tic -x -o ~/.terminfo "$file"
-    echo "Installed 'wezterm.terminfo' into '~/.terminfo'."
+    if [ ! -f ~/.terminfo/w/wezterm ]; then
+        tic -x -o ~/.terminfo "$file"
+        echo "Installed 'wezterm.terminfo' into '~/.terminfo'."
+    fi
 else
     echo "WARNING: Cannot install 'wezterm.terminfo':" >&2
     echo "         Either file missing or 'tic' is not installed." >&2
