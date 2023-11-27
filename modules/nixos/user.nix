@@ -25,6 +25,7 @@
         "networkmanager"
         "network"
         "davfs2"
+        "dialout" # For bazecor and the Dygma keyboard.
       ];
     };
   };

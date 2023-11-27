@@ -11,7 +11,7 @@
   };
 
   services.xserver = {
-    layout = "programmer";
+    layout = "programmer-defy";
     xkbVariant = "";
     xkbOptions = "ctrl:nocaps";
 
@@ -22,7 +22,7 @@
     };
 
     extraLayouts.programmer = {
-      description = "Prog. Mx (US)"; # Must have the same naming as in the file !!!
+      description = "Prog. Mx (US)";
       languages = ["eng"];
       symbolsFile = ../../config/keyboard/linux/symbols/programmer;
     };

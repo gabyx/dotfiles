@@ -1,7 +1,7 @@
 partial alphanumeric_keys modifier_keys
-xkb_symbols "basic" {
+xkb_symbols "programmer" {
 
-    include "us"
+    include "us(basic)"
     name[Group1] = "Prog. Mx (US)";
 
     // To see the symbold corresponding to the keycode generated check
@@ -24,28 +24,17 @@ xkb_symbols "basic" {
     key <TLDE>  { [  U1F606,     U1F914  ]  };
     key <LSGT>  { [  grave,      asciitilde  ]  };
 
-    // Switch modifiers.
-
-    // // CapsLock acts as left Ctrl.
-    // // Taken from /nix/store/.../xkeyboard-config/share/X11/xkb/symbols/capslock
-    // replace key <CAPS> {
-    //     type[Group1] = "ONE_LEVEL",
-    //     symbols[Group1] = [ Caps_Lock ],
-    //     actions[Group1] = [ SetMods(modifiers=Control) ]
-    // };
-    // modifier_map Control { <CAPS> };
-
     // Right Ctrl acts as compose key.
-    key <RCTL> { [ Multi_key ] };
+    // key <RCTL> { [ Multi_key ] };
     // Left Ctrl acts as left Meta key.
-    key <LCTL> { [ Meta_L ] };
+    // key <LCTL> { [ Hyper_L ] };
+    // key <RALT> { [ Meta_L ] };
 
-    // Right Alt acts as right Meta.
-    // key <RALT> { [ Meta_R ] };
-
-    // Beginning of modifier mappings.
-    // modifier_map Mod1 { Alt_L };
-    // modifier_map Mod2 { Super_L };
-    // modifier_map Mod3 { Meta_L };
-
+    // Switch modifiers.
+    // modifier_map Shift { Shift_L, Shift_R };
+    // modifier_map Control { Control_L };
+    // modifier_map Mod1 { Alt_L, Alt_R };
+    // modifier_map Mod4 { Super_L, Super_R, Shift_L };
+    // modifier_map Mod2 { Hyper_L, Hyper_R };
+    // modifier_map Mod2 { Meta_L };
 };

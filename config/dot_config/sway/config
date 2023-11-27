@@ -219,7 +219,7 @@ seat * hide_cursor when-typing enable
     bindsym $mod+q kill
     bindsym $mod+Control+Shift+q focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, kill
 
-    bindsym $mod+Shift+Escape exec $power-menu
+    bindsym $mod+Shift+p exec $power-menu
     bindsym $mod+Shift+w exec $wireless-menu
     bindsym $mod+Shift+i exec $network-menu
     bindsym $mod+Shift+n exec $notification-menu
@@ -229,7 +229,6 @@ seat * hide_cursor when-typing enable
     bindsym $mod+Shift+m exec $emoji-menu
     bindsym $mod+Shift+s exec $screenshot-menu
     bindsym $mod+d exec $launcher-menu
-    bindsym $mod+c exec $clipboard-menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
