@@ -200,7 +200,7 @@ bindsym --locked $mod+Space input '*' xkb_switch_layout next
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 input type:keyboard {
-    xkb_layout programmer,programmer-defy,us,de
+    xkb_layout programmer-defy,programmer,us,de
     xkb_options ctrl:nocaps,grp:shifts_toggle
 }
 
@@ -228,6 +228,7 @@ seat * hide_cursor when-typing enable
     bindsym $mod+Shift+t exec $procs-menu
     bindsym $mod+Shift+m exec $emoji-menu
     bindsym $mod+Shift+s exec $screenshot-menu
+    bindsym $mod+c exec $clipboard-menu
     bindsym $mod+d exec $launcher-menu
 
     # Drag floating windows by holding down $mod and left mouse button.
