@@ -51,7 +51,7 @@ set $power-menu ~/.config/rofi/show-power-menu.sh
 set $wireless-menu ~/.config/rofi/show-network-menu.sh --wireless
 set $network-menu ~/.config/rofi/show-network-menu.sh --editor
 set $bluetooth-menu rofi-bluetooth
-set $emoji-menu rofimoji --clipboarder wl-copy --action type copy --keybinding-copy y
+set $emoji-menu rofimoji --clipboarder wl-copy --action type copy --keybinding-copy Ctrl-y
 set $systemd-menu rofi-systemd
 set $procs-menu kitty btop
 set $sound-menu pavucontrol
@@ -201,7 +201,7 @@ bindsym --locked $mod+Space input '*' xkb_switch_layout next
 # Read `man 5 sway-input` for more information about this section.
 input type:keyboard {
     xkb_layout programmer-defy,programmer,us,de
-    xkb_options ctrl:nocaps,grp:shifts_toggle
+    xkb_options ctrl:nocaps,grp:menu_toggle
 }
 
 seat * hide_cursor when-typing enable
