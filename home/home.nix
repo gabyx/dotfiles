@@ -24,6 +24,7 @@
 
     ./environment.nix
     ./packages.nix
+    ./xdg.nix
 
     outputs.homeManagerModules.tmux
     outputs.homeManagerModules.chezmoi

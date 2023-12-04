@@ -12,7 +12,9 @@ source "$HOME/.config/zsh/.zshenv_rust"
 source "$HOME/.config/shell/aliases.bash"
 source "$HOME/.config/shell/functions.bash"
 
-source "$HOME/python-envs/default/bin/activate"
+if [ -f "$HOME/python-envs/default/bin/activate" ]; then
+    source "$HOME/python-envs/default/bin/activate"
+fi
 
 if [ -n "$WEZTERM_EXECUTABLE" ]; then
     # Shell integration for Wezterm.

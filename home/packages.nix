@@ -19,6 +19,7 @@ in {
     # Basics
     git
     git-lfs
+    tig
 
     gnome.seahorse
 
@@ -124,8 +125,10 @@ in {
     vlc # Movie player
     inkscape # Vector graphics
     krita # Painting
+    nomacs # Image viewer
     zathura # Simple document viewer
     pdfarranger # PDF arranger
+    ghostscript
     ymuse # Sound player
     zoom-us # Video calls
     firefox

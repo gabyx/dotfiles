@@ -21,7 +21,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     # You can access packages and modules from different nixpkgs revs
     # at the same time. Here's an working example:
-    nixpkgsStable.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgsStable.url = "github:nixos/nixpkgs/nixos-23.11";
     # Also see the 'stable-packages' overlay at 'overlays/default.nix'.
 
     # Some hardware modules.
@@ -36,7 +36,7 @@
 
     # WezTerm Nightly
     wezterm = {
-      url = "github:happenslol/wezterm/add-nix-flake";
+      url = "github:happenslol/wezterm/add-nix-flake?dir=nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
