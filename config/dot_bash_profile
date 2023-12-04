@@ -5,9 +5,9 @@
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-source "$HOME/.config/zsh/.zshenv_go"
-source "$HOME/.config/zsh/.zshenv_homebrew"
-source "$HOME/.config/zsh/.zshenv_rust"
+source "$HOME/.config/zsh/.zshenv-go.zsh"
+source "$HOME/.config/zsh/.zshenv-homebrew.zsh"
+source "$HOME/.config/zsh/.zshenv-rust.zsh"
 
 source "$HOME/.config/shell/aliases.bash"
 source "$HOME/.config/shell/functions.bash"
