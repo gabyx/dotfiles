@@ -23,7 +23,7 @@
     # ./nvim.nix
 
     ./environment.nix
-    ./packages.ni
+    ./packages.nix
     ./programs.nix
     ./xdg.nix
 
