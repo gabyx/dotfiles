@@ -17,6 +17,7 @@ in {
   # $ nix search wget
   home.packages = with pkgs; [
     # Basics
+    age # Encryption tool.
     git
     git-lfs
     tig
@@ -118,6 +119,7 @@ in {
 
     # MultiMedia
     bitwarden # Password manager
+    bitwarden-cli
     signal-desktop # Messaging app
     slack # Messaging app
     transmission-gtk

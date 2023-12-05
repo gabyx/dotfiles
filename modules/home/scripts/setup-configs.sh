@@ -41,8 +41,15 @@ else
     echo " \$ $dest/modules/home/scripts/setup-configs.sh --force '$chezmoiUrl' '$chezmoiRef' '$workspace'"
 fi
 
+addArgs=()
+if [ ! -f ~/.config/chezmoi/key.txt ]; then
+    echo "WARNING: Encrypted files are not applied, " >&2
+    echo "because chezmoi is not yet setup." >&2
+    addArgs=("--exclude" "encrypted")
+fi
+
 echo "Apply chezmoi config files."
 chezmoi --force --no-tty \
     --no-pager \
     --refresh-externals=never \
-    apply
+    apply "${addArgs[@]}"
