@@ -5,7 +5,7 @@
   inputs,
   ...
 }: let
-  browser = ["google-chrome-stable.desktop"];
+  browser = ["google-chrome.desktop"];
 
   associations = {
     "text/html" = browser;
