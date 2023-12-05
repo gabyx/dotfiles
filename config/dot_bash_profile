@@ -8,12 +8,17 @@ export LANG=en_US.UTF-8
 source "$HOME/.config/zsh/.zshenv-go.zsh"
 source "$HOME/.config/zsh/.zshenv-homebrew.zsh"
 source "$HOME/.config/zsh/.zshenv-rust.zsh"
+source "$HOME/.config/zsh/.zshenv-kube.zsh"
 
 source "$HOME/.config/shell/aliases.bash"
 source "$HOME/.config/shell/functions.bash"
 
 if [ -f "$HOME/python-envs/default/bin/activate" ]; then
     source "$HOME/python-envs/default/bin/activate"
+fi
+
+if command direnv &>/dev/null; then
+    eval "$(direnv hook bash)"
 fi
 
 if [ -n "$WEZTERM_EXECUTABLE" ]; then

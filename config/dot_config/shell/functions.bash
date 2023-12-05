@@ -23,6 +23,11 @@ function gabyx::compress_pdf() {
         "-sOutputFile=$output" "$file"
 }
 
+function gabyx::bitwarden() {
+    BW_SESSION=$(bw login gnuetzi@gmail.com --raw)
+    export BW_SESSION
+}
+
 function gabyx::remove_docker_images() {
     local builder="docker"
 
