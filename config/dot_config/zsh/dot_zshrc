@@ -141,6 +141,11 @@ fi
 
 source "$HOME/.config/zsh/.zshrc-tmux.zsh"
 
+# Direnv hook
+if command direnv &>/dev/null; then
+    eval "$(direnv hook zsh)"
+fi
+
 # Wezterm shell integration.
 if [ -n "$WEZTERM_EXECUTABLE" ]; then
     if [ -f "$HOME/.config/wezterm/shell-integration.sh" ]; then

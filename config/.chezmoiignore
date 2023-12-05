@@ -7,6 +7,8 @@ keyboard
 common
 docs
 
+.config/chezmoi/key.txt.age
+
 {{- if ne .chezmoi.os "darwin" }}
 # Only on darwin
 .config/skhd

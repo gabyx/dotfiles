@@ -23,7 +23,8 @@
     # ./nvim.nix
 
     ./environment.nix
-    ./packages.nix
+    ./packages.ni
+    ./programs.nix
     ./xdg.nix
 
     outputs.homeManagerModules.tmux
