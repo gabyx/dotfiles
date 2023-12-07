@@ -3,13 +3,13 @@ clusters:
 - cluster:
     certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJkakNDQVIyZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWpNU0V3SHdZRFZRUUREQmhyTTNNdGMyVnkKZG1WeUxXTmhRREUzTURFM01qY3pORGt3SGhjTk1qTXhNakEwTWpJd01qSTVXaGNOTXpNeE1qQXhNakl3TWpJNQpXakFqTVNFd0h3WURWUVFEREJock0zTXRjMlZ5ZG1WeUxXTmhRREUzTURFM01qY3pORGt3V1RBVEJnY3Foa2pPClBRSUJCZ2dxaGtqT1BRTUJCd05DQUFRZ2wvQzlhNDlrWTRmWTgzbVJaNmZDUm9nVWx1MjZYZ093aEJFOGZhRCsKeWxrZmpZT0J5bjl1VWg3L1NiQzhVQ3Q2S1M5R1N5eUxOQUhSTnVqS0JGVTNvMEl3UURBT0JnTlZIUThCQWY4RQpCQU1DQXFRd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVWY4VmZ0SUE3U2xubjVqTm12aWFtCk9lUytTTGt3Q2dZSUtvWkl6ajBFQXdJRFJ3QXdSQUlnWDhpWjR0TVlHdGRmUzN3K0JyYVlyTHBweVBmRU5RbmUKekRqSmhHTStCcDRDSUZJNW82UittTXpYZXNQTFp2RE55eGtlVFJaeUp0Y25QTUFZVzYyemtuV3IKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
     server: https://127.0.0.1:6443
-  name: local-k3s
+  name: default
 contexts:
 - context:
-    cluster: local-k3s
-    user: local-k3s
-  name: local-k3s
-current-context: local-k3s
+    cluster: default
+    user: default
+  name: default
+current-context: default
 kind: Config
 preferences: {}
 users:
