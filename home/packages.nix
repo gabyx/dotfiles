@@ -54,9 +54,35 @@ in {
     kdiff3
     jq
     yq
+    yarn
+    just
+
+    # Linters
+    markdownlint-cli
+    yamllint
+    nodePackages.jsonlint
+    codespell
+    typos
     shfmt
     shellcheck
-    just
+
+    ## Lsp
+    # rust-analyzer and clangd come with
+    # the toolchain.
+    gopls
+    golangci-lint-langserver
+    texlab
+    rnix-lsp
+    marksman
+    lua-language-server
+    nodePackages.dockerfile-language-server-nodejs
+    nodePackages.bash-language-server
+    nodePackages.vscode-json-languageserver
+    nodePackages.yaml-language-server
+
+    ## Debug Adapters
+    # lldb-code is installed in llvm
+    delve
 
     ## C
     gnumake
