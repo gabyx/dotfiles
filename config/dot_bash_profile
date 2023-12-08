@@ -6,6 +6,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 source "$HOME/.config/zsh/.zshenv-go.zsh"
+source "$HOME/.config/zsh/.zshenv-node.zsh"
 source "$HOME/.config/zsh/.zshenv-homebrew.zsh"
 source "$HOME/.config/zsh/.zshenv-rust.zsh"
 source "$HOME/.config/zsh/.zshenv-kube.zsh"

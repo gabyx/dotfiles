@@ -1,10 +1,12 @@
 {pkgs, ...}: {
-  programs.direnv = {
-    enable = true;
-    package = pkgs.direnv;
-    nix-direnv = {
+  programs = {
+    direnv = {
       enable = true;
-      package = pkgs.nix-direnv;
+      package = pkgs.direnv;
+      nix-direnv = {
+        enable = true;
+        package = pkgs.nix-direnv;
+      };
     };
   };
 }

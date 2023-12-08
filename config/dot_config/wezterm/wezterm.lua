@@ -1,5 +1,7 @@
 -- Pull in the wezterm API
 local wezterm = require("wezterm")
+local astrodark = require("colors/astrodark")
+
 local act = wezterm.action
 local mux = wezterm.mux
 
@@ -25,10 +27,31 @@ config.set_environment_variables = {
 config.term = "xterm-256color"
 
 -- This is where you actually apply your config choices
-config.color_scheme = "Cobalt2"
+config.colors = astrodark.colors()
+config.window_frame = astrodark.window_frame()
+
 config.font = wezterm.font_with_fallback({
-    { family = "JetBrainsMono Nerd Font", weight = "Bold" },
+    { family = "JetBrainsMono Nerd Font", weight = "Medium" },
 })
+config.font_rules = {
+    {
+        intensity = "Bold",
+        italic = false,
+        font = wezterm.font({
+            family = "JetBrainsMono Nerd Font",
+            weight = "ExtraBold",
+        }),
+    },
+    {
+        intensity = "Bold",
+        italic = true,
+        font = wezterm.font({
+            family = "JetBrainsMono Nerd Font",
+            italic = true,
+            weight = "ExtraBold",
+        }),
+    },
+}
 config.font_size = 12
 config.window_decorations = "RESIZE"
 config.hide_tab_bar_if_only_one_tab = true
