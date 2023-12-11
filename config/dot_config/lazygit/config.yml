@@ -119,11 +119,11 @@ keybinding:
     nextBlock-alt2: <tab>
     prevBlock-alt2: <backtab>
     jumpToBlock:
-      - "1"
-      - "2"
-      - "3"
-      - "4"
-      - "5"
+      - "!"
+      - "@"
+      - "#"
+      - "$"
+      - "%"
     nextMatch: "n"
     prevMatch: "N"
     startSearch: /
@@ -161,7 +161,7 @@ keybinding:
     copyToClipboard: <c-o>
     openRecentRepos: <c-r>
     submitEditorText: <enter>
-    extrasMenu: "@"
+    extrasMenu: "^"
     toggleWhitespaceInDiffView: <c-w>
     increaseContextInDiffView: "}"
     decreaseContextInDiffView: "{"
