@@ -135,8 +135,12 @@ source "$HOME/.config/shell/aliases.bash"
 source "$HOME/.config/shell/aliases.zsh"
 source "$HOME/.config/shell/functions.bash"
 
-if [ -f "$HOME/python-envs/default/bin/activate" ]; then
-    source "$HOME/python-envs/default/bin/activate"
+if [ "$CHEZMOI_OS_RELEASE_ID" = "nixos" ]; then
+    gabyx::nixos_activate_python_environment default || true
+else
+    if [ -f "$HOME/python-envs/default/bin/activate" ]; then
+        source "$HOME/python-envs/default/bin/activate"
+    fi
 fi
 
 source "$HOME/.config/zsh/.zshrc-tmux.zsh"

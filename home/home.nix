@@ -26,6 +26,7 @@
     ./packages.nix
     ./programs.nix
     ./xdg.nix
+    ./python.nix
 
     outputs.homeManagerModules.tmux
     outputs.homeManagerModules.chezmoi
@@ -62,6 +63,10 @@
     enable = true;
     astroVimUserUrl = "https://github.com/gabyx/astrovim.git";
     astroVimUserRef = "main";
+  };
+
+  python-envs = {
+    enable = true;
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

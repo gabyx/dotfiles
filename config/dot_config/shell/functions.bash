@@ -120,3 +120,23 @@ function gabyx::nixos_rebuild() {
     (cd "$(readlink ~/nixos-config)" &&
         nixos-rebuild "$what" --flake ".#$host" --use-remote-sudo "$@")
 }
+
+function gabyx::nixos_activate_python_env() {
+    local env="$1"
+    local dir="$HOME/python-envs"
+
+    if [ -d "$dir/.$env" ] || [ ! -d "$dir/$env" ]; then
+        rm -rf "$dir/.$env" || true
+
+        (cd ~/nixos-config/home/python-envs &&
+            nix build ".#python-envs.$env" -o "$dir/.$env" &&
+            "$dir/.$env/bin/python" -m venv --system-site-packages "$dir/$env") ||
+            {
+                echo "Failed to activate environment '$env'." >&2
+                return 1
+            }
+    fi
+
+    # shellcheck disable=SC1090
+    source "$dir/$env/bin/activate"
+}
