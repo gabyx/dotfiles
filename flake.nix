@@ -36,7 +36,7 @@
 
     # WezTerm Nightly
     wezterm = {
-      url = "github:happenslol/wezterm/add-nix-flake?dir=nix";
+      url = "github:Emiller88/wezterm/nix-ci?dir=nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
