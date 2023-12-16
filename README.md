@@ -30,7 +30,7 @@ other shit OS which desperately tries to convert itself into a \*nix OS) and
 | Wallpaper Setter           | [sway](https://github.com/swaywm/sway)                                                                                                            |
 | Screenshot                 | [grimshot](https://search.nixos.org/packages?channel=23.05&show=sway-contrib.grimshot&from=0&size=50&sort=relevance&type=packages&query=grimshot) |
 | Clipboard                  | [copyq](https://hluk.github.io/CopyQ/) with special password ignore command                                                                       |
-| Notification               | [swaync](https://github.com/ErikReider/SwayNotificationCenter) with special password ignore command                                               |
+| Notification               | [swaync](https://github.com/ErikReider/SwayNotificationCenter)                                                                                    |
 | Web Browser                | [Chrome](https://www.google.com/intl/de/chrome/)                                                                                                  |
 | Code Editor                | [Nvim](https://neovim.io/) with [Astrovim](https://github.com/gabyx/astrovim)                                                                     |
 | Normal Font                | [NotoSans Nerd Font](https://www.nerdfonts.com/)                                                                                                  |

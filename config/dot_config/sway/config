@@ -212,8 +212,8 @@ seat * hide_cursor when-typing enable
 # Basics:
 #
     # Start a terminal
-    bindsym $mod+Return exec $term
-    bindsym $mod+Shift+Return exec $file-manager
+    bindsym $mod+Return exec ~/.config/sway/scripts/run-in-focused-cwd.sh $term
+    bindsym $mod+Shift+Return exec ~/.config/sway/scripts/run-in-focused-cwd.sh $file-manager
 
     # Kill focused window
     bindsym $mod+q kill
