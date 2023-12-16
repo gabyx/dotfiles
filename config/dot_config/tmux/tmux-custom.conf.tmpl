@@ -72,6 +72,9 @@ bind-key r \
 #############################
 set -g default-terminal "tmux-256color"
 
+# Set support for reporting modifiers in `CSI u` mode
+set -g extended-keys on
+
 # Allow the tmux server to exist without any sessions!
 set exit-empty off
 
