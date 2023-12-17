@@ -18,6 +18,9 @@ history:
   echo "History in 'test' profile:"
   nix profile history --profile /nix/var/nix/profiles/system-profiles/test
 
+trim *ARGS:
+  ./scripts/trim-generations.sh {{ARGS}}
+
 gc:
   echo "Remove test profile"
   sudo rm -rf /nix/var/nix/profiles/system-profile/test
