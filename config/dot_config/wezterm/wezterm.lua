@@ -15,7 +15,7 @@ if wezterm.config_builder then
 end
 
 wezterm.on("gui-startup", function()
-    local tab, pane, window = mux.spawn_window({})
+    local _, _, window = mux.spawn_window({})
     window:gui_window():maximize()
 end)
 
@@ -30,6 +30,8 @@ config.term = "xterm-256color"
 config.colors = astrodark.colors()
 config.window_frame = astrodark.window_frame()
 
+config.font_size = 12
+config.warn_about_missing_glyphs = true
 config.font = wezterm.font_with_fallback({
     { family = "JetBrainsMono Nerd Font", weight = "Medium" },
 })
@@ -52,7 +54,6 @@ config.font_rules = {
         }),
     },
 }
-config.font_size = 12
 config.window_decorations = "RESIZE"
 config.hide_tab_bar_if_only_one_tab = true
 
@@ -71,8 +72,8 @@ config.keys = {
     -- { key = "v", mods = "SUPER", action = act.PasteFrom("Clipboard") },
 
     -- Leader stuff
-    { key = "p", mods = "LEADER",     action = act.ActivateCommandPalette },
-    { key = "n", mods = "LEADER",     action = act.SpawnWindow },
+    { key = "p", mods = "LEADER", action = act.ActivateCommandPalette },
+    { key = "n", mods = "LEADER", action = act.SpawnWindow },
 }
 
 -- and finally, return the configuration to wezterm
