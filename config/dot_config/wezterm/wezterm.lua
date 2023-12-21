@@ -31,29 +31,40 @@ config.colors = astrodark.colors()
 config.window_frame = astrodark.window_frame()
 
 config.font_size = 12
-config.warn_about_missing_glyphs = true
+config.warn_about_missing_glyphs = false
 config.font = wezterm.font_with_fallback({
     { family = "JetBrainsMono Nerd Font", weight = "Medium" },
+    { family = "Noto Color Emoji", weight = "Medium" },
 })
-config.font_rules = {
-    {
-        intensity = "Bold",
-        italic = false,
-        font = wezterm.font({
-            family = "JetBrainsMono Nerd Font",
-            weight = "ExtraBold",
-        }),
-    },
-    {
-        intensity = "Bold",
-        italic = true,
-        font = wezterm.font({
-            family = "JetBrainsMono Nerd Font",
-            italic = true,
-            weight = "ExtraBold",
-        }),
-    },
-}
+
+-- config.font_rules = {
+--     {
+--         intensity = "Normal",
+--         italic = true,
+--         font = wezterm.font({
+--             family = "JetBrainsMono Nerd Font",
+--             italic = true,
+--             weight = "Medium",
+--         }),
+--     },
+--     {
+--         intensity = "Bold",
+--         italic = false,
+--         font = wezterm.font({
+--             family = "JetBrainsMono Nerd Font",
+--             weight = "ExtraBold",
+--         }),
+--     },
+--     {
+--         intensity = "Bold",
+--         italic = true,
+--         font = wezterm.font({
+--             family = "JetBrainsMono Nerd Font",
+--             italic = true,
+--             weight = "ExtraBold",
+--         }),
+--     },
+-- }
 config.window_decorations = "RESIZE"
 config.hide_tab_bar_if_only_one_tab = true
 
