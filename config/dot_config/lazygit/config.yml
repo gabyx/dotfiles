@@ -50,8 +50,8 @@ gui:
   showRandomTip: true
   showCommandLog: true
   showBottomLine: true
-  showIcons: true
-  nerdFontsVersion: ""
+  showIcons: true # deprecated.
+  nerdFontsVersion: "2"
   showBranchCommitHash: false
   commandLogSize: 8
   splitDiff: auto
