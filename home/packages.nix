@@ -32,7 +32,6 @@ in {
     # neovim configured in `astronvim.nix`
 
     # Tools
-    (lib.hiPrio parallel)
     lf # File manager
     chafa # For Sixel pictures in terminal
     exiftool # For image meta preview.
@@ -40,23 +39,26 @@ in {
     bat # For text preview with syntax highlight and Git integration.
     poppler_utils # For image conversions.
     ffmpegthumbnailer # For video thumbnails.
-
     trash-cli
-    chezmoi
     etcher
     gparted
-    lazygit
-    delta
-
-    # FHS Environment with nix-alien
-    inputs.nixAlien.packages.${pkgs.system}.nix-alien
 
     # Programming
+    (lib.hiPrio parallel)
+    chezmoi
+    lazygit
+    delta
+    kubectl
+    kind # Simple kubernetes for local development.
+    k9s # Kubernetes management CLI tool
     kdiff3
     jq
     yq
     yarn
     just
+
+    # FHS Environment with nix-alien
+    inputs.nixAlien.packages.${pkgs.system}.nix-alien
 
     # Linters
     markdownlint-cli

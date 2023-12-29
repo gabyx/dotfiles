@@ -23,8 +23,11 @@
 
     ### Firewall ================================================================
     # Open ports in the firewall.
-    firewall.allowedTCPPorts = [22];
-    # firewall.allowedUDPPorts = [ ... ];
+    firewall = {
+      enable = false;
+      allowedTCPPorts = [];
+      # allowedUDPPorts = [ ... ];
+    };
     # ===========================================================================
   };
 

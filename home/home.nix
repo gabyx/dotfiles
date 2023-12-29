@@ -25,6 +25,7 @@
     ./environment.nix
     ./packages.nix
     ./programs.nix
+    ./services.nix
     ./xdg.nix
 
     outputs.homeManagerModules.tmux
@@ -36,13 +37,10 @@
   home = rec {
     username = osConfig.settings.user.name;
     homeDirectory = "/home/${osConfig.settings.user.name}";
+
     # Add support for .local/bin
     sessionPath = ["${homeDirectory}/.local/bin"];
   };
-
-  # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
