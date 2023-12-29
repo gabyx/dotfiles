@@ -50,7 +50,8 @@
 
     # Virtualisation
     docker
-    k3s # Simple kubernetes for local development.
+    kubectl
+    kind # Simple kubernetes for local development.
     k9s # Kubernetes management CLI tool
     docker-compose
     libguestfs # Needed to virt-sparsify qcow2 files
