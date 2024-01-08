@@ -1,3 +1,5 @@
+set sandbox none
+
 set font "NotoSans Nerd Font Bold 14"
 
 set selection-clipboard clipboard
