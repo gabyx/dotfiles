@@ -42,6 +42,7 @@ in {
     trash-cli
     etcher
     gparted
+    gnome.gnome-disk-utility
 
     # Programming
     (lib.hiPrio parallel)
