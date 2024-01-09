@@ -63,6 +63,12 @@
 
   swapDevices = [{device = "/swap/swapfile";}];
 
+  # Backup volume to handle with rectic.
+  fileSystems."/mnt/linux-backup" = {
+    device = "/dev/disk/by-uuid/6bcddafe-25f6-4b27-ad82-0967b551cf94";
+    fsType = "btrfs";
+  };
+
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
