@@ -21,6 +21,13 @@ history:
 trim *ARGS:
   ./scripts/trim-generations.sh {{ARGS}}
 
+diff dest_ref="HEAD" src_ref="origin/main" host="desktop":
+    @echo "Diffing closures of host '{{host}}' from '{{src_ref}}' to '{{dest_ref}}'"
+
+    nix store diff-closures \
+        '.?ref={{src_ref}}#nixosConfiguration.{{host}}.config.system.build.toplevel' \
+        '.?ref={{dest_ref}}#nixosConfiguration.{{host}}.config.system.build.toplevel'
+
 gc:
   echo "Remove test profile"
   sudo rm -rf /nix/var/nix/profiles/system-profile/test

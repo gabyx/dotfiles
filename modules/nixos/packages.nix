@@ -19,6 +19,9 @@
     binutils
     moreutils
 
+    exfatprogs
+    baobab # Analyze disks.
+
     dmidecode # BIOS read tool.
     lshw
     pciutils
