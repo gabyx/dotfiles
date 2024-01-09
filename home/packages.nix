@@ -32,6 +32,7 @@ in {
     # neovim configured in `astronvim.nix`
 
     # Tools
+    restic # Backup tool
     lf # File manager
     chafa # For Sixel pictures in terminal
     exiftool # For image meta preview.
