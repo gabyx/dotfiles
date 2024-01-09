@@ -67,6 +67,7 @@
   fileSystems."/mnt/linux-backup" = {
     device = "/dev/disk/by-uuid/6bcddafe-25f6-4b27-ad82-0967b551cf94";
     fsType = "btrfs";
+    options = ["defaults" "noatime"];
   };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
