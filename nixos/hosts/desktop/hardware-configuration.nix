@@ -64,11 +64,16 @@
   swapDevices = [{device = "/swap/swapfile";}];
 
   # Backup volume to handle with rectic.
-  fileSystems."/mnt/linux-backup" = {
-    device = "/dev/disk/by-uuid/6bcddafe-25f6-4b27-ad82-0967b551cf94";
-    fsType = "btrfs";
-    options = ["defaults" "noatime"];
-  };
+ # fileSystems."/mnt/linux-backup" = {
+ #   device = "/dev/disk/by-uuid/6bcddafe-25f6-4b27-ad82-0967b551cf94";
+ #   fsType = "btrfs";
+ #   options = ["defaults" "noatime"];
+ # };
+ # fileSystems."/mnt/linux-data" = {
+ #   device = "/dev/disk/by-uuid/EF9F-E912";
+ #   fsType = "exfat";
+ #   options = ["defaults" "noatime"];
+ # };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

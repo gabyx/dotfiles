@@ -19,7 +19,9 @@
     binutils
     moreutils
 
+    hdparm
     exfatprogs
+    zfs
     baobab # Analyze disks.
 
     dmidecode # BIOS read tool.

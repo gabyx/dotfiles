@@ -9,6 +9,9 @@
     upower.enable = true;
     locate.enable = true;
 
+    # For `udisksctl power-off` etc.
+    udisks2.enable = true;
+
     # Keyring Service
     gnome.gnome-keyring.enable = true;
 
