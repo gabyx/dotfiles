@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090,SC1091,SC2034
 
-function getPlatformOS() {
+function get_platform_os() {
     local -n _platformOS="$1"
     local platformOSDist=""
     local platformOSVersion=""
@@ -86,7 +86,7 @@ function getPlatformOS() {
     return 0
 }
 
-function getPlatformArch() {
+function get_platform_arch() {
     local -n _arch="$1"
 
     _arch=""

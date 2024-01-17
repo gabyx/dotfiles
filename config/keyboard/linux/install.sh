@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1090
 #
 # If that script does not work
 # use
@@ -10,10 +11,10 @@ set -u
 set -e
 
 DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-. "$DIR/../../common/platform.sh"
-. "$DIR/../../common/log.sh"
+. ~/.config/shell/common/log.sh
+. ~/.config/shell/common/platform.sh
 
-function writeToXML() {
+function write_to_xml() {
     local rootNode="$1"
     local finalNode="$2"
     local where="$3" # Either 'layout' or 'variant' under which the 'configItem' is created.
@@ -23,7 +24,7 @@ function writeToXML() {
     long="Programmer (En, US)"
 
     if ! xmlstarlet -q sel -Q -t -c "$finalNode" "$file"; then
-        printInfo "Add new $where 'programmer' to '$file'."
+        print_info "Add new $where 'programmer' to '$file'."
 
         sudo xmlstarlet ed --inplace \
             -s "$rootNode" -t elem -n "$where" \
@@ -36,10 +37,10 @@ function writeToXML() {
             -s '$prev' -t elem -n "iso639Id" -v "eng" \
             "$file" || die "Adding new $where 'programmer' to '$file' failed."
     else
-        printInfo "Keyboard $where 'programmer' already existing."
+        print_info "Keyboard $where 'programmer' already existing."
     fi
 
-    printInfo "Modify layout 'programmer'."
+    print_info "Modify layout 'programmer'."
     sudo xmlstarlet ed --inplace \
         --var newN "$finalNode" \
         -u '$newN/shortDescription' -v "$short" \
@@ -48,7 +49,7 @@ function writeToXML() {
         "$file" || die "Modify 'programmer' in '$file' failed."
 }
 
-function addVariant() {
+function add_variant() {
 
     # file="$DIR/test.xml"
     file="/usr/share/X11/xkb/rules/evdev.xml"
@@ -61,19 +62,19 @@ function addVariant() {
     # # Install as variant 'programmer' in 'us' layout
     # local rootNode="/xkbConfigRegistry/layoutList/layout[configItem[name[text()='us']]]/variantList"
     # local finalNode="$rootNode/variant/configItem[name[text()='programmer']]"
-    # writeToXML "$rootNode" "$finalNode" "variant" "$file"
+    # write_to_xml "$rootNode" "$finalNode" "variant" "$file"
 
     # Install as separate layout `programmer`
     rootNode="/xkbConfigRegistry/layoutList"
     finalNode="$rootNode/layout/configItem[name[text()='programmer']]"
-    writeToXML "$rootNode" "$finalNode" "layout" "$file"
+    write_to_xml "$rootNode" "$finalNode" "layout" "$file"
 
     if [ "$dist" = "ubuntu" ]; then
         sudo dpkg-reconfigure xkb-data || die "Could not 'dpkg-reconfigure xkb-data'."
     fi
 }
 
-function applyToGnome() {
+function apply_to_gnome() {
     sudo gsettings set org.gnome.desktop.input-sources sources \
         "[('xkb', 'us'), ('xkb', 'programmer')]"
 
@@ -91,7 +92,7 @@ function applyToGnome() {
 }
 
 dist=""
-getPlatformOS os dist
+get_platform_os os dist
 
 if ! command -v xmlstarlet &>/dev/null; then
     if [ "$dist" = "ubuntu" ]; then
@@ -110,12 +111,11 @@ setxkbmap "-I$DIR/symbols" programmer -print |
         "xkbcomp \"-I$DIR/symbols\" - \"$DISPLAY\""
 
 target="/usr/share/X11/xkb/symbols/programmer"
-printInfo "Move layout to '$target'"
+print_info "Move layout to '$target'"
 sudo cp "$DIR/symbols/programmer" "$target" ||
     die "Could not move layout to '$target'."
 
-addVariant
+add_variant
+apply_to_gnome
 
-applyToGnome
-
-printInfo 'Layout installed, logout, login and select it in the os.'
+print_info 'Layout installed, logout, login and select it in the os.'

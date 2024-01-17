@@ -7,5 +7,5 @@ if [ "$1" = "--wireless" ]; then
 elif [ "$1" = "--editor" ]; then
     nm-connection-editor
 else
-    echo "No command given." >2
+    echo "No command given." >&2
 fi

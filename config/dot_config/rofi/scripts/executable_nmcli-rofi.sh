@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# shellcheck disable=all
+#
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # default config
