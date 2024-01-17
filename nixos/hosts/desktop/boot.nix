@@ -34,9 +34,14 @@
     };
     # ===========================================================================
 
+    supportedFilesystems = ["zfs"];
+    zfs.forceImportRoot = false;
     ### Temp Files ==============================================================
     tmp.useTmpfs = true;
     tmp.cleanOnBoot = true;
     # ===========================================================================
   };
+
+  # For zfs support.
+  networking.hostId = "28099f56";
 }

@@ -22,6 +22,8 @@ in {
     git-lfs
     tig
 
+    gnome.zenity # For dialogs over githooks.
+
     gnome.seahorse
 
     kitty
