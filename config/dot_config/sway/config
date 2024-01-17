@@ -93,7 +93,9 @@ assign [app_id="(?i).*thunderbird.*"] $mail-ws
 set $web-ws 9:9:  
 set $ws-9 9:9:  
 set $web google-chrome-stable
+set $web-aux firefox
 assign [class="(?i).*chrome.*"] $web-ws
+assign [app_id="(?i).*firefox.*"] $web-ws
 
 set $creds-ws 10:0:  󱕴
 set $ws-10 10:0:  󱕴

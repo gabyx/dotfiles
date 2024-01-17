@@ -28,19 +28,19 @@ function _print() {
         echo $flags -e "${s}${color}-- $header$msg${s}${e}"
     fi
 }
-function printInfo() {
+function print_info() {
     _print "[0;94m" "" "" "$@"
 }
 
-function printWarning() {
+function print_warning() {
     _print "[0;31m" "" "WARN: " "$@" >&2
 }
 
-function printPrompt() {
+function print_prompt() {
     _print "[0;32m" "-n" "" "$@" >&2
 }
 
-function printError() {
+function print_error() {
     _print "[0;31m" "" "ERROR: " "$@" >&2
 }
 

@@ -6,6 +6,14 @@
 # @author Gabriel Nützi, gnuetzi@gmail.com
 # =========================================================================================
 
+function gabyx::mount_zfs_disks() {
+    ~/.config/shell/mount-zfs-disks.sh "$@"
+}
+
+function gabyx::unmount_zfs_disks() {
+    ~/.config/shell/mount-zfs-disks.sh --unmount "$@"
+}
+
 function gabyx::compress_pdf() {
     local file="$1"
     local output="$2"
@@ -111,6 +119,10 @@ function gabyx::nixos_hm_log() {
     journalctl -u home-manager-nixos.service -e
 }
 
+function gabyx::backup_zfs() {
+    ~/.config/restic/backup.sh
+}
+
 function gabyx::nixos_rebuild() {
     local what="${1:?Specify how? 'switch,boot,test'}"
     shift 1
@@ -139,4 +151,16 @@ function gabyx::nixos_activate_python_env() {
 
     # shellcheck disable=SC1090
     source "$dir/$env/bin/activate"
+}
+
+function gabyx::tmux_new_session() {
+    local name="${1:-default}"
+    local root="${2:-$(pwd)}"
+    local session_layout="${3:-default}"
+    local window_layout="${4:-default}"
+
+    TMUXIFIER_ROOT_DIR="$root" \
+        TMUXIFIER_SESSION_NAME="$name" \
+        TMUXIFIER_WINDOW_LAYOUT="$window_layout" \
+        tmuxifier load-session "$session_layout"
 }
