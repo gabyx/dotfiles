@@ -26,6 +26,7 @@ in {
 
     gnome.seahorse
 
+    starship
     kitty
     wezterm-nightly
 
@@ -57,7 +58,7 @@ in {
     k9s # Kubernetes management CLI tool
     kdiff3
     jq
-    yq
+    yq-go
     yarn
     just
 

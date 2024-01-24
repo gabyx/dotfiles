@@ -127,8 +127,13 @@ bindkey "^[D" znt-cd-widget
 zle -N znt-kill-widget
 bindkey "^[K" znt-kill-widget
 
-# To customize prompt, run 'p10k configure' or edit $ZDOTDIR/.p10k.zsh.
-[[ ! -f "$ZDOTDIR/.p10k.zsh" ]] || source "$ZDOTDIR/.p10k.zsh"
+# Promp setup.
+# if command -v starship &>/dev/null; then
+    # eval "$(starship init zsh)"
+if [ -f "$ZDOTDIR/.p10k.zsh" ]; then
+    # To customize prompt, run 'p10k configure' or edit $ZDOTDIR/.p10k.zsh.
+    source "$ZDOTDIR/.p10k.zsh"
+fi
 
 # Aliases
 source "$HOME/.config/shell/aliases.bash"

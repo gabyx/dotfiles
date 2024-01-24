@@ -13,12 +13,12 @@ function restic_backup() {
     local src="$1"
     local dest="$2"
 
-    print_info "===============================" \
+    gabyx::print_info "===============================" \
         "Backing up '$src' to '$dest' with restic."
     (cd "$src" &&
         restic backup -r "$dest" --exclude-file "$general_excludes" ./) ||
         die "Backup failed."
-    print_info "==============================="
+    gabyx::print_info "==============================="
 }
 
 function backup() {
@@ -44,7 +44,7 @@ else
 fi
 export RESTIC_PASSWORD
 
-print_info "Import all zfs pools"
+gabyx::print_info "Import all zfs pools"
 sudo zpool import -f -a
 
 # Mount sources.
