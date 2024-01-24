@@ -9,7 +9,7 @@ set -e
 . ~/.config/shell/common/log.sh
 . ~/.config/restic/scripts/mount-disks.sh
 
-print_info "Import all ZFS pools and mount disks."
+gabyx::print_info "Import all ZFS pools and mount disks."
 sudo zpool import -f -a
 
 unmount="false"

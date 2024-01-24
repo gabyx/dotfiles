@@ -24,7 +24,7 @@ function write_to_xml() {
     long="Programmer (En, US)"
 
     if ! xmlstarlet -q sel -Q -t -c "$finalNode" "$file"; then
-        print_info "Add new $where 'programmer' to '$file'."
+        gabyx::print_info "Add new $where 'programmer' to '$file'."
 
         sudo xmlstarlet ed --inplace \
             -s "$rootNode" -t elem -n "$where" \
@@ -37,10 +37,10 @@ function write_to_xml() {
             -s '$prev' -t elem -n "iso639Id" -v "eng" \
             "$file" || die "Adding new $where 'programmer' to '$file' failed."
     else
-        print_info "Keyboard $where 'programmer' already existing."
+        gabyx::print_info "Keyboard $where 'programmer' already existing."
     fi
 
-    print_info "Modify layout 'programmer'."
+    gabyx::print_info "Modify layout 'programmer'."
     sudo xmlstarlet ed --inplace \
         --var newN "$finalNode" \
         -u '$newN/shortDescription' -v "$short" \
@@ -111,11 +111,11 @@ setxkbmap "-I$DIR/symbols" programmer -print |
         "xkbcomp \"-I$DIR/symbols\" - \"$DISPLAY\""
 
 target="/usr/share/X11/xkb/symbols/programmer"
-print_info "Move layout to '$target'"
+gabyx::print_info "Move layout to '$target'"
 sudo cp "$DIR/symbols/programmer" "$target" ||
     die "Could not move layout to '$target'."
 
 add_variant
 apply_to_gnome
 
-print_info 'Layout installed, logout, login and select it in the os.'
+gabyx::print_info 'Layout installed, logout, login and select it in the os.'

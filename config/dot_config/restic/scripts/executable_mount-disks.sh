@@ -28,7 +28,7 @@ function mount() {
     get_mount_point mountpoint
     local mount="$mountpoint/$3"
 
-    print_info "Mount zfs: $pool, dataset: $dataset at: '$mount/$dataset"
+    gabyx::print_info "Mount zfs: $pool, dataset: $dataset at: '$mount/$dataset"
     sudo zfs set -u mountpoint="$mount/$dataset" "$pool/$dataset"
     sudo zfs mount -l "$pool/$dataset"
 }
@@ -37,6 +37,6 @@ function unmount() {
     local pool="$1"
     local dataset="$2"
 
-    print_info "Unmount zfs: $pool, dataset: $dataset"
+    gabyx::print_info "Unmount zfs: $pool, dataset: $dataset"
     sudo zfs unmount "$pool/$dataset"
 }

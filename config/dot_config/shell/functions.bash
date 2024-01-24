@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2015
 # =========================================================================================
 # Chezmoi Setup
 #
 # @date 17.3.2023
 # @author Gabriel Nützi, gnuetzi@gmail.com
 # =========================================================================================
+SCRIPT_DIR=$(cd -- "$(dirname -- "$0")" &>/dev/null && pwd)
+. "$SCRIPT_DIR/common/log.sh"
 
 function gabyx::mount_zfs_disks() {
     ~/.config/shell/mount-zfs-disks.sh "$@"
@@ -14,13 +17,21 @@ function gabyx::unmount_zfs_disks() {
     ~/.config/shell/mount-zfs-disks.sh --unmount "$@"
 }
 
+function gabyx::find_recent() {
+    local dir="$1"
+    shift 1
+
+    fd "$@" "$dir" --exec find {} -printf "%T@ %Td-%Tb-%TY %TT %p\n" |
+        sort -n | cut -d " " -f 2-
+}
+
 function gabyx::compress_pdf() {
     local file="$1"
     local output="$2"
     local level="${3:-screen}"
 
     if [[ ! "$level" =~ (screen|ebook|prepress|default) ]]; then
-        echo "The level must be something of 'screen|ebook|prepress|default'." >&2
+        gabyx::print_error "The level must be something of 'screen|ebook|prepress|default'." >&2
         return 1
     fi
 
@@ -42,12 +53,12 @@ function gabyx::get_k3s_killall_script() {
 
     curl -sL https://raw.githubusercontent.com/smartin77/create-k3s-killall/main/create-k3s-killall.sh -o "$temp"
     if [ "$(sha256sum "$temp" | cut -d ' ' -f 1)" != "b93e95218beb47cf37ca4313e61d0fab26514aa168e8aea610a21a04f5780a8e" ]; then
-        echo "SHA sum of script does not match!" >&2
+        gabyx::print_error "SHA sum of script does not match!" >&2
         return 1
     fi
     cd ~/.config/kube || return 1
 
-    echo "Writing 'k3s-killall.sh' to '~/.config/kube'"
+    gabyx::print_info "Writing 'k3s-killall.sh' to '~/.config/kube'"
     bash "$temp"
 
     rm -f "$temp"
@@ -61,6 +72,32 @@ function gabyx::k3s_killall() {
     ~/.config/kube/k3s-killall.sh
 }
 
+function gabyx::tmux_resurrect_restore() {
+    local dir=~/.local/share/tmux/resurrect
+    local last_index="$1"
+
+    fd "tmux_.*" "$dir" --change-older-than 1weeks --exec rm || {
+        gabyx::print_error "Could not clean up"
+    }
+
+    local last_file
+    gabyx::find_recent "$dir" "tmux_.*" | cut -d ' ' -f 3- | tail "-$last_index"
+    last_file=$(gabyx::find_recent "$dir" "tmux_.*" | cut -d ' ' -f 3- | tail "-$last_index" | head -1)
+
+    if [ ! -f "$last_file" ]; then
+        gabyx::print_info "No last file in '$dir'"
+    fi
+
+    gabyx::print_info "Last file '$last_file' contains:"
+    cat "$last_file"
+
+    gabyx::print_info "Restore last file."
+    rm "$dir/last" &&
+        ln -s "$last_file" "$dir/last" || {
+        gabyx::print_error "Could not symlink last file."
+    }
+}
+
 function gabyx::remove_docker_images() {
     local builder="docker"
 
@@ -70,16 +107,17 @@ function gabyx::remove_docker_images() {
     fi
 
     [ -z "$1" ] && {
-        echo "Empty regex given."
+        gabyx::print_error "Empty regex given."
         return 1
     }
     images=$("$builder" images --format '{{.ID}}|{{.Repository}}:{{.Tag}}' | grep -v '<none>' |
         grep -xE "(\w+)\|$1" | sed -E "s/(\w+)\|.*/\1/g")
     [ -z "$images" ] && {
-        echo "No images found."
+        gabyx::print_warning "No images found."
         return 0
     }
-    echo "Deleting images:"
+
+    gabyx::print_info "Deleting images:"
     echo "$images"
     echo "$images" | xargs -n 1 docker rmi --force
 }
@@ -88,11 +126,11 @@ function gabyx::copy_images_to_podman() {
     transport="docker-daemon"
 
     [ -z "$1" ] && {
-        echo "Empty regex given."
+        gabyx::print_error "Empty regex given."
         return 1
     }
 
-    echo "Copying images with regex '$1' from docker to podman."
+    gabyx::print_info "Copying images with regex '$1' from docker to podman."
     images=$(docker images --format "$transport:{{.Repository}}:{{.Tag}}" | grep -v '<none>' | grep -xE "$transport:$1")
 
     echo "$images" | xargs printf "  - '%s'\n"
@@ -103,7 +141,7 @@ function gabyx::file_regex_replace() {
     "$HOME/.config/shell/file-regex-replace.py" "$@"
 }
 
-function gabyx::print_keycode_table {
+function gabyx::gabyx::print_keycode_table {
     xmodmap -pke
 }
 
@@ -144,7 +182,7 @@ function gabyx::nixos_activate_python_env() {
             nix build ".#python-envs.$env" -o "$dir/.$env" &&
             "$dir/.$env/bin/python" -m venv --system-site-packages "$dir/$env") ||
             {
-                echo "Failed to activate environment '$env'." >&2
+                gabyx::print_error "Failed to activate environment '$env'." >&2
                 return 1
             }
     fi

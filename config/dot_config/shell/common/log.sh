@@ -28,19 +28,19 @@ function _print() {
         echo $flags -e "${s}${color}-- $header$msg${s}${e}"
     fi
 }
-function print_info() {
+function gabyx::print_info() {
     _print "[0;94m" "" "" "$@"
 }
 
-function print_warning() {
+function gabyx::print_warning() {
     _print "[0;31m" "" "WARN: " "$@" >&2
 }
 
-function print_prompt() {
+function gabyx::print_prompt() {
     _print "[0;32m" "-n" "" "$@" >&2
 }
 
-function print_error() {
+function gabyx::print_error() {
     _print "[0;31m" "" "ERROR: " "$@" >&2
 }
 
