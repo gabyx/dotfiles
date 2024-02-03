@@ -32,6 +32,8 @@
     outputs.homeManagerModules.chezmoi
     outputs.homeManagerModules.astronvim
     outputs.homeManagerModules.bazecor
+
+    inputs.nix-index-database.hmModules.nix-index
   ];
 
   home = rec {

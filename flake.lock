@@ -301,6 +301,26 @@
     },
     "nix-index-database": {
       "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1706411424,
+        "narHash": "sha256-BzziJYucEZvdCE985vjPoo3ztWcmUiSQ1wJ2CoT6jCc=",
+        "owner": "nix-community",
+        "repo": "nix-index-database",
+        "rev": "c782f2a4f6fc94311ab5ef31df2f1149a1856181",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-index-database",
+        "type": "github"
+      }
+    },
+    "nix-index-database_2": {
+      "inputs": {
         "nixpkgs": "nixpkgs"
       },
       "locked": {
@@ -322,10 +342,8 @@
         "flake-compat": "flake-compat_2",
         "flake-utils": "flake-utils_2",
         "nix-filter": "nix-filter",
-        "nix-index-database": "nix-index-database",
+        "nix-index-database": "nix-index-database_2",
         "nixpkgs": [
-          "nixAlien",
-          "nix-index-database",
           "nixpkgs"
         ]
       },
@@ -396,6 +414,7 @@
         "hardware": "hardware",
         "home-manager": "home-manager",
         "neovim-nightly": "neovim-nightly",
+        "nix-index-database": "nix-index-database",
         "nixAlien": "nixAlien",
         "nixpkgs": "nixpkgs_2",
         "nixpkgsStable": "nixpkgsStable",
@@ -486,17 +505,16 @@
       },
       "locked": {
         "dir": "nix",
-        "lastModified": 1701909499,
-        "narHash": "sha256-uQEZt1fyLG4zeX29XS8++erbQYB8tHc2qb/APx5bRdA=",
-        "owner": "Emiller88",
+        "lastModified": 1706591020,
+        "narHash": "sha256-6+LznzN56Gr9oyY15SmV590XS7uMR2ui7lAFBVdkI98=",
+        "owner": "wez",
         "repo": "wezterm",
-        "rev": "613f75b01b760da4802483e6d8d918517be81431",
+        "rev": "47f647cadcaa0f06df107999221c661a0ff5017d",
         "type": "github"
       },
       "original": {
         "dir": "nix",
-        "owner": "Emiller88",
-        "ref": "nix-ci",
+        "owner": "wez",
         "repo": "wezterm",
         "type": "github"
       }
