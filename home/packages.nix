@@ -100,20 +100,19 @@ in {
 
     ## C++
     cmake
-    valgrind
-    cppcheck
+    # cppcheck
     # gcc13
-    gdb
-    llvmPkgs.bintools
-    llvmPkgs.openmp
-    llvmPkgs.lld
-    llvmPkgs.llvm
-    llvmPkgs.lldb
-    # llvmPkgs.libclc
-    llvmPkgs.libclang
-    llvmPkgs.libllvm
-    llvmPkgs.libcxx
-    (hiPrio llvmPkgs.libstdcxxClang)
+    # gdb
+    # llvmPkgs.bintools
+    # llvmPkgs.openmp
+    # # (hiPrio llvmPkgs.lld)
+    # llvmPkgs.llvm
+    # llvmPkgs.lldb
+    # # # llvmPkgs.libclc
+    # llvmPkgs.libclang
+    # llvmPkgs.libllvm
+    # llvmPkgs.libcxx
+    # (hiPrio llvmPkgs.libstdcxxClang)
 
     ## Go
     go
@@ -165,15 +164,20 @@ in {
     zathura # Simple document viewer
     pdfarranger # PDF arranger
     ghostscript
+    imagemagick_light # Converter tools
     ymuse # Sound player
     zoom-us # Video calls
     firefox
     google-chrome
     thunderbird
     libreoffice
+
     ## Sonos Device
     noson
     (mkchromecast.override {enableSonos = true;})
+
+    # VPN
+    wgnord
 
     # Dictionaries
     aspell

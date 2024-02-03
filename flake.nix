@@ -24,19 +24,33 @@
     nixpkgsStable.url = "github:nixos/nixpkgs/nixos-23.11";
     # Also see the 'stable-packages' overlay at 'overlays/default.nix'.
 
+    # Index the nix-store.
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Some hardware modules.
-    hardware.url = "github:NixOS/nixos-hardware";
+    hardware = {
+      url = "github:NixOS/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Home manager
-    home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Nix-Alien
-    nixAlien.url = "github:thiagokokada/nix-alien";
+    nixAlien = {
+      url = "github:thiagokokada/nix-alien";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # WezTerm Nightly
     wezterm = {
-      url = "github:Emiller88/wezterm/nix-ci?dir=nix";
+      url = "github:wez/wezterm?dir=nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

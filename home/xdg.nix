@@ -31,9 +31,13 @@
     "text/calendar" = ["thunderbird.desktop"]; # ".ics"  iCalendar format
 
     "application/json" = browser; # ".json"  JSON format
-    "application/pdf" = browser; # ".pdf"  Adobe Portable Document Format (PDF)
+    "application/pdf" = browser ++ ["com.github.jeromerobert.pdfarranger.desktop"];
   };
 in {
+  # Enable all XDG directories.
+  xdg.enable = true;
+
+  # Set some file associations.
   xdg.mimeApps.enable = true;
   xdg.mimeApps.associations.added = associations;
   xdg.mimeApps.defaultApplications = associations;

@@ -55,14 +55,16 @@
 
     # Virtualisation
     docker
+    docker-compose
     kubectl
     kind # Simple kubernetes for local development.
     k9s # Kubernetes management CLI tool
-    docker-compose
-    libguestfs # Needed to virt-sparsify qcow2 files
-    libvirt
-    spice # For automatic window resize if this conf is used as OS in VM
-    spice-vdagent
-    virt-manager
+
+    # Other virtualisation stuff.
+    # libguestfs # Needed to virt-sparsify qcow2 files
+    # libvirt
+    # spice # For automatic window resize if this conf is used as OS in VM
+    # spice-vdagent
+    # virt-manager
   ];
 }
