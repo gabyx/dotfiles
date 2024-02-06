@@ -167,6 +167,7 @@ in {
     imagemagick_light # Converter tools
     ymuse # Sound player
     zoom-us # Video calls
+    deluge # Bittorrent client
     firefox
     google-chrome
     thunderbird
