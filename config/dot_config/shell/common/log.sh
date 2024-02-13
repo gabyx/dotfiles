@@ -18,13 +18,13 @@ function _print() {
     if [ "$hasColor" = "0" ] || [ "${LOG_COLORS:-}" = "false" ]; then
         local msg
         msg=$(printf '%b\n' "$@")
-        msg="${msg//$'\n'/$'\n'   }"
+        msg=${msg//$'\n'/$'\n'   }
         echo $flags -e "-- $header$msg"
     else
         local s=$'\033' e='[0m'
         local msg
         msg=$(printf "%b\n" "$@")
-        msg="${msg//$'\n'/$'\n'   }"
+        msg=${msg//$'\n'/$'\n'   }
         echo $flags -e "${s}${color}-- $header$msg${s}${e}"
     fi
 }

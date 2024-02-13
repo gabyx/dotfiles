@@ -96,7 +96,7 @@ in {
     gnumake
     autoconf
     libtool
-    pkgconf
+    pkg-config
 
     ## C++
     cmake
