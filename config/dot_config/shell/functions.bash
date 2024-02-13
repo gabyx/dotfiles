@@ -214,11 +214,42 @@ function gabyx::nixos_activate_python_env() {
     source "$dir/$env/bin/activate"
 }
 
+# Creates a new tmux sessions with name `$1`
+# and root directory `$2` and session layout `$3`
+# and window layout `$4`.
+# If it already exist it will load the window layout `$3`.
+# If `--force` is given the already existing session
+# is closed and reopened.
 function gabyx::tmux_new_session() {
+    local force="false"
+
+    [ "$1" != "--force" ] || {
+        shift 1
+        force="true"
+    }
+
+    if [ -n "$TMUX" ]; then
+        gabyx::print_error "Detach first from this session and run the command again."
+        return 1
+    fi
+
     local name="${1:-default}"
     local root="${2:-$(pwd)}"
     local session_layout="${3:-default}"
     local window_layout="${4:-default}"
+
+    if tmux list-sessions -F "#{session_name}" | grep -q "$name"; then
+        if [ "$force" = "true" ]; then
+            gabyx::print_info "Closing session '$name'."
+            tmux kill-session -t "$name"
+        else
+            gabyx::print_warning "Session with '$name' already exists." \
+                "Use 'tmuxfier load-window $window_layout'." \
+                "or use '--force' to close it and reload it."
+        fi
+    fi
+
+    gabyx::print_info "Creating session '$name'."
 
     TMUXIFIER_ROOT_DIR="$root" \
         TMUXIFIER_SESSION_NAME="$name" \
