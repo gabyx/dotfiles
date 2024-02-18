@@ -17,7 +17,6 @@
         "wheel"
         "disk"
         "libvirtd"
-        "docker"
         "audio"
         "video"
         "input"
