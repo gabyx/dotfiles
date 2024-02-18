@@ -100,19 +100,6 @@ in {
 
     ## C++
     cmake
-    # cppcheck
-    # gcc13
-    # gdb
-    # llvmPkgs.bintools
-    # llvmPkgs.openmp
-    # # (hiPrio llvmPkgs.lld)
-    # llvmPkgs.llvm
-    # llvmPkgs.lldb
-    # # # llvmPkgs.libclc
-    # llvmPkgs.libclang
-    # llvmPkgs.libllvm
-    # llvmPkgs.libcxx
-    # (hiPrio llvmPkgs.libstdcxxClang)
 
     ## Go
     go
@@ -132,6 +119,8 @@ in {
     ## Python
     python311
     python311Packages.pip
+    python311Packages.isort
+    python311Packages.black
     nodePackages.pyright
 
     ## Nix
