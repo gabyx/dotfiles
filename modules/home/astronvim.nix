@@ -46,6 +46,7 @@ in {
     home.packages = with pkgs; [
       neovim
       neovim-nightly
+      tree-sitter
     ];
 
     # Let home-manager clone the repos from the store and
