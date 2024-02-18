@@ -21,15 +21,13 @@
     onShutdown = "shutdown";
   };
 
-  users = {
-    users.${config.settings.user.name} = {
-      extraGroups = [
-        "libvirtd"
-      ];
-    };
-  };
-
   # ========================================
+
+  users.users.${config.settings.user.name}.extraGroups = [
+    # "docker"
+    "podman"
+    "libvirtd"
+  ];
 
   # Docker
   # virtualisation.docker = {
