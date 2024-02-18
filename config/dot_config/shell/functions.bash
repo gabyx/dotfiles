@@ -176,6 +176,11 @@ function gabyx::get_window_properties {
     swaymsg -t get_tree | jq
 }
 
+function gabyx::nixos_systemd_log() {
+    local service="$1"
+    journalctl -u "$service.service" -e
+}
+
 function gabyx::nixos_hm_log() {
     journalctl -u home-manager-nixos.service -e
 }

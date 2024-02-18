@@ -3,11 +3,13 @@
 import argparse
 import functools
 import os
+import os.path as path
 import re
 import subprocess
 from multiprocessing import Pool
+from pathlib import PurePath
 from typing import Optional
-import os.path as path
+
 
 def replace(file, regexes: list[str], force: bool = False) -> list[str]:
     cmd = ["perl", "-i", "-0777pe", ";".join(regexes), file]
@@ -29,6 +31,7 @@ def replace_files(
     excs: list[str] = [],
     force: bool = False,
     verbose: bool = True,
+    only_git_files: bool = True,
 ):
     includes = None
     if incs:
@@ -41,9 +44,21 @@ def replace_files(
             r.match(f) for r in excludes
         )
 
-    files: list[str] = []
-    for d, _, fs in os.walk(dir):
-        files += list(filter(is_included, [path.join(d, f) for f in fs]))
+    def get_files(dir):
+        for d, _, fs in os.walk(dir):
+            for f in fs:
+                yield PurePath(path.join(d, f)).as_posix()
+
+    def get_git_files(dir):
+        fs = subprocess.check_output(
+            ["git", "-C", dir, "ls-files", "--exclude-standard"], encoding="utf-8"
+        )
+        for f in fs.splitlines():
+            yield PurePath(dir, f).as_posix()
+
+    files = list(
+        filter(is_included, get_files(dir) if only_git_files else get_git_files(dir))
+    )
 
     if not force:
         print(f"Dry-run: replacing in '{len(files)}' files.")
@@ -96,6 +111,11 @@ def main():
         help="Include path regex for files.",
     )
     parser.add_argument(
+        "--git-files",
+        action=argparse.BooleanOptionalAction,
+        help="",
+    )
+    parser.add_argument(
         "-f",
         "--force",
         action="store_true",
@@ -119,6 +139,7 @@ def main():
         excs=args.exclude,
         force=args.force,
         regex=args.regex,
+        only_git_files=args.git_files,
     )
 
 

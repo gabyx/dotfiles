@@ -54,8 +54,6 @@
     bash
 
     # Virtualisation
-    docker
-    docker-compose
     kubectl
     kind # Simple kubernetes for local development.
     k9s # Kubernetes management CLI tool
