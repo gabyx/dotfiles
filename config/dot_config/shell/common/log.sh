@@ -45,6 +45,6 @@ function gabyx::print_error() {
 }
 
 function die() {
-    printError "$@"
+    print_error "$@"
     exit 1
 }
