@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  outputs,
   ...
 }: {
   ### Virtualisation ==========================================================
@@ -24,26 +25,30 @@
   # ========================================
 
   users.users.${config.settings.user.name}.extraGroups = [
-    # "docker"
+    "docker"
     "podman"
     "libvirtd"
   ];
 
   # Docker
-  # virtualisation.docker = {
-  #   enable = true;
-  #   enableOnBoot = true;
-  # };
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = true;
+    rootless = {
+      enable = false;
+      setSocketVariable = true;
+    };
+  };
 
   # Podman
   virtualisation.podman = {
     enable = true;
 
     # Create a `docker` alias for podman, to use it as a drop-in replacement
-    dockerCompat = true;
-    dockerSocket = {
-      enable = true;
-    };
+    # dockerCompat = true;
+    # dockerSocket = {
+    #   enable = true;
+    # };
 
     # Required for containers under podman-compose to be able to talk to each other.
     defaultNetwork.settings.dns_enabled = true;
@@ -76,5 +81,19 @@
   # virtualisation.virtualbox.guest.enable = true;
   # virtualisation.virtualbox.host.enable = true;
   # virtualisation.virtualbox.host.enableExtensionPack = true;
+
+  # Packages
+  environment.systemPackages = with pkgs; [
+    kubectl
+    kind # Simple kubernetes for local development.
+    k9s # Kubernetes management CLI tool
+
+    # Other virtualisation stuff.
+    # virt-manager
+    # libguestfs # Needed to virt-sparsify qcow2 files
+    # libvirt
+    # spice # For automatic window resize if this conf is used as OS in VM
+    # spice-vdagent
+  ];
   # ===========================================================================
 }
