@@ -33,7 +33,6 @@
     # Some hardware modules.
     hardware = {
       url = "github:NixOS/nixos-hardware";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Home manager
