@@ -2,6 +2,7 @@
   config,
   pkgs,
   pkgsStable,
+  inputs,
   ...
 }: {
   # List packages installed in system profile. To search, run:
@@ -64,5 +65,8 @@
     # spice # For automatic window resize if this conf is used as OS in VM
     # spice-vdagent
     # virt-manager
+
+    # Nix tools
+    inputs.nvd-tool.packages."${system}".nvd
   ];
 }

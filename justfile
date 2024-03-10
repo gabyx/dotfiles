@@ -1,12 +1,18 @@
-# Run as `just deploy desktop`
-deploy host:
-  nixos-rebuild switch --flake .#{{host}} --use-remote-sudo
+set positional-arguments
+set shell := ["bash", "-cue"]
+root_dir := justfile_directory()
 
-deploy-debug host:
-  nixos-rebuild switch --flake .#{{host}} --use-remote-sudo --show-trace --verbose
+rebuild how host *ARGS:
+  nixos-rebuild {{how}} --flake .#{{host}} --use-remote-sudo {{ARGS}}
 
-deploy-test host:
-  nixos-rebuild switch --flake .#{{host}} --use-remote-sudo -p test
+switch host *ARGS:
+  nixos-rebuild switch --flake .#{{host}} --use-remote-sudo {{ARGS}}
+
+switch-debug host *ARGS:
+  nixos-rebuild switch --flake .#{{host}} --use-remote-sudo --show-trace --verbose {{ARGS}}
+
+switch-test host *ARGS:
+  nixos-rebuild switch --flake .#{{host}} --use-remote-sudo -p test {{ARGS}}
 
 update:
   nix flake update
@@ -21,12 +27,20 @@ history:
 trim *ARGS:
   ./scripts/trim-generations.sh {{ARGS}}
 
-diff dest_ref="HEAD" src_ref="origin/main" host="desktop":
+diff current_profile="/nix/var/nix/profiles/system":
+  #!/usr/bin/env bash
+  set -euo pipefail
+
+  [ -n "${last_profile:-}" ] || \
+      last_profile="$(find /nix/var/nix/profiles -type l -name '*system*' | sort -u | tail -2 | head -1)"
+  nvd diff "$last_profile" "{{current_profile}}";
+
+diff-closure dest_ref="/" src_ref="origin/main" host="desktop":
     @echo "Diffing closures of host '{{host}}' from '{{src_ref}}' to '{{dest_ref}}'"
 
     nix store diff-closures \
-        '.?ref={{src_ref}}#nixosConfiguration.{{host}}.config.system.build.toplevel' \
-        '.?ref={{dest_ref}}#nixosConfiguration.{{host}}.config.system.build.toplevel'
+        '.?ref={{src_ref}}#nixosConfigurations.{{host}}.config.system.build.toplevel' \
+        '.?ref={{dest_ref}}#nixosConfigurations.{{host}}.config.system.build.toplevel'
 
 gc:
   echo "Remove test profile"

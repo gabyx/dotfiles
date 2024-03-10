@@ -114,6 +114,24 @@
         "systems": "systems_3"
       },
       "locked": {
+        "lastModified": 1709126324,
+        "narHash": "sha256-q6EQdSeUZOG26WelxqkmR7kArjgWCdw5sfJVHPH/7j8=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "d465f4819400de7c8d874d50b982301f28a84605",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_4": {
+      "inputs": {
+        "systems": "systems_4"
+      },
+      "locked": {
         "lastModified": 1705309234,
         "narHash": "sha256-uNRRNRKmJyCRC/8y1RqBkqWBLM034y4qN7EprSdmgyA=",
         "owner": "numtide",
@@ -409,6 +427,27 @@
         "type": "github"
       }
     },
+    "nvd-tool": {
+      "inputs": {
+        "flake-utils": "flake-utils_3",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1685293754,
+        "narHash": "sha256-JiTM6pcvFWjk0qii5LfX0uysF3nseEhA9lBZeCOhiUc=",
+        "owner": "khumba",
+        "repo": "nvd",
+        "rev": "1276c2d3ebf311a9f48494ae369bc9848b6e0a3a",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "khumba",
+        "repo": "nvd",
+        "type": "gitlab"
+      }
+    },
     "root": {
       "inputs": {
         "hardware": "hardware",
@@ -418,6 +457,7 @@
         "nixAlien": "nixAlien",
         "nixpkgs": "nixpkgs_2",
         "nixpkgsStable": "nixpkgsStable",
+        "nvd-tool": "nvd-tool",
         "wezterm": "wezterm"
       }
     },
@@ -491,9 +531,24 @@
         "type": "github"
       }
     },
+    "systems_4": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
     "wezterm": {
       "inputs": {
-        "flake-utils": "flake-utils_3",
+        "flake-utils": "flake-utils_4",
         "freetype2": "freetype2",
         "harfbuzz": "harfbuzz",
         "libpng": "libpng",
