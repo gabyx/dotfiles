@@ -13,8 +13,17 @@
       ];
     };
 
-    pam.services.login.enableGnomeKeyring = true;
+    pam.services = {
+      login.enableGnomeKeyring = true;
+
+      # For SSH logins enable the Google Authenticator login.
+      sshd.googleAuthenticator.enable = true;
+    };
   };
+
+  packages = with pkgs; [
+    google-authenticator
+  ];
 
   services = {
     dbus.apparmor = "enabled";
