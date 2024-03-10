@@ -115,8 +115,8 @@ function gabyx::tmux_resurrect_restore() {
     cat "$last_file"
 
     gabyx::print_info "Restore last file."
-    rm "$dir/last" &&
-        ln -s "$last_file" "$dir/last" || {
+    rm "$dir/last" || true
+    ln -s "$last_file" "$dir/last" || {
         gabyx::print_error "Could not symlink last file."
     }
 }
