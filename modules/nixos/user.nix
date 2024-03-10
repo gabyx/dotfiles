@@ -26,6 +26,10 @@
         "davfs2"
         "dialout" # For bazecor and the Dygma keyboard.
       ];
+
+      openssh.authorizedKeys.keyFiles = [
+        ../../config/private_dot_ssh/gabyx_ed25519.pub
+      ];
     };
   };
   # ===========================================================================

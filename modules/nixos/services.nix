@@ -29,7 +29,7 @@
         port = 50022;
         PermitRootLogin = "no";
         AllowUsers = [config.settings.user.name];
-        PasswordAuthentication = true;
+        PasswordAuthentication = false;
       };
     };
   };
