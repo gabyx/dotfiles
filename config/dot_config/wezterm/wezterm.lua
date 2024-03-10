@@ -1,5 +1,6 @@
 -- Pull in the wezterm API
 local wezterm = require("wezterm")
+local environment = require("environment")
 local astrodark = require("colors/astrodark")
 
 local act = wezterm.action
@@ -65,7 +66,13 @@ config.font = wezterm.font_with_fallback({
 --         }),
 --     },
 -- }
-config.window_decorations = "RESIZE"
+
+if environment.os == "linux" then
+    config.window_decorations = "NONE"
+else
+    config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
+end
+
 config.hide_tab_bar_if_only_one_tab = true
 
 config.enable_kitty_keyboard = true

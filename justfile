@@ -27,12 +27,12 @@ history:
 trim *ARGS:
   ./scripts/trim-generations.sh {{ARGS}}
 
-diff current_profile="/nix/var/nix/profiles/system":
+diff last="1" current_profile="/nix/var/nix/profiles/system":
   #!/usr/bin/env bash
   set -euo pipefail
 
   [ -n "${last_profile:-}" ] || \
-      last_profile="$(find /nix/var/nix/profiles -type l -name '*system*' | sort -u | tail -2 | head -1)"
+      last_profile="$(find /nix/var/nix/profiles -type l -name '*system*' | sort -u | tail "-{{last}}" | head -1)"
   nvd diff "$last_profile" "{{current_profile}}";
 
 diff-closure dest_ref="/" src_ref="origin/main" host="desktop":
