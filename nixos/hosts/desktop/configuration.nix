@@ -50,7 +50,7 @@ in {
 
     outputs.nixosModules.virtualization
 
-    (outputs.nixosModules.packages {inherit config pkgs pkgsStable;})
+    (outputs.nixosModules.packages {inherit config pkgs pkgsStable inputs;})
     outputs.nixosModules.programs
 
     outputs.nixosModules.user
