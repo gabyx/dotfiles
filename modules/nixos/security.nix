@@ -27,8 +27,5 @@
 
   services = {
     dbus.apparmor = "enabled";
-    openssh = {
-      settings = {PermitRootLogin = "no";};
-    };
   };
 }

@@ -92,6 +92,10 @@ config.keys = {
     -- Leader stuff
     { key = "p", mods = "LEADER", action = act.ActivateCommandPalette },
     { key = "n", mods = "LEADER", action = act.SpawnWindow },
+
+    -- Font Size
+    { key = "=", mods = "LEADER", action = act.IncreaseFontSize },
+    { key = "-", mods = "LEADER", action = act.DecreaseFontSize },
 }
 
 -- and finally, return the configuration to wezterm
