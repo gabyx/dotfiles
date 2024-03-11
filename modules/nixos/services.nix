@@ -25,11 +25,12 @@
     # Enable the OpenSSH daemon.
     openssh = {
       enable = true;
+      ports = [50022];
       settings = {
-        port = 50022;
         PermitRootLogin = "no";
         AllowUsers = [config.settings.user.name];
-        PasswordAuthentication = false;
+        PasswordAuthentication = true;
+        KbdInteractiveAuthentication = true;
       };
     };
   };
