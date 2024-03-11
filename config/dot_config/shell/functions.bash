@@ -195,8 +195,17 @@ function gabyx::nixos_rebuild() {
     local host="${1:?Specify a host to build}"
     shift 1
 
-    (cd "$(readlink ~/nixos-config)" &&
-        nixos-rebuild "$what" --flake ".#$host" --use-remote-sudo "$@")
+    if command -v just &>/dev/null; then
+        cd "$(readlink ~/nixos-config)" &&
+            just rebuild "$what" "$host" &&
+            if [ "$what" = "switch" ]; then
+                print_info "The following changed:"
+                just diff 2
+            fi
+    else
+        (cd "$(readlink ~/nixos-config)" &&
+            nixos-rebuild "$what" --flake ".#$host" --use-remote-sudo "$@")
+    fi
 }
 
 function gabyx::nixos_activate_python_env() {
