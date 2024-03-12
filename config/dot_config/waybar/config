@@ -39,6 +39,7 @@
         "cpu",
         "temperature",
         "disk",
+        "custom/ssh",
         "sway/language",
         "network",
         "bluetooth",
@@ -89,6 +90,18 @@
         "tooltip": true
     },
 
+    "custom/ssh" : {
+        "format": "{icon}",
+        "return-type": "json",
+        "exec": "~/.config/waybar/scripts/ssh-connections.sh",
+        "interval": 5,
+        "format-icons": {
+           "none": "󰌺",
+           "some": "󰌹"
+        },
+        "tooltip": true,
+    },
+
     "battery": {
         "interval": 10,
         "states": {
@@ -100,11 +113,11 @@
         // Not connected to AC
         "format-discharging": "{icon}  {capacity}%",
         "format-icons": [
-            "", // Icon: battery-full
-            "", // Icon: battery-three-quarters
-            "", // Icon: battery-half
-            "", // Icon: battery-quarter
-            ""  // Icon: battery-empty
+            "",
+            "",
+            "",
+            "",
+            ""
         ],
         "tooltip": true
     },
