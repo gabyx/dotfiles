@@ -146,7 +146,7 @@
 
     "cpu": {
         "interval": 5,
-        "format": "  {usage}%", // Icon: microchip
+        "format": "󰍛 {usage}%",
         "states": {
           "warning": 70,
           "critical": 90
@@ -162,7 +162,7 @@
 
     "memory": {
         "interval": 5,
-        "format": "󰍛  {}%", // Icon: memory
+        "format": " {}%",
         "states": {
             "warning": 70,
             "critical": 90

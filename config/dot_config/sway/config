@@ -84,6 +84,8 @@ set $comm-ws 7:7:  
 set $ws-7 7:7:  
 set $comm signal-desktop
 assign [class="(?i).*signal.*"] $comm-ws
+set $comm-matrix element-desktop
+assign [class="(?i).*element.*"] $comm-ws
 
 set $mail-ws 8:8:  
 set $ws-8 8:8:  
@@ -394,6 +396,7 @@ exec $notifications
 exec $mail
 exec $web
 exec $comm
+exec $comm-matrix
 exec $creds
 
 exec ~/.config/sway/scripts/start-up.sh
