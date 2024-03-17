@@ -143,6 +143,7 @@ in {
     bitwarden # Password manager
     bitwarden-cli
     signal-desktop # Messaging app
+    element-desktop # Matrix client.
     slack # Messaging app
     transmission-gtk
     ffmpeg # Movie converter
