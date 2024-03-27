@@ -26,7 +26,9 @@
     ./packages.nix
     ./programs.nix
     ./services.nix
+    ./display.nix
     ./xdg.nix
+    ./virtualization.nix
 
     outputs.homeManagerModules.tmux
     outputs.homeManagerModules.chezmoi

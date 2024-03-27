@@ -1,10 +1,16 @@
 {
   config,
+  lib,
   pkgs,
   outputs,
   ...
 }: {
   ### Virtualisation ==========================================================
+  users.users.${config.settings.user.name}.extraGroups = [
+    "docker"
+    "podman"
+    "libvirtd"
+  ];
 
   # Libvirtd ===============================
   services.qemuGuest.enable = true;
@@ -21,26 +27,27 @@
     onBoot = "ignore";
     onShutdown = "shutdown";
   };
-
   # ========================================
 
-  users.users.${config.settings.user.name}.extraGroups = [
-    "docker"
-    "podman"
-    "libvirtd"
-  ];
-
-  # Docker
+  # Docker =================================
   virtualisation.docker = {
     enable = true;
     enableOnBoot = true;
+
     rootless = {
-      enable = false;
+      enable = true;
       setSocketVariable = true;
     };
-  };
 
-  # Podman
+    # Auto prune podman resources.
+    autoPrune = {
+      dates = "weekly";
+      flags = ["--external"];
+    };
+  };
+  # =======================================
+
+  # Podman ================================
   virtualisation.podman = {
     enable = true;
 
@@ -60,22 +67,55 @@
     };
   };
 
+  virtualisation.containers = {
+    # Podman already enables this, I guess.
+    enable = true;
+
+    # storage.settings = {
+    #   storage = {
+    #     driver = "overlay";
+    #     graphroot = "/var/lib/containers/storage";
+    #     runroot = "/run/containers/storage";
+    #     options.overlay = {
+    #       mount_program = lib.getExe pkgs.fuse-overlayfs;
+    #       mountopt = "nodev,fsync=0";
+    #     };
+    #   };
+    # };
+  };
+  # =======================================
+
   # Extent the user `uid/gid` ranges to make podman work better.
   # This is for using https://gitlab.com/qontainers/pipglr
   users.extraUsers.${config.settings.user.name} = {
     subUidRanges = [
       {
         startUid = 100000;
-        count = 65539;
+        count = 10000000; # 65539;
       }
     ];
     subGidRanges = [
       {
         startGid = 100000;
-        count = 65539;
+        count = 10000000; # 65539;
       }
     ];
   };
+
+  security.pam.loginLimits = [
+    {
+      domain = "*";
+      type = "-";
+      item = "nofile";
+      value = "65536";
+    }
+    {
+      domain = "*";
+      type = "-";
+      item = "nproc";
+      value = "1048576";
+    }
+  ];
 
   # Virtualbox
   # virtualisation.virtualbox.guest.enable = true;
