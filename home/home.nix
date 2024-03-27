@@ -24,16 +24,15 @@
 
     ./environment.nix
     ./packages.nix
+    ./tmux.nix
     ./programs.nix
     ./services.nix
     ./display.nix
     ./xdg.nix
     ./virtualization.nix
 
-    outputs.homeManagerModules.tmux
     outputs.homeManagerModules.chezmoi
     outputs.homeManagerModules.astronvim
-    outputs.homeManagerModules.bazecor
 
     inputs.nix-index-database.hmModules.nix-index
   ];
