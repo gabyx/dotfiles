@@ -74,9 +74,9 @@ else
 end
 
 config.hide_tab_bar_if_only_one_tab = true
-
+config.enable_csi_u_key_encoding = true
 config.enable_kitty_keyboard = true
-config.debug_key_events = false -- Start `wezterm start --always-new-process` to see the keys
+config.debug_key_events = true -- Start `wezterm start --always-new-process` to see the keys
 config.disable_default_key_bindings = true
 
 config.leader = { key = "n", mods = "CTRL", timeout_milliseconds = 1000 }
