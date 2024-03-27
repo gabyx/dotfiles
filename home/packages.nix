@@ -12,6 +12,12 @@
   # https://github.com/NixOS/nixpkgs/issues/244609
   llvmPkgs = pkgs.llvmPackages_15;
   clangTools = pkgs.clang-tools_15;
+
+  # Own built packages:
+  custom = {
+    git-town = pkgs.callPackage ./pkgs/git-town {};
+    bazecor = pkgs.callPackage ./pkgs/bazecor {};
+  };
 in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -20,6 +26,7 @@ in {
     age # Encryption tool.
     git
     git-lfs
+    custom.git-town
     tig
 
     gnome.zenity # For dialogs over githooks.
@@ -142,6 +149,7 @@ in {
     # MultiMedia
     bitwarden # Password manager
     bitwarden-cli
+    custom.bazecor # Dygma Defy Keyboard.
     signal-desktop # Messaging app
     element-desktop # Matrix client.
     slack # Messaging app

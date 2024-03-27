@@ -4,6 +4,4 @@
   # List your module files here
   chezmoi = import ./chezmoi.nix;
   astronvim = import ./astronvim.nix;
-  tmux = import ./tmux.nix;
-  bazecor = import ./bazecor.nix;
 }
