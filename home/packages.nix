@@ -15,7 +15,6 @@
 
   # Own built packages:
   custom = {
-    git-town = pkgs.callPackage ./pkgs/git-town {};
     bazecor = pkgs.callPackage ./pkgs/bazecor {};
   };
 in {
@@ -26,7 +25,6 @@ in {
     age # Encryption tool.
     git
     git-lfs
-    custom.git-town
     tig
 
     gnome.zenity # For dialogs over githooks.
