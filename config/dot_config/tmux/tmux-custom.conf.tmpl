@@ -11,11 +11,11 @@ bind-key - split-window -v -c "#{pane_current_path}"
 unbind e
 bind-key e new-window -n '~/.config/tmux/tmux.conf' "sh -c 'nvim ~/.config/tmux/tmux.conf && tmux source ~/.config/tmux/tmux.conf'"
 
-# Move around panes with hjkl, as one would in vim after pressing ctrl + w
-bind-key h select-pane -L
-bind-key j select-pane -D
-bind-key k select-pane -U
-bind-key l select-pane -R
+# Resize panes with hjkl
+bind-key -n 'C-S-h' resize-pane -L 2
+bind-key -n 'C-S-l' resize-pane -R 2
+bind-key -n 'C-S-k' resize-pane -U 2
+bind-key -n 'C-S-j' resize-pane -D 2
 
 # Smart pane switching with awareness of Vim splits.
 # See: https://github.com/christoomey/vim-tmux-navigator

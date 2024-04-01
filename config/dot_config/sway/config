@@ -275,6 +275,7 @@ seat * hide_cursor when-typing enable
 # Workspaces:
 #
     # Switch to workspace
+    bindsym $mod+i workspace back_and_forth
     bindcode $mod+10 workspace number $ws-1
     bindcode $mod+11 workspace number $ws-2
     bindcode $mod+12 workspace number $ws-3
@@ -309,7 +310,7 @@ seat * hide_cursor when-typing enable
     bindcode $mod+20 splitv
 
     # Switch the current container between different layout styles
-    bindsym $mod+s layout stacking
+    bindsym $mod+s layout stackins
     bindsym $mod+w layout tabbed
     bindsym $mod+e layout toggle split
 
@@ -317,10 +318,10 @@ seat * hide_cursor when-typing enable
     bindsym $mod+f fullscreen
 
     # Toggle the current focus between tiling and floating mode
-    bindsym $mod+Shift+space floating toggle
+    bindsym $mod+space floating toggle
 
     # Swap focus between the tiling area and the floating area
-    bindsym $mod+space focus mode_toggle
+    bindsym $mod+shift+space focus mode_toggle
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
