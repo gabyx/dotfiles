@@ -42,6 +42,10 @@
     containerManager = "podman,docker"
 [init]
     defaultBranch = main
+
+[git-town.sync-strategy]
+    feature-branches = rebase
+
 [filter "lfs"]
     process = git-lfs filter-process
     required = true
@@ -65,7 +69,3 @@
     ui = true
 [status]
     showUntrackedFiles = all
-[branch "main"]
-    mergeoptions = --no-ff
-[branch "stable"]
-    mergeoptions = --no-ff

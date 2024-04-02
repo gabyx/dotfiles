@@ -25,6 +25,7 @@ in {
     age # Encryption tool.
     git
     git-lfs
+    git-town
     tig
 
     gnome.zenity # For dialogs over githooks.
