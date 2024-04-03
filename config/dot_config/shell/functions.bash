@@ -198,7 +198,7 @@ function gabyx::nixos_rebuild() {
     if command -v just &>/dev/null; then
         cd "$(readlink ~/nixos-config)" &&
             just rebuild "$what" "$host" &&
-            if [ "$what" = "switch" ]; then
+            if [[ "$what" =~ switch|test ]]; then
                 print_info "The following changed:"
                 just diff 2
             fi
