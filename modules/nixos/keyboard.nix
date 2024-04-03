@@ -11,20 +11,22 @@
   };
 
   services.xserver = {
-    layout = "programmer-defy";
-    xkbVariant = "";
-    xkbOptions = "ctrl:nocaps";
+    xkb = {
+      layout = "programmer-defy";
+      variant = "";
+      options = "ctrl:nocaps";
 
-    extraLayouts.programmer-defy = {
-      description = "Prog. Defy (US)"; # Must have the same naming as in the file !!!
-      languages = ["eng"];
-      symbolsFile = ../../config/keyboard/linux/symbols/programmer-defy;
-    };
+      extraLayouts.programmer-defy = {
+        description = "Prog. Defy (US)"; # Must have the same naming as in the file !!!
+        languages = ["eng"];
+        symbolsFile = ../../config/keyboard/linux/symbols/programmer-defy;
+      };
 
-    extraLayouts.programmer = {
-      description = "Prog. Mx (US)";
-      languages = ["eng"];
-      symbolsFile = ../../config/keyboard/linux/symbols/programmer;
+      extraLayouts.programmer = {
+        description = "Prog. Mx (US)";
+        languages = ["eng"];
+        symbolsFile = ../../config/keyboard/linux/symbols/programmer;
+      };
     };
   };
 

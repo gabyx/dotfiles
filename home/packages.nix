@@ -50,7 +50,6 @@ in {
     poppler_utils # For image conversions.
     ffmpegthumbnailer # For video thumbnails.
     trash-cli
-    etcher
     gparted
     gnome.gnome-disk-utility
 
@@ -86,7 +85,7 @@ in {
     gopls
     golangci-lint-langserver
     texlab
-    rnix-lsp
+    nil
     marksman
     lua-language-server
     nodePackages.dockerfile-language-server-nodejs
@@ -130,6 +129,7 @@ in {
     nodePackages.pyright
 
     ## Nix
+    nix-tree
     nixpkgs-lint
     stdenv.cc
     alejandra
