@@ -34,6 +34,9 @@
     };
   };
 
+  # Install some nix related important packages.
+  environment.systemPackages = with pkgs; [nix-tree];
+
   nixpkgs = {
     config = {
       allowUnfree = true;
