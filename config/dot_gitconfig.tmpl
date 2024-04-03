@@ -42,9 +42,13 @@
     containerManager = "podman,docker"
 [init]
     defaultBranch = main
-
-[git-town.sync-strategy]
-    feature-branches = rebase
+[git-town]
+    main-branch = "main"
+    perennial-branches = "main"
+    sync-feature-strategy = rebase
+    sync-perennial-strategy = rebase
+    sync-upstream = true
+    sync-before-ship = true
 
 [filter "lfs"]
     process = git-lfs filter-process
