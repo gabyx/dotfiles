@@ -196,12 +196,18 @@ function gabyx::nixos_rebuild() {
     shift 1
 
     if command -v just &>/dev/null; then
-        cd "$(readlink ~/nixos-config)" &&
-            just rebuild "$what" "$host" &&
-            if [[ "$what" =~ switch|test ]]; then
-                print_info "The following changed:"
-                just diff 2
+        (
+            cd "$(readlink ~/nixos-config)" &&
+                just rebuild "$what" "$host"
+
+            if [[ "$what" =~ switch\|test ]]; then
+                gabyx::print_info "Differences are:"
+                just diff 1
+            elif [[ "$what" =~ build ]]; then
+                gabyx::print_info "Differences are:"
+                just diff /run/current-system result
             fi
+        )
     else
         (cd "$(readlink ~/nixos-config)" &&
             nixos-rebuild "$what" --flake ".#$host" --use-remote-sudo "$@")
