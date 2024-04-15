@@ -37,8 +37,8 @@ EOF
 
 WITH_CURSOR=$(
     rofi -dmenu -p 'With Cursor?' -lines 2 <<EOF
-yes
 no
+yes
 EOF
 )
 
@@ -84,8 +84,8 @@ esac
 if command -v swappy $ >/dev/null; then
     EDIT_CHOICE=$(
         rofi -dmenu -p 'Edit the shot?' -lines 2 <<EOF
-yes
 no
+yes
 EOF
     )
     case "$EDIT_CHOICE" in

@@ -13,6 +13,10 @@
     signkey = E969172AB0757EB8
 [commit]
     gpgsign = true
+    template = {{ .git.configPath }}/commit-template.txt
+[tag]
+    gpgsign = true
+
 [interactive]
     diffFilter = delta --color-only --features=interactive
 [push]

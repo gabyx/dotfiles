@@ -7,13 +7,13 @@ rebuild how host *args:
         nixos-rebuild {{how}} --flake .#{{host}} --use-remote-sudo "${@:3}"
 
 switch host *args:
-    just rebuild switch "{{host}}" "$@"
+    just rebuild switch "{{host}}" "${@:2}"
 
 switch-debug host *args:
-    just rebuild switch "{{host}}" --show-trace --verbose "$@"
+    just rebuild switch "{{host}}" --show-trace --verbose "${@:2}"
 
 switch-test host *args:
-    just rebuild switch "{{host}}" -p test "$@"
+    just rebuild switch "{{host}}" -p test "${@:2}"
 
 update:
     cd "{{root_dir}}" && nix flake update
