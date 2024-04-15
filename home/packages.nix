@@ -133,7 +133,7 @@ in {
     nixpkgs-lint
     stdenv.cc
     alejandra
-    nixfmt
+    nixfmt-rfc-style
 
     ## Lua
     stylua

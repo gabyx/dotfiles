@@ -24,7 +24,7 @@
 
     # Enable the OpenSSH daemon.
     openssh = {
-      enable = true;
+      enable = false;
       ports = [50022];
       settings = {
         PermitRootLogin = "no";
