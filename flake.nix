@@ -47,9 +47,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # WezTerm Nightly
+    # wezterm nightly
     wezterm = {
       url = "github:wez/wezterm?dir=nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Githooks
+    githooks = {
+      url = "github:gabyx/githooks?dir=nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

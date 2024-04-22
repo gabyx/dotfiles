@@ -3,4 +3,4 @@
 set -e
 set -u
 
-~/.githooks/bin/dialog entry --title "Restic Backup" --text "Enter the password:" --hide-entry
+~/.githooks/bin/githooks-dialog entry --title "Restic Backup" --text "Enter the password:" --hide-entry

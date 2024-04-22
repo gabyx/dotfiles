@@ -29,15 +29,24 @@
 [delta]
     features = gabyx
 [alias]
+{{- if .git.githooksPackaged }}
+    hooks = !\"githooks-cli\"
+{{- else }}
     hooks = !\"{{ .chezmoi.homeDir }}/.githooks/bin/githooks-cli\"
+{{- end }}
 [githooks]
     installDir = {{ .chezmoi.homeDir }}/.githooks
     cloneUrl = {{ .git.githooksCloneURL }}
     cloneBranch = {{ .git.githooksCloneBranch }}
 	installMode = manual
 	pathForUseCoreHooksPath = {{ .chezmoi.homeDir }}/.githooks/templates/hooks
+{{- if .git.githooksPackaged }}
+    runner = githooks-runner
+    dialog = githooks-dialog
+{{- else }}
     runner = {{ .chezmoi.homeDir }}/.githooks/bin/githooks-runner
     dialog = {{ .chezmoi.homeDir }}/.githooks/bin/githooks-dialog
+{{- end }}
     maintainedHooks = !all, applypatch-msg, pre-applypatch, post-applypatch, pre-commit, pre-merge-commit, prepare-commit-msg, commit-msg, post-commit, pre-rebase, post-checkout, post-merge, pre-push, post-rewrite
 	updateCheckEnabled = true
     containerizedHooksEnabled = true

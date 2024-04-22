@@ -7,6 +7,7 @@
 }: let
   # Define some special packages.
   wezterm-nightly = inputs.wezterm.packages."${pkgs.system}".default;
+  githooks = inputs.githooks.packages."${pkgs.system}".default;
 
   # llvm 16 packages have a problem:
   # https://github.com/NixOS/nixpkgs/issues/244609
@@ -26,6 +27,7 @@ in {
     git
     git-lfs
     git-town
+    githooks
     tig
 
     gnome.zenity # For dialogs over githooks.

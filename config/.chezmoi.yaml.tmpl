@@ -21,6 +21,7 @@ data:
     configPath: {{ .chezmoi.homeDir }}/.config/git
     toolsPath: {{ .chezmoi.homeDir }}/.config/git/tools
 
+    githooksPackaged: {{if eq .chezmoi.osRelease.id "nixos" }}true{{else}}false{{end}}
     githooksCloneURL: https://github.com/gabyx/githooks.git
     githooksCloneBranch: main
 
