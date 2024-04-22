@@ -29,18 +29,17 @@
 [delta]
     features = gabyx
 [alias]
-    hooks = !\"{{ .chezmoi.homeDir }}/.githooks/bin/cli\"
+    hooks = !\"{{ .chezmoi.homeDir }}/.githooks/bin/githooks-cli\"
 [githooks]
     installDir = {{ .chezmoi.homeDir }}/.githooks
     cloneUrl = {{ .git.githooksCloneURL }}
     cloneBranch = {{ .git.githooksCloneBranch }}
-    useManual = true
-    useCoreHooksPath = false
-    manualTemplateDir = {{ .chezmoi.homeDir }}/.githooks/templates
-    runner = {{ .chezmoi.homeDir }}/.githooks/bin/runner
-    dialog = {{ .chezmoi.homeDir }}/.githooks/bin/dialog
+	installMode = manual
+	pathForUseCoreHooksPath = {{ .chezmoi.homeDir }}/.githooks/templates/hooks
+    runner = {{ .chezmoi.homeDir }}/.githooks/bin/githooks-runner
+    dialog = {{ .chezmoi.homeDir }}/.githooks/bin/githooks-dialog
     maintainedHooks = !all, applypatch-msg, pre-applypatch, post-applypatch, pre-commit, pre-merge-commit, prepare-commit-msg, commit-msg, post-commit, pre-rebase, post-checkout, post-merge, pre-push, post-rewrite
-    autoUpdateEnabled = true
+	updateCheckEnabled = true
     containerizedHooksEnabled = true
     containerManager = "podman,docker"
 [init]

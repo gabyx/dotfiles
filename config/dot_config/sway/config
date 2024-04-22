@@ -146,18 +146,18 @@ output * bg ~/.config/wallpapers/background-space.jpg fill
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 # Home Setup ==============================================
-set $primaryDispHome Philips Consumer Electronics Company PHL 275E2F UHB2307008083
-set $secondaryDispHome Dell Inc. DELL P2418HT 32MPJ87E177L
+set $primaryDispHome 'Philips Consumer Electronics Company PHL 275E2F UHB2307008083'
+set $secondaryDispHome 'Dell Inc. DELL P2418HT 32MPJ87E177L'
 
 # General Setup
 set $primaryDisp $primaryDispHome
 set $secondaryDisp $secondaryDispHome
 
-output "$primaryDisp" {
+output $primaryDisp {
     mode 2560x1440@74.968Hz
     pos 0 0
 }
-output "$secondaryDisp" {
+output $secondaryDisp {
     mode 1920x1080@60.000Hz
     pos 2560 0
 }
