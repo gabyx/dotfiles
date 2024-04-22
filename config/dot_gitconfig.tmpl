@@ -16,7 +16,6 @@
     template = {{ .git.configPath }}/commit-template.txt
 [tag]
     gpgsign = true
-
 [interactive]
     diffFilter = delta --color-only --features=interactive
 [push]
@@ -53,7 +52,6 @@
     sync-perennial-strategy = rebase
     sync-upstream = true
     sync-before-ship = true
-
 [filter "lfs"]
     process = git-lfs filter-process
     required = true

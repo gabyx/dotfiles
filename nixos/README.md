@@ -383,3 +383,8 @@ Running root application like `gparted` over `sway` must be done like that:
 ```shell
 sudo -E gparted
 ```
+
+## Todos
+
+1. Use https://github.com/moverest/sway-interactive-screenshot which now
+   supports rofi.

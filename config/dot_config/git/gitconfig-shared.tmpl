@@ -2,6 +2,7 @@
     is-lfs-tracked = ! \"{{ .git.toolsPath }}/git-scripts/is-lfs-tracked.sh\"
 
     make-executable = ! git add --chmod=+x -- \"$@\"
+    cm = commit --signoff
     sw = switch --recurse-submodule
     ch = checkout --recurse-submodule
     sm-branches = "!git submodule foreach --quiet 'echo \"$name :: $(git symbolic-ref -q --short HEAD || git describe --tags --exact-match)\";' #"
