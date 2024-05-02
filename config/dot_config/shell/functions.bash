@@ -142,7 +142,7 @@ function gabyx::remove_docker_images() {
 
     gabyx::print_info "Deleting images:"
     echo "$images"
-    echo "$images" | xargs -n 1 docker rmi --force
+    echo "$images" | xargs -n 1 "$builder" rmi --force
 }
 
 function gabyx::copy_images_to_podman() {
