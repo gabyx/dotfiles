@@ -61,8 +61,8 @@
   # Enable astronmvim setup.
   astronvim = {
     enable = true;
-    astroVimUserUrl = "https://github.com/gabyx/astrovim.git";
-    astroVimUserRef = "main";
+    url = "https://github.com/gabyx/astrovim.git";
+    ref = "main";
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

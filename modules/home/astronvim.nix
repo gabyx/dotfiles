@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  pkgsStable,
   lib,
   inputs,
   ...
@@ -18,27 +17,16 @@ in {
   options.astronvim = {
     enable = mkEnableOption "nvim";
 
-    astroVimUrl = mkOption {
+    url = mkOption {
       type = types.str;
-      description = "AstroVim Git repo url.";
-      default = "https://github.com/AstroNvim/AstroNvim.git";
+      description = "AstroNvim Git repo url.";
+      default = "https://github.com/gabyx/astronvim.git";
     };
 
-    astroVimRef = mkOption {
-      type = types.enum ["main" "nightly"];
-      default = "main";
-      description = "AstroVim Git branch.";
-    };
-
-    astroVimUserUrl = mkOption {
-      type = types.str;
-      description = "AstroVim User Git repo url.";
-    };
-
-    astroVimUserRef = mkOption {
+    ref = mkOption {
       type = types.enum ["main"];
       default = "main";
-      description = "AstroVimUser Git branch.";
+      description = "AstroNvim Git branch.";
     };
   };
 
@@ -55,8 +43,7 @@ in {
       export PATH="${pkgs.git-lfs}/bin:${pkgs.gitFull}/bin:${pkgs.chezmoi}/bin:$PATH"
 
       ${builtins.toPath ./scripts/setup-astronvim.sh} \
-        "${cfg.astroVimUrl}" "${cfg.astroVimRef}" \
-        "${cfg.astroVimUserUrl}" "${cfg.astroVimUserRef}"
+        "${cfg.url}" "${cfg.ref}" \
     '';
   };
 }
