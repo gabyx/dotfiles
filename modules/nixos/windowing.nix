@@ -9,14 +9,16 @@
   services.xserver.autorun = true;
 
   # Display Manager ===========================================================
+  services.displayManager = {
+    autoLogin.enable = false;
+    autoLogin.user = "nixos";
+  };
+
   services.xserver.displayManager = {
-    sddm.enable = false;
     gdm = {
       enable = true;
       wayland = true;
     };
-    autoLogin.enable = false;
-    autoLogin.user = "nixos";
   };
   # ===========================================================================
 

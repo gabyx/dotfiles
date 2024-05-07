@@ -29,7 +29,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    font-manager
+    # font-manager
   ];
 
   # ===========================================================================

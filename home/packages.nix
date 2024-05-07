@@ -13,11 +13,6 @@
   # https://github.com/NixOS/nixpkgs/issues/244609
   llvmPkgs = pkgs.llvmPackages_15;
   clangTools = pkgs.clang-tools_15;
-
-  # Own built packages:
-  custom = {
-    bazecor = pkgs.callPackage ./pkgs/bazecor {};
-  };
 in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -150,7 +145,7 @@ in {
     # MultiMedia
     bitwarden # Password manager
     bitwarden-cli
-    custom.bazecor # Dygma Defy Keyboard.
+    bazecor # Dygma Defy Keyboard.
     signal-desktop # Messaging app
     element-desktop # Matrix client.
     slack # Messaging app
