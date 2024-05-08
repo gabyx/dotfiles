@@ -13,6 +13,8 @@ switch host *args:
 
 # Build with nix-output-monitor.
 switch-visual host *args:
+    # We need sudo, because output-monitor will not show the prompt.
+    sudo echo "Starting" && \
     just rebuild switch "{{host}}" --show-trace --verbose --log-format internal-json \
         "${@:2}" |& nom --json
 
