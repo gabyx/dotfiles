@@ -68,5 +68,6 @@
 
     # Nix tools
     inputs.nvd-tool.packages."${system}".nvd
+    nix-output-monitor
   ];
 }

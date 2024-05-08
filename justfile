@@ -2,22 +2,31 @@ set positional-arguments
 set shell := ["bash", "-cue"]
 root_dir := justfile_directory()
 
+# NixOS rebuild command for the `host` (defined in the flake).
 rebuild how host *args:
     cd "{{root_dir}}" && \
         nixos-rebuild {{how}} --flake .#{{host}} --use-remote-sudo "${@:3}"
 
+# Switch the `host` to the latest configuration.
 switch host *args:
     just rebuild switch "{{host}}" "${@:2}"
 
-switch-debug host *args:
-    just rebuild switch "{{host}}" --show-trace --verbose "${@:2}"
+# Build with nix-output-monitor.
+switch-visual host *args:
+    just rebuild switch "{{host}}" --show-trace --verbose --log-format internal-json \
+        "${@:2}" |& nom --json
 
+# Switch the `host` to the latest configuration but under boot entry `test`.
 switch-test host *args:
     just rebuild switch "{{host}}" -p test "${@:2}"
 
-update:
-    cd "{{root_dir}}" && nix flake update
+# Update the flake lock file.
+# You can also do `--update-input XXX` to
+# only update one input.
+update *args:
+    cd "{{root_dir}}" && nix flake update "$@"
 
+# Show the history of the system profile and test profiles.
 history:
     #!/usr/bin/env bash
     echo "History in 'system' profile:"
@@ -26,9 +35,12 @@ history:
     echo "History in 'test' profile:"
     nix profile history --profile /nix/var/nix/profiles/system-profiles/test
 
+# Run the trim script to reduce the amount of generations kept on the system.
 trim *args:
     ./scripts/trim-generations.sh {{args}}
 
+# Diff the profile `current-system` with the last system profile
+# to see the differences.
 diff last="1" current_profile="/run/current-system":
     #!/usr/bin/env bash
     set -euo pipefail
@@ -43,9 +55,12 @@ diff last="1" current_profile="/run/current-system":
 
     nvd diff "$last_profile" "$current_profile"
 
+# Run nix-tree to get the tree of all packages.
 tree:
     nix-tree
 
+# Diff closures from `dest_ref` to `src_ref`. This builds and
+# computes the closure which might take some time.
 diff-closure dest_ref="/" src_ref="origin/main" host="desktop":
     @echo "Diffing closures of host '{{host}}' from '{{src_ref}}' to '{{dest_ref}}'"
 
@@ -53,6 +68,7 @@ diff-closure dest_ref="/" src_ref="origin/main" host="desktop":
         '.?ref={{src_ref}}#nixosConfigurations.{{host}}.config.system.build.toplevel' \
         '.?ref={{dest_ref}}#nixosConfigurations.{{host}}.config.system.build.toplevel'
 
+# Run Nix garbage-collection on the system-profile.
 gc:
     echo "Remove test profile"
     sudo rm -rf /nix/var/nix/profiles/system-profile/test

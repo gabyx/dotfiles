@@ -29,6 +29,8 @@
   };
 
   environment.systemPackages = with pkgs; [
+    # TODO: Currently has build problems:
+    # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1069358
     # font-manager
   ];
 
