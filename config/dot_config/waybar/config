@@ -141,7 +141,8 @@
     "clock#date": {
       "interval": 10,
       "format": "  {:%e %b %Y}", // Icon: calendar-alt
-      "tooltip-format": "{:%e %B %Y}"
+      "tooltip-format": "{:%e %B %Y}",
+      "on-click": "zenity --calendar"
     },
 
     "cpu": {
