@@ -1,4 +1,3 @@
-# This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 # Search for all options using: https://mipmip.github.io/home-manager-option-search
 {
@@ -30,7 +29,9 @@
     ./display.nix
     ./xdg.nix
     ./virtualization.nix
+    ./mail.nix
 
+    outputs.homeManagerModules.settings
     outputs.homeManagerModules.chezmoi
     outputs.homeManagerModules.astronvim
 

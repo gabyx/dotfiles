@@ -4,4 +4,5 @@
   # List your module files here
   chezmoi = import ./chezmoi.nix;
   astronvim = import ./astronvim.nix;
+  settings = import ./settings.nix;
 }

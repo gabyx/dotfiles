@@ -25,7 +25,7 @@ in {
     githooks
     tig
 
-    gnome.zenity # For dialogs over githooks.
+    gnome.zenity # For dialogs over githooks and calendar.
 
     gnome.seahorse
 
@@ -164,7 +164,6 @@ in {
     deluge # Bittorrent client
     firefox
     google-chrome
-    thunderbird
     libreoffice
 
     ## Sonos Device
