@@ -7,7 +7,13 @@
 # @author Gabriel Nützi, gnuetzi@gmail.com
 # =========================================================================================
 SCRIPT_DIR=$(cd -- "$(dirname -- "$0")" &>/dev/null && pwd)
-. "$SCRIPT_DIR/common/log.sh"
+if [ ! -f "$SCRIPT_DIR" ]; then
+    SCRIPT_DIR="$HOME/.config/shell"
+fi
+
+. "$SCRIPT_DIR/common/log.sh" || {
+    echo "Could not source 'log.sh'."
+} >&2
 
 function gabyx::mount_zfs_disks() {
     ~/.config/shell/mount-zfs-disks.sh "$@"
