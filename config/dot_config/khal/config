@@ -1,0 +1,18 @@
+[calendars]
+
+[[default]]
+path = /home/nixos/.local/share/khal/calendars/gnuetzi@gmail.com/
+type = calendar
+readonly = True
+
+[locale]
+timeformat = %H:%M
+dateformat = %m/%d/%Y
+longdateformat = %m/%d/%Y
+datetimeformat = %m/%d/%Y %H:%M
+longdatetimeformat = %m/%d/%Y %H:%M
+
+[default]
+default_calendar = default
+show_all_day = True
+enable_mouse = True
