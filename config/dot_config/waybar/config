@@ -20,10 +20,11 @@
     "modules-left": [
         "custom/launcher",
         "sway/workspaces",
-        "sway/mode"
+        "sway/mode",
+        "sway/window",
     ],
     "modules-center": [
-        // "sway/window",
+        "custom/agenda",
         "clock#date",
         "clock#time"
     ],
@@ -145,6 +146,16 @@
       "on-click": "zenity --calendar"
     },
 
+    "custom/agenda": {
+        "format": "{}",
+        "exec": "nextmeeting --max-title-length 30 --waybar",
+        "on-click": "nextmeeting --open-meet-url",
+        "on-click-right": "kitty -- /bin/bash -c \"cal -3;echo;nextmeeting;read;\";",
+        "interval": 59,
+        "return-type": "json",
+        "tooltip": "true"
+    },
+
     "cpu": {
         "interval": 5,
         "format": "󰍛 {usage}%",
@@ -193,8 +204,8 @@
     },
 
     "sway/window": {
-        "format": "{}",
-        "max-length": 120
+        "format": "{title}",
+        "max-length": 20,
     },
 
     "sway/workspaces": {

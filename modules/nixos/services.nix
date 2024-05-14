@@ -5,6 +5,9 @@
 }: {
   ### Services ================================================================
   services = {
+    # TODO: Needs goeclue setup.
+    # localtimed.enable = true;
+
     dbus.enable = true;
     upower.enable = true;
     locate.enable = true;

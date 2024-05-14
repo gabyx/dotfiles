@@ -65,12 +65,13 @@ in {
   nixpkgs = {
     # You can add overlays here.
     overlays = [
-      # NOTE: We are not using overlays so far, we pass inputs directly to modules.
-      #       Overlays is a recursive mechanism.
+      # NOTE: We are not eagerly using overlays so far, we pass inputs directly to modules.
+      #       Overlays is a recursive mechanism which is only used when a
+      #       package needs to be overwrittern globaly.
 
       # Add overlays of your own flake exports (from overlays and pkgs dir):
-      # outputs.overlays.additions
-      # outputs.overlays.modifications
+      outputs.overlays.additions
+      outputs.overlays.modifications
       # outputs.overlays.unstable-packages
     ];
   };

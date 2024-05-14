@@ -1,9 +1,4 @@
-{config, ...}: let
-  realName = "Gabriel Nützi";
-  at = "@";
-  defaultAddress = "gnuetzi" + at + "gmail.com";
-  workAddress = "nuetzig" + at + "ethz.ch";
-in {
+{config, ...}: {
   programs.thunderbird = {
     enable = true;
     profiles."nixos" = {
@@ -13,11 +8,11 @@ in {
 
   accounts.email.accounts =
     {
-      "${defaultAddress}" = {
-        realName = realName;
-        address = defaultAddress;
+      "${config.settings.user.email}" = rec {
+        realName = config.settings.user.name;
+        address = config.settings.user.email;
 
-        userName = defaultAddress;
+        userName = address;
         primary = true;
 
         thunderbird = {
@@ -40,13 +35,13 @@ in {
       };
     }
     // (
-      if config.settings.setupWorkEmail
+      if config.settings.user.emailWorkEnable
       then {
-        "${workAddress}" = {
-          realName = realName;
-          address = workAddress;
+        "${config.settings.user.emailWork}" = rec {
+          realName = config.settings.user.name;
+          address = config.settings.user.emailWork;
 
-          userName = workAddress;
+          userName = address;
           primary = false;
 
           thunderbird = {
