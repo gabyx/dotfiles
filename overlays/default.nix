@@ -3,7 +3,13 @@
   # NOTE: we are not using these overlays, they are here for reference only.
   # Why: Passing inputs to modules can be done in different ways, best is to not use
   # overlays, but just using plain old functions.
-  # [Read more here](docs/pass-inputs-to-modules.md).
+  #
+  # However, overlays are very useful to overwrite a package globaly which then gets used transitively.
+  # So overlays should only be used when a package must be overwritten for all
+  # packages which might need to use this derivation override as well.
+  #
+  # [Read more here](docs/pass-inputs-to-modules.md) and
+  # [here](https://nix-community.github.io/home-manager/options.xhtml#opt-nixpkgs.overlays).
 
   # This one brings our custom packages from the 'pkgs' directory
   additions = final: _prev: import ../pkgs {pkgs = final;};
@@ -15,6 +21,8 @@
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
+
+    gcalcli = prev.callPackage ../pkgs/gcalcli {gcalcli = prev.gcalcli;};
   };
 
   # When applied, the stable nixpkgs set (declared in the flake inputs) will
