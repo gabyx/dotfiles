@@ -207,6 +207,8 @@
 
 #window {
   font-weight: bold;
+  color: #6495ed;
+  padding-left: 20px;
 }
 
 #workspaces button {

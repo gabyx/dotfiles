@@ -140,6 +140,7 @@ source "$HOME/.config/shell/aliases.bash"
 source "$HOME/.config/shell/aliases.zsh"
 source "$HOME/.config/shell/functions.bash"
 
+# Python environment.
 if [ "$CHEZMOI_OS_RELEASE_ID" = "nixos" ]; then
     gabyx::nixos_activate_python_environment default || true
 else
@@ -148,12 +149,19 @@ else
     fi
 fi
 
+# Nextmeeting stuff.
+if [ -f ~/.config/nextmeeting/envrc ]; then
+    source ~/.config/nextmeeting/envrc
+fi
+
+# Tmux stuff.
 source "$HOME/.config/zsh/.zshrc-tmux.zsh"
 
-# Direnv hook
+# Direnv hook.
 if command direnv &>/dev/null; then
     eval "$(direnv hook zsh)"
 fi
+
 
 # Wezterm shell integration.
 if [ -n "$WEZTERM_EXECUTABLE" ]; then
