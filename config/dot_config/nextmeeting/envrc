@@ -2,4 +2,4 @@
 # here to set the default calendar which
 # nextmeeting uses.
 
-export GCALCLI_DEFAULT_CALENDAR="$(git config user.email)"
+export GCALCLI_DEFAULT_CALENDAR="Work"
