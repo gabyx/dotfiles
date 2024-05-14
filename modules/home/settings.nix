@@ -19,7 +19,7 @@ with lib; {
 
       user.emailWork = mkOption {
         description = "The default work email of the user.";
-        default = "nuetzig" + "@" + "ethz.com";
+        default = "nuetzig" + "@" + "ethz.ch";
         type = types.str;
       };
 
