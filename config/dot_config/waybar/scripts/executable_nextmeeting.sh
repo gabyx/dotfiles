@@ -5,4 +5,9 @@ if [ -f ~/.config/nextmeeting/envrc ]; then
     source ~/.config/nextmeeting/envrc
 fi
 
-exec nextmeeting "$@"
+if echo "$@" | grep "open-url"; then
+    nextmeeting "$@"
+    swaymsg [class='(?i).*chrome.*'] focus
+else
+    exec nextmeeting "$@"
+fi
