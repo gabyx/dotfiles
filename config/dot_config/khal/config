@@ -22,5 +22,3 @@ longdatetimeformat = %d/%m/%Y %H:%M
 [default]
 show_all_days = True
 highlight_event_days = True
-default_event_alarm = 20m
-default_dayevent_alarm = 12h

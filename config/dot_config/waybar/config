@@ -148,8 +148,7 @@
 
     "custom/agenda": {
         "format": "{}",
-        "exec": "~/.config/waybar/scripts/nextmeeting.sh  --max-title-length 30 --waybar",
-        "on-click": "~/.config/waybar/scripts/nextmeeting.sh --open-meet-url;",
+        "exec": "~/.config/waybar/scripts/nextmeeting-khal.py  --max-title-length 30",
         "on-click-right": "kitty -- /usr/bin/env bash -c ikhal",
         "interval": 59,
         "return-type": "json",

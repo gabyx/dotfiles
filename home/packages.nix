@@ -3,6 +3,7 @@
   pkgs,
   pkgsStable,
   inputs,
+  outputs,
   ...
 }: let
   # Define some special packages.
@@ -144,6 +145,9 @@ in {
 
     # Calendar/Mail
     khal # CLI Calendar
+    nextmeeting # Show meeting in waybar
+    gcalcli # Google Calender CLI (used also in nextmeeting)
+    batz # Timezone converter (for nextmeeting)
 
     # MultiMedia
     bitwarden # Password manager

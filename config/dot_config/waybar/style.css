@@ -86,12 +86,20 @@
 /* -----------------------------------------------------------------------------
  * Module styles
  * -------------------------------------------------------------------------- */
-#custom-agenda {
+#custom-agenda.togo {
   color: #6495ed;
 }
 
 #custom-agenda.soon {
-  color: #eb4d4b;
+  color: #f0e373;
+}
+
+#custom-agenda.soon-urgent {
+  color: #ff7a33;
+}
+
+#custom-agenda.soon-critical {
+  color: #fc0303;
 }
 
 #battery {

@@ -116,10 +116,6 @@
       rofi-bluetooth
       rofi-systemd
       playerctl # Player control in waybar.
-
-      nextmeeting # Show meeting in waybar
-      gcalcli # Google Calender CLI (used also in nextmeeting)
-      batz # Timezone converter (for nextmeeting)
     ];
 
     extraSessionCommands = ''

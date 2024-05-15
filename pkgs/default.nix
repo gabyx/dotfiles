@@ -9,6 +9,7 @@
 
   # Batman Timezone Converter
   batz = pkgs.callPackage ./batz {};
+
   # Google calendar integration into waybar.
   nextmeeting = pkgs.callPackage ./nextmeeting {};
 }
