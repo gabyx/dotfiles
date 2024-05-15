@@ -80,3 +80,6 @@ gc:
 
     echo "Garbage collect all unused nix store entries"
     sudo nix store gc --debug
+
+delete-chezmoi-script-state:
+    chezmoi state delete-bucket --bucket scriptState

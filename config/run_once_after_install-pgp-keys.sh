@@ -7,7 +7,8 @@ file=~/.config/gnupg/gabyx-private.asc
 
 echo "Install PGP key: '$file' ..."
 if ! command -v gpg &>/dev/null; then
-    echo "WARNING: gnupg is not installed. Cannot install PGP keys." >&2
+    echo "WARNING: 'gnupg' is not installed. Cannot install PGP keys." >&2
+    exit 0
 fi
 
 if [ -f "$file" ]; then

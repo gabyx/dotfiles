@@ -1,18 +1,26 @@
 [calendars]
 
 [[default]]
-path = /home/nixos/.local/share/khal/calendars/gnuetzi@gmail.com/
+color = "#DFAB25"
+path = ~/.local/share/khal/calendars/gnuetzi@gmail.com
+type = calendar
+readonly = True
+
+[[work]]
+color = "#5EB7FF"
+path = ~/.local/share/khal/calendars/c001b2788d3b88bb4e85673271116b40215f10843e5bce76381e21c0a073243d@group.calendar.google.com
 type = calendar
 readonly = True
 
 [locale]
 timeformat = %H:%M
-dateformat = %m/%d/%Y
-longdateformat = %m/%d/%Y
-datetimeformat = %m/%d/%Y %H:%M
-longdatetimeformat = %m/%d/%Y %H:%M
+dateformat = %d/%m/%Y
+longdateformat = %d/%m/%Y
+datetimeformat = %d/%m/%Y %H:%M
+longdatetimeformat = %d/%m/%Y %H:%M
 
 [default]
-default_calendar = default
-show_all_day = True
-enable_mouse = True
+show_all_days = True
+highlight_event_days = True
+default_event_alarm = 20m
+default_dayevent_alarm = 12h

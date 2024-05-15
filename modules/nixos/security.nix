@@ -22,7 +22,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    google-authenticator
+    google-authenticator # For SSH logins.
   ];
 
   services = {

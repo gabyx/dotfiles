@@ -1,4 +1,13 @@
 {pkgs, ...}: {
+  ### Calendar Syncing ========================================================
+  home.packages = with pkgs; [vdirsyncer];
+
+  services.vdirsyncer = {
+    enable = true;
+    frequency = "*:0/2"; # Sync every 2 minutes.
+  };
+  # ==========================================================================
+
   ### Color Shifting ==========================================================
   services.gammastep = {
     enable = true;

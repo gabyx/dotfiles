@@ -142,6 +142,9 @@ in {
     texlive.combined.scheme-full
     pandoc
 
+    # Calendar/Mail
+    khal # CLI Calendar
+
     # MultiMedia
     bitwarden # Password manager
     bitwarden-cli

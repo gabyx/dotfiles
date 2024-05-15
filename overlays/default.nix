@@ -23,6 +23,7 @@
     # });
 
     gcalcli = prev.callPackage ../pkgs/gcalcli {gcalcli = prev.gcalcli;};
+    vdirsyncer = prev.callPackage ../pkgs/vdirsyncer {vdirsyncer = prev.vdirsyncer;};
   };
 
   # When applied, the stable nixpkgs set (declared in the flake inputs) will

@@ -9,7 +9,7 @@
 
 [general]
 # A folder where vdirsyncer can store some metadata about each pair.
-status_path = "~/.local/vdirsyncer/status"
+status_path = "~/.local/state/vdirsyncer/status/"
 
 [pair khal_default]
 a = "khal_default_local"
@@ -21,12 +21,12 @@ conflict_resolution = "b wins"
 
 [storage khal_default_local]
 type = "filesystem"
-path = "/home/nixos/.local/share/khal/calendars"
+path = "~/.local/share/khal/calendars/"
 fileext = ".ics"
-read_only = true
 
 [storage khal_default_remote]
+read_only = true
 type = "google_calendar"
-token_file = "~/.local/share/vdirsyncer/khal_default_remote"
+token_file = "~/.local/state/vdirsyncer/khal_default_remote"
 client_id.fetch = ["command", "cat", "~/.config/vdirsyncer/google-calendar-client-id"]
 client_secret.fetch = ["command", "cat", "~/.config/vdirsyncer/google-calendar-client-secret"]
