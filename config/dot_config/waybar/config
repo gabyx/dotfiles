@@ -200,7 +200,7 @@
     "network": {
         "interval": 5,
         "format-wifi": "   {essid} ({signalStrength}%)", // Icon: wifi
-        "format-ethernet": "󰈀  {ifname}: {ipaddr}/{cidr}", // Icon: ethernet
+        "format-ethernet": "󰈀  {ifname}", // Icon: ethernet
         "format-disconnected": "󰖪 ",
         "tooltip-format": "{ifname}: {ipaddr}",
         "on-click": "swaymsg exec \\$wireless-menu",

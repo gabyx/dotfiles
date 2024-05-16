@@ -85,13 +85,17 @@ tooltip {
 #custom-ssh,
 #custom-agenda,
 #tray {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 7px;
+  padding-right: 7px;
 }
 
 /* -----------------------------------------------------------------------------
  * Module styles
  * -------------------------------------------------------------------------- */
+#custom-vpn {
+  padding-left: 13px;
+}
+
 #custom-vpn.connected {
   color: #6495ed;
 }
@@ -213,6 +217,15 @@ tooltip {
   font-size: 16px;
   font-weight: bold;
   color: #6495ed;
+}
+
+#bluetooth {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#custom-ssh {
+  padding-right: 12px;
 }
 
 #custom-ssh.warning {
