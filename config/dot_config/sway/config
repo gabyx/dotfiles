@@ -58,12 +58,15 @@ set $sound-menu pavucontrol
 set $calculator-menu qalculate-gtk
 set $password-menu swaymsg workspace \\$creds-ws
 set $screenshot-menu ~/.config/rofi/scripts/rofi-screenshot.sh
+set $color-picker-menu ~/.config/rofi/scripts/rofi-color-picker.sh
 
 set $clipboard 'copyq --start-server'
 set $clipboard-menu copyq toggle
 
 set $notifications "swaync"
 set $notification-menu "swaync-client -t -sw"
+
+set $nightshifter 'gammastep-indicator'
 
 # Special workspaces
 # Icons can be found at:
@@ -236,6 +239,7 @@ seat * hide_cursor when-typing enable
     bindsym $mod+Shift+t exec $procs-menu
     bindsym $mod+Shift+m exec $emoji-menu
     bindsym $mod+Shift+s exec $screenshot-menu
+    bindsym $mod+Shift+y exec $color-picker-menu
     bindsym $mod+c exec $clipboard-menu
     bindsym $mod+d exec $launcher-menu
 
@@ -405,6 +409,7 @@ exec $web
 exec $comm
 exec $comm-matrix
 exec $creds
+exec $nightshifter
 
 exec ~/.config/sway/scripts/start-up.sh
 ### ===========================================================================

@@ -92,7 +92,6 @@
     extraPackages = with pkgs; [
       power-profiles-daemon
 
-      redshift # Redshift monitor colors.
       swaylock-effects # Swaylock but with more effects.
       swayidle
       swaynotificationcenter
@@ -109,6 +108,8 @@
       slurp # Wayland region selector.
       sway-contrib.grimshot # Main screenshot tool.
       swappy # Edit tool for screenshots.
+      gcolor3 # Colorwheel picker.
+      hyprpicker # Colorpicker on screen.
 
       rofi # Application Launcher for waybar.
       rofimoji

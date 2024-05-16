@@ -3,25 +3,39 @@
 set -eE
 set -u
 
+function show_error() {
+    if ! command -v notify-send &>/dev/null; then
+        msg="$(echo -e "$@")"
+        swaynag -t warning -m "$msg" || true
+    else
+        notify-send --category warning "$@" || true
+    fi
+}
+
+function assert_exe() {
+    local exe="$1"
+    if ! command -v "$exe" &>/dev/null; then
+        show_error "Executable '$exe' not found. Did you install it?"
+        exit 1
+    fi
+}
+
 function on_error() {
-    notify-send --category warning "This script '$0' failed." || true
+    show_error "Screenshot failed" "Script '$0' failed."
     exit 1
 }
 
-trap cleanup ERR
+trap on_error ERR
 
 # Taken from https://github.com/gibbz00/sway-rofi-screenshot/blob/master/sway-rofi-screenshot
 # and adapted to grimshot
 # which works nicely with sway.
 
-if ! out=$(grimshot check 2>&1); then
-    if ! command -v notify-send &>/dev/null; then
-        swaynag -t warning -m "Grimshot has not all tools available. Run 'grimshot check'." || true
-    else
-        notify-send --category warning "Command 'grimshot check' failed:" \
-            "$out" || true
-    fi
+assert_exe grimshot
+assert_exe rofi
 
+if ! out=$(grimshot check 2>&1); then
+    show_error "Grimshot has not all tools available. Run 'grimshot check':\n$out."
     exit 1
 fi
 
@@ -33,14 +47,14 @@ Manual Window
 Current Screen
 All Screens
 EOF
-)
+) || exit 0
 
 WITH_CURSOR=$(
     rofi -dmenu -p 'With Cursor?' -lines 2 <<EOF
 no
 yes
 EOF
-)
+) || exit 0
 
 CURSOR_ARG=""
 if [ "$WITH_CURSOR" = "yes" ]; then
@@ -71,11 +85,9 @@ case "$CHOICE" in
     grimshot $CURSOR_ARG --notify save screen "$FILENAME"
     ;;
 '')
-    notify-send "Screenshot" "Cancelled"
     exit 0
     ;;
 *)
-    notify-send "Screenshot" "Cancelled"
     exit 0
     ;;
 esac
@@ -111,4 +123,6 @@ if command -v "copyq" 2>/dev/null; then
     copyq enable
 fi
 
-notify-send "Screenshot" "File saved as <i>'$FILENAME'</i> and copied to the clipboard." -i "$FILENAME"
+notify-send "Screenshot" \
+    "File saved as <i>'$FILENAME'</i> and copied to the clipboard." -i "$FILENAME" ||
+    true
