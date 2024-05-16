@@ -21,22 +21,25 @@ other shit OS which desperately tries to convert itself into a \*nix OS) and
 
 ![Screenshot](./nixos/docs/screenshot.png)
 
-| Program                    | Name                                                                                                                                              |
-| :------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Linux Distribution         | [NixOS](https://www.nixos.org/)                                                                                                                   |
-| Window Manager             | [sway](https://github.com/swaywm/sway)                                                                                                            |
-| Bar                        | [waybar](https://github.com/Alexays/Waybar)                                                                                                       |
-| Program Launcher & Menu    | [rofi](https://github.com/DaveDavenport/rofi)                                                                                                     |
-| Wallpaper Setter           | [sway](https://github.com/swaywm/sway)                                                                                                            |
-| Screenshot                 | [grimshot](https://search.nixos.org/packages?channel=23.05&show=sway-contrib.grimshot&from=0&size=50&sort=relevance&type=packages&query=grimshot) |
-| Clipboard                  | [copyq](https://hluk.github.io/CopyQ/) with special password ignore command                                                                       |
-| Notification               | [swaync](https://github.com/ErikReider/SwayNotificationCenter)                                                                                    |
-| Web Browser                | [Chrome](https://www.google.com/intl/de/chrome/)                                                                                                  |
-| Code Editor                | [Nvim](https://neovim.io/) with [Astrovim](https://github.com/gabyx/astrovim)                                                                     |
-| Normal Font                | [NotoSans Nerd Font](https://www.nerdfonts.com/)                                                                                                  |
-| Text editors/Terminal font | [JetBrainsMono Nerd Font](https://www.jetbrains.com/lp/mono)                                                                                      |
-| Shell                      | [zsh](https://www.zsh.org/)                                                                                                                       |
-| Terminal Emulator          | [wezterm](https://wezfurlong.org) [kitty](https://sw.kovidgoyal.net/kitty)                                                                        |
+| Program                     | Name                                                                                                                                              |
+| :-------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Linux Distribution          | [NixOS](https://www.nixos.org/)                                                                                                                   |
+| Window Manager              | [sway](https://github.com/swaywm/sway)                                                                                                            |
+| Bar                         | [waybar](https://github.com/Alexays/Waybar)                                                                                                       |
+| Wallpaper Setter            | [sway](https://github.com/swaywm/sway)                                                                                                            |
+| Program Launcher & Menus    | [rofi](https://github.com/DaveDavenport/rofi)                                                                                                     |
+| Clipboard                   | [copyq](https://hluk.github.io/CopyQ/) with special password ignore command                                                                       |
+| Screenshot                  | [grimshot](https://search.nixos.org/packages?channel=23.05&show=sway-contrib.grimshot&from=0&size=50&sort=relevance&type=packages&query=grimshot) |
+| Colorpicking                | [hyprpick](https://github.com/hyprwm/hyprpicker) and [gcolor3](https://gitlab.gnome.org/World/gcolor3)                                            |
+| Nightshifting               | [gammastep](https://gitlab.com/chinstrap/gammastep)                                                                                               |
+| Notification                | [swaync](https://github.com/ErikReider/SwayNotificationCenter)                                                                                    |
+| Calendar and Meeting Status | [vdirsyncer](https://vdirsyncer.pimutils.org/en/stable) and [khal](https://khal.readthedocs.io/en/latest/)                                        |
+| Browser                     | [Chrome](https://www.google.com/intl/de/chrome/)                                                                                                  |
+| Editor                      | [Nvim](https://neovim.io/) with [Astrovim](https://github.com/gabyx/astrovim)                                                                     |
+| Normal Font                 | [NotoSans Nerd Font](https://www.nerdfonts.com/)                                                                                                  |
+| Editor/Terminal Font        | [JetBrainsMono Nerd Font](https://www.jetbrains.com/lp/mono)                                                                                      |
+| Shell                       | [zsh](https://www.zsh.org/)                                                                                                                       |
+| Terminal Emulator           | [wezterm](https://wezfurlong.org) [kitty](https://sw.kovidgoyal.net/kitty)                                                                        |
 
 ## NixOS Configurations
 
