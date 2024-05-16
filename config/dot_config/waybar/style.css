@@ -57,6 +57,11 @@
   font-weight: bold;
 }
 
+tooltip {
+  border: 1.5px solid #6495ed;
+  border-radius: 4px;
+}
+
 /* Each module */
 #battery,
 #clock,
@@ -76,6 +81,7 @@
 #custom-powermenu,
 #custom-launcher,
 #custom-notification,
+#custom-vpn,
 #custom-ssh,
 #custom-agenda,
 #tray {
@@ -86,6 +92,10 @@
 /* -----------------------------------------------------------------------------
  * Module styles
  * -------------------------------------------------------------------------- */
+#custom-vpn.connected {
+  color: #6495ed;
+}
+
 #custom-agenda.togo {
   color: #6495ed;
 }

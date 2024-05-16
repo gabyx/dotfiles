@@ -42,6 +42,7 @@
         "disk",
         "custom/ssh",
         "sway/language",
+        "custom/vpn",
         "network",
         "bluetooth",
         "pulseaudio",
@@ -187,6 +188,15 @@
         "on-scroll-down": "swaymsg exec \\$brightness_down"
     },
 
+    "custom/vpn":{
+        "format": "{icon}",
+        "exec": "~/.config/waybar/scripts/vpn-status.sh",
+        "interval": 5,
+        "format-icons": ["",""],
+        "return-type": "json",
+        "tooltip": true,
+    },
+
     "network": {
         "interval": 5,
         "format-wifi": "   {essid} ({signalStrength}%)", // Icon: wifi
@@ -194,7 +204,7 @@
         "format-disconnected": "󰖪 ",
         "tooltip-format": "{ifname}: {ipaddr}",
         "on-click": "swaymsg exec \\$wireless-menu",
-        "on-click-right": "swaymsg exec \\$network-menu"
+        "on-click-right": "swaymsg exec \\$network-menu",
     },
 
     "sway/mode": {
