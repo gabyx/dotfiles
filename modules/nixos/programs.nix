@@ -40,7 +40,14 @@
       ];
     };
 
+    # Crendential Manager.
     seahorse.enable = true;
+
+    # Email.
+    evolution = {
+      enable = true;
+      plugins = with pkgs; [evolution-ews];
+    };
   };
   # ===========================================================================
 }

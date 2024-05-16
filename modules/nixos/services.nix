@@ -36,6 +36,17 @@
         KbdInteractiveAuthentication = true;
       };
     };
+
+    gnome.evolution-data-server.enable = true;
+    # optional to use google/nextcloud calendar
+    gnome.gnome-online-accounts.enable = true;
   };
+
+  programs.dconf.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    # Only for online accounts.
+    gnome.gnome-control-center
+  ];
   # ===========================================================================
 }
