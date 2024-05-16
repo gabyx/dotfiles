@@ -3,20 +3,58 @@
 set -e
 set -u
 
-file=~/.config/gnupg/gabyx-private.asc
-
-echo "Install PGP key: '$file' ..."
 if ! command -v gpg &>/dev/null; then
     echo "WARNING: 'gnupg' is not installed. Cannot install PGP keys." >&2
     exit 0
 fi
 
-if [ -f "$file" ]; then
-    printf "PGP Password: "
-    read -sr password </dev/tty
+cd ~/.config/gnupg || {
+    echo "Could not cd to '~/.config/gnupg'."
+    exit 1
+}
 
-    gpg --import --passphrase-file <(echo "$password") --pinentry-mode loopback --armor "$file" || {
-        echo "WARNING: Import of PGP file '$file' failed." >&2
+# Collect all GPG keys.
+readarray -t private_files < <(find . -type f -name "*-private.asc.age")
+
+trusted_keys=(
+    90AECCB97AD34CE43AED9402E969172AB0757EB8
+    F24F52A877FC8A640A836E1DF9E3B0FF9D4E7A81
+    C2F8DE28F8AB11118966910837A5F59C07097058
+)
+
+for private_file in "${private_files[@]}"; do
+    echo
+    echo "Install Private PGP key: '$private_file' ..."
+
+    public_file="${private_file%%-private.asc.age}-public.asc"
+    passphrase_file="${private_file%%.asc.age}.passphrase.age"
+
+    # Import private key.
+    gpg --import \
+        --passphrase-file <(chezmoi decrypt "$passphrase_file") \
+        --pinentry-mode loopback --armor \
+        <(chezmoi decrypt "$private_file") || {
+        echo "WARNING: Import of PGP file '$private_file' failed." >&2
         exit 1
     }
-fi
+
+    # Import public key.
+    echo "Install Public PGP key: '$public_file' ..."
+    gpg --import \
+        --pinentry-mode loopback --armor \
+        "$public_file" || {
+        echo "WARNING: Import of PGP file '$public_file' failed." >&2
+        exit 1
+    }
+
+    # Trust all imported keys with trust level 5.
+    trusted_re="$(printf "%s|" "${trusted_keys[@]}")"
+    trusted_re="${trusted_re%|}"
+    echo "Setting trust level for know keys."
+    gpg --list-keys --fingerprint | grep pub -A 1 | grep -Ev "pub|--" | tr -d ' ' | grep -E "$trusted_re" |
+        awk 'BEGIN { FS = "\n" } ; { print $1":5:" } ' |
+        gpg --import-ownertrust
+done
+
+echo "Successfully installed all GPG keys."
+echo
