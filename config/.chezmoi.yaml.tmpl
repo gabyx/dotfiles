@@ -13,6 +13,13 @@ data:
   # Any of `private`, `work`
   workspace: {{ $workspace }}
 
+  gpg:
+    {{- if contains $workspace "work" }}
+    defaultKeyFingerprint: C2F8DE28F8AB11118966910837A5F59C07097058
+    {{- else }}
+    defaultKeyFingerprint: F24F52A877FC8A640A836E1DF9E3B0FF9D4E7A81
+    {{- end }}
+
   # Git Setup.
   git:
     diffTool: nvim
@@ -26,7 +33,7 @@ data:
     githooksCloneBranch: main
 
     {{- if contains $workspace "work" }}
-    userEmail: gnuetzi@gmail.com
+    userEmail: gabriel.nuetzi@sdsc.ethz.ch
     userName: Gabriel Nützi
     {{- else }}
     userEmail: gnuetzi@gmail.com
