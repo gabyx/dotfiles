@@ -81,5 +81,14 @@ gc:
     echo "Garbage collect all unused nix store entries"
     sudo nix store gc --debug
 
+# Apply all configs, also encrypted ones.
+apply-configs:
+    chezmoi apply
+
+# Apply all configs but not encrypted ones.
+apply-configs-exclude-encrypted:
+    chezmoi apply --exclude encrypted
+
+# Delete the script state of chezmoi to rerun scripts.
 delete-chezmoi-script-state:
     chezmoi state delete-bucket --bucket scriptState

@@ -3,6 +3,11 @@
 
 encryption: age
 age:
+  # If you use here the encrypted key-file `key.txt.age`
+  # `age` run by chezmoi will always ask for the passphrase
+  # on every apply for every file. That is cumbersome.
+  # So we use here the unencrypted file which always gets deleted
+  # again after apply.
   identity: ~/.config/chezmoi/key.txt
   recipient: age1cc23vqe4w0hkz64ttcc9l6pghycsdkquegyxg8dq3r4z72twacdqlfuz64
 
