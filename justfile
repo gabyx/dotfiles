@@ -89,6 +89,15 @@ apply-configs:
 apply-configs-exclude-encrypted:
     chezmoi apply --exclude encrypted
 
+# Encrypt a file using the encryptiong configured
+# in `.chezmoi.yaml`.
+# This is using the public key.
+encrypt file:
+    chezmoi encrypt "{{file}}"
+
+decrypt file:
+    age --decrypt -i "{{root_dir}}/config/dot_config/chezmoi/key.txt.age" "{{file}}"
+
 # Delete the script state of chezmoi to rerun scripts.
 delete-chezmoi-script-state:
     chezmoi state delete-bucket --bucket scriptState

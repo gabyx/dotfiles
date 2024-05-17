@@ -57,12 +57,35 @@ chezmoi diff
 
 and to apply use
 
+- For non encrypted files use.
+
+  ```shell
+  just apply-configs-exclude-encrypted
+  ```
+
+- For encrypted files use:
+
+  ```shell
+  just apply-configs
+  ```
+
+### Encryption
+
+Chezmoi is configured to use `age` as encryption tool with a secret private-key
+file
+[config/dot_config/chezmoi/key.txt.age](config/dot_config/chezmoi/key.txt.age)
+which was generated with:
+
 ```shell
-chezmoi apply
+age-keygen | age --passphrase --armor > key.txt.age
 ```
 
-All together:
+This file `key.txt.age` is passphrase encrypted and contains the secret-key for
+all `age` encryption in this repository. The file is encoded in human-readable
+PEM format (`--armor`).
 
-```shell
-chezmoi init --apply --verbose https://github.com/gabyx/dotfiles.git
-```
+The file `key.txt.age` is decrypted (interactive passphrase prompt) when
+`chezmoi apply` is run in a
+[_before_ hook](config/run_before_decrypt-private-key.sh) such that all
+encrypted files can be decrypted in on go. The decrypted key is then again
+deleted in a [_after_ hook](config/run_after_delete-decrypted-private-key.sh).
