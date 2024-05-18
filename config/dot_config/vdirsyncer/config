@@ -11,22 +11,46 @@
 # A folder where vdirsyncer can store some metadata about each pair.
 status_path = "~/.local/state/vdirsyncer/status/"
 
-[pair khal_default]
-a = "khal_default_local"
-b = "khal_default_remote"
+# Personal Calendar
+# =============================================================================
+[pair google_default]
+a = "google_local"
+b = "google_remote"
 collections = ["from a", "from b"]
 # This is important because we do not want to
 # sync back any change to the server.
 conflict_resolution = "b wins"
 
-[storage khal_default_local]
+[storage google_local]
 type = "filesystem"
-path = "~/.local/share/khal/calendars/"
+path = "~/.local/share/khal/calendars/personal"
 fileext = ".ics"
 
-[storage khal_default_remote]
+[storage google_remote]
 read_only = true
 type = "google_calendar"
-token_file = "~/.local/state/vdirsyncer/khal_default_remote"
+token_file = "~/.local/state/vdirsyncer/google_remote"
 client_id.fetch = ["command", "cat", "~/.config/vdirsyncer/google-calendar-client-id"]
 client_secret.fetch = ["command", "cat", "~/.config/vdirsyncer/google-calendar-client-secret"]
+
+# Work Calendar
+# =============================================================================
+[pair work_default]
+a = "work_local"
+b = "work_remote"
+collections = ["from a", "from b"]
+# This is important because we do not want to
+# sync back any change to the server.
+conflict_resolution = "b wins"
+
+[storage work_local]
+type = "filesystem"
+path = "~/.local/share/khal/calendars/work"
+fileext = ".ics"
+
+[storage work_remote]
+read_only = true
+type = "caldav"
+url = "https://mail.ethz.ch/EWS/Exchange.aswx"
+username.fetch = ["command", "cat", "~/.config/vdirsyncer/exchange-work-calendar-username"]
+password.fetch = ["command", "cat", "~/.config/vdirsyncer/exchange-work-calendar-password"]

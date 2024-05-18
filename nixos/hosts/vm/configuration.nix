@@ -22,6 +22,10 @@ in {
     ./hardware-configuration.nix
     ./boot.nix
 
+    # Load the NixOS age encryption module to encrypt/decrypt
+    # secrets with this NixOS configuration
+    inputs.agenix.nixosModules.default
+
     # Include all other specifications.
     (outputs.nixosModules.windowing {inherit config pkgs pkgsStable;})
     outputs.nixosModules.display

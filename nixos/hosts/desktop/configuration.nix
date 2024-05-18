@@ -25,6 +25,10 @@ in {
     inputs.hardware.nixosModules.common-gpu-amd
     inputs.hardware.nixosModules.common-pc-ssd
 
+    # Load the NixOS age encryption module to encrypt/decrypt
+    # secrets with this NixOS configuration
+    inputs.agenix.nixosModules.default
+
     # You can also split up your configuration and import pieces of it here:
     # ./users.nix
 

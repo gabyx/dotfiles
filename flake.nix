@@ -30,12 +30,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Some hardware modules.
+    # Some Hardware Modules.
     hardware = {
       url = "github:NixOS/nixos-hardware";
     };
 
-    # Home manager
+    # Home-Manager for NixOS.
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,21 +47,27 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # wezterm nightly
+    # Terminal `wezterm` nightly
     wezterm = {
       url = "github:wez/wezterm?dir=nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Githooks
+    # Githooks.
     githooks = {
       url = "github:gabyx/githooks?dir=nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Neovim nigthtly
+    # Neovim Nightly.
     neovim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Age Encryption Tool for NixOS.
+    agenix = {
+      url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

@@ -96,7 +96,7 @@ encrypt file:
     chezmoi encrypt "{{file}}"
 
 decrypt file:
-    age --decrypt -i "{{root_dir}}/config/dot_config/chezmoi/key.txt.age" "{{file}}"
+    age --decrypt -i "{{root_dir}}/config/dot_config/chezmoi/key.age" "{{file}}"
 
 # Delete the script state of chezmoi to rerun scripts.
 delete-chezmoi-script-state:

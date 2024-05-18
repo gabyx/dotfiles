@@ -57,13 +57,14 @@ chezmoi diff
 
 and to apply use
 
-- For non encrypted files use.
+- For non encrypted files use (which is truly non-interactively, no passphrase
+  prompt)
 
   ```shell
   just apply-configs-exclude-encrypted
   ```
 
-- For encrypted files use:
+- For encrypted files use (which might prompt for the passphrase):
 
   ```shell
   just apply-configs
@@ -72,20 +73,28 @@ and to apply use
 ### Encryption
 
 Chezmoi is configured to use `age` as encryption tool with a secret private-key
-file
-[config/dot_config/chezmoi/key.txt.age](config/dot_config/chezmoi/key.txt.age)
+file [config/dot_config/chezmoi/key.age](config/dot_config/chezmoi/key.age)
 which was generated with:
 
 ```shell
-age-keygen | age --passphrase --armor > key.txt.age
+age-keygen | age --passphrase --armor > key.age
 ```
 
-This file `key.txt.age` is passphrase encrypted and contains the secret-key for
-all `age` encryption in this repository. The file is encoded in human-readable
-PEM format (`--armor`).
+This file `key.age` is passphrase encrypted and contains the secret-key for all
+`age` encryption in this repository. The file is encoded in human-readable PEM
+format (`--armor`).
 
-The file `key.txt.age` is decrypted (interactive passphrase prompt) when
+The file `key.age` is decrypted (interactive passphrase prompt) when
 `chezmoi apply` is run in a
 [_before_ hook](config/run_before_decrypt-private-key.sh) such that all
-encrypted files can be decrypted in on go. The decrypted key is then again
-deleted in a [_after_ hook](config/run_after_delete-decrypted-private-key.sh).
+encrypted files can be decrypted in one go. The decrypted key is then again
+deleted in a _after_ hook](config/run_after_delete-decrypted-private-key.sh).
+
+The passphrase can be stored into the login keyring to make `just apply-configs`
+**pass non-interactively**:
+
+```shell
+secret-tool store --label='Chezmoi Key-File Passphrase' chezmoi keyfile-passphrase
+```
+
+Inspect the store with `seahorse`.

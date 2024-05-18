@@ -21,6 +21,9 @@
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
 
+    inputs.nix-index-database.hmModules.nix-index
+    inputs.agenix.homeManagerModules.default
+
     ./environment.nix
     ./packages.nix
     ./tmux.nix
@@ -30,12 +33,11 @@
     ./xdg.nix
     ./virtualization.nix
     ./mail.nix
+    ./secrets.nix
 
     outputs.homeManagerModules.settings
     outputs.homeManagerModules.chezmoi
     outputs.homeManagerModules.astronvim
-
-    inputs.nix-index-database.hmModules.nix-index
   ];
 
   home = rec {

@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   ### Calendar Syncing ========================================================
-  home.packages = with pkgs; [vdirsyncer];
+  home.packages = with pkgs; [vdirsyncer davmail];
 
   services.vdirsyncer = {
     enable = true;

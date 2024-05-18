@@ -20,6 +20,7 @@ in {
   home.packages = with pkgs; [
     # Basics
     age # Encryption tool.
+    libsecret # secret-tool to access gnome-keyring
     git
     git-lfs
     git-town
