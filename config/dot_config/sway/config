@@ -92,8 +92,8 @@ assign [class="(?i).*element.*"] $comm-ws
 
 set $mail-ws 8:8:  
 set $ws-8 8:8:  
-set $mail thunderbird
-assign [app_id="(?i).*thunderbird.*"] $mail-ws
+set $mail evolution
+assign [app_id="(?i).*evolution.*"] $mail-ws
 
 set $web-ws 9:9:  
 set $ws-9 9:9:  
