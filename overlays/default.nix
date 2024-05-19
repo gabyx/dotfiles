@@ -27,9 +27,6 @@
 
     # We need latest calendar CLI on `main` with `--json` support.
     khal = prev.callPackage ../pkgs/khal {};
-
-    # We need a patched `age` where passphrase prompt is non-interactive.
-    age = prev.callPackage ../pkgs/age {age = prev.age;};
   };
 
   # When applied, the stable nixpkgs set (declared in the flake inputs) will
