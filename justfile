@@ -92,11 +92,20 @@ apply-configs-exclude-encrypted:
 # Encrypt a file using the encryptiong configured
 # in `.chezmoi.yaml`.
 # This is using the public key.
+[no-cd]
 encrypt file:
     chezmoi encrypt "{{file}}"
 
+# Decrypt a file using the encryption configured.
+[no-cd]
 decrypt file:
     age --decrypt -i "{{root_dir}}/config/dot_config/chezmoi/key.age" "{{file}}"
+
+# Store the private-key for the keyfile 'key.age'
+# into the keyring.
+store-kefile-private-key:
+    secret-tool store --label='Chezmoi Key-File Private Key' \
+        chezmoi keyfile-private-key
 
 # Delete the script state of chezmoi to rerun scripts.
 delete-chezmoi-script-state:
