@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  osConfig,
+  pkgs,
+  ...
+}: {
   ### Calendar Syncing ========================================================
   home.packages = with pkgs; [vdirsyncer davmail];
 

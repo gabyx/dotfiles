@@ -3,13 +3,13 @@
 [[default]]
 color = "#DFAB25"
 path = ~/.local/share/khal/calendars/personal/*
-type = calendar
+type = discover
 readonly = True
 
 [[work]]
 color = "#5EB7FF"
 path = ~/.local/share/khal/calendars/work/*
-type = calendar
+type = discover
 readonly = True
 
 [locale]

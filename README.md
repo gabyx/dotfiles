@@ -168,7 +168,7 @@ Skip two step 3 on a fresh system.
    systemctl --user restart dbus-broker
    ```
 
-   This should log you out and then login again.
+   **This should log you out and then login again.**
 
    Only resetting with
    `systemctl --user restart dbus-:1.1-org.gnome.OnlineAccounts@0.service` or

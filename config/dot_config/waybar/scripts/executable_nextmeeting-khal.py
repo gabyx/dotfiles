@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import math
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -103,10 +104,13 @@ def main():
         if len(title) > args.max_title_length:
             title = title[0 : max(args.max_title_length - 3, 0)] + "..."
 
-        if e.togo:
-            estim = "still {0:>2.0f} min".format(e.until_end)
+        delta = e.until_end if e.togo else e.until_start
+        if delta > 60:
+            delta_fmt = "{0:>2.0f}h {0:>2.0f} min".format(int(delta / 60), delta % 60)
         else:
-            estim = "in {0:>2.0f} min".format(e.until_start)
+            delta_fmt = "{0:>2.0f} min"
+
+        estim = ("still {}" if e.togo else "in {}").format(delta_fmt)
 
         if short:
             return "󰃰  {0} ({1}) | {2}".format(

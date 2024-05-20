@@ -47,6 +47,11 @@
     gnome.evolution-data-server.enable = true;
     # optional to use google/nextcloud calendar
     gnome.gnome-online-accounts.enable = true;
+
+    davmail = {
+      enable = true;
+      url = "https://mail.ethz.ch/EWS/Exchange.asmx";
+    };
   };
 
   programs.dconf.enable = true;
@@ -55,5 +60,6 @@
     # Only for online accounts.
     gnome.gnome-control-center
   ];
+
   # ===========================================================================
 }
