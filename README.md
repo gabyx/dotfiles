@@ -119,9 +119,9 @@ Setting up the accounts happens with the two folders:
 - `~/.config/goa-1.0`
 - `~/.config/evolution/sources`
 
-Skip two step 3 on a fresh system.
+Skip to step 3 on a fresh system.
 
-1. Check that there are not online accounts already setup:
+1. Check that there are no online accounts already setup:
 
    ```shell
    XDG_CURRENT_DESKTOP=GNOME gnome-control-center
@@ -172,8 +172,7 @@ Skip two step 3 on a fresh system.
 
    Only resetting with
    `systemctl --user restart dbus-:1.1-org.gnome.OnlineAccounts@0.service` or
-   login The name might be similar, check with
-   `systemctl --user list-units | grep gnome`.
+   just login out did not work.
 
 1. Stop any evolution already running after login.
 
