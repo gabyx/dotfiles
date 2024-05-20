@@ -1,0 +1,53 @@
+[Data Source]
+DisplayName=gnuetzi@gmail.com
+Enabled=true
+Parent=f462daead0cf207034f64279f88ef22c69bb809f
+
+[Mail Submission]
+SentFolder=folder://0f9b0823dc42b16d3a5d6f97902882e2c7e0b50f/%5bGmail%5d/Gesendet
+TransportUid=041ebe1b57735f0a897c2377a56a011b0cfd44fb
+RepliesToOriginFolder=false
+UseSentFolder=true
+
+[Mail Composition]
+Bcc=
+Cc=
+DraftsFolder=folder://0f9b0823dc42b16d3a5d6f97902882e2c7e0b50f/%5bGmail%5d/Entw%c3%bcrfe
+ReplyStyle=default
+SignImip=true
+TemplatesFolder=folder://0f9b0823dc42b16d3a5d6f97902882e2c7e0b50f/Templates
+StartBottom=inconsistent
+TopSignature=inconsistent
+Language=
+
+[Mail Identity]
+Address=gnuetzi@gmail.com
+Aliases=
+Name=Gabriel Nützi
+Organization=
+ReplyTo=
+SignatureUid=none
+
+[Pretty Good Privacy (OpenPGP)]
+AlwaysTrust=true
+EncryptToSelf=true
+KeyId=F9E3B0FF9D4E7A81
+SigningAlgorithm=
+SignByDefault=true
+EncryptByDefault=false
+PreferInline=false
+LocateKeys=true
+SendPublicKey=true
+SendPreferEncrypt=true
+AskSendPublicKey=true
+
+[Message Disposition Notifications]
+ResponsePolicy=ask
+
+[Secure MIME (S/MIME)]
+EncryptionCertificate=
+EncryptByDefault=false
+EncryptToSelf=true
+SigningAlgorithm=
+SigningCertificate=
+SignByDefault=false

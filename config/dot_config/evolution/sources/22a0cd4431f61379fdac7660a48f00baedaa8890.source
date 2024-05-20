@@ -1,0 +1,7 @@
+[Data Source]
+DisplayName=gabriel.nuetzi@sdsc.ethz.ch
+Enabled=true
+Parent=1b0b6f32c2071e7bbf3965fd5e75368dc42ea482
+
+[Mail Transport]
+BackendName=ews

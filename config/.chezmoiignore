@@ -7,10 +7,10 @@ keyboard
 common
 docs
 
-.config/chezmoi/key.txt.age
+.config/chezmoi/key
 
 {{- if ne .chezmoi.os "darwin" }}
-# Only on darwin
+# Ignore if not on darwin
 .config/skhd
 .config/spacebar
 .config/karabiner
@@ -18,7 +18,7 @@ docs
 {{- end }}
 
 {{- if ne .chezmoi.os "linux" }}
-# Only on linux
+# Ignore if not on linux
 .config/flashfocus
 .config/hypr
 .config/mako
@@ -27,8 +27,12 @@ docs
 .config/swaylock
 .config/swaync
 .config/wallpapers
+.config/fontconfig
+.config/nextmeeting
+.config/goa-1.0
 {{- end }}
 
 {{- if eq .chezmoi.osRelease.id "nixos" }}
+# Ignore only on NixOS
 .config/tmux/tmux.conf
 {{- end }}

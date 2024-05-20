@@ -100,3 +100,96 @@ secret-tool store --label='Chezmoi Key-File Passphrase' chezmoi keyfile-passphra
 ```
 
 Inspect the store with `seahorse`.
+
+### Mail & Calendar
+
+I am using `gnome-online-accounts` because they work flawlessly for a various of
+different providers (`google`, `Exchange`). The mail/calendar client `evolution`
+is really good and has a very nice user-experience also with PGP etc. It is
+honestly better than `thunderbird` and integrates better into the system and
+also from a security perspective (does not contain a browser etc.).
+
+Automated setup of these online accounts apparently works but is still a bit
+brittle. It is crucial to follow the below steps.
+
+#### Automated Setup
+
+Setting up the accounts happens with the two folders:
+
+- `~/.config/goa-1.0`
+- `~/.config/evolution/sources`
+
+Skip two step 3 on a fresh system.
+
+1. Check that there are not online accounts already setup:
+
+   ```shell
+   XDG_CURRENT_DESKTOP=GNOME gnome-control-center
+   ```
+
+   **Check tab `Online Accounts`.**
+
+1. Make sure you do not have anything in your login keyring with a name starting
+   with `GOA`. Check `seahorse`. Should be automatically true if no _online
+   accounts_ are setup.
+
+1. Kill all `evolution` processes: `evolution --force-shutdown`.
+
+1. Delete all evolution settings and state:
+
+   ```shell
+   rm -rf ~/.config/evolution
+   rm -rf ~/.local/share/evolution
+   ```
+
+   Stop also the services for `evolution`:
+
+   ```shell
+   systemctl --user stop evolution-addressbook-factory.service
+   systemctl --user stop evolution-calendar-factory.service
+   systemctl --user stop evolution-source-registry.service
+   systemctl --user daemon-reload
+   ```
+
+1. Apply the two folders `~/.config/goa-1.0` and `~/.config/evolution/sources`
+   with
+
+   ```shell
+   chezmoi apply
+   ```
+
+1. Restart the `dbus` service, as it controls the
+   [`goa-daemon`](https://manpages.ubuntu.com/manpages/bionic/man8/goa-daemon.8.html).
+   Since we are using `dbus-broker` which exposes all `dbus` services as
+   `systemd` services we can restart it together with the `evolution` services
+   which might still be running.
+
+   ```shell
+   systemctl --user restart dbus-broker
+   ```
+
+   This should log you out and then login again.
+
+   Only resetting with
+   `systemctl --user restart dbus-:1.1-org.gnome.OnlineAccounts@0.service` or
+   login The name might be similar, check with
+   `systemctl --user list-units | grep gnome`.
+
+1. Stop any evolution already running after login.
+
+   ```shell
+   evolution --force-shutdown
+   systemctl --user stop evolution-addressbook-factory.service
+   systemctl --user stop evolution-calendar-factory.service
+   systemctl --user stop evolution-source-registry.service
+   ```
+
+1. Now provide credentials to the online accounts in `gnome-control-center`:
+
+   ```shell
+   XDG_CURRENT_DESKTOP=GNOME gnome-control-center
+   ```
+
+1. Start `evolution` and you should see now all accounts be connected and
+   working. If `evolution` starts up without having picked up the accounts, you
+   probably need another `dbus` restart above or logout or complete `restart`.

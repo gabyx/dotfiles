@@ -8,7 +8,14 @@
     # TODO: Needs goeclue setup.
     # localtimed.enable = true;
 
-    dbus.enable = true;
+    dbus = {
+      enable = true;
+      # Choosing `broker` here uses
+      # the new dbus implementation
+      # which makes systemd units.
+      implementation = "broker";
+    };
+
     upower.enable = true;
     locate.enable = true;
 

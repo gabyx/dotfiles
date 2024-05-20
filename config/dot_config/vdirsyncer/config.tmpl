@@ -45,12 +45,12 @@ conflict_resolution = "b wins"
 
 [storage work_local]
 type = "filesystem"
-path = "~/.local/share/khal/calendars/work"
+path = "~/.local/share/khal/calendars/work/calendar"
 fileext = ".ics"
 
 [storage work_remote]
 read_only = true
 type = "caldav"
-url = "https://mail.ethz.ch/EWS/Exchange.aswx"
-username.fetch = ["command", "cat", "~/.config/vdirsyncer/exchange-work-calendar-username"]
-password.fetch = ["command", "cat", "~/.config/vdirsyncer/exchange-work-calendar-password"]
+url = "http://localhost:1080/{{ .calendar.work.exchange.path }}"
+username.fetch = ["command", "cat", "~/.config/vdirsyncer/work-calendar-username"]
+password.fetch = ["command", "cat", "~/.config/vdirsyncer/work-calendar-password"]

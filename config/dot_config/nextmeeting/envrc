@@ -1,5 +1,0 @@
-# This file is only
-# here to set the default calendar which
-# nextmeeting uses.
-
-export GCALCLI_DEFAULT_CALENDAR="Work"

@@ -83,7 +83,7 @@ gc:
 
 # Apply all configs, also encrypted ones.
 apply-configs:
-    chezmoi apply
+    just cm apply
 
 # Apply all configs but not encrypted ones.
 apply-configs-exclude-encrypted:
@@ -97,9 +97,33 @@ encrypt file:
     chezmoi encrypt "{{file}}"
 
 # Decrypt a file using the encryption configured.
+# You need `store-kefile-private-key` executed.
+# This does actually the following:
+# pkey=$(secret-tool lookup chezmoi keyfile-private-key 2>/dev/null) && \
+# echo "$pkey" | age -d -i - "{{root_dir}}/config/dot_config/chezmoi/key.age" | age -d -i - "{{file}}"
 [no-cd]
 decrypt file:
-    age --decrypt -i "{{root_dir}}/config/dot_config/chezmoi/key.age" "{{file}}"
+    just cm decrypt {{file}}
+
+# Decrypt and edit the file.
+# You need `store-kefile-private-key` executed.
+[no-cd]
+decrypt-edit file:
+    just cm edit "{{file}}"
+
+# This is a wrapper to `chezmoi` which provided the necessary encryption
+# key temporarily and deletes it afterwards again.
+# This is only used for invocations which need the private key.
+# This needs `store-kefile-private-key` to be run.
+[no-cd]
+cm *args:
+    pkey=$(secret-tool lookup chezmoi keyfile-private-key 2>/dev/null) && \
+        echo "$pkey" | \
+            age -d -i - "{{root_dir}}/config/dot_config/chezmoi/key.age" > \
+                        ~/.config/chezmoi/key && \
+        chezmoi "$@" && \
+        rm -rf ~/.config/chezmoi/key || \
+        rm -rf ~/.config/chezmoi/key 2>/dev/null
 
 # Store the private-key for the keyfile 'key.age'
 # into the keyring.

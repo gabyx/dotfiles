@@ -1,0 +1,53 @@
+[Data Source]
+DisplayName=gabriel.nuetzi@sdsc.ethz.ch
+Enabled=true
+Parent=1b0b6f32c2071e7bbf3965fd5e75368dc42ea482
+
+[Mail Submission]
+SentFolder=folder://628b91904b85e8bfe4a17db666d6512163062c55/Sent%20Items
+TransportUid=22a0cd4431f61379fdac7660a48f00baedaa8890
+RepliesToOriginFolder=false
+UseSentFolder=true
+
+[Mail Composition]
+Bcc=
+Cc=
+DraftsFolder=folder://628b91904b85e8bfe4a17db666d6512163062c55/Drafts
+ReplyStyle=default
+SignImip=true
+TemplatesFolder=folder://628b91904b85e8bfe4a17db666d6512163062c55/Templates
+StartBottom=inconsistent
+TopSignature=inconsistent
+Language=
+
+[Mail Identity]
+Address=gabriel.nuetzi@sdsc.ethz.ch
+Aliases=
+Name=Gabriel Nützi
+Organization=ETH Zurich
+ReplyTo=
+SignatureUid=none
+
+[Pretty Good Privacy (OpenPGP)]
+AlwaysTrust=false
+EncryptToSelf=true
+KeyId=37A5F59C07097058
+SigningAlgorithm=
+SignByDefault=true
+EncryptByDefault=false
+PreferInline=false
+LocateKeys=true
+SendPublicKey=true
+SendPreferEncrypt=true
+AskSendPublicKey=true
+
+[Message Disposition Notifications]
+ResponsePolicy=ask
+
+[Secure MIME (S/MIME)]
+EncryptionCertificate=
+EncryptByDefault=false
+EncryptToSelf=true
+SigningAlgorithm=
+SigningCertificate=
+SignByDefault=false

@@ -2,13 +2,13 @@
 
 [[default]]
 color = "#DFAB25"
-path = ~/.local/share/khal/calendars/gnuetzi@gmail.com
+path = ~/.local/share/khal/calendars/personal/*
 type = calendar
 readonly = True
 
 [[work]]
 color = "#5EB7FF"
-path = ~/.local/share/khal/calendars/c001b2788d3b88bb4e85673271116b40215f10843e5bce76381e21c0a073243d@group.calendar.google.com
+path = ~/.local/share/khal/calendars/work/*
 type = calendar
 readonly = True
 
