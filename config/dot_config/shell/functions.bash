@@ -192,7 +192,11 @@ function gabyx::nixos_hm_log() {
 }
 
 function gabyx::backup_zfs() {
-    ~/.config/restic/backup.sh
+    ~/.config/restic/scripts/backup.sh
+}
+
+function gabyx::list_backups() {
+    ~/.config/restic/scripts/backup.sh --list
 }
 
 function gabyx::nixos_rebuild() {

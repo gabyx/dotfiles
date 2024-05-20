@@ -9,6 +9,12 @@ set -u
 
 . ~/.config/restic/scripts/mount-disks.sh
 
+PERSONAL_SRC=/mnt/data/personal
+PERSONAL_DEST=/mnt/external-ssd/data-backups/personal
+
+WORK_SRC=/mnt/data/work
+WORK_DEST=/mnt/external-ssd/data-backups/work
+
 function restic_backup() {
     local src="$1"
     local dest="$2"
@@ -21,50 +27,112 @@ function restic_backup() {
     gabyx::print_info "==============================="
 }
 
-function backup() {
-    src=/mnt/data/work
-    dest=/mnt/external-ssd/data-backups/work
+function backup_all() {
+    echo "Starting backup of all disks..."
 
-    restic_backup "$src" "$dest"
-
-    src=/mnt/data/personal
-    dest=/mnt/external-ssd/data-backups/personal
-
-    restic_backup "$src" "$dest"
+    restic_backup "$PERSONAL_SRC" "$PERSONAL_DEST"
+    restic_backup "$WORK_SRC" "$WORK_DEST"
+    backup_list_and_check
 }
 
-password_file=~/.config/restic/backup-pass.txt
-general_excludes=~/.config/restic/general-excludes.txt
+function backup_list_and_check() {
+    # export_backup_password
+    echo "Snapshots for '$PERSONAL_DEST'."
+    restic snapshots -r "$PERSONAL_DEST"
 
-if [ ! -f "$password_file" ]; then
-    RESTIC_PASSWORD=$("$HOME/.config/restic/scripts/password-ask.sh") ||
-        die "Could not prompt for password."
+    echo "Snapshots for '$WORK_DEST'."
+    restic snapshots -r "$WORK_DEST"
+
+    echo "Checks for '$PERSONAL_DEST'."
+    restic check -r "$PERSONAL_DEST"
+
+    echo "Checks for '$WORK_DEST'."
+    restic check -r "$WORK_DEST"
+}
+
+function prompt_password() {
+    if command -v githooks-dialog &>/dev/null; then
+        exe="githooks-dialog"
+    else
+        exe=~"/.githooks/bin/githooks-dialog"
+    fi
+
+    "$exe" entry --title "Restic Backup" --text "Enter the password:" --hide-entry
+}
+
+function export_backup_password() {
+    password_file=~/.config/restic/backup-pass
+
+    if [ ! -f "$password_file" ]; then
+        RESTIC_PASSWORD=$(prompt_password) ||
+            die "Could not prompt for password."
+    else
+        RESTIC_PASSWORD=$(cat "$password_file")
+    fi
+
+    [ -n "$RESTIC_PASSWORD" ] || die "Password is empty."
+
+    export RESTIC_PASSWORD
+}
+
+function run_backup_list() {
+    export_backup_password
+
+    gabyx::print_info "Import all zfs pools"
+    sudo zpool import -f -a
+
+    unmount zfs-pool-external-ssd data-backups || true
+    mount zfs-pool-external-ssd data-backups "external-ssd"
+
+    backup_list_and_check
+}
+
+function run_backup() {
+    general_excludes=~/.config/restic/general-excludes.txt
+
+    export_backup_password
+
+    gabyx::print_info "Import all zfs pools"
+    sudo zpool import -f -a
+
+    # Mount sources.
+    unmount zfs-pool-data work || true
+    unmount zfs-pool-data personal || true
+    mount zfs-pool-data work "data"
+    mount zfs-pool-data personal "data"
+
+    # Mount targets
+    unmount zfs-pool-external-ssd data-backups || true
+    mount zfs-pool-external-ssd data-backups "external-ssd" || {
+        echo "Did you plugin the external-ssd backup disk?" >&2
+        exit 1
+    }
+
+    backup_all
+
+    # Unmount for sure the encrypted disk.
+    unmount zfs-pool-data work
+    # unmount zfs-pool-data personal
+}
+
+function unmount_power_off_backup_drive() {
+    # Export the pool, will unmount everything.
+    sudo zpool export zfs-pool-external-ssd
+
+    # Powerdone external drive.
+    sudo udisksctl power-off -b /dev/disk/by-uuid/4877700394137381369
+}
+
+function clean_up() {
+    echo "Unmount and power off backup drive for safety."
+    unmount_power_off_backup_drive &>/dev/null || true
+}
+
+trap clean_up EXIT
+
+if [ "${1:-}" = "--list" ]; then
+    shift
+    run_backup_list
 else
-    RESTIC_PASSWORD=$(cat "$password_file")
+    run_backup
 fi
-export RESTIC_PASSWORD
-
-gabyx::print_info "Import all zfs pools"
-sudo zpool import -f -a
-
-# Mount sources.
-unmount zfs-pool-data work || true
-unmount zfs-pool-data personal || true
-mount zfs-pool-data work "data"
-mount zfs-pool-data personal "data"
-
-# Mount targets
-unmount zfs-pool-external-ssd data-backups || true
-mount zfs-pool-external-ssd data-backups "external-ssd"
-
-backup
-
-# Unmount for sure the encrypted disk.
-unmount zfs-pool-data work
-# unmount zfs-pool-data personal
-
-# Export the pool, will unmount everything.
-sudo zpool export zfs-pool-external-ssd
-
-# Powerdone external drive.
-sudo udisksctl power-off -b /dev/disk/by-uuid/4877700394137381369
