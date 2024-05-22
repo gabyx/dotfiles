@@ -32,6 +32,16 @@
   }
 }
 
+@keyframes bounce-font {
+  from {
+    font-size: smaller;
+  }
+
+  to {
+    font-size: larger;
+  }
+}
+
 /* -----------------------------------------------------------------------------
  * Base styles
  * -------------------------------------------------------------------------- */
@@ -114,6 +124,11 @@ tooltip {
 
 #custom-agenda.soon-critical {
   color: #fc0303;
+  animation-name: bounce-font;
+  animation-duration: 0.4s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
 #battery {
