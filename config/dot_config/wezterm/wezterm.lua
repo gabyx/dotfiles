@@ -15,8 +15,8 @@ if wezterm.config_builder then
     config = wezterm.config_builder()
 end
 
-wezterm.on("gui-startup", function()
-    local _, _, window = mux.spawn_window({})
+wezterm.on("gui-startup", function(cmd)
+    local _, _, window = mux.spawn_window(cmd or {})
     window:gui_window():maximize()
 end)
 
@@ -35,7 +35,7 @@ config.font_size = 12
 config.warn_about_missing_glyphs = false
 config.font = wezterm.font_with_fallback({
     { family = "JetBrainsMono Nerd Font", weight = "Medium" },
-    { family = "Noto Color Emoji", weight = "Medium" },
+    { family = "Noto Color Emoji",        weight = "Medium" },
 })
 
 -- config.font_rules = {
@@ -67,6 +67,19 @@ config.font = wezterm.font_with_fallback({
 --     },
 -- }
 
+config.skip_close_confirmation_for_processes_named = {
+    "bash",
+    "sh",
+    "zsh",
+    "fish",
+    "tmux",
+    "cmd.exe",
+    "pwsh.exe",
+    "powershell.exe",
+    "lf",
+    "btop",
+}
+
 if environment.os == "linux" then
     config.window_decorations = "NONE"
 else
@@ -90,12 +103,29 @@ config.keys = {
     -- { key = "v", mods = "SUPER", action = act.PasteFrom("Clipboard") },
 
     -- Leader stuff
-    { key = "p", mods = "LEADER", action = act.ActivateCommandPalette },
-    { key = "n", mods = "LEADER", action = act.SpawnWindow },
+    { key = "p", mods = "LEADER",     action = act.ActivateCommandPalette },
+    { key = "n", mods = "LEADER",     action = act.SpawnWindow },
 
     -- Font Size
-    { key = "=", mods = "LEADER", action = act.IncreaseFontSize },
-    { key = "-", mods = "LEADER", action = act.DecreaseFontSize },
+    { key = "=", mods = "LEADER",     action = act.IncreaseFontSize },
+    { key = "-", mods = "LEADER",     action = act.DecreaseFontSize },
+}
+
+config.mouse_bindings = {
+    -- Scrolling up while holding CTRL increases the font size
+    -- Inside `tmux` press `Shift+Ctrl+Scroll` to bypass
+    -- mouse event tracking.
+    {
+        event = { Down = { streak = 1, button = { WheelUp = 1 } } },
+        mods = "CTRL",
+        action = act.IncreaseFontSize,
+    },
+    -- Scrolling down while holding CTRL decreases the font size
+    {
+        event = { Down = { streak = 1, button = { WheelDown = 1 } } },
+        mods = "CTRL",
+        action = act.DecreaseFontSize,
+    },
 }
 
 -- and finally, return the configuration to wezterm
