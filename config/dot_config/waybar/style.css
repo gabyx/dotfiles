@@ -273,6 +273,6 @@ tooltip {
 }
 
 #workspaces button.urgent {
-  border-color: #c9545d;
-  color: #c9545d;
+  border-color:#fc0303
+  color: #fc0303;
 }
