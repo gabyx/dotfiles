@@ -78,6 +78,7 @@ config.skip_close_confirmation_for_processes_named = {
     "powershell.exe",
     "lf",
     "btop",
+    "journalctl",
 }
 
 if environment.os == "linux" then

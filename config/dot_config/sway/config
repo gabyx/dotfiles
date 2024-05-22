@@ -52,7 +52,7 @@ set $wireless-menu ~/.config/rofi/show-network-menu.sh --wireless
 set $network-menu ~/.config/rofi/show-network-menu.sh --editor
 set $bluetooth-menu rofi-bluetooth
 set $emoji-menu rofimoji --clipboarder wl-copy --action type copy --keybinding-copy Ctrl-y
-set $systemd-menu rofi-systemd
+set $systemd-menu ROFI_SYSTEMD_TERM="wezterm start" rofi-systemd
 set $procs-menu kitty btop
 set $sound-menu pavucontrol
 set $calculator-menu qalculate-gtk
