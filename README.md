@@ -96,7 +96,7 @@ The "passphrase" `P` can be stored into the login keyring to make
 `just apply-configs` **pass non-interactively**:
 
 ```shell
-secret-tool store --label='Chezmoi Key-File Passphrase' chezmoi keyfile-passphrase
+secret-tool store --label='Chezmoi Key-File Passphrase' chezmoi keyfile-private-key
 ```
 
 Inspect the store with `seahorse`.

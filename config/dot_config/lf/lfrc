@@ -61,14 +61,16 @@ map m
 
 map au unarchive
 
+
 # Basic Functions
+map <enter> $$EDITOR_READONLY "$f"
+map o open
 map . set hidden!
 map dd trash
 map dr restore_trash
 map p paste
 map x cut
 map y copy
-map <enter> open
 map R reload
 map mf mkfile
 map md mkdir

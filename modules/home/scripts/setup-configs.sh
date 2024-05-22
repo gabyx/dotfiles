@@ -6,7 +6,7 @@ set -u
 
 function get_password_from_keyring() {
     if command -v secret-tool &>/dev/null; then
-        secret-tool lookup chezmoi keyfile-passphrase 2>/dev/null
+        secret-tool lookup chezmoi keyfile-private-key 2>/dev/null
     fi
 }
 
@@ -51,7 +51,7 @@ addArgs=()
 if ! get_password_from_keyring &>/dev/null; then
     echo "WARNING: Encrypted files are not applied, " >&2
     echo "because no password entry in keyring with attribute:" >&2
-    echo "'chezmoi' and key: 'keyfile-passphrase'." >&2
+    echo "'chezmoi' and key: 'keyfile-private-key'." >&2
     addArgs=("--exclude" "encrypted")
 fi
 

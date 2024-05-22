@@ -41,7 +41,7 @@ in {
     ];
 
     home.activation.install-chezmoi = hm.dag.entryAfter ["installPackages"] ''
-      export PATH="${pkgs.git-lfs}/bin:${pkgs.gitFull}/bin:${pkgs.chezmoi}/bin:$PATH"
+      export PATH="${pkgs.git-lfs}/bin:${pkgs.gitFull}/bin:${pkgs.chezmoi}/bin:${pkgs.age}/bin:${pkgs.systemd}/bin:${pkgs.libsecret}/bin:$PATH"
       ${builtins.toPath ./scripts/setup-configs.sh} \
         "${cfg.url}" "${cfg.ref}" "${cfg.workspace}"
     '';

@@ -3,17 +3,6 @@
 set -e
 set -u
 
-if [ "$CHEZMOI_COMMAND" = "apply" ] &&
-    echo "$CHEZMOI_ARGS" | grep -q "exclude encrypted"; then
-    # When chezmoi `appply` command is run and encrypted files are excluded
-    # we shall not decrypt the keyfile, also making this non-interactive!
-    # We need this when configs are installed over NixOS `setup-configs.sh`
-
-    echo "Decrypting chezmoi's encryption key-file (age) NOT necessary!" \
-        "We are not applying encrypted files."
-    exit 0
-fi
-
 function assert_exe() {
     local exe="$1"
     if ! command -v "$exe" &>/dev/null; then
@@ -52,6 +41,17 @@ function get_password_from_keyring() {
     fi
 }
 
+if [ "$CHEZMOI_COMMAND" = "apply" ] &&
+    echo "$CHEZMOI_ARGS" | grep -q "exclude encrypted"; then
+    # When chezmoi `apply` command is run and encrypted files are excluded
+    # we shall not decrypt the keyfile, also making this non-interactive!
+    # We need this when configs are installed over NixOS `setup-configs.sh`
+
+    echo "Decrypting chezmoi's encryption key-file (age) NOT necessary!" \
+        "We are not applying encrypted files."
+    exit 0
+fi
+
 if [ ! -f ~/.config/chezmoi/key.txt ]; then
     mkdir -p ~/.config/chezmoi &&
         touch ~/.config/chezmoi/key &&
@@ -67,6 +67,11 @@ if [ ! -f ~/.config/chezmoi/key.txt ]; then
         read -rs private_key
         echo
     fi
+
+    [ -n "$private_key" ] || {
+        echo "Private key for 'key.age' is empty." >&2
+        exit 1
+    }
 
     echo "$private_key" | age -i - -d "$CHEZMOI_SOURCE_DIR/dot_config/chezmoi/key.age" \
         >~/.config/chezmoi/key
