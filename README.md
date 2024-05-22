@@ -156,6 +156,9 @@ Skip to step 3 on a fresh system.
 
    ```shell
    chezmoi apply
+
+   find ~/.config/evolution/sources -type f -name "*.sources" | \
+      xargs -I {} sed -iE "s@NeedsInitialSetup=false@NeedsInitialSetup=true@ {}"
    ```
 
 1. Restart the `dbus` service, as it controls the
@@ -188,6 +191,8 @@ Skip to step 3 on a fresh system.
    ```shell
    XDG_CURRENT_DESKTOP=GNOME gnome-control-center
    ```
+
+1. Check `mail.nix` for adjustments in the `dconf` settings GUID strings.
 
 1. Start `evolution` and you should see now all accounts be connected and
    working. If `evolution` starts up without having picked up the accounts, you

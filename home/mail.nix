@@ -1,91 +1,55 @@
-{
-  lib,
-  config,
-  ...
-}: let
-  imapFolder = email: imapHost: path: "imap://${lib.replaceStrings ["@"] ["%40"] email}@${imapHost}/${path}";
+{lib, ...}:
+with lib.hm.gvariant; {
+  dconf.settings = {
+    "org/gnome/calendar" = {
+      active-view = "week";
+    };
 
-  # Place all sent/drafts/archive/templates inside the respective folder on
-  # the imap storage.
-  # Thunderbird otherwise puts them into a local folder.
-  identitySettingsFolders = id: email: imapHost: {
-    # "mail.identity.id_${id}.fcc_folder_picker_mode" = 0;
-    "mail.identity.id_${id}.fcc_folder" = imapFolder email imapHost "Sent";
-    # "mail.identity.id_${id}.draft_folder_picker_mode" = 0;
-    "mail.identity.id_${id}.draft_folder" = imapFolder email imapHost "Drafts";
-    # "mail.identity.id_${id}.archive_folder_picker_mode" = 0;
-    "mail.identity.id_${id}.archive_folder" = imapFolder email imapHost "Archive";
-    # "mail.identity.id_${id}.stationary_folder_picker_mode" = 0;
-    "mail.identity.id_${id}.stationary_folder" = imapFolder email imapHost "Templates";
-  };
-in {
-  programs.thunderbird = {
-    enable = true;
-    profiles."nixos" = {
-      isDefault = true;
+    "org/gnome/evolution" = {
+      default-mail-account = "0f9b0823dc42b16d3a5d6f97902882e2c7e0b50f";
+      default-mail-identity = "f22fd06697ff4c9554aaba7d95d963b3d3aee73e";
+    };
+
+    "org/gnome/evolution/calendar" = {
+      allow-direct-summary-edit = true;
+      confirm-purge = true;
+      editor-show-timezone = true;
+      prefer-new-item = "event-new";
+      time-divisions = 10;
+      use-default-reminder = true;
+      use-markdown-editor = true;
+      week-start-day-name = "monday";
+      work-day-friday = true;
+      work-day-monday = true;
+      work-day-saturday = false;
+      work-day-sunday = false;
+      work-day-thursday = true;
+      work-day-tuesday = true;
+      work-day-wednesday = true;
+    };
+
+    "org/gnome/evolution/mail" = {
+      browser-close-on-reply-policy = "ask";
+      composer-mode = "markdown-html";
+      composer-show-from-override = false;
+      composer-signature-in-new-only = true;
+      composer-visually-wrap-long-lines = false;
+      forward-style-name = "attached";
+      image-loading-policy = "never";
+      junk-check-custom-header = true;
+      junk-empty-on-exit-days = 0;
+      junk-lookup-addressbook = false;
+      message-list-sort-on-header-click = "always";
+      prompt-check-if-default-mailer = false;
+      prompt-on-composer-mode-switch = false;
+      prompt-on-unwanted-html = false;
+      reply-style-name = "quoted";
+      show-to-do-bar = false;
+      trash-empty-on-exit-days = 0;
+    };
+
+    "org/gnome/evolution/plugin/mail-notification" = {
+      notify-sound-beep = false;
     };
   };
-
-  accounts.email.accounts =
-    {
-      "${config.settings.user.email}" = rec {
-        realName = config.settings.user.name;
-        address = config.settings.user.email;
-
-        userName = address;
-        primary = true;
-
-        thunderbird = {
-          enable = true;
-          profiles = ["nixos"];
-
-          perIdentitySettings = id: {
-            "mail.server.server_${id}.authMethod" = 10; # OAuth2
-            "mail.smtpserver.smtp_${id}.authMethod" = 10; # OAuth2
-          };
-        };
-
-        imap.host = "imap.gmail.com";
-        imap.port = 993;
-        imap.tls.enable = true;
-
-        smtp.host = "smtp.gmail.com";
-        smtp.port = 465;
-        smtp.tls.enable = true;
-      };
-    }
-    // (
-      if config.settings.user.emailWorkEnable
-      then {
-        "${config.settings.user.emailWork}" = rec {
-          realName = config.settings.user.name;
-          address = config.settings.user.emailWork;
-
-          userName = address;
-          primary = false;
-
-          thunderbird = {
-            enable = true;
-            profiles = ["nixos"];
-
-            perIdentitySettings = id:
-              {
-                "mail.server.smtp_${id}.authMethod" = 3; # Normal password.
-                "mail.smtpserver.smtp_${id}.authMethod" = 3; # Normal password.
-              }
-              // identitySettingsFolders id address imap.host;
-          };
-
-          imap.host = "mail.ethz.ch";
-          imap.port = 993;
-          imap.tls.enable = true;
-
-          smtp.host = "mail.ethz.ch";
-          smtp.port = 587;
-          smtp.tls.enable = true;
-          smtp.tls.useStartTls = true;
-        };
-      }
-      else {}
-    );
 }

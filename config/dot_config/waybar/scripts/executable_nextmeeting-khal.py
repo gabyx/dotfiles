@@ -108,7 +108,7 @@ def main():
         if delta > 60:
             delta_fmt = "{0:>2.0f}h {0:>2.0f} min".format(int(delta / 60), delta % 60)
         else:
-            delta_fmt = "{0:>2.0f} min"
+            delta_fmt = "{0:>2.0f} min".format(delta)
 
         estim = ("still {}" if e.togo else "in {}").format(delta_fmt)
 
@@ -139,6 +139,7 @@ def main():
             if e_soon.until_start > 20:
                 cls = "soon"
             elif e_soon.until_start > 10:
+                # 20-10min before.
                 cls = "soon-urgent"
             else:
                 cls = "soon-critical"
