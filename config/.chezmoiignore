@@ -37,6 +37,10 @@ docs
 .config/tmux/tmux.conf
 {{- end }}
 
+# Evolution (ignore for now)
+.config/evolution
+.config/goa-1
+
 # Switch display settings depending on work
 {{- if eq .workspace "private" }}
 .config/sway/config-display-work

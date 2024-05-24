@@ -152,7 +152,7 @@ Skip to step 3 on a fresh system.
    ```
 
 1. Apply the two folders `~/.config/goa-1.0` and `~/.config/evolution/sources`
-   with
+   with (**uncomment the ignore in `.chezmoiignore`**).
 
    ```shell
    chezmoi apply

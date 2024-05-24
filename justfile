@@ -81,6 +81,10 @@ gc:
     echo "Garbage collect all unused nix store entries"
     sudo nix store gc --debug
 
+diff-to-main:
+    git fetch origin && \
+    git diff origin/main...HEAD
+
 # Apply all configs, also encrypted ones.
 apply-configs:
     just cm apply

@@ -49,7 +49,7 @@ with lib.hm.gvariant; {
     };
 
     "org/gnome/evolution/plugin/mail-notification" = {
-      notify-sound-beep = false;
+      notify-sound-beep = true;
     };
   };
 }
