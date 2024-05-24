@@ -32,16 +32,6 @@
   }
 }
 
-@keyframes bounce-font {
-  from {
-    font-size: smaller;
-  }
-
-  to {
-    font-size: larger;
-  }
-}
-
 /* -----------------------------------------------------------------------------
  * Base styles
  * -------------------------------------------------------------------------- */
@@ -120,12 +110,17 @@ tooltip {
 
 #custom-agenda.soon-urgent {
   color: #ff7a33;
+  animation-name: blink-warning;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
 #custom-agenda.soon-critical {
   color: #fc0303;
-  animation-name: bounce-font;
-  animation-duration: 0.4s;
+  animation-name: blink-critical;
+  animation-duration: 0.8s;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   animation-direction: alternate;

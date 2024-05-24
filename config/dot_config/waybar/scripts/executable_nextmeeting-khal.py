@@ -136,10 +136,10 @@ def main():
         if e_soon.togo:
             cls = "togo"
         else:
-            if e_soon.until_start > 20:
+            if e_soon.until_start > 10:
                 cls = "soon"
-            elif e_soon.until_start > 10:
-                # 20-10min before.
+            elif e_soon.until_start > 5:
+                # 10-5min before.
                 cls = "soon-urgent"
             else:
                 cls = "soon-critical"

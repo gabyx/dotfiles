@@ -156,7 +156,9 @@ set $primaryDispWork 'Philips Consumer Electronics Company PHL 275E2F UHB2307008
 set $secondaryDispWork 'Dell Inc. DELL P2418HT 32MPJ87E177L'
 
 # General Setup
-include $(~/.config/sway/scripts/get-display-config.sh)
+# Only one file will be deployed and picked and included.
+include display-config-private
+include display-config-work
 # =========================================================
 
 workspace $ws-1 output $primaryDisp
