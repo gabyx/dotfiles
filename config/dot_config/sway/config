@@ -148,22 +148,15 @@ output * bg ~/.config/wallpapers/background-space.jpg fill
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
-# Home Setup ==============================================
+# Home Setup
 set $primaryDispHome 'Philips Consumer Electronics Company PHL 275E2F UHB2307008083'
 set $secondaryDispHome 'Dell Inc. DELL P2418HT 32MPJ87E177L'
+# Work Setup
+set $primaryDispWork 'Philips Consumer Electronics Company PHL 275E2F UHB2307008083'
+set $secondaryDispWork 'Dell Inc. DELL P2418HT 32MPJ87E177L'
 
 # General Setup
-set $primaryDisp $primaryDispHome
-set $secondaryDisp $secondaryDispHome
-
-output $primaryDisp {
-    mode 2560x1440@74.968Hz
-    pos 0 0
-}
-output $secondaryDisp {
-    mode 1920x1080@60.000Hz
-    pos 2560 0
-}
+include $(~/.config/sway/scripts/get-display-config.sh)
 # =========================================================
 
 workspace $ws-1 output $primaryDisp
@@ -403,6 +396,7 @@ bar {
 ### Startup ===================================================================
 exec_always --no-startup-id flashfocus
 
+exec way-displays
 exec $notifications
 exec $mail
 exec $web

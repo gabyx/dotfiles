@@ -97,6 +97,8 @@
       swaynotificationcenter
       libnotify
 
+      way-displays # Manage your displays.
+
       xdg-utils
       flashfocus # Flash focus animations in sway.
       copyq # Clipboard manager.

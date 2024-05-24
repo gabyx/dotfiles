@@ -36,3 +36,10 @@ docs
 # Ignore only on NixOS
 .config/tmux/tmux.conf
 {{- end }}
+
+# Switch display settings depending on work
+{{- if eq .workspace "private" }}
+.config/sway/config-display-work
+{{- else }}
+.config/sway/config-display-private
+{{- end }}
