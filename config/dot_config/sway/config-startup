@@ -1,0 +1,14 @@
+### Startup ===================================================================
+exec_always --no-startup-id flashfocus
+
+exec way-displays
+exec $notifications
+exec $mail
+exec $web
+exec $comm
+exec $comm-matrix
+exec $creds
+exec $nightshifter
+
+exec ~/.config/sway/scripts/start-up.sh
+### ===========================================================================

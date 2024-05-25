@@ -43,7 +43,7 @@ docs
 
 # Switch display settings depending on work
 {{- if eq .workspace "private" }}
-.config/sway/config-display-work
+.config/sway/config-work
 {{- else }}
-.config/sway/config-display-private
+.config/sway/config-private
 {{- end }}

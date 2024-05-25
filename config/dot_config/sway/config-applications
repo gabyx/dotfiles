@@ -1,0 +1,27 @@
+### Applications ==============================================================
+
+assign [class="(?i).*chrome.*"] $web-ws
+assign [app_id="(?i).*firefox.*"] $web-ws
+assign [class="(?i).*signal.*"] $comm-ws
+assign [app_id="(?i).*evolution.*"] $mail-ws
+assign [class="(?i).*element.*"] $comm-ws
+assign [class="(?i).*bitwarden.*"] $creds-ws
+
+# Set floating mode for generated windows
+for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+
+for_window [app_id="(?i)thunderbird"] exec ~/.config/sway/scripts/thunderbird-notifications.sh
+
+# This windows should be floating.
+for_window [app_id="(?i).*copyq.*"] floating enable; resize set 800 600;
+for_window [app_id="(?i).*qalculate-gtk.*"] floating enable; resize set 800 600;
+for_window [app_id="(?i).*font-manager.*"] floating enable; resize set 800 600;
+for_window [class="(?i).*zoom.*"] floating enable; resize set 800 600;
+
+### ===========================================================================

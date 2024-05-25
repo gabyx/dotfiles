@@ -8,7 +8,8 @@
 include /etc/sway/config.d/*
 
 ### Variables =================================================================
-#
+# Variables can not be included in a `include` file since that does not set the
+# parent scopes.
 
 # Main modification key:
 # See `programmer` file.
@@ -86,326 +87,37 @@ set $ws-6 6:6:  
 set $comm-ws 7:7:  
 set $ws-7 7:7:  
 set $comm signal-desktop
-assign [class="(?i).*signal.*"] $comm-ws
 set $comm-matrix element-desktop
-assign [class="(?i).*element.*"] $comm-ws
 
 set $mail-ws 8:8:  
 set $ws-8 8:8:  
 set $mail evolution
-assign [app_id="(?i).*evolution.*"] $mail-ws
 
 set $web-ws 9:9:  
 set $ws-9 9:9:  
 set $web google-chrome-stable
 set $web-aux firefox
-assign [class="(?i).*chrome.*"] $web-ws
-assign [app_id="(?i).*firefox.*"] $web-ws
 
 set $creds-ws 10:0:  󱕴
 set $ws-10 10:0:  󱕴
 set $creds bitwarden
-assign [class="(?i).*bitwarden.*"] $creds-ws
 
-### ===========================================================================
-
-## Visual Theme ===============================================================
-include themes/catppuccin-frappe
-
-client.focused           $lavender $base $text  $rosewater $lavender
-client.focused_inactive  $overlay0 $base $text  $rosewater $overlay0
-client.unfocused         $overlay0 $base $text  $rosewater $overlay0
-client.urgent            $peach    $base $peach $overlay0  $peach
-client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
-client.background        $base
-
-# Font
-font pango:NotoSans Nerd Font Bold 10
-
-# Border
-hide_edge_borders both
-default_border pixel 1
-# No border for browsers
-# for_window [app_id="(?i).*(firefox)"] default_border pixel 1
-
-# Configure 5px of space between windows and to the screen edges.
-gaps inner 8
-# Configure an additional 5px of extra space to the screen edges,
-# for a total gap of 10px to the screen edges, and 5px between windows.
-gaps outer 5
-# Only enable outer gaps when there is exactly one window or split container on the workspace.
-smart_gaps on
-### ===========================================================================
-
-### Output Configuration ======================================================
-#
-# Default wallpaper (more resolutions are available in /run/current-system/sw/share/backgrounds/sway/)
-output * bg ~/.config/wallpapers/background-space.jpg fill
-
-#
-# Example configuration:
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
-#
-# You can get the names of your outputs by running: swaymsg -t get_outputs
-# Home Setup
+# Output variables
 set $primaryDispHome 'Philips Consumer Electronics Company PHL 275E2F UHB2307008083'
 set $secondaryDispHome 'Dell Inc. DELL P2418HT 32MPJ87E177L'
-# Work Setup
 set $primaryDispWork 'Philips Consumer Electronics Company PHL 275E2F UHB2307008083'
 set $secondaryDispWork 'Dell Inc. DELL P2418HT 32MPJ87E177L'
+### ===========================================================================
 
-# General Setup
 # Only one file will be deployed and picked and included.
-include display-config-private
-include display-config-work
-# =========================================================
+include config-private
+include config-work
 
-workspace $ws-1 output $primaryDisp
-workspace $ws-2 output $primaryDisp
-workspace $ws-3 output $primaryDisp
-workspace $ws-4 output $primaryDisp
-workspace $ws-5 output $primaryDisp
-workspace $ws-6 output $primaryDisp
+include config-visual
+include config-idle
+include config-input
+include config-keybindings
+include config-applications
+include config-bar
 
-# Assign the special workspaces to second monitor.
-workspace $comm-ws  output $secondaryDisp
-workspace $mail-ws  output $secondaryDisp
-workspace $web-ws   output $secondaryDisp
-workspace $creds-ws output $secondaryDisp
-
-# If running in a VM, use the following.
-output Virtual-1 resolution 1600x900
-### ===========================================================================
-
-### Idle Configuration ========================================================
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
-exec swayidle -w \
-         timeout 600 'swaylock -f' \
-         timeout 1200 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f'
-
-# Switch keyboard layout in locked screen.
-bindsym --locked $mod+Space input '*' xkb_switch_layout next
-
-### ===========================================================================
-
-### Input Configuration =======================================================
-#
-# Example configuration:
-#
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
-#
-# You can get the names of your inputs by running: swaymsg -t get_inputs
-# Read `man 5 sway-input` for more information about this section.
-input type:keyboard {
-    xkb_layout programmer-defy,programmer,us,de
-    xkb_options ctrl:nocaps,grp:menu_toggle
-}
-
-seat * hide_cursor when-typing enable
-### ===========================================================================
-
-### Key Bindings ==============================================================
-#
-# Basics:
-#
-    # Start a terminal
-    bindsym $mod+Return exec ~/.config/sway/scripts/run-in-focused-cwd.sh $term
-    bindsym $mod+Shift+Return exec ~/.config/sway/scripts/run-in-focused-cwd.sh $file-manager
-
-    # Kill focused window
-    bindsym $mod+q kill
-    bindsym $mod+Control+Shift+q focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, kill
-
-    bindsym $mod+Shift+p exec $power-menu
-    bindsym $mod+Shift+w exec $wireless-menu
-    bindsym $mod+Shift+i exec $network-menu
-    bindsym $mod+Shift+n exec $notification-menu
-    bindsym $mod+Shift+a exec $sound-menu
-    bindsym $mod+Shift+d exec $systemd-menu
-    bindsym $mod+Shift+t exec $procs-menu
-    bindsym $mod+Shift+m exec $emoji-menu
-    bindsym $mod+Shift+s exec $screenshot-menu
-    bindsym $mod+Shift+y exec $color-picker-menu
-    bindsym $mod+c exec $clipboard-menu
-    bindsym $mod+d exec $launcher-menu
-
-    # Drag floating windows by holding down $mod and left mouse button.
-    # Resize them with right mouse button + $mod.
-    # Despite the name, also works for non-floating windows.
-    # Change normal to inverse to use left mouse button for resizing and right
-    # mouse button for dragging.
-    floating_modifier $mod normal
-
-    # Reload the configuration file
-    bindsym $mod+Shift+c reload
-
-    # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
-#
-# Moving around:
-#
-    # Move your focus around
-    bindsym $mod+$left focus left
-    bindsym $mod+$down focus down
-    bindsym $mod+$up focus up
-    bindsym $mod+$right focus right
-    # Or use $mod+[up|down|left|right]
-    bindsym $mod+Left focus left
-    bindsym $mod+Down focus down
-    bindsym $mod+Up focus up
-    bindsym $mod+Right focus right
-
-    # Move the focused window with the same, but add Shift
-    bindsym $mod+Shift+$left move left
-    bindsym $mod+Shift+$down move down
-    bindsym $mod+Shift+$up move up
-    bindsym $mod+Shift+$right move right
-    # Ditto, with arrow keys
-    bindsym $mod+Shift+Left move left
-    bindsym $mod+Shift+Down move down
-    bindsym $mod+Shift+Up move up
-    bindsym $mod+Shift+Right move right
-#
-# Workspaces:
-#
-    # Switch to workspace
-    bindsym $mod+i workspace back_and_forth
-    bindcode $mod+10 workspace number $ws-1
-    bindcode $mod+11 workspace number $ws-2
-    bindcode $mod+12 workspace number $ws-3
-    bindcode $mod+13 workspace number $ws-4
-    bindcode $mod+14 workspace number $ws-5
-    bindcode $mod+15 workspace number $ws-6
-    bindcode $mod+16 workspace number $ws-7
-    bindcode $mod+17 workspace number $ws-8
-    bindcode $mod+18 workspace number $ws-9
-    bindcode $mod+19 workspace number $ws-10
-
-    # Move focused container to workspace
-    bindcode $mod+Shift+10 move container to workspace number $ws-1
-    bindcode $mod+Shift+11 move container to workspace number $ws-2
-    bindcode $mod+Shift+12 move container to workspace number $ws-3
-    bindcode $mod+Shift+13 move container to workspace number $ws-4
-    bindcode $mod+Shift+14 move container to workspace number $ws-5
-    bindcode $mod+Shift+15 move container to workspace number $ws-6
-    bindcode $mod+Shift+16 move container to workspace number $ws-7
-    bindcode $mod+Shift+17 move container to workspace number $ws-8
-    bindcode $mod+Shift+18 move container to workspace number $ws-9
-    bindcode $mod+Shift+19 move container to workspace number $ws-10
-    # Note: workspaces can have any name you want, not just numbers.
-    # We just use 1-10 as the default.
-
-# Layout stuff:
-#
-    # You can "split" the current object of your focus with
-    # $mod+\ or $mod+-, for vertical and horizontal splits
-    # respectively.
-    bindcode $mod+51 splith
-    bindcode $mod+20 splitv
-
-    # Switch the current container between different layout styles
-    bindsym $mod+s layout stackins
-    bindsym $mod+w layout tabbed
-    bindsym $mod+e layout toggle split
-
-    # Make the current focus fullscreen
-    bindsym $mod+f fullscreen
-
-    # Toggle the current focus between tiling and floating mode
-    bindsym $mod+space floating toggle
-
-    # Swap focus between the tiling area and the floating area
-    bindsym $mod+shift+space focus mode_toggle
-
-    # Move focus to the parent container
-    bindsym $mod+a focus parent
-#
-# Scratchpad:
-#
-    # Sway has a "scratchpad", which is a bag of holding for windows.
-    # You can send windows there and get them back later.
-
-    # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+minus move scratchpad
-
-    # Show the next scratchpad window or hide the focused scratchpad window.
-    # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+minus scratchpad show
-
-#
-# Resizing containers:
-#
-mode "resize" {
-    # left will shrink the containers width
-    # right will grow the containers width
-    # up will shrink the containers height
-    # down will grow the containers height
-    bindsym $left resize shrink width 50px
-    bindsym $down resize grow height 50px
-    bindsym $up resize shrink height 50px
-    bindsym $right resize grow width 50px
-
-    # Ditto, with arrow keys
-    bindsym Left resize shrink width 50px
-    bindsym Down resize grow height 50px
-    bindsym Up resize shrink height 50px
-    bindsym Right resize grow width 50px
-
-    # Return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-bindsym $mod+r mode "resize"
-
-
-### ===========================================================================
-
-### Applications ==============================================================
-# Set floating mode for generated windows
-for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable
-for_window [window_role="pop-up"] floating enable
-for_window [window_role="bubble"] floating enable
-for_window [window_role="task_dialog"] floating enable
-for_window [window_role="Preferences"] floating enable
-for_window [window_type="dialog"] floating enable
-for_window [window_type="menu"] floating enable
-
-for_window [app_id="(?i)thunderbird"] exec ~/.config/sway/scripts/thunderbird-notifications.sh
-
-# This windows should be floating.
-for_window [app_id="(?i).*copyq.*"] floating enable; resize set 800 600;
-for_window [app_id="(?i).*qalculate-gtk.*"] floating enable; resize set 800 600;
-for_window [app_id="(?i).*font-manager.*"] floating enable; resize set 800 600;
-for_window [class="(?i).*zoom.*"] floating enable; resize set 800 600;
-### ===========================================================================
-
-bar {
-    swaybar_command waybar
-    strip_workspace_numbers no
-    strip_workspace_name no
-}
-
-### Startup ===================================================================
-exec_always --no-startup-id flashfocus
-
-exec way-displays
-exec $notifications
-exec $mail
-exec $web
-exec $comm
-exec $comm-matrix
-exec $creds
-exec $nightshifter
-
-exec ~/.config/sway/scripts/start-up.sh
-### ===========================================================================
+include config-startup
