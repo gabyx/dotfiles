@@ -38,6 +38,7 @@ history:
     nix profile history --profile /nix/var/nix/profiles/system-profiles/test
 
 # Run the trim script to reduce the amount of generations kept on the system.
+# Usage with `--help`.
 trim *args:
     ./scripts/trim-generations.sh {{args}}
 
