@@ -1,0 +1,6 @@
+{
+  "device": "alsa_input.usb-SteelSeries_Arctis_Nova_7-00.mono-fallback",
+  "device-description": "Arctis Nova 7 Mono",
+  "device-profile": "analog-input-mic",
+  "preset-name": "headset-effects"
+}

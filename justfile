@@ -20,7 +20,7 @@ switch-visual host *args:
 
 # Switch the `host` to the latest configuration but under boot entry `test`.
 switch-test host *args:
-    just rebuild switch "{{host}}" -p test "${@:2}"
+    just switch "{{host}}" -p test "${@:2}"
 
 # Update the flake lock file.
 # You can also do `--update-input XXX` to
@@ -45,6 +45,11 @@ trim *args:
 # to see the differences.
 diff last="1" current_profile="/run/current-system":
     #!/usr/bin/env bash
+    if ! command -v nvd &>/dev/null; then
+        echo "! Command 'nvd' not installed to print difference." >&2
+        exit 0
+    fi
+
     set -euo pipefail
     last="$1"
     current_profile="$2"

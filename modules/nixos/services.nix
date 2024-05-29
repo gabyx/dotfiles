@@ -8,6 +8,10 @@
     # TODO: Needs goeclue setup.
     # localtimed.enable = true;
 
+    # UDev settings.
+    udev.packages = [pkgs.headsetcontrol];
+
+    # Dbus settings.
     dbus = {
       enable = true;
       # Choosing `broker` here uses

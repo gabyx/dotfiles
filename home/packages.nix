@@ -174,9 +174,10 @@ in {
     google-chrome
     libreoffice
 
-    ## Sonos Device
-    noson
-    (mkchromecast.override {enableSonos = true;})
+    # Sound
+    headsetcontrol
+    noson # Sonos device
+    (mkchromecast.override {enableSonos = true;}) # Cast to Sonos device.
 
     # VPN
     wgnord

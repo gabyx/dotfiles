@@ -15,14 +15,17 @@ fi
     echo "Could not source 'log.sh'."
 } >&2
 
+# Mount all ZFS disks.
 function gabyx::mount_zfs_disks() {
     ~/.config/shell/mount-zfs-disks.sh "$@"
 }
 
+# Unmount all ZFS disks.
 function gabyx::unmount_zfs_disks() {
     ~/.config/shell/mount-zfs-disks.sh --unmount "$@"
 }
 
+# Find recent files in the dir `$1`.
 function gabyx::find_recent() {
     local dir="$1"
     shift 1
@@ -48,11 +51,14 @@ function gabyx::compress_pdf() {
         "-sOutputFile=$output" "$file"
 }
 
+# Login into the Bitwarden CLI
+# and make the session variable `BW_SESSION` available.
 function gabyx::bitwarden() {
     BW_SESSION=$(bw login gnuetzi@gmail.com --raw)
     export BW_SESSION
 }
 
+# Connect the NordVPN connection.
 function gabyx::nordvpn_connect() {
     local region="${1:-ch}"
     # Create some folders such that wgnord does not have troubles.
@@ -72,8 +78,15 @@ function gabyx::nordvpn_connect() {
     sudo wgnord connect "$region"
 }
 
+# Disconnect the NordVPN connection.
 function gabyx::nordvpn_disconnect() {
     sudo wgnord disconnect
+}
+
+# Connect to the named VPN connection.
+function gabyx::vpn_connect() {
+    local name="${1:-ETH Zurich}"
+    nmcli connection up "$1" --ask
 }
 
 function gabyx::get_k3s_killall_script() {
@@ -93,6 +106,7 @@ function gabyx::get_k3s_killall_script() {
     rm -f "$temp"
 }
 
+# Kill all `k3s` (kubernetes) instances.
 function gabyx::k3s_killall() {
     if [ ! -f ~/.config/kube/k3s-killall.sh ]; then
         gabyx::get_k3s_killall_script
@@ -101,6 +115,9 @@ function gabyx::k3s_killall() {
     ~/.config/kube/k3s-killall.sh
 }
 
+# Restore `tmux` with the `$1`-th last saved settings.
+# After this function invoke a `Tmux-Leader + Ctrl+R`
+# to trigger resurrect.
 function gabyx::tmux_resurrect_restore() {
     local dir=~/.local/share/tmux/resurrect
     local last_index="$1"
@@ -127,6 +144,9 @@ function gabyx::tmux_resurrect_restore() {
     }
 }
 
+# Remove `docker` or `podman` images with a regex `$1`.
+# Use `--use-podman` as first argument if
+# you want `podman` instead of `docker`.
 function gabyx::remove_docker_images() {
     local builder="docker"
 
@@ -166,39 +186,48 @@ function gabyx::copy_images_to_podman() {
     echo "$images" | xargs podman pull
 }
 
+# Call my file regex/replace script.
 function gabyx::file_regex_replace() {
     "$HOME/.config/shell/file-regex-replace.py" "$@"
 }
 
+# Print the keycodes of the active keyboard.
 function gabyx::gabyx::print_keycode_table {
     xmodmap -pke
 }
 
+# Get a keycode from a keypress.
 function gabyx::get_keycode {
     xev
 }
 
+# Get the window tree in JSON format in `sway`.
 function gabyx::get_window_properties {
     swaymsg -t get_tree | jq
 }
 
+# Get the log of the systemd service with name `$1`.
 function gabyx::nixos_systemd_log() {
     local service="$1"
     journalctl -u "$service.service" -e
 }
 
+# Get the log of the home-manager systemd service.
 function gabyx::nixos_hm_log() {
     journalctl -u home-manager-nixos.service -e
 }
 
+# Run the backup script.
 function gabyx::backup_zfs() {
     ~/.config/restic/scripts/backup.sh
 }
 
+# List all backups.
 function gabyx::list_backups() {
     ~/.config/restic/scripts/backup.sh --list
 }
 
+# Rebuild the system with Nix.
 function gabyx::nixos_rebuild() {
     local what="${1:?Specify how? 'switch,boot,test'}"
     shift 1
@@ -224,6 +253,7 @@ function gabyx::nixos_rebuild() {
     fi
 }
 
+# Activate a python environment under Nix.
 function gabyx::nixos_activate_python_env() {
     local env="$1"
     local dir="$HOME/python-envs"
@@ -235,7 +265,7 @@ function gabyx::nixos_activate_python_env() {
             nix build ".#python-envs.$env" -o "$dir/.$env" &&
             "$dir/.$env/bin/python" -m venv --system-site-packages "$dir/$env") ||
             {
-                gabyx::print_error "Failed to activate environment '$env'." >&2
+                gabyx::print_error "Failed to create the python environment '$dir/$env'." >&2
                 return 1
             }
     fi
