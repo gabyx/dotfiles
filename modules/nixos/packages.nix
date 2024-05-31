@@ -42,6 +42,8 @@
     tree
     file
     fzf
+    fzf-git-sh
+    eza
 
     wget
     curl

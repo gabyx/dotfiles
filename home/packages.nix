@@ -48,9 +48,9 @@ in {
     bat # For text preview with syntax highlight and Git integration.
     poppler_utils # For image conversions.
     ffmpegthumbnailer # For video thumbnails.
-    trash-cli
-    gparted
-    gnome.gnome-disk-utility
+    trash-cli # Trash command line to move stuff to trash.
+    gparted # Disk utility.
+    gnome.gnome-disk-utility # Easy disk utility `gdisk`.
 
     # Programming
     (lib.hiPrio parallel)

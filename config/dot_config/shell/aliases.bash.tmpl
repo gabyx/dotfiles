@@ -1,10 +1,5 @@
-{{- if eq .chezmoi.os "darwin" }}
-alias ls='ls -G'
-alias ll='ls -al -G'
-{{- else }}
-alias ls='ls --color=auto'
-alias ll='ls -al --color=auto'
-{{- end }}
+alias ls='eza -h --icons=always --color=auto'
+alias ll='eza -algHmh --icons=always --color=auto'
 
 alias untar='tar -xzf'
 alias untarv='tar -xvzf'

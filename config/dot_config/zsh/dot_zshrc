@@ -86,53 +86,30 @@ fi
 source "$ZDOTDIR/.zsh_plugins.zsh"
 # ==============================================================================
 
-# To see the key characters press `CTRL+V` and afterwards the combination in
-# a normal shell.
-# Del/Home/End
-bindkey "^[[H" beginning-of-line
-bindkey "^[[F" end-of-line
-bindkey "^[[3~" delete-char
-
-# Ctrl+ Left/right, and Alt+h, Alt+l for word back and forward movement.
-bindkey "^[[1;5C" forward-word
-bindkey "^[[1;5D" backward-word
-bindkey "^[l" forward-word
-bindkey "^[h" backward-word
-export WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
-
-# Keybindings for substring search plugin.
-# Maps up and down arrows and Alt+k, Alt+j
-bindkey -M main '^[[A' history-substring-search-up
-bindkey -M main '^[[B' history-substring-search-down
-bindkey -M main '^[k' history-substring-search-up
-bindkey -M main '^[j' history-substring-search-down
-
-zmodload zsh/complist
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
-bindkey -M menuselect 'j' vi-down-line-or-history
-
-# Keybindings for autosuggestions plugin
-bindkey '^ ' autosuggest-accept
-bindkey '^f' autosuggest-accept
-
-# Map CTRL+R to history, Ctrl+Alt+D to cd witchet and
-# Ctrl+Alt+K to the kill witched.
-autoload znt-history-widget
-zle -N znt-history-widget
-bindkey "^R" znt-history-widget
-zle -N znt-cd-widget
-bindkey "^[D" znt-cd-widget
-zle -N znt-kill-widget
-bindkey "^[K" znt-kill-widget
-
 # Promp setup.
-# if command -v starship &>/dev/null; then
-    # eval "$(starship init zsh)"
 if [ -f "$ZDOTDIR/.p10k.zsh" ]; then
     # To customize prompt, run 'p10k configure' or edit $ZDOTDIR/.p10k.zsh.
     source "$ZDOTDIR/.p10k.zsh"
+fi
+
+# Tmux stuff.
+source "$HOME/.config/zsh/.zshrc-tmux.zsh"
+
+# Direnv hook.
+if command direnv &>/dev/null; then
+    eval "$(direnv hook zsh)"
+fi
+
+# Wezterm shell integration.
+if [ -n "$WEZTERM_EXECUTABLE" ]; then
+    if [ -f "$HOME/.config/wezterm/shell-integration.sh" ]; then
+        source "$HOME/.config/wezterm/shell-integration.sh"
+    fi
+fi
+
+# Fuzzy Find integration
+if command -v fzf &>/dev/null; then
+    source "$HOME/.config/fzf/fzf.zsh"
 fi
 
 # Aliases
@@ -149,23 +126,5 @@ else
     fi
 fi
 
-# Nextmeeting stuff.
-if [ -f ~/.config/nextmeeting/envrc ]; then
-    source ~/.config/nextmeeting/envrc
-fi
-
-# Tmux stuff.
-source "$HOME/.config/zsh/.zshrc-tmux.zsh"
-
-# Direnv hook.
-if command direnv &>/dev/null; then
-    eval "$(direnv hook zsh)"
-fi
-
-
-# Wezterm shell integration.
-if [ -n "$WEZTERM_EXECUTABLE" ]; then
-    if [ -f "$HOME/.config/wezterm/shell-integration.sh" ]; then
-        source "$HOME/.config/wezterm/shell-integration.sh"
-    fi
-fi
+# Keybindings
+source "$HOME/.config/zsh/.zshrc-keybindings.zsh"
