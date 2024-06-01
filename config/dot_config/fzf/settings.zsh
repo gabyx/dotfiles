@@ -1,7 +1,16 @@
-export FZF_DEFAULT_OPTS="--layout=reverse --border --inline-info"
+export FZF_DEFAULT_OPTS="
+  --layout=reverse --border --inline-info
+  --color=fg:#dedbdb,bg:#1A1D23,hl:#5f87af
+  --color=fg+:#ededed,bg+:#595959,hl+:#5fd7ff
+  --color=info:#b3b312,prompt:#f23000,pointer:#af5fff
+  --color=marker:#87ff00,spinner:#af5fff,header:#87afaf"
+
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
+
+# To make the keypresses in `fzf-git` work.
+KEYTIMEOUT=300
 
 # Preview file content using bat (https://github.com/sharkdp/bat)
 export FZF_CTRL_T_OPTS="
