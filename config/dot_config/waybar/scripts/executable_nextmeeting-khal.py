@@ -2,11 +2,11 @@
 
 import argparse
 import json
-import math
 import subprocess
 import sys
 from dataclasses import dataclass
 from datetime import datetime, timedelta
+from itertools import chain
 from typing import Dict
 
 DATE_FORMAT = "%d/%m/%Y"
@@ -35,8 +35,26 @@ def main():
         prog="Waybar meeting notification over khal",
         description="Reads khal output and update the status bar.",
     )
-    parser.add_argument("--max-title-length", default=20, type=int)
+    parser.add_argument(
+        "--config",
+        default=None,
+        help="Config file to read.",
+    )
     args = parser.parse_args()
+
+    included_calendars = []
+    max_title_length = 20
+
+    if args.config:
+        with open(args.config) as f:
+            config = json.load(f)
+
+        if config["calendars"]:
+            included_calendars: list[str] = list(
+                chain(*[["--include-calendar", c] for c in config["calendars"]])
+            )
+
+        max_title_length = config.get("max_title_length", max_title_length)
 
     res = subprocess.check_output(
         [
@@ -46,6 +64,7 @@ def main():
             "24h",
             "--day-format",
             "",
+            *included_calendars,
             "--json=start-date-full",
             "--json=end-date-full",
             "--json=start-time-full",
@@ -101,8 +120,8 @@ def main():
 
     def format_event(e, short=False):
         title = e.raw["title"]
-        if len(title) > args.max_title_length:
-            title = title[0 : max(args.max_title_length - 3, 0)] + "..."
+        if len(title) > max_title_length:
+            title = title[0 : max(max_title_length - 3, 0)] + "..."
 
         delta = e.until_end if e.togo else e.until_start
         if delta > 60:
