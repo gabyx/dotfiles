@@ -133,6 +133,7 @@ in {
     stdenv.cc
     alejandra
     nixfmt-rfc-style
+    dconf2nix # To generate the `dconf` settings.
 
     ## Lua
     stylua
