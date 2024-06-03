@@ -233,8 +233,8 @@ if-shell 'test -n "$SSH_CONNECTION"' \
 # Plugins Settings
 ##############################
 {{- if ne .chezmoi.osRelease.id "nixos" }}
-source-file '~/.config/tmux/tmux-plugin-resurrect.conf'
-source-file '~/.config/tmux/tmux-plugin-continuum.conf'
+source-file ~/.config/tmux/tmux-plugin-resurrect.conf
+source-file ~/.config/tmux/tmux-plugin-continuum.conf
 {{- end}}
 
 ##############################
@@ -243,7 +243,7 @@ source-file '~/.config/tmux/tmux-plugin-continuum.conf'
 {{- if ne .chezmoi.osRelease.id "nixos" }}
 # On NixOS we do not auto install plugins they are managed in
 # the NixOS config and loaded in `/etc/tmux.conf`.
-run '~/.config/tmux/scripts/install-tpm.sh'
+run ~/.config/tmux/scripts/install-tpm.sh
 
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-resurrect'

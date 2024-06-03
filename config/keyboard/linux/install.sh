@@ -65,6 +65,7 @@ function add_variant() {
     # write_to_xml "$rootNode" "$finalNode" "variant" "$file"
 
     # Install as separate layout `programmer`
+    gabyx::print_info "Add variant to file '$file'."
     rootNode="/xkbConfigRegistry/layoutList"
     finalNode="$rootNode/layout/configItem[name[text()='programmer']]"
     write_to_xml "$rootNode" "$finalNode" "layout" "$file"
@@ -75,7 +76,7 @@ function add_variant() {
 }
 
 function apply_to_gnome() {
-    sudo gsettings set org.gnome.desktop.input-sources sources \
+    gsettings set org.gnome.desktop.input-sources sources \
         "[('xkb', 'us'), ('xkb', 'programmer')]"
 
     # Ex.:
@@ -88,7 +89,7 @@ function apply_to_gnome() {
     # this command you'll see the layout/variants listed.
 
     # Make `CAPS-LOCK` also a `CTRL` and the normal CTRL a HYPER key
-    sudo gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:swapcaps_hyper']"
+    gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:swapcaps_hyper']"
 }
 
 dist=""

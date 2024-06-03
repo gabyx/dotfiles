@@ -70,6 +70,17 @@ and to apply use
   just apply-configs
   ```
 
+### Minimal Requirements
+
+To deploy the configs you need the minimal stuff installed:
+
+- `findutils`
+- `delta`
+- `git`
+- `git-lfs`
+- `age`
+- `just`
+
 ### Encryption
 
 Chezmoi is configured to use `age` as encryption tool with a secret private-key

@@ -10,7 +10,7 @@
 [user]
     name = {{ .git.userName | quote }}
     email = {{ .git.userEmail | quote }}
-    signingkey = F9E3B0FF9D4E7A81
+    signingkey = {{ .gpg.defaultKeyFingerprint }}
 [commit]
     gpgsign = true
     template = {{ .git.configPath }}/commit-template.txt

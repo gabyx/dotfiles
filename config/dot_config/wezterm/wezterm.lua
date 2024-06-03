@@ -20,8 +20,9 @@ wezterm.on("gui-startup", function(cmd)
     window:gui_window():maximize()
 end)
 
+terminfo_dir = os.getenv("TERMINFO_DIRS")
 config.set_environment_variables = {
-    TERMINFO_DIRS = os.getenv("HOME") .. "/.terminfo" .. ":" .. os.getenv("TERMINFO_DIRS"),
+    TERMINFO_DIRS = os.getenv("HOME") .. "/.terminfo" .. (terminfo_dir ~= nil and (":".. terminfo_dir) or ""),
     WSLENV = "TERMINFO_DIRS",
 }
 -- Setting it to `wezterm` disable cursor small/bold in the vim plugin.
