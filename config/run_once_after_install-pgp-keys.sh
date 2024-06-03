@@ -2,19 +2,22 @@
 
 set -e
 set -u
+set -o pipefail
+
+REPO_DIR="$CHEZMOI_WORKING_TREE"
 
 if ! command -v gpg &>/dev/null; then
     echo "WARNING: 'gnupg' is not installed. Cannot install PGP keys." >&2
     exit 0
 fi
 
-cd ~/.config/gnupg || {
-    echo "Could not cd to '~/.config/gnupg'."
+cd "$REPO_DIR" || {
+    echo "Could not cd to '$REPO_DIR'."
     exit 1
 }
 
-# Collect all GPG keys.
-readarray -t private_files < <(find . -type f -name "*-private.asc.age")
+# Collect all GPG keys deployed on the system.
+readarray -t private_files < <(find ~/.config/gnupg -type f -name "*-private.asc.age")
 
 trusted_keys=(
     90AECCB97AD34CE43AED9402E969172AB0757EB8
@@ -31,9 +34,9 @@ for private_file in "${private_files[@]}"; do
 
     # Import private key.
     gpg --import \
-        --passphrase-file <(chezmoi decrypt "$passphrase_file") \
+        --passphrase-file <(just cm decrypt "$passphrase_file") \
         --pinentry-mode loopback --armor \
-        <(chezmoi decrypt "$private_file") || {
+        <(just cm decrypt "$private_file") || {
         echo "WARNING: Import of PGP file '$private_file' failed." >&2
         exit 1
     }
