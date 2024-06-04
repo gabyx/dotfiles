@@ -89,7 +89,7 @@ function apply_to_gnome() {
     # this command you'll see the layout/variants listed.
 
     # Make `CAPS-LOCK` also a `CTRL` and the normal CTRL a HYPER key
-    gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:swapcaps_hyper']"
+    gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:swapcaps']"
 }
 
 dist=""
