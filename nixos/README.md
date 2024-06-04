@@ -87,11 +87,18 @@ useful information when going through these steps:
 1. Start the virtual machine with [`scripts/start-vm.sh`](scripts/start-vm.sh)
    and switch to the VM NixOS configuration by doing
 
-```shell
-  nixos-install switch --flake github:gabyx/dotfiles#vm
+   ```shell
+      nixos-install switch --flake github:gabyx/dotfiles#vm
+      reboot
+   ```
 
-  reboot
-```
+   or directly from the repository with
+
+   ```shell
+   nixos-install --root /mnt --flake .#vm --impure
+   reboot
+   ```
+
 
 Go to the section [first login](#first-login) for further instructions.
 
@@ -299,8 +306,29 @@ root partition.
 1. Copy the hardware configuration to the repo for the installation:
 
    ```shell
-   cp /mnt/etc/nixos/hardware-configuration.nix /mnt/persist/repos/dotfiles/modules/hardware/desktop.nix
+   cp /mnt/etc/nixos/hardware-configuration.nix /mnt/persist/repos/dotfiles/nixos/hosts/<host>/hardware-configuration.nix
    ```
+
+1. Apply the initial config files into the home directory with:
+
+  **Config Files:**
+  ```shell
+  nix-shell -p chezmoi
+  git clone https://github.com/dotfiles $MNTPNT/home/nixos/.local/share/chezmoi
+  HOME=$MNTPNT/home/nixos chezmoi apply --exclude encrypted
+  ```
+
+  **Editor Setup:**
+  ```shell
+  git clone https://github.com/gabyx/astronvim.git ~/.config/nvim
+  ```
+
+  This is only to make sure once you reboot and login you have `sway` starting with the settings wanted
+  already in your home directory.
+
+  TODO: Make this automated such that we bake the whole repository into a derivation to be used/run when no 
+        `~/.config/chezmoi/chezmoi.yaml` is there (no apply done) during activation.
+        The activation should run a `nix run` application defined in the `flake.nix`.
 
 1. **Finally run the install command** by doing:
 
@@ -321,12 +349,12 @@ root partition.
 1. Login with the initial login `nixos` and default password `nixos`.
 
 1. Move the initial configuration out of the way and point to the new
-   configuration.
+   configuration (create a hardlink).
 
    ```shell
    sudo mv /etc/nixos /etc/nixos.bak # Backup the original configuration
-   ln -s ~/nixos-config ~/.local/share/chezmoi
-   sudo ln -s ~/nixos-config/ /etc/nixos
+   ln ~/nixos-config ~/.local/share/chezmoi
+   sudo ln ~/nixos-config/ /etc/nixos
    ```
 
 1. Change the password
@@ -346,7 +374,7 @@ root partition.
 1. Modify the [`configuration.nix`](configuration.nix) in this repo and use
 
    ```shell
-   just deploy [desktop|vm]
+   just deploy [desktop|vm|tuxedo]
    ```
 
    Use `build` to just build the NixOS system. Use `boot` to build the NixOS (a
