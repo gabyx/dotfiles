@@ -38,8 +38,10 @@ docs
 {{- end }}
 
 # Evolution (ignore for now)
+{{- if ne .chezmoi.osRelease.id "nixos" }}
 .config/evolution
 .config/goa-1
+{{- end }}
 
 # Switch display settings depending on work
 {{- if eq .workspace "private" }}
