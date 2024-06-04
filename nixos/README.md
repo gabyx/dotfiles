@@ -136,7 +136,7 @@ benefit, that the swap partition will also be encrypted.
 
    ```shell
    MYDISK=/dev/sda
-   gdisk $MYDISK
+   sudo gdisk $MYDISK
    ```
 
 1. Then do the following:
@@ -157,8 +157,13 @@ benefit, that the swap partition will also be encrypted.
 
 1. Format the partitions with:
 
-   ```
+   EFI Partition:
+   ```shell
    sudo mkfs.fat -F 32 ${MYDISK}1
+   ```
+
+   LVM Partition:
+   ```shell
    DISKMAP=/dev/mapper/enc-physical-vol
    sudo mkfs.btrfs $DISKMAP
    ```
@@ -174,22 +179,23 @@ benefit, that the swap partition will also be encrypted.
    - `log`: The subvolume for `/var/log`. I’m not so interested in backing up
      logs but I want them to be preserved across reboots, so I’m dedicating a
      subvolume to logs rather than using the persist subvolume.
-   - `swap`: A swap volume which is also encrypted because we are paranoid.
+   - `swap`: A swap volume with size 72Gb which is also encrypted because we are paranoid.
 
    ```shell
    DISKMAP=/dev/mapper/enc-physical-vol
-   sudo mount -t btrfs $DISKMAP /mnt
-   sudo btrfs subvolume create /mnt/root
-   sudo btrfs subvolume create /mnt/home
-   sudo btrfs subvolume create /mnt/nix
-   sudo btrfs subvolume create /mnt/persist
-   sudo btrfs subvolume create /mnt/log
+   MNTPNT="/mnt"
+   sudo mount -t btrfs $DISKMAP $MNTPNT
+   sudo btrfs subvolume create $MNTPNT/root
+   sudo btrfs subvolume create $MNTPNT/home
+   sudo btrfs subvolume create $MNTPNT/nix
+   sudo btrfs subvolume create $MNTPNT/persist
+   sudo btrfs subvolume create $MNTPNT/log
 
-   sudo btrfs subvolume create /mnt/swap
-   sudo btrfs filesystem mkswapfile --size 72g --uuid clear /mnt/swap/swapfile
+   sudo btrfs subvolume create $MNTPNT/swap
+   sudo btrfs filesystem mkswapfile --size 72g --uuid clear $MNTPNT/swap/swapfile
 
-   sudo btrfs subvolume snapshot -r /mnt/root /mnt/root-blank
-   sudo umount /mnt
+   sudo btrfs subvolume snapshot -r $MNTPNT/root $MNTPNT/root-blank
+   sudo umount $MNTPNT
    ```
 
    Above we also created an empty snapshot of the root volume. Later we might
@@ -206,30 +212,31 @@ root partition.
 
    ```shell
    DISKMAP=/dev/mapper/enc-physical-vol
-   sudo mkdir -p /mnt
-   sudo mount -o subvol=root,compress=zstd,noatime $DISKMAP /mnt
+   MNTPNT="/mnt"
+   sudo mkdir -p $MNTPNT
+   sudo mount -o subvol=root,compress=zstd,noatime $DISKMAP $MNTPNT
 
-   sudo mkdir -p /mnt/home
-   sudo mount -o subvol=home,compress=zstd,noatime $DISKMAP /mnt/home
+   sudo mkdir -p $MNTPNT/home
+   sudo mount -o subvol=home,compress=zstd,noatime $DISKMAP $MNTPNT/home
 
-   sudo mkdir -p /mnt/nix
-   sudo mount -o subvol=nix,compress=zstd,noatime $DISKMAP /mnt/nix
+   sudo mkdir -p $MNTPNT/nix
+   sudo mount -o subvol=nix,compress=zstd,noatime $DISKMAP $MNTPNT/nix
 
-   sudo mkdir -p /mnt/persist
-   sudo mount -o subvol=persist,compress=zstd,noatime $DISKMAP /mnt/persist
+   sudo mkdir -p $MNTPNT/persist
+   sudo mount -o subvol=persist,compress=zstd,noatime $DISKMAP $MNTPNT/persist
 
-   sudo mkdir -p /mnt/var/log
-   sudo mount -o subvol=log,compress=zstd,noatime $DISKMAP /mnt/var/log
+   sudo mkdir -p $MNTPNT/var/log
+   sudo mount -o subvol=log,compress=zstd,noatime $DISKMAP $MNTPNT/var/log
 
-   sudo mkdir -p /mnt/swap
-   sudo mount -o subvol=swap,defaults,noatime $DISKMAP /mnt/swap
+   sudo mkdir -p $MNTPNT/swap
+   sudo mount -o subvol=swap,defaults,noatime $DISKMAP $MNTPNT/swap
 
    # Don't forget this!
-   sudo mkdir -p /mnt/boot
-   sudo mount "${MYDISK}1" /mnt/boot
+   sudo mkdir -p $MNTPNT/boot
+   sudo mount "${MYDISK}1" $MNTPNT/boot
 
    # Enable swap
-   sudo swapon /mnt/swap/swapfile
+   sudo swapon $MNTPNT/swap/swapfile
    ```
 
 1. Then, let NixOS figure out the hardware configuration:
