@@ -37,11 +37,11 @@ docs
 .config/tmux/tmux.conf
 {{- end }}
 
-# Evolution (ignore for now)
-{{- if ne .chezmoi.osRelease.id "nixos" }}
+# Evolution (ignore after apply)
+# {{- if ne .chezmoi.osRelease.id "nixos" }}
 .config/evolution
 .config/goa-1
-{{- end }}
+# {{- end }}
 
 # Switch display settings depending on work
 {{- if eq .workspace "private" }}

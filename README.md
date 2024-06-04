@@ -168,8 +168,8 @@ Skip to step 3 on a fresh system.
    ```shell
    chezmoi apply
 
-   find ~/.config/evolution/sources -type f -name "*.sources" | \
-      xargs -I {} sed -iE "s@NeedsInitialSetup=false@NeedsInitialSetup=true@ {}"
+   find ~/.config/evolution/sources -type f -name "*.source" | \
+      xargs -I {} sed -iE "s@NeedsInitialSetup=false@NeedsInitialSetup=true@" {}
    ```
 
 1. Restart the `dbus` service, as it controls the
