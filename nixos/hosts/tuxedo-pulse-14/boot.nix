@@ -43,5 +43,5 @@
   };
 
   # For zfs support.
-  networking.hostId = "28099f56";
+  networking.hostId = "06c1ee33";
 }

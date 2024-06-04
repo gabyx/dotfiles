@@ -302,11 +302,17 @@ root partition.
    cp /mnt/etc/nixos/hardware-configuration.nix /mnt/persist/repos/dotfiles/modules/hardware/desktop.nix
    ```
 
-1. Finally run the install command\*\* by doing:
+1. **Finally run the install command** by doing:
 
    ```shell
    nixos-install --root /mnt --flake github:gabyx/dotfiles#desktop
+   reboot
+   ```
 
+   or directly from the repository with
+
+   ```shell
+   nixos-install --root /mnt --flake .#desktop --impure
    reboot
    ```
 
