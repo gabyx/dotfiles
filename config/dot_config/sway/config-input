@@ -11,9 +11,19 @@
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
+# See the function `gabyx::get_input_properties`.
 input type:keyboard {
     xkb_layout programmer-defy,programmer,us,de
     xkb_options ctrl:nocaps,grp:menu_toggle
+}
+
+
+input type:touchpad {
+  tap enabled
+  drag enabled
+  dwt enabled
+  natural_scroll disabled
+  click_method clickfinger
 }
 
 seat * hide_cursor when-typing enable

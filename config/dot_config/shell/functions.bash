@@ -180,7 +180,7 @@ function gabyx::copy_images_to_podman() {
     }
 
     gabyx::print_info "Copying images with regex '$1' from docker to podman."
-    images=$(docker images --format "$transport:{{.Repository}}:{{.Tag}}" | grep -v '<none>' | grep -xE "$transport:$1")
+    images=$(docker images --format "$transport:{{.Repository}}:{{.Tag}}" | grep -v 'wnonew' | grep -xE "$transport:$1")
 
     echo "$images" | xargs printf "  - '%s'\n"
     echo "$images" | xargs podman pull
@@ -204,6 +204,12 @@ function gabyx::get_keycode {
 # Get the window tree in JSON format in `sway`.
 function gabyx::get_window_properties {
     swaymsg -t get_tree | jq
+}
+
+# Get information on the input device from `sway`.
+function gabyx::get_input_properties {
+    local device_type="${1:-touchpad}"
+    swaymsg -t get_inputs --raw | jq ".[] | select(.type==\"$device_type\")"
 }
 
 # Get the log of the systemd service with name `$1`.
