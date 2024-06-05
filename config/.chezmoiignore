@@ -30,6 +30,7 @@ docs
 .config/fontconfig
 .config/nextmeeting
 .config/goa-1.0
+.config/evolution
 {{- end }}
 
 {{- if eq .chezmoi.osRelease.id "nixos" }}
@@ -38,10 +39,8 @@ docs
 {{- end }}
 
 # Evolution (ignore after apply)
-# {{- if ne .chezmoi.osRelease.id "nixos" }}
-.config/evolution
+.config/evolution/sources
 .config/goa-1
-# {{- end }}
 
 # Switch display settings depending on work
 {{- if eq .workspace "private" }}

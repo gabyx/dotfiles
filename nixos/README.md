@@ -99,7 +99,6 @@ useful information when going through these steps:
    reboot
    ```
 
-
 Go to the section [first login](#first-login) for further instructions.
 
 ### Connect to VM over SSH
@@ -165,11 +164,13 @@ benefit, that the swap partition will also be encrypted.
 1. Format the partitions with:
 
    EFI Partition:
+
    ```shell
    sudo mkfs.fat -F 32 ${MYDISK}1
    ```
 
    LVM Partition:
+
    ```shell
    DISKMAP=/dev/mapper/enc-physical-vol
    sudo mkfs.btrfs $DISKMAP
@@ -186,7 +187,8 @@ benefit, that the swap partition will also be encrypted.
    - `log`: The subvolume for `/var/log`. I’m not so interested in backing up
      logs but I want them to be preserved across reboots, so I’m dedicating a
      subvolume to logs rather than using the persist subvolume.
-   - `swap`: A swap volume with size 72Gb which is also encrypted because we are paranoid.
+   - `swap`: A swap volume with size 72Gb which is also encrypted because we are
+     paranoid.
 
    ```shell
    DISKMAP=/dev/mapper/enc-physical-vol
@@ -311,24 +313,28 @@ root partition.
 
 1. Apply the initial config files into the home directory with:
 
-  **Config Files:**
-  ```shell
-  nix-shell -p chezmoi
-  git clone https://github.com/dotfiles $MNTPNT/home/nixos/.local/share/chezmoi
-  HOME=$MNTPNT/home/nixos chezmoi apply --exclude encrypted
-  ```
+   **Config Files:**
 
-  **Editor Setup:**
-  ```shell
-  git clone https://github.com/gabyx/astronvim.git ~/.config/nvim
-  ```
+   ```shell
+   nix-shell -p chezmoi
+   git clone https://github.com/dotfiles $MNTPNT/home/nixos/.local/share/chezmoi
+   git lfs pull
+   HOME=$MNTPNT/home/nixos chezmoi apply --exclude encrypted
+   ```
 
-  This is only to make sure once you reboot and login you have `sway` starting with the settings wanted
-  already in your home directory.
+   **Editor Setup:**
 
-  TODO: Make this automated such that we bake the whole repository into a derivation to be used/run when no 
-        `~/.config/chezmoi/chezmoi.yaml` is there (no apply done) during activation.
-        The activation should run a `nix run` application defined in the `flake.nix`.
+   ```shell
+   git clone https://github.com/gabyx/astronvim.git ~/.config/nvim
+   ```
+
+This is only to make sure once you reboot and login you have `sway` starting
+with the settings wanted already in your home directory.
+
+TODO: Make this automated such that we bake the whole repository into a
+derivation to be used/run when no `~/.config/chezmoi/chezmoi.yaml` is there (no
+apply done) during activation. The activation should run a `nix run` application
+defined in the `flake.nix`.
 
 1. **Finally run the install command** by doing:
 

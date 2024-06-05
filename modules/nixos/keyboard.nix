@@ -4,6 +4,18 @@
   ...
 }: {
   ### Keyboard Settings =================================================
+
+  # Waylands input service which handles mouse and touchpad.
+  services.libinput = {
+    enable = true;
+    touchpad = {
+      tapping = true;
+      tappingButtonMap = "lrm";
+      naturalScrolling = true;
+      horizontalScrolling = true;
+    };
+  };
+
   i18n.defaultLocale = "en_US.UTF-8";
 
   console = {

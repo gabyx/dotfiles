@@ -166,7 +166,7 @@ Skip to step 3 on a fresh system.
    with (**uncomment the ignore in `.chezmoiignore`**).
 
    ```shell
-   chezmoi apply
+   just cm apply
 
    find ~/.config/evolution/sources -type f -name "*.source" | \
       xargs -I {} sed -iE "s@NeedsInitialSetup=false@NeedsInitialSetup=true@" {}
