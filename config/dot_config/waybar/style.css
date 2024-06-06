@@ -43,18 +43,24 @@
   min-height: 24pt;
   margin: 0;
   padding: 0;
+
+  font-family:
+    NotoSans Nerd Font,
+    Noto Sans,
+    sans-serif;
+  font-weight: bold;
+  font-size: 12pt;
+}
+
+window.eDP-1 * {
+  font-size: 9pt;
+  min-height: 21pt;
 }
 
 /* The whole bar */
 #waybar {
   background: #323232;
   color: white;
-  font-family:
-    NotoSans Nerd Font,
-    Noto Sans,
-    sans-serif;
-  font-size: 15px;
-  font-weight: bold;
 }
 
 tooltip {
@@ -63,37 +69,85 @@ tooltip {
 }
 
 /* Each module */
-#battery,
-#clock,
-#cpu,
-#memory,
-#mode,
-#network,
-#pulseaudio,
-#temperature,
-#backlight,
-#bluetooth,
-#disk,
-#sway-language,
-#custom-emoji,
-#custom-calculator,
-#custom-password,
-#custom-powermenu,
 #custom-launcher,
-#custom-notification,
-#custom-vpn,
-#custom-ssh,
+#workspaces button,
+#mode,
+#tray,
 #custom-agenda,
-#tray {
-  padding-left: 7px;
-  padding-right: 7px;
+#clock,
+#custom-calculator,
+#custom-emoji,
+#custom-password,
+#custom-screenshot,
+#backlight,
+#memory,
+#cpu,
+#battery,
+#temperature,
+#disk,
+#custom-ssh,
+#language,
+#custom-vpn,
+#network,
+#bluetooth,
+#pulseaudio,
+#battery,
+#custom-notification,
+#custom-powermenu {
+  padding-left: 5pt;
+  padding-right: 5pt;
+}
+
+/* For Laptop monitor on 1980px widths */
+#window.eDP-1 custom-launcher {
+  padding-left: 3pt;
+}
+
+#window.eDP-1 custom-powermenu {
+  padding-right: 3pt;
+}
+
+window.eDP-1 #workspaces button {
+  padding-right: 3pt;
+  padding-left: 3pt;
+}
+
+window.eDP-1 #custom-agenda {
+  padding-left: 2pt;
+  padding-right: 4pt;
+}
+
+window.eDP-1 #mode,
+#tray,
+#clock,
+#custom-calculator,
+#custom-emoji,
+#custom-password,
+#custom-screenshot,
+#backlight,
+#memory,
+#cpu,
+#battery,
+#temperature,
+#disk,
+#custom-ssh,
+#language,
+#custom-vpn,
+#network,
+#bluetooth,
+#pulseaudio,
+#battery,
+#custom-notification,
+#custom-powermenu {
+  padding-left: 2pt;
+  padding-right: 2pt;
 }
 
 /* -----------------------------------------------------------------------------
  * Module styles
  * -------------------------------------------------------------------------- */
 #custom-vpn {
-  padding-left: 13px;
+  /* padding-left: 6pt; */
 }
 
 #custom-vpn.connected {
@@ -218,24 +272,24 @@ tooltip {
 }
 
 #custom-launcher {
-  font-size: 18px;
+  font-size: 1.5em;
   font-weight: bold;
   color: #6495ed;
 }
 
 #custom-powermenu {
-  font-size: 16px;
+  font-size: 1.3em;
   font-weight: bold;
   color: #6495ed;
 }
 
 #bluetooth {
-  padding-left: 5px;
-  padding-right: 5px;
+  /* padding-left: 5px; */
+  /* padding-right: 5px; */
 }
 
 #custom-ssh {
-  padding-right: 12px;
+  /* padding-right: 12px; */
 }
 
 #custom-ssh.warning {
@@ -255,9 +309,6 @@ tooltip {
 #workspaces button {
   border-top: 2px solid transparent;
   /* To compensate for the top border and still have vertical centering */
-  padding-bottom: 2px;
-  padding-left: 10px;
-  padding-right: 10px;
   color: #888888;
 }
 

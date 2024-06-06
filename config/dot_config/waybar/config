@@ -26,7 +26,7 @@
     "modules-center": [
         "custom/agenda",
         "clock#date",
-        "clock#time"
+        "clock#time",
     ],
 
     "modules-right": [
@@ -84,7 +84,7 @@
     },
 
     "custom/screenshot" : {
-        "format": "󰄀  ",
+        "format": "󰄀",
         "return-type": "json",
         "exec": "~/.config/waybar/scripts/tooltip.sh 'Screenshot'",
         "interval": "once",
@@ -168,8 +168,9 @@
     },
 
     "sway/language": {
-        "format": "   {long} {variant}",
+        "format": "  {long} {variant}",
         "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
+
     },
 
     "memory": {
@@ -199,10 +200,11 @@
 
     "network": {
         "interval": 5,
-        "format-wifi": "   {essid} ({signalStrength}%)", // Icon: wifi
+        "format-wifi": "   {signalStrength}%", // Icon: wifi
         "format-ethernet": "󰈀 ", // Icon: ethernet
         "format-disconnected": "󰖪 ",
         "tooltip-format": "{ifname}: {ipaddr}",
+        "tooltip-wifi": "{essid} ({signalStrength}%) {ipaddr}",
         "on-click": "swaymsg exec \\$wireless-menu",
         "on-click-right": "swaymsg exec \\$network-menu",
     },
@@ -219,7 +221,8 @@
 
     "sway/workspaces": {
         "all-outputs": false,
-        "disable-scroll": true,
+        "disable-scroll": false,
+        "smooth-scrolling-threshold": 10,
         "format": "{icon}  {name}",
         "format-icons": {
             "1:www": "龜", // Icon: firefox-browser
@@ -253,7 +256,7 @@
     "temperature": {
       "critical-threshold": 80,
       "interval": 5,
-      "format": "{icon}  {temperatureC}°C",
+      "format": "{icon} {temperatureC}°C",
       "format-icons": [
           "", // Icon: temperature-empty
           "", // Icon: temperature-quarter
@@ -310,7 +313,7 @@
     },
 
     "tray": {
-        "icon-size": 21,
-        "spacing": 10
+        "icon-size": 15,
+        "spacing": 7
     }
 }
