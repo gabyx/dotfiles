@@ -15,6 +15,7 @@ bindsym $mod+Control+Shift+q focus parent, focus parent, focus parent, focus par
 bindsym $mod+Shift+p exec $power-menu
 bindsym $mod+Shift+w exec $wireless-menu
 bindsym $mod+Shift+i exec $network-menu
+bindsym $mod+Shift+b exec $bluetooth-menu
 bindsym $mod+Shift+n exec $notification-menu
 bindsym $mod+Shift+a exec $sound-menu
 bindsym $mod+Shift+d exec $systemd-menu

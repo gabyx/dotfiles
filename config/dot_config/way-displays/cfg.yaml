@@ -49,9 +49,7 @@ MODE:
     MAX: TRUE
 
   - NAME_DESC: "!^Tianma.*TL140.*" # Tuxedo - Internal
-    WIDTH: 1920
-    HEIGHT: 1200
-    HZ: 120
+    MAX: TRUE
 
 # Rotate or translate the display.
 # 90, 180, 270, FLIPPED, FLIPPED-90, FLIPPED-180, FLIPPED-270

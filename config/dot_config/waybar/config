@@ -293,7 +293,7 @@
              "enabled": "",
              "disabled": "󰂲"
         },
-        "on-right-click": "swaymsg exec \\$bluetooth-menu",
+        "on-click-right": "swaymsg exec \\$bluetooth-menu",
         "tooltip-format": "{status}"
     },
 
