@@ -49,7 +49,7 @@
     Noto Sans,
     sans-serif;
   font-weight: bold;
-  font-size: 12pt;
+  font-size: 11pt;
 }
 
 window.eDP-1 * {
@@ -63,18 +63,17 @@ window.eDP-1 * {
   color: white;
 }
 
-tooltip {
-  border: 1.5px solid #6495ed;
-  border-radius: 4px;
+#workspaces button {
+  padding-right: 8pt;
+  padding-left: 8pt;
 }
 
 /* Each module */
 #custom-launcher,
-#workspaces button,
 #mode,
-#tray,
 #custom-agenda,
 #clock,
+#tray,
 #custom-calculator,
 #custom-emoji,
 #custom-password,
@@ -94,8 +93,8 @@ tooltip {
 #battery,
 #custom-notification,
 #custom-powermenu {
-  padding-left: 5pt;
-  padding-right: 5pt;
+  padding-left: 4pt;
+  padding-right: 4pt;
 }
 
 /* For Laptop monitor on 1980px widths */
@@ -118,27 +117,27 @@ window.eDP-1 #custom-agenda {
 }
 
 window.eDP-1 #mode,
-#tray,
-#clock,
-#custom-calculator,
-#custom-emoji,
-#custom-password,
-#custom-screenshot,
-#backlight,
-#memory,
-#cpu,
-#battery,
-#temperature,
-#disk,
-#custom-ssh,
-#language,
-#custom-vpn,
-#network,
-#bluetooth,
-#pulseaudio,
-#battery,
-#custom-notification,
-#custom-powermenu {
+window.eDP-1 #clock,
+window.eDP-1 #tray,
+window.eDP-1 #custom-calculator,
+window.eDP-1 #custom-emoji,
+window.eDP-1 #custom-password,
+window.eDP-1 #custom-screenshot,
+window.eDP-1 #backlight,
+window.eDP-1 #memory,
+window.eDP-1 #cpu,
+window.eDP-1 #battery,
+window.eDP-1 #temperature,
+window.eDP-1 #disk,
+window.eDP-1 #custom-ssh,
+window.eDP-1 #language,
+window.eDP-1 #custom-vpn,
+window.eDP-1 #network,
+window.eDP-1 #bluetooth,
+window.eDP-1 #pulseaudio,
+window.eDP-1 #battery,
+window.eDP-1 #custom-notification,
+window.eDP-1 #custom-powermenu {
   padding-left: 2pt;
   padding-right: 2pt;
 }
@@ -146,6 +145,11 @@ window.eDP-1 #mode,
 /* -----------------------------------------------------------------------------
  * Module styles
  * -------------------------------------------------------------------------- */
+tooltip {
+  border: 1.5px solid #6495ed;
+  border-radius: 4px;
+}
+
 #custom-vpn {
   /* padding-left: 6pt; */
 }
@@ -303,7 +307,6 @@ window.eDP-1 #mode,
 #window {
   font-weight: bold;
   color: #6495ed;
-  padding-left: 20px;
 }
 
 #workspaces button {
