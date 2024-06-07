@@ -22,6 +22,7 @@ in {
 
     # Or modules from other flakes (such as nixos-hardware):
     inputs.hardware.nixosModules.tuxedo-pulse-14-gen3
+    inputs.auto-cpufreq.nixosModules.default
 
     # Load the NixOS age encryption module to encrypt/decrypt
     # secrets with this NixOS configuration
