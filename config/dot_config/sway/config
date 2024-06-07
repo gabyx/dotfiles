@@ -105,6 +105,7 @@ set $creds bitwarden
 # Output variables
 set $primaryDispHome 'Philips Consumer Electronics Company PHL 275E2F UHB2307008083'
 set $secondaryDispHome 'Dell Inc. DELL P2418HT 32MPJ87E177L'
+
 set $primaryDispWork 'Philips Consumer Electronics Company PHL 275E2F UHB2307008083'
 set $secondaryDispWork 'Dell Inc. DELL P2418HT 32MPJ87E177L'
 ### ===========================================================================

@@ -10,3 +10,8 @@ workspace $comm-ws  output $secondaryDisp
 workspace $mail-ws  output $secondaryDisp
 workspace $web-ws   output $secondaryDisp
 workspace $creds-ws output $secondaryDisp
+
+# Assign an empty auxillary to any laptop display
+# Fixes to avoid having an empty `1` workspace colliding with
+# our `1`.
+workspace "Empty" output eDP-1
