@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   # Enable bluetooth
   hardware.bluetooth = {
     enable = true; # enables support for Bluetooth
@@ -13,6 +17,11 @@
     enable = true;
     tailor-gui.enable = true;
   };
+
+  # Setup OpenCL for AMD GPU
+  hardware.opengl.extraPackages = with pkgs; [
+    rocmPackages.clr.icd
+  ];
 
   # Power Management
   # The hardware includes for Tuxedo define if `tpl` is used or not.

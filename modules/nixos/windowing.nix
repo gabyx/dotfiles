@@ -20,6 +20,15 @@
       wayland = true;
     };
   };
+
+  hardware = {
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+    };
+  };
+
   # ===========================================================================
 
   # Desktop Manager ===========================================================
@@ -33,9 +42,6 @@
   #   xwayland.enable = true; # Bridge to Wayland API for X11 apps.
   # };
   #
-  # hardware = {
-  #   opengl.enable = true;
-  # };
   #
   # # Handle desktop interaction.
   # xdg.portal = {
