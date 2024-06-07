@@ -6,6 +6,7 @@
   ...
 }: let
   browser = ["google-chrome.desktop"];
+  archiver = ["file-roller.desktop"];
 
   associations = {
     "text/html" = browser;
@@ -27,6 +28,24 @@
     "image/*" = "nomacs.desktop";
     "audio/*" = ["vlc.desktop"];
     "video/*" = ["vlc.desktop"];
+
+    # Archives
+    "application/zip" = archiver;
+    "application/x-tar" = archiver;
+    "application/gzip" = archiver;
+    "application/x-bzip2" = archiver;
+    "application/x-7z-compressed" = archiver;
+    "application/vnd.rar" = archiver;
+    "application/x-iso9660-image" = archiver;
+    "application/x-lzh-compressed" = archiver;
+    "application/x-xz" = archiver;
+    "application/vnd.ms-cab-compressed" = archiver;
+    "application/x-arj" = archiver;
+    "application/x-lzip" = archiver;
+    "application/x-compress" = archiver;
+    "application/x-cpio" = archiver;
+    "application/x-ace-compressed" = archiver;
+    "application/x-lzma" = archiver;
 
     "text/calendar" = ["thunderbird.desktop"]; # ".ics"  iCalendar format
 
