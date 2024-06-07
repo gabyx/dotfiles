@@ -70,6 +70,7 @@ window.eDP-1 * {
 
 /* Each module */
 #custom-launcher,
+#window,
 #mode,
 #custom-agenda,
 #clock,
@@ -117,6 +118,7 @@ window.eDP-1 #custom-agenda {
 }
 
 window.eDP-1 #mode,
+window.eDP-1 #window,
 window.eDP-1 #clock,
 window.eDP-1 #tray,
 window.eDP-1 #custom-calculator,
