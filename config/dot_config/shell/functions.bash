@@ -223,6 +223,11 @@ function gabyx::nixos_hm_log() {
     journalctl -u home-manager-nixos.service -e
 }
 
+# List all running kernel modules.
+function gabyx::nixos_kernel_modules() {
+    lsmod
+}
+
 # Run the backup script.
 function gabyx::backup_zfs() {
     ~/.config/restic/scripts/backup.sh
