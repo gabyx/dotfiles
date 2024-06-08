@@ -208,3 +208,12 @@ Skip to step 3 on a fresh system.
 1. Start `evolution` and you should see now all accounts be connected and
    working. If `evolution` starts up without having picked up the accounts, you
    probably need another `dbus` restart above or logout or complete `restart`.
+
+#### Troubleshooting
+
+When I log out and in again, evolution gets sometimes really stuck in
+authentication and what helps is to do
+
+```shell
+   systemctl --user restart dbus-broker
+```
