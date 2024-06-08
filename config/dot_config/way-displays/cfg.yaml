@@ -15,7 +15,7 @@ ALIGN: MIDDLE
 # Define your own.
 ORDER:
   - "!^Philips.*PHL 275E2F.*"
-  - "!^Dell.*32MPJ87E177L.*"
+  - "!^Dell.*U2724DE.*"
   - "!^DP-" # External monitors.
   - "!^eDP-" # Internal monitors.
 
@@ -45,7 +45,7 @@ MODE:
     HEIGHT: 1440
     HZ: 75
 
-  - NAME_DESC: "!^Dell.*32MPJ87E177L.*" # Home - External
+  - NAME_DESC: "!^Dell.*U2724DE.*" # Home - External
     MAX: TRUE
 
   - NAME_DESC: "!^Tianma.*TL140.*" # Tuxedo - Internal
@@ -61,7 +61,7 @@ MODE:
 # VRR / adaptive sync is enabled by default. Disable it per display.
 VRR_OFF:
   - "!^Phillips.*PHL 275E2F.*"
-  - "!^Dell.*32MPJ87E177L.*"
+  - "!^Dell.*U2724DE.*"
   - "!^Tianma.*TL140.*"
 
 # Sets a `/bin/sh` command to be executed when display configurations are successfully changed.
