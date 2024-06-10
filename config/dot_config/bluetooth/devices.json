@@ -1,0 +1,7 @@
+{
+  "devices": [
+    { "mac": "28:9A:4B:78:80:84", "name": "Arctic Nova 7" },
+    { "mac": "F1:A7:8F:1A:2F:00", "name": "Dygma Defy" },
+    { "mac": "DC:73:72:2D:82:7E", "name": "MX Anywhere 3S" }
+  ]
+}
