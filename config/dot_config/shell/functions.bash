@@ -212,6 +212,11 @@ function gabyx::get_input_properties {
     swaymsg -t get_inputs --raw | jq ".[] | select(.type==\"$device_type\")"
 }
 
+# Get the last boot log.
+function gabyx::nixos_last_boot_log() {
+    journalctl -b -1 -e
+}
+
 # Get the log of the systemd service with name `$1`.
 function gabyx::nixos_systemd_log() {
     local service="$1"

@@ -1,3 +1,5 @@
 source <(fzf --bash)
 source ~/.config/fzf/settings.zsh
-source ~/.config/fzf/fzf-git.sh
+
+# This apparently crashes home-manager activation.
+# source ~/.config/fzf/fzf-git.sh
