@@ -3,3 +3,5 @@
 # If running in a VM, use the following.
 output Virtual-1 resolution 1600x900
 
+# Turn off all adaptive sync which might cause flickering.
+output * adaptive_sync off
