@@ -104,10 +104,10 @@ set $creds bitwarden
 
 # Output variables
 set $primaryDispHome 'Philips Consumer Electronics Company PHL 275E2F UHB2307008083'
-set $secondaryDispHome 'Dell Inc. DELL P2418HT 32MPJ87E177L'
+set $secondaryDispHome 'Dell Inc. DELL U2724DE 4TPGCP3'
 
 set $primaryDispWork 'Philips Consumer Electronics Company PHL 275E2F UHB2307008083'
-set $secondaryDispWork 'Dell Inc. DELL P2418HT 32MPJ87E177L'
+set $secondaryDispWork 'Dell Inc. DELL U2724DE 4TPGCP3'
 ### ===========================================================================
 
 # Only one file will be deployed and picked and included.

@@ -14,10 +14,14 @@ ALIGN: MIDDLE
 # The default ORDER is simply the order in which the displays are discovered.
 # Define your own.
 ORDER:
-  - "!^Philips.*PHL 275E2F.*"
-  - "!^Dell.*U2724DE.*"
-  - "!^DP-" # External monitors.
-  - "!^eDP-" # Internal monitors.
+  # Home.
+  - "!^Philips.*PHL 275E2F.*UHB2307008083.*" # External monitor.
+  - "!^Dell.*U2724DE.*4TPGCP3.*" # External monitor.
+  # Work.
+  # TODO
+  #
+  # Laptop Monitor comes always last.
+  - "!^Tianma.*TL140ADXP24.*" # Internal monitor.
 
 # Enable scaling, overrides AUTO_SCALE and SCALE
 SCALING: TRUE
@@ -40,15 +44,15 @@ SCALE:
 # See https://github.com/alex-courtis/way-displays#known-issues-with-workarounds
 # for a possible workaround.
 MODE:
-  - NAME_DESC: "!^Philips.*PHL 275E2F.*" # Home - External
+  - NAME_DESC: "!^Philips.*PHL 275E2F.*UHB2307008083.*" # Home - External
     WIDTH: 2560
     HEIGHT: 1440
     HZ: 75
 
-  - NAME_DESC: "!^Dell.*U2724DE.*" # Home - External
+  - NAME_DESC: "!^Dell.*U2724DE.*4TPGCP3.*" # Home - External
     MAX: TRUE
 
-  - NAME_DESC: "!^Tianma.*TL140.*" # Tuxedo - Internal
+  - NAME_DESC: "!^Tianma.*TL140ADXP24.*" # Tuxedo - Internal
     WIDTH: 1920
     HEIGHT: 1200
 
@@ -60,9 +64,7 @@ MODE:
 
 # VRR / adaptive sync is enabled by default. Disable it per display.
 VRR_OFF:
-  - "!^Phillips.*PHL 275E2F.*"
-  - "!^Dell.*U2724DE.*"
-  - "!^Tianma.*TL140.*"
+  - "!^.*"
 
 # Sets a `/bin/sh` command to be executed when display configurations are successfully changed.
 # NOTE: Depending on your compositor this could get executed multiple times when

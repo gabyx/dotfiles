@@ -40,7 +40,7 @@ docs
 
 # Evolution (ignore after apply)
 .config/evolution/sources
-.config/goa-1
+.config/goa-1.0
 
 # Switch display settings depending on work
 {{- if eq .workspace "private" }}
