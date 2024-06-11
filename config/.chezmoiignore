@@ -42,6 +42,9 @@ docs
 .config/evolution/sources
 .config/goa-1.0
 
+# Google Chrome Bookmarks
+.config/google-chrome
+
 # Switch display settings depending on work
 {{- if eq .workspace "private" }}
 .config/sway/config-work
