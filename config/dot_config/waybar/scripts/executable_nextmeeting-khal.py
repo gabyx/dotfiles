@@ -6,6 +6,7 @@ import subprocess
 import sys
 from dataclasses import dataclass
 from datetime import datetime, timedelta
+from html import escape
 from itertools import chain
 from typing import Dict
 
@@ -135,14 +136,14 @@ def main():
             return "󰃰  {0} ({1}) | {2}".format(
                 e.raw["start-time-full"],
                 estim,
-                title,
+                escape(title),
             )
         else:
             return "󰃰  {0} ↦ {1} ({2}) | {3}".format(
                 e.raw["start-time-full"],
                 e.raw["end-time-full"],
                 estim,
-                title,
+                escape(title),
             )
 
     if len(events) == 0:
