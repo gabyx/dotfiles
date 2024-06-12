@@ -2,9 +2,13 @@
 
 assign [class="(?i).*chrome.*"] $web-ws
 assign [app_id="(?i).*firefox.*"] $web-ws
-assign [class="(?i).*signal.*"] $comm-ws
+
 assign [app_id="(?i).*evolution.*"] $mail-ws
+
+assign [class="(?i).*signal.*"] $comm-ws
+assign [class="(?i).*slack.*"] $comm-ws
 assign [class="(?i).*element.*"] $comm-ws
+
 assign [class="(?i).*bitwarden.*"] $creds-ws
 
 # Set floating mode for generated windows

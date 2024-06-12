@@ -1,12 +1,13 @@
 ### Startup ===================================================================
 exec_always --no-startup-id flashfocus
 
-exec way-displays
+exec $display-manager 2>&1 ~/.way-displays.log
 exec $notifications
 exec $mail
 exec $web
 exec $comm
 exec $comm-matrix
+exec $comm-slack
 exec $creds
 exec $nightshifter
 

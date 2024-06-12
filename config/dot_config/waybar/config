@@ -220,6 +220,7 @@
     },
 
     "sway/workspaces": {
+        "window-rewrite": {},
         "all-outputs": false,
         "disable-scroll": false,
         "smooth-scrolling-threshold": 10,

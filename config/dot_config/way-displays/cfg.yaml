@@ -22,6 +22,7 @@ ORDER:
   #
   # Laptop Monitor comes always last.
   - "!^Tianma.*TL140ADXP24.*" # Internal monitor.
+  - "eDP-1"
 
 # Enable scaling, overrides AUTO_SCALE and SCALE
 SCALING: TRUE
@@ -55,6 +56,7 @@ MODE:
   - NAME_DESC: "!^Tianma.*TL140ADXP24.*" # Tuxedo - Internal
     WIDTH: 1920
     HEIGHT: 1200
+    HZ: 120
 
 # Rotate or translate the display.
 # 90, 180, 270, FLIPPED, FLIPPED-90, FLIPPED-180, FLIPPED-270
