@@ -165,7 +165,7 @@ bindsym $mod+r mode "resize"
 # Special stuff
 #
 # Enable Brightness control on special keys.
-bindsym XF86MonBrightnessUp exec $brightness-up"
+bindsym XF86MonBrightnessUp   exec $brightness-up
 bindsym XF86MonBrightnessDown exec $brightness-down
 
 

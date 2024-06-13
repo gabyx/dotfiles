@@ -62,7 +62,7 @@ set $password-menu swaymsg workspace \\$creds-ws
 set $screenshot-menu ~/.config/rofi/scripts/rofi-screenshot.sh
 set $color-picker-menu ~/.config/rofi/scripts/rofi-color-picker.sh
 
-set $brightness-up brightnessctl set "+10%"
+set $brightness-up brightnessctl set "10%+"
 set $brightness-down brightnessctl set "10%-"
 
 set $clipboard 'copyq --start-server'
@@ -107,7 +107,8 @@ set $creds-ws 10:0:  󱕴
 set $ws-10 10:0:  󱕴
 set $creds bitwarden
 
-# Output variables
+# Default output display names.
+# If other setups are used.
 set $primaryDispHome 'Philips Consumer Electronics Company PHL 275E2F UHB2307008083'
 set $secondaryDispHome 'Dell Inc. DELL U2724DE 4TPGCP3'
 

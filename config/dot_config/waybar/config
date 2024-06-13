@@ -185,8 +185,8 @@
     "backlight": {
         "format": "{icon} {percent}%",
         "format-icons": ["󰃞", "󰃟", "󰃠"],
-        "on-scroll-up": "swaymsg exec \\$brightness_up",
-        "on-scroll-down": "swaymsg exec \\$brightness_down"
+        "on-scroll-up": "swaymsg exec \\$brightness-up",
+        "on-scroll-down": "swaymsg exec \\$brightness-down"
     },
 
     "custom/vpn":{
@@ -204,7 +204,7 @@
         "format-ethernet": "󰈀 ", // Icon: ethernet
         "format-disconnected": "󰖪 ",
         "tooltip-format": "{ifname}: {ipaddr}",
-        "tooltip-wifi": "{essid} ({signalStrength}%) {ipaddr}",
+        "tooltip-format-wifi": "{essid} | {signalStrength}%: {ipaddr}",
         "on-click": "swaymsg exec \\$wireless-menu",
         "on-click-right": "swaymsg exec \\$network-menu",
     },
