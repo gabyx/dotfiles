@@ -124,6 +124,8 @@
       rofi-power-menu
       rofi-bluetooth
       rofi-systemd
+
+      brightnessctl # Brightness control in waybar.
       playerctl # Player control in waybar.
     ];
 

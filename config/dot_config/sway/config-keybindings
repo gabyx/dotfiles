@@ -163,6 +163,11 @@ bindsym $mod+r mode "resize"
 
 # ========================================
 # Special stuff
+#
+# Enable Brightness control on special keys.
+bindsym XF86MonBrightnessUp exec $brightness-up"
+bindsym XF86MonBrightnessDown exec $brightness-down
+
 
 # Switch keyboard layout in locked screen.
 bindsym --locked $mod+Space input '*' xkb_switch_layout next

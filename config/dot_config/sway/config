@@ -62,6 +62,9 @@ set $password-menu swaymsg workspace \\$creds-ws
 set $screenshot-menu ~/.config/rofi/scripts/rofi-screenshot.sh
 set $color-picker-menu ~/.config/rofi/scripts/rofi-color-picker.sh
 
+set $brightness-up brightnessctl set "+10%"
+set $brightness-down brightnessctl set "10%-"
+
 set $clipboard 'copyq --start-server'
 set $clipboard-menu copyq toggle
 
