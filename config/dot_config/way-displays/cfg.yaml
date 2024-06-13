@@ -17,12 +17,16 @@ ORDER:
   # Home.
   - "!^Philips.*PHL 275E2F.*UHB2307008083.*" # External monitor.
   - "!^Dell.*U2724DE.*4TPGCP3.*" # External monitor.
+
   # Work.
   # TODO
   #
-  # Laptop Monitor comes always last.
-  - "!^Tianma.*TL140ADXP24.*" # Internal monitor.
-  - "eDP-1"
+  # Any other stupid monitor comes always before laptop.
+  - "!^DP-.*"
+
+  # Laptop monitors.
+  - "!^Tianma.*TL140ADXP24.*" # Tuxedo: Laptop Monitor comes always last.
+  - "!^eDP-*" # The laptop monitor.
 
 # Enable scaling, overrides AUTO_SCALE and SCALE
 SCALING: TRUE
@@ -51,6 +55,9 @@ MODE:
     HZ: 75
 
   - NAME_DESC: "!^Dell.*U2724DE.*4TPGCP3.*" # Home - External
+    MAX: TRUE
+
+  - NAME_DESC: "!^DP-.*" # Any other external monitor.
     MAX: TRUE
 
   - NAME_DESC: "!^Tianma.*TL140ADXP24.*" # Tuxedo - Internal

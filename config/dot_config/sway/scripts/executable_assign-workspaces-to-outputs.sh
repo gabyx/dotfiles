@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 #
 # This script moves workspaces to the correct monitors.
-# It detects which primary/secondary setup is used: either `home` or `work` setup
+#
+# It detects which primary/secondary setup is used:
+#  - `home` or
+#  - `work` or
 # by inspecting the predefined variables in the `sway` config.
+# Otherwise it inspects the default displays `DP-1`, `DP-2` and uses those.
+# You can swap the decision by specifying `--swap`.
+#
 # It then moves all all numbered workspaces `$ws-1, $ws-2, ..., $ws-6` to the
 # primary display and moves the rest defined named workspaces `$...-ws`
 # to the secondary workspace.
@@ -13,45 +19,55 @@ set -u
 set -e
 set -o pipefail
 
-function get_primary_monitor_name() {
+function find_defined_monitor_name() {
     local type="$1"
+    local which="${2:-primary}"
+
     local disp_name
-    disp_name=$(grep "primaryDisp$type" ~/.config/sway/config | sed -E "s/^set .primaryDisp$type '(.*)'.*/\1/")
+    disp_name=$(grep "${which}Disp$type" ~/.config/sway/config | sed -E "s/^set .${which}Disp$type '(.*)'.*/\1/")
+
+    if [ -z "$disp_name" ]; then
+        echo "- Display $which '$type' not defined in 'sway/config'." >&2
+        return 0
+    fi
+
+    swaymsg --pretty -t get_outputs | grep -q "$disp_name" || {
+        echo "- Display $which '$disp_name' not found in outputs." >&2
+        return 0
+    }
 
     echo "$disp_name"
 }
 
-function get_secondary_monitor_name() {
+function detect_monitor() {
     local type="$1"
-    local disp_name
-    disp_name=$(grep "secondaryDisp$type" ~/.config/sway/config | sed -E "s/^set .secondaryDisp$type '(.*)'.*/\1/")
+    local -n _disp_name_primary="$2"
+    local -n _disp_name_secondary="$3"
 
-    echo "$disp_name"
-}
+    echo "Detecting monitors for type '$type'." >&2
 
-function is_at_home() {
-    local disp_name
-    disp_name=$(get_primary_monitor_name Home)
-
-    if [ -z "$disp_name" ]; then
-        echo "Primary home display not defined in 'sway/config'." >&2
+    if echo "$type" | grep -qE "Work|Home"; then
+        _disp_name_primary=$(find_defined_monitor_name "$type" primary)
+        _disp_name_secondary=$(find_defined_monitor_name "$type" secondary)
+    elif echo "$type" | grep -qE "External"; then
+        # Detect some external monitors.
+        _disp_name_primary=$(swaymsg -t get_outputs --pretty | grep -qE "^Output.* DP-1" | sed -E "s@.*'(.*)'.*@\1@")
+        _disp_name_secondary=$(swaymsg -t get_outputs --pretty | grep -qE "^Output.* DP-2" | sed -E "s@.*'(.*)'.*@\1@")
+    else
+        echo "!! Cannot detect monitors with type '$type'." >&2
         return 1
     fi
 
-    swaymsg --pretty -t get_outputs | grep -q "$disp_name" || return 1
-    return 0
-}
-
-function is_at_work() {
-    local disp_name
-    disp_name=$(get_primary_monitor_name Work)
-
-    if [ -z "$disp_name" ]; then
-        echo "Primary work display not defined in 'sway/config'." >&2
+    if [ -z "$_disp_name_primary" ]; then
+        echo "! No primary monitor for '$type' found."
         return 1
     fi
 
-    swaymsg --pretty -t get_outputs | grep -q "$disp_name" || return 1
+    if [ -z "$_disp_name_secondary" ]; then
+        echo "! No second monitor for '$type' found."
+        return 0
+    fi
+
     return 0
 }
 
@@ -65,38 +81,53 @@ if [ ! -f ~/.config/sway/config-workspaces ]; then
     exit 1
 fi
 
-if is_at_home; then
-    primaryDisp=$(get_primary_monitor_name Home)
-    secondaryDisp=$(get_secondary_monitor_name Home)
-elif is_at_work; then
-    primaryDisp=$(get_primary_monitor_name Work)
-    secondaryDisp=$(get_secondary_monitor_name Work)
+disp_primary=""
+disp_secondary=""
+do_swap="false"
+
+if [ "${1:-}" = "--swap" ]; then
+    do_swap="true"
+fi
+
+if detect_monitor "Home" disp_primary disp_secondary; then
+    echo "Detected Home monitors." >&2
+elif detect_monitor "Work" disp_primary disp_secondary; then
+    echo "Detected Work monitors." >&2
+elif detect_monitor "External" disp_primary disp_secondary; then
+    echo "Detected External monitors." >&2
 else
-    echo "Displays not detected." >&2
+    echo "Detected no monitors to assign workspaces." >&2
     exit 1
 fi
 
-if [ -z "$secondaryDisp" ]; then
-    echo ""
-    secondaryDisp="$primaryDisp"
+if [ -z "$disp_secondary" ]; then
+    echo "Secondary monitor not detected, taking primary."
+    disp_secondary="$disp_primary"
 fi
 
-echo "Settings primary display to: '$primaryDisp'."
-echo "Settings secondary display to: '$secondaryDisp'."
+if [ "$do_swap" = "true" ]; then
+    a="$disp_primary"
+    disp_primary="$disp_secondary"
+    disp_secondary="$a"
+    unset a
+fi
+
+echo "Settings primary display to: '$disp_primary'."
+echo "Settings secondary display to: '$disp_secondary'."
 
 last_focused_ws=$(swaymsg -t get_workspaces -r |
     jq -r ".[] | select(.focused == true) | .name" | sed -E 's/^\d+://')
 
 # Configure all displays.
-swaymsg "set \$primaryDisp '$primaryDisp'"
-swaymsg "set \$secondaryDisp '$secondaryDisp'"
+swaymsg "set \$primaryDisp $disp_primary"
+swaymsg "set \$secondaryDisp '$disp_secondary'"
 swaymsg "$(sed 's/^#.*//g' ~/.config/sway/config-workspaces)"
 
 # Move existing workspaces to the correct display.
 for idx in {1..6}; do
     echo "Move workspace '$idx' to primary display."
     swaymsg "workspace \$ws-$idx;
-             move workspace to output '$primaryDisp'"
+             move workspace to output '$disp_primary'"
 done
 
 all_other_workspaces=()
@@ -105,7 +136,7 @@ readarray -t all_other_workspaces < <(grep -E '\$\w+-ws' ~/.config/sway/config |
 for ws in "${all_other_workspaces[@]}"; do
     echo "Move workspace '$ws' to secondary display."
     swaymsg "workspace $ws;
-         move workspace to output '$secondaryDisp'"
+         move workspace to output '$disp_secondary'"
 done
 
 # Focus last workspace.
