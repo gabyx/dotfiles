@@ -57,6 +57,7 @@ in {
     chezmoi
     lazygit
     delta
+    meld
     kubectl
     kind # Simple kubernetes for local development.
     k9s # Kubernetes management CLI tool

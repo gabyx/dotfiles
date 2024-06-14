@@ -1,3 +1,4 @@
+
 # Attribute file for assigning key=value pairs to paths.
 # Any edit to this file needs to be reviewed by admins.
 # These attributes define among other things
@@ -14,40 +15,7 @@
 # Overall LF lineendings for the
 # following files.
 # ===============================
-# Git files.
-.gitattributes text eol=lf
-.gitignore text eol=lf
-.gitkeep text eol=lf
-# Markdown.
-*.md text eol=lf
-# Settings files.
-*.yaml text eol=lf
-*.yml text eol=lf
-*.json text eol=lf
-# C++ files as defined in the guidelines.
-*.cpp text eol=lf
-*.mpp text eol=lf
-*.ipp text eol=lf
-*.h text eol=lf
-*.c text eol=lf
-# Legacy C++ files.
-*.inl text eol=lf
-# Dependency C++ files.
-*.cc text eol=lf
-*.cxx text eol=lf
-*.hpp text eol=lf
-*.hxx text eol=lf
-# CMake files.
-*.cmake text eol=lf
-CMakeLists.txt text eol=lf
-# Go files as defined in the guidelines.
-*.go text eol=lf
-# Proto files.
-*.proto text eol=lf
-# Python.
-*.py text eol=lf
-# Groovy.
-*.groovy text eol=lf
+* text=auto eol=lf
 
 # Default attribute patterns for common binary files
 # which should be stored in Git LFS.

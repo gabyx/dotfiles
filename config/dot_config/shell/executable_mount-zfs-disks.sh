@@ -13,7 +13,7 @@ gabyx::print_info "Import all ZFS pools and mount disks."
 sudo zpool import -f -a
 
 unmount="false"
-if [ "$1" = "--unmount" ]; then
+if [ "${1:-}" = "--unmount" ]; then
     shift 1
     unmount=true
 fi
