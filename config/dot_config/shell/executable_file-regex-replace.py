@@ -57,7 +57,7 @@ def replace_files(
             yield PurePath(dir, f).as_posix()
 
     files = list(
-        filter(is_included, get_files(dir) if only_git_files else get_git_files(dir))
+        filter(is_included, get_git_files(dir) if only_git_files else get_files(dir))
     )
 
     if not force:
@@ -99,7 +99,7 @@ def main():
     parser.add_argument(
         "-e",
         "--exclude",
-        default=[],
+        default=["(.*/)?.git/.*"],
         action="append",
         help="Exclude path regex for files.",
     )
@@ -111,7 +111,7 @@ def main():
         help="Include path regex for files.",
     )
     parser.add_argument(
-        "--git-files",
+        "--git-files-only",
         action=argparse.BooleanOptionalAction,
         help="",
     )
@@ -139,7 +139,7 @@ def main():
         excs=args.exclude,
         force=args.force,
         regex=args.regex,
-        only_git_files=args.git_files,
+        only_git_files=args.git_files_only,
     )
 
 

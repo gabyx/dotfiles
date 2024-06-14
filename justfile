@@ -2,6 +2,10 @@ set positional-arguments
 set shell := ["bash", "-cue"]
 root_dir := justfile_directory()
 
+# Prints the NixOS version (based on nixpkgs repository).
+version:
+    nixos-version --revision
+
 # NixOS rebuild command for the `host` (defined in the flake).
 rebuild how host *args:
     cd "{{root_dir}}" && \
