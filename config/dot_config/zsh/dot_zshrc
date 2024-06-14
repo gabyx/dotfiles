@@ -52,9 +52,19 @@ autoload -Uz "$fpath[-1]/antidote"
 function install_plugins() {
     zstyle -s ':antidote:bundle' file zsh_plugins_src
     local zsh_plugins="$ZDOTDIR/.zsh_plugins.zsh"
-
     local force_bundle="false"
-    if [ "$1" = "--force" ]; then
+
+    # On the systems where I dont have antidote.
+    if [ ! -d "$ZDOTDIR/.antidote" ]; then
+        git clone --depth=1 --branch v1.8.6 \
+            --single-branch https://github.com/mattmc3/antidote.git \
+            "$ZDOTDIR/.antidote"
+
+        force_bundle="true"
+    fi
+
+    # Destination not existing -> force.
+    if [ -f "$zsh_plugins" ]; then
         force_bundle="true"
     fi
 
@@ -69,19 +79,13 @@ function install_plugins() {
     # source plugin list is updated.
     if [[ "$zsh_plugins_src" -nt "$zsh_plugins" ]] ||
         [ "$force_bundle" = "true" ]; then
-        echo "Generate static plugins file '$zsh_plugins' ..."
-        antidote bundle <"$zsh_plugins_src" >"$zsh_plugins"
+        echo "Generate static plugins file '$zsh_plugins' from '$zsh_plugins_src'..."
+        antidote bundle <"$ZDOTDIR/.zplugins" >"$zsh_plugins"
     fi
 }
 
-# Set the name of the static .zsh plugins file antidote will generate.
-if [ ! -d "$ZDOTDIR/.antidote" ]; then
-    git clone --depth=1 https://github.com/mattmc3/antidote.git "$ZDOTDIR/.antidote"
-    install_plugins --force
-else
-   install_plugins
-fi
-
+# Install antidote and bundle plugins.
+install_plugins
 # Loading plugins
 source "$ZDOTDIR/.zsh_plugins.zsh"
 # ==============================================================================
