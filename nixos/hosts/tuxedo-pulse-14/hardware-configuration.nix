@@ -14,6 +14,7 @@
 
   boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "usb_storage" "sd_mod"];
   boot.initrd.kernelModules = [];
+  boot.kernelParams = []; # ["amdgpu.aspm=0"];
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
 
