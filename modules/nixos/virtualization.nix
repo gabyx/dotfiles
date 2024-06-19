@@ -127,6 +127,7 @@
     kubectl
     kind # Simple kubernetes for local development.
     k9s # Kubernetes management CLI tool
+    podman-compose
 
     podman-compose
 
