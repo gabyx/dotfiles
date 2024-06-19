@@ -10,11 +10,11 @@
   storage-settings = {
     storage = {
       driver = "btrfs";
-      options.overlay = {
-        # mount_program = lib.getExe pkgs.fuse-overlayfs;
-        # mountopt = "nodev,fsync=0";
-        # force_mask = "shared";
-      };
+      # options.overlay = {
+      #   # mount_program = lib.getExe pkgs.fuse-overlayfs;
+      #   # mountopt = "nodev,fsync=0";
+      #   # force_mask = "shared";
+      # };
     };
   };
 in {

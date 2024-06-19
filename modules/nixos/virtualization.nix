@@ -91,13 +91,13 @@
     subUidRanges = [
       {
         startUid = 100000;
-        count = 10000000; # 65539;
+        count = 65539;
       }
     ];
     subGidRanges = [
       {
         startGid = 100000;
-        count = 10000000; # 65539;
+        count = 65539;
       }
     ];
   };
@@ -127,6 +127,8 @@
     kubectl
     kind # Simple kubernetes for local development.
     k9s # Kubernetes management CLI tool
+
+    podman-compose
 
     # Other virtualisation stuff.
     # virt-manager
