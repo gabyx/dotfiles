@@ -4,4 +4,5 @@
 output Virtual-1 resolution 1600x900
 
 # Turn off all adaptive sync which might cause flickering.
-output * adaptive_sync off
+# way-display should actually handle this.
+# output * adaptive_sync off

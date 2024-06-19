@@ -23,6 +23,7 @@ docs
 .config/hypr
 .config/mako
 .config/rofi
+.config/avizo
 .config/sway
 .config/swaylock
 .config/swaync

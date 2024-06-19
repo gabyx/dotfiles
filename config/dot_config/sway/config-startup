@@ -1,7 +1,8 @@
 ### Startup ===================================================================
 exec_always --no-startup-id flashfocus
 
-exec $display-manager 2>&1 ~/.way-displays.log
+exec avizo-service
+exec $display-manager 2>&1 > ~/.way-displays.log
 exec $notifications
 exec $mail
 exec $web

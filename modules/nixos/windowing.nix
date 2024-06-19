@@ -125,6 +125,7 @@
       rofi-bluetooth
       rofi-systemd
 
+      avizo # Nice brightnessctl and audio volume visualization for wayland.
       brightnessctl # Brightness control in waybar.
       playerctl # Player control in waybar.
     ];

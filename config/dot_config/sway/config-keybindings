@@ -165,9 +165,16 @@ bindsym $mod+r mode "resize"
 # Special stuff
 #
 # Enable Brightness control on special keys.
-bindsym XF86MonBrightnessUp   exec $brightness-up
-bindsym XF86MonBrightnessDown exec $brightness-down
+# bindsym XF86MonBrightnessUp   exec $brightness-up
+# bindsym XF86MonBrightnessDown exec $brightness-down
 
+# This runs over avizo: https://github.com/misterdanb/avizo
+bindsym XF86AudioRaiseVolume exec volumectl -u up
+bindsym XF86AudioLowerVolume exec volumectl -u down
+bindsym XF86AudioMute exec volumectl toggle-mute
+bindsym XF86AudioMicMute exec volumectl -m toggle-mute
+bindsym XF86MonBrightnessUp exec lightctl up
+bindsym XF86MonBrightnessDown exec lightctl down
 
 # Switch keyboard layout in locked screen.
 bindsym --locked $mod+Space input '*' xkb_switch_layout next
