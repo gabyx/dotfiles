@@ -2,29 +2,50 @@ set positional-arguments
 set shell := ["bash", "-cue"]
 root_dir := justfile_directory()
 
+# Get the defined host inside the `.env` file.
+[private]
+get-host:
+    #!/usr/bin/env bash
+    set -eu
+    cd "{{root_dir}}"
+    [ -f .env ] || { echo "Place a .env inside '{{root_dir}}'."; exit 1; }
+    source "{{root_dir}}/.env" &>/dev/null && echo "$host"
+
 # Prints the NixOS version (based on nixpkgs repository).
 version:
     nixos-version --revision
 
 # NixOS rebuild command for the `host` (defined in the flake).
-rebuild how host *args:
-    cd "{{root_dir}}" && \
-        nixos-rebuild {{how}} --flake .#{{host}} --use-remote-sudo "${@:3}"
+rebuild how *args:
+    #!/usr/bin/env bash
+    set -eu
+    cd "{{root_dir}}"
 
-# Switch the `host` to the latest configuration.
-switch host *args:
-    just rebuild switch "{{host}}" "${@:2}"
+    host="${2:-}"
+    [ -n "$host" ] || host=$(just get-host) || exit 1
+
+    echo "----"
+    echo nixos-rebuild {{how}} --flake ".#$host" --use-remote-sudo "${@:3}"
+    echo "----"
+
+    nixos-rebuild {{how}} --flake ".#$host" --use-remote-sudo "${@:3}"
+
+# Switch the `host` (`$1`) to the latest configuration.
+switch *args:
+    just rebuild switch "$1" "${@:2}"
 
 # Build with nix-output-monitor.
-switch-visual host *args:
+switch-visual *args:
     # We need sudo, because output-monitor will not show the prompt.
     sudo echo "Starting" && \
-    just rebuild switch "{{host}}" --show-trace --verbose --log-format internal-json \
+    just rebuild switch "${1:-}" \
+        --show-trace --verbose --log-format internal-json \
         "${@:2}" |& nom --json
 
-# Switch the `host` to the latest configuration but under boot entry `test`.
-switch-test host *args:
-    just switch "{{host}}" -p test "${@:2}"
+# Switch the `host` (`$1`) to the latest
+# configuration but under boot entry `test`.
+switch-test *args:
+    just switch "${1:-}" -p test "${@:2}"
 
 # Update the flake lock file.
 # You can also do `--update-input XXX` to
@@ -35,6 +56,7 @@ update *args:
 # Show the history of the system profile and test profiles.
 history:
     #!/usr/bin/env bash
+    set -eu
     echo "History in 'system' profile:"
     nix profile history --profile /nix/var/nix/profiles/system
 
@@ -50,6 +72,8 @@ trim *args:
 # to see the differences.
 diff last="1" current_profile="/run/current-system":
     #!/usr/bin/env bash
+    set -eu
+
     if ! command -v nvd &>/dev/null; then
         echo "! Command 'nvd' not installed to print difference." >&2
         exit 0
@@ -73,12 +97,18 @@ tree:
 
 # Diff closures from `dest_ref` to `src_ref`. This builds and
 # computes the closure which might take some time.
-diff-closure dest_ref="/" src_ref="origin/main" host="desktop":
-    @echo "Diffing closures of host '{{host}}' from '{{src_ref}}' to '{{dest_ref}}'"
+diff-closure dest_ref="/" src_ref="origin/main" host="":
+    #!/usr/bin/env bash
+    set -eu
+
+    host="{{host}}"
+    [ -n "$host" ] || host=$(just get-host) || exit 1
+
+    echo "Diffing closures of host '$host' from '{{src_ref}}' to '{{dest_ref}}'"
 
     nix store diff-closures \
-        '.?ref={{src_ref}}#nixosConfigurations.{{host}}.config.system.build.toplevel' \
-        '.?ref={{dest_ref}}#nixosConfigurations.{{host}}.config.system.build.toplevel'
+        ".?ref={{src_ref}}#nixosConfigurations.$host.config.system.build.toplevel" \
+        ".?ref={{dest_ref}}#nixosConfigurations.$host.config.system.build.toplevel"
 
 # Run Nix garbage-collection on the system-profile.
 gc:
