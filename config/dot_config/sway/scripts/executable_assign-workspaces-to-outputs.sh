@@ -119,14 +119,14 @@ last_focused_ws=$(swaymsg -t get_workspaces -r |
     jq -r ".[] | select(.focused == true) | .name" | sed -E 's/^\d+://')
 
 # Configure all displays.
-swaymsg "set \$primaryDisp $disp_primary"
-swaymsg "set \$secondaryDisp '$disp_secondary'"
-swaymsg "$(sed 's/^#.*//g' ~/.config/sway/config-workspaces)"
+swaymsg -q "set \$primaryDisp $disp_primary"
+swaymsg -q "set \$secondaryDisp '$disp_secondary'"
+swaymsg -q "$(sed 's/^#.*//g' ~/.config/sway/config-workspaces)"
 
 # Move existing workspaces to the correct display.
 for idx in {1..6}; do
     echo "Move workspace '$idx' to primary display."
-    swaymsg "workspace \$ws-$idx;
+    swaymsg -q "workspace \$ws-$idx;
              move workspace to output '$disp_primary'"
 done
 
@@ -135,9 +135,9 @@ readarray -t all_other_workspaces < <(grep -E '\$\w+-ws' ~/.config/sway/config |
 
 for ws in "${all_other_workspaces[@]}"; do
     echo "Move workspace '$ws' to secondary display."
-    swaymsg "workspace $ws;
+    swaymsg -q "workspace $ws;
          move workspace to output '$disp_secondary'"
 done
 
 # Focus last workspace.
-swaymsg "workspace '$last_focused_ws'"
+swaymsg -q "workspace '$last_focused_ws'"
