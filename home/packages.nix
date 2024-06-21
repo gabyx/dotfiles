@@ -126,7 +126,7 @@ in {
     python311Packages.pip
     python311Packages.isort
     python311Packages.black
-    nodePackages.pyright
+    pyright
 
     ## Nix
     nix-tree

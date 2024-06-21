@@ -40,7 +40,8 @@ switch-visual *args:
     sudo echo "Starting" && \
     just rebuild switch "${1:-}" \
         --show-trace --verbose --log-format internal-json \
-        "${@:2}" |& nom --json
+        "${@:2}" |& nom --json && \
+    just diff 1
 
 # Switch the `host` (`$1`) to the latest
 # configuration but under boot entry `test`.
