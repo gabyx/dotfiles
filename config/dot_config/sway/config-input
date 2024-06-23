@@ -14,7 +14,7 @@
 # See the function `gabyx::get_input_properties`.
 input type:keyboard {
     xkb_layout programmer-defy,programmer,us,de
-    xkb_options ctrl:nocaps,grp:menu_toggle
+    xkb_options ctrl:nocaps,compose:ralt
 }
 
 
