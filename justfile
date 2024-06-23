@@ -32,7 +32,7 @@ rebuild how *args:
 
 # Switch the `host` (`$1`) to the latest configuration.
 switch *args:
-    just rebuild switch "$1" "${@:2}"
+    sudo just rebuild switch "$1" "${@:2}"
 
 # Build with nix-output-monitor.
 switch-visual *args:
@@ -46,7 +46,7 @@ switch-visual *args:
 # Switch the `host` (`$1`) to the latest
 # configuration but under boot entry `test`.
 switch-test *args:
-    just switch "${1:-}" -p test "${@:2}"
+    sudo just rebuild switch "${1:-}" -p test "${@:2}"
 
 # Update the flake lock file.
 # You can also do `--update-input XXX` to

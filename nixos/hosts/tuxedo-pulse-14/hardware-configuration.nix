@@ -18,6 +18,10 @@
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
 
+  # Use the latest kernel for the shutdown problem,
+  # that the power turns completely off.
+  boot.kernelPackages = pkgs.zfs.latestCompatibleLinuxPackages;
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/6fbd4c98-9ca9-4a8a-966f-24491282220b";
     fsType = "btrfs";
