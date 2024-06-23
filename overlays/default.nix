@@ -27,6 +27,9 @@
 
     # We need latest calendar CLI on `main` with `--json` support.
     khal = prev.callPackage ../pkgs/khal {};
+
+    # We need the latest codespell.
+    codespell = prev.callPackage ../pkgs/codespell {};
   };
 
   # When applied, the stable nixpkgs set (declared in the flake inputs) will
