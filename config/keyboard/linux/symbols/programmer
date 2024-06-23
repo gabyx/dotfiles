@@ -1,7 +1,7 @@
 partial alphanumeric_keys modifier_keys
 xkb_symbols "programmer" {
 
-    include "us(basic)"
+    include "us"
     name[Group1] = "Prog. Mx (US)";
 
     // To see the symbold corresponding to the keycode generated check

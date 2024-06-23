@@ -90,9 +90,8 @@ There are other files you can edit too but you'll need to make more advanced
 config changes, like `rules` and a `keymap`. In `symbols/us`, the first
 `kbd_symbols` definition defines the basic symbol layout, imported by most of
 the other `kbd_symbols` definitions. You'll notice that the others in this file
-usually have `include "us(basic)`, which refer to the symbol filename and the
-symbol definition name. We also use this in
-[`us_programmer`](linux/us_programmer).
+usually have `include "us"`, which refer to the symbol filename and the symbol
+definition name. We also use this in [`us_programmer`](linux/us_programmer).
 
 ### Create a `kbd_symbols` File
 
@@ -103,7 +102,6 @@ basic config I'm starting out with. With `include "us"`, i'm pulling in the
 After you're done editing, copy your file to `/usr/share/X11/xkb/symbols/xx`.
 
 ```
-
 partial alphanumeric_keys xkb_symbols "basic" {
 
     include "us"
