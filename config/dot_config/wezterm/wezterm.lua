@@ -22,7 +22,7 @@ end)
 
 terminfo_dir = os.getenv("TERMINFO_DIRS")
 config.set_environment_variables = {
-    TERMINFO_DIRS = os.getenv("HOME") .. "/.terminfo" .. (terminfo_dir ~= nil and (":".. terminfo_dir) or ""),
+    TERMINFO_DIRS = os.getenv("HOME") .. "/.terminfo" .. (terminfo_dir ~= nil and (":" .. terminfo_dir) or ""),
     WSLENV = "TERMINFO_DIRS",
 }
 -- Setting it to `wezterm` disable cursor small/bold in the vim plugin.
@@ -89,7 +89,7 @@ else
 end
 
 config.hide_tab_bar_if_only_one_tab = true
-config.enable_csi_u_key_encoding = true
+config.enable_csi_u_key_encoding = false
 config.enable_kitty_keyboard = true
 config.debug_key_events = false -- Start `wezterm start --always-new-process` to see the keys
 config.disable_default_key_bindings = true
