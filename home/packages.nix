@@ -131,7 +131,7 @@ in {
     ## Nix
     nix-tree
     nixpkgs-lint
-    stdenv.cc
+    stdenv.cc # for neovim treesitter.
     alejandra
     nixfmt-rfc-style
     dconf2nix # To generate the `dconf` settings.
@@ -148,8 +148,6 @@ in {
 
     # Calendar/Mail
     khal # CLI Calendar
-    nextmeeting # Show meeting in waybar
-    gcalcli # Google Calender CLI (used also in nextmeeting)
     batz # Timezone converter (for nextmeeting)
 
     # MultiMedia
