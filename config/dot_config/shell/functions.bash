@@ -217,7 +217,13 @@ function gabyx::nixos_last_boot_log() {
     journalctl -b -1 -e
 }
 
+# Get the whole log for all user systemd services.
+function gabyx::nixos_systemd_log() {
+    journalctl --user -e
+}
+
 # Get the log of the systemd service with name `$1`.
+# User log is: `user@1000`.
 function gabyx::nixos_systemd_log() {
     local service="$1"
     journalctl -u "$service.service" -e
