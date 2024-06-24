@@ -36,6 +36,7 @@
 
     supportedFilesystems = ["zfs"];
     zfs.forceImportRoot = false;
+
     ### Temp Files ==============================================================
     tmp.useTmpfs = true;
     tmp.cleanOnBoot = true;
