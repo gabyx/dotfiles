@@ -61,6 +61,7 @@ in {
     kubectl
     kind # Simple kubernetes for local development.
     k9s # Kubernetes management CLI tool
+    dive # Container inspection tool
     kdiff3
     jq
     yq-go
