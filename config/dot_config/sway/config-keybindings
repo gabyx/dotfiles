@@ -74,6 +74,9 @@ bindsym $mod+Shift+Right move right
 
 # Switch to workspace
 bindsym $mod+i workspace back_and_forth
+bindsym $mod+comma workspace prev
+bindsym $mod+period workspace next
+
 bindcode $mod+10 workspace number $ws-1
 bindcode $mod+11 workspace number $ws-2
 bindcode $mod+12 workspace number $ws-3
