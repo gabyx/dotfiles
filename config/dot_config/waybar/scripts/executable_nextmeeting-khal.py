@@ -86,6 +86,8 @@ def main():
         raw_events += json.loads(line)
 
     now = datetime.now()
+    debug(f"Date now: {now}")
+
     raw_events = list(filter(lambda e: e["all-day"] in [False, "False"], raw_events))
     raw_events = list(
         filter(lambda e: e["status"].lower() not in "cancelled", raw_events)

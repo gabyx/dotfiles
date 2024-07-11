@@ -160,10 +160,12 @@ in {
     transmission-gtk
     ffmpeg # Movie converter
     vlc # Movie player
+
     inkscape # Vector graphics
     krita # Painting
     nomacs # Image viewer
     zathura # Simple document viewer
+    kdePackages.okular # Another PDF viewer
     pdfarranger # PDF arranger
     ghostscript
     imagemagick_light # Converter tools

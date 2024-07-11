@@ -277,13 +277,13 @@ function gabyx::nixos_rebuild() {
 
 # Activate a python environment under Nix.
 function gabyx::nixos_activate_python_env() {
-    local env="$1"
+    local env="${1:-default}"
     local dir="$HOME/python-envs"
 
     if [ -d "$dir/.$env" ] || [ ! -d "$dir/$env" ]; then
         rm -rf "$dir/.$env" || true
 
-        (cd ~/nixos-config/home/python-envs &&
+        (cd ~/.local/share/chezmoi/home/python-envs &&
             nix build ".#python-envs.$env" -o "$dir/.$env" &&
             "$dir/.$env/bin/python" -m venv --system-site-packages "$dir/$env") ||
             {
