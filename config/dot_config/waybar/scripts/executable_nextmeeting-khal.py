@@ -127,8 +127,11 @@ def main():
             title = title[0 : max(max_title_length - 3, 0)] + "..."
 
         delta = e.until_end if e.togo else e.until_start
+
         if delta > 60:
-            delta_fmt = "{0:>2.0f}h {0:>2.0f} min".format(int(delta / 60), delta % 60)
+            delta_h = int(delta / 60.0)
+            delta_m = delta % 60.0
+            delta_fmt = "{0:>2.0f}h {1:>2.0f} min".format(delta_h, delta_m)
         else:
             delta_fmt = "{0:>2.0f} min".format(delta)
 
