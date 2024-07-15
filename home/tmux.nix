@@ -26,6 +26,7 @@
             source-file ~/.config/tmux/tmux-plugin-continuum.conf
           '';
         }
+        urlview
         vim-tmux-navigator
         cpu
       ];
