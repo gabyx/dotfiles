@@ -9,7 +9,7 @@ get-host:
     set -eu
     cd "{{root_dir}}"
     [ -f .env ] || { echo "Place a .env inside '{{root_dir}}'."; exit 1; }
-    source "{{root_dir}}/.env" &>/dev/null && echo "$host"
+    source ".env" &>/dev/null && echo "$host"
 
 # Prints the NixOS version (based on nixpkgs repository).
 version:
@@ -32,7 +32,7 @@ rebuild how *args:
 
 # Switch the `host` (`$1`) to the latest configuration.
 switch *args:
-    sudo just rebuild switch "$1" "${@:2}"
+    sudo just rebuild switch "${1:-}" "${@:2}"
 
 # Build with nix-output-monitor.
 switch-visual *args:
