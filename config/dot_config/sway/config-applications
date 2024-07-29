@@ -31,5 +31,6 @@ for_window [app_id="(?i).*copyq.*"] floating enable; resize set 800 600;
 for_window [app_id="(?i).*qalculate-gtk.*"] floating enable; resize set 800 600;
 for_window [app_id="(?i).*font-manager.*"] floating enable; resize set 800 600;
 for_window [class="(?i).*zoom.*"] floating enable; resize set 800 600;
+for_window [app_id="(?i).*showmethekey.*"] floating enable; sticky enable; resize set 400 128;
 
 ### ===========================================================================
