@@ -66,6 +66,7 @@ in {
     yq-go
     yarn
     just
+    dive # Inspect container images.
 
     # FHS Environment with nix-alien
     inputs.nixAlien.packages.${pkgs.system}.nix-alien
@@ -160,6 +161,7 @@ in {
     transmission-gtk
     ffmpeg # Movie converter
     vlc # Movie player
+    showmethekey # Screencast the key-presses.
 
     inkscape # Vector graphics
     krita # Painting
