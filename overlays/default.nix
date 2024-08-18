@@ -28,8 +28,8 @@
     # We need latest calendar CLI on `main` with `--json` support.
     khal = prev.callPackage ../pkgs/khal {};
 
-    # We need the latest codespell.
-    codespell = prev.callPackage ../pkgs/codespell {};
+    # Current delta 0.17 has a bug to build -> use 0.18 from
+    detal = prev.callPackage ../pkgs/delta {};
   };
 
   # When applied, the stable nixpkgs set (declared in the flake inputs) will
