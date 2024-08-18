@@ -181,7 +181,6 @@ in {
     # Sound
     headsetcontrol
     noson # Sonos device
-    (mkchromecast.override {enableSonos = true;}) # Cast to Sonos device.
 
     # VPN
     wgnord

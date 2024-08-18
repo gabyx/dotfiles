@@ -1,10 +1,6 @@
 # This file defines overlays
 {inputs, ...}: {
-  # NOTE: we are not using these overlays, they are here for reference only.
-  # Why: Passing inputs to modules can be done in different ways, best is to not use
-  # overlays, but just using plain old functions.
-  #
-  # However, overlays are very useful to overwrite a package globaly which then gets used transitively.
+  # Overlays are very useful to overwrite a package globaly which then gets used transitively.
   # So overlays should only be used when a package must be overwritten for all
   # packages which might need to use this derivation override as well.
   #
@@ -28,8 +24,9 @@
     # We need latest calendar CLI on `main` with `--json` support.
     khal = prev.callPackage ../pkgs/khal {};
 
-    # Current delta 0.17 has a bug to build -> use 0.18 from
-    detal = prev.callPackage ../pkgs/delta {};
+    # Current packages have a compile error with rust 1.80.
+    delta = prev.callPackage ../pkgs/delta {};
+    deepfilternet = prev.callPackage ../pkgs/deepfilternet {};
   };
 
   # When applied, the stable nixpkgs set (declared in the flake inputs) will
