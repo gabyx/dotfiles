@@ -151,6 +151,7 @@
         "format": "{}",
         "exec": "~/.config/waybar/scripts/nextmeeting-khal.py --config ~/.config/khal/nextmeeting-conf.json",
         "on-click-right": "kitty -- /usr/bin/env bash -c ikhal",
+        "on-click-left": "~/.config/waybar/scripts/nextmeeting-khal.py --config ~/.config/khal/nextmeeting-conf.json --open-url",
         "interval": 59,
         "return-type": "json",
         "tooltip": "true"

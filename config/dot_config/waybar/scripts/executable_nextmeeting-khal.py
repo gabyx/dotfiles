@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -40,6 +41,12 @@ def main():
         "--config",
         default=None,
         help="Config file to read.",
+    )
+
+    parser.add_argument(
+        "--open-url",
+        action="store_true",
+        help="Open the Meeting URL if found on the soonest meeting.",
     )
     args = parser.parse_args()
 
@@ -93,7 +100,7 @@ def main():
         filter(lambda e: e["status"].lower() not in "cancelled", raw_events)
     )
 
-    events = []
+    events: list[Event] = []
     for e in raw_events:
 
         start = datetime.strptime(
@@ -158,6 +165,12 @@ def main():
         meetings = "\n".join([format_event(e) for e in events])
         e_soon = events[0]
 
+        if args.open_url:
+            url = find_url(e_soon)
+            if url is not None:
+                open_url(url)
+                return
+
         if e_soon.togo:
             cls = "togo"
         else:
@@ -181,5 +194,33 @@ def main():
         )
 
 
+# Find the meeting URL for the event.
+def find_url(event: Event) -> str | None:
+    desc = event.raw["description"].splitlines()
+    zoom_re = re.compile(r"https://.*\.zoom\..*")
+    google_re = re.compile(r"https://meet\.google.*")
+    for l in desc:
+        for w in l.split(" "):
+            if zoom_re.match(w) is not None or google_re.match(w) is not None:
+                return w
+
+    raise RuntimeError(f"Did not find any URL in event.")
+
+
+# Open a URL in the browser.
+def open_url(url: str):
+    try:
+        subprocess.check_call(["notify-send", "Opening URL in browser.", f"URL: {url}"])
+    except:
+        pass
+
+    subprocess.check_call(["xdg-open", url])
+
+
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        subprocess.check_call(
+            ["notify-send", "--category", "warning", "Exception happened.", f"{e}"]
+        )
