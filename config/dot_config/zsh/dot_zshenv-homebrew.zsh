@@ -1,4 +1,4 @@
-{{- if eq .chezmoi.os "darwin" }}
+if [ "$CHEZMOI_OS" = "darwin" ]; then
 
 test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
 test -f /usr/local/bin/brew && eval "$(/usr/local/bin/brew shellenv)"
@@ -20,9 +20,9 @@ PATH="/usr/local/opt/llvm@13/bin:$PATH"
 PATH="/usr/local/opt/gcc@11/bin:$PATH"
 export PATH
 
-{{- else }}
+else
 
 test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
 test -d /home/linuxbrew/.linuxbrew/bin && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-{{- end }}
+fi

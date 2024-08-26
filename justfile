@@ -54,6 +54,10 @@ switch-test *args:
 update *args:
     cd "{{root_dir}}" && nix flake update "$@"
 
+# Update a single input in the lock file.
+update-single *args:
+    cd "{{root_dir}}" && nix flake lock --update-input "$@"
+
 # Show the history of the system profile and test profiles.
 history:
     #!/usr/bin/env bash
