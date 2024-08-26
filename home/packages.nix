@@ -27,9 +27,9 @@ in {
     githooks
     tig
 
-    gnome.zenity # For dialogs over githooks and calendar.
+    zenity # For dialogs over githooks and calendar.
 
-    gnome.seahorse
+    seahorse
 
     starship
     kitty
@@ -50,7 +50,7 @@ in {
     ffmpegthumbnailer # For video thumbnails.
     trash-cli # Trash command line to move stuff to trash.
     gparted # Disk utility.
-    gnome.gnome-disk-utility # Easy disk utility `gdisk`.
+    gnome-disk-utility # Easy disk utility `gdisk`.
 
     # Programming
     (lib.hiPrio parallel)
@@ -158,7 +158,7 @@ in {
     signal-desktop # Messaging app
     element-desktop # Matrix client.
     slack # Messaging app
-    transmission-gtk
+    transmission_3-gtk
     ffmpeg # Movie converter
     vlc # Movie player
     showmethekey # Screencast the key-presses.
