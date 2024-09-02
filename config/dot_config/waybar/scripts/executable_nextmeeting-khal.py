@@ -196,13 +196,21 @@ def main():
 
 # Find the meeting URL for the event.
 def find_url(event: Event) -> str | None:
-    desc = event.raw["description"].splitlines()
-    zoom_re = re.compile(r"https://.*\.zoom\..*")
-    google_re = re.compile(r"https://meet\.google.*")
-    for l in desc:
-        for w in l.split(" "):
+    zoom_re = re.compile(r"\(?https://.*\.zoom\..*\)?")
+    google_re = re.compile(r"\(?https://meet\.google.*\)?")
+
+    def match(line):
+        for w in line.split(" "):
             if zoom_re.match(w) is not None or google_re.match(w) is not None:
                 return w
+        return None
+
+    for key in ["description", "location"]:
+        desc = event.raw[key].splitlines()
+        for l in desc:
+            m = match(l)
+            if m is not None:
+                return m
 
     raise RuntimeError(f"Did not find any URL in event.")
 
