@@ -16,16 +16,17 @@ with lib.hm.gvariant; {
       editor-show-timezone = true;
       prefer-new-item = "event-new";
       time-divisions = 10;
+      time-zone = "Europe/Zurich";
       use-default-reminder = true;
       use-markdown-editor = true;
       week-start-day-name = "monday";
-      work-day-friday = true;
       work-day-monday = true;
-      work-day-saturday = false;
-      work-day-sunday = false;
-      work-day-thursday = true;
       work-day-tuesday = true;
       work-day-wednesday = true;
+      work-day-thursday = true;
+      work-day-friday = true;
+      work-day-saturday = false;
+      work-day-sunday = false;
     };
 
     "org/gnome/evolution/mail" = {
