@@ -86,7 +86,7 @@ in {
     gopls
     golangci-lint-langserver
     texlab
-    nil
+    nixd
     marksman
     lua-language-server
     nodePackages.dockerfile-language-server-nodejs
