@@ -18,11 +18,13 @@ in {
   # Testing PR 293017
   disabledModules = [
     "hardware/tuxedo-keyboard.nix"
+    "services/hardware/tuxedo-rs.nix"
   ];
 
   imports = [
     # Testing PR 293017
     "${inputs.tuxedo}/nixos/modules/hardware/tuxedo-drivers.nix"
+    "${inputs.tuxedo}/nixos/modules/services/hardware/tuxedo-rs.nix"
 
     # If you want to use modules your own flake exports (from modules/nixos):
     # outputs.nixosModules.example

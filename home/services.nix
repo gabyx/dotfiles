@@ -23,7 +23,7 @@
 
   ### Color Shifting ==========================================================
   services.gammastep = {
-    enable = true;
+    enable = false;
     provider = "manual";
 
     longitude = 8.55;
