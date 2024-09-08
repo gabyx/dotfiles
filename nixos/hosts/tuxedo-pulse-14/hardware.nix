@@ -11,8 +11,8 @@
 
   services.blueman.enable = true;
 
-  # Enable tuxedo-rs and tuxedo-keyboard kernel modul.
-  hardware.tuxedo-keyboard.enable = true;
+  # Enable tuxedo-rs and tuxedo-drivers.
+  hardware.tuxedo-drivers.enable = true;
   hardware.tuxedo-rs = {
     enable = true;
     tailor-gui.enable = true;

@@ -615,6 +615,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgsStable": "nixpkgsStable",
         "nvd-tool": "nvd-tool",
+        "tuxedo": "tuxedo",
         "wezterm": "wezterm"
       }
     },
@@ -711,6 +712,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tuxedo": {
+      "locked": {
+        "lastModified": 1722783617,
+        "narHash": "sha256-aUj0q+j91wTjICSkPgzVHIBl8UeGzlJislCm1caOEaY=",
+        "owner": "CutestNekoAqua",
+        "repo": "nixpkgs",
+        "rev": "76427d3992c7a2a3293485d8322b98730afd20db",
+        "type": "github"
+      },
+      "original": {
+        "owner": "CutestNekoAqua",
+        "ref": "76427d3992c7a2a3293485d8322b98730afd20db",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
