@@ -138,7 +138,7 @@ apply-configs:
 apply-configs-exclude-encrypted:
     chezmoi apply --exclude encrypted
 
-# Encrypt a file using the encryptiong configured
+# Encrypt a file using the encrypting configured
 # in `.chezmoi.yaml`.
 # This is using the public key.
 [no-cd]

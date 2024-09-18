@@ -86,6 +86,7 @@ in {
     gopls
     golangci-lint-langserver
     texlab
+    typos-lsp
     nixd
     marksman
     lua-language-server
@@ -184,6 +185,9 @@ in {
 
     # VPN
     wgnord
+
+    # Remote Desks
+    anydesk
 
     # Dictionaries
     aspell
