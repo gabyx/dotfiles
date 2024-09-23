@@ -3,7 +3,8 @@
   pkgs,
   pkgsStable,
   ...
-}: {
+}:
+{
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.autorun = true;
@@ -126,6 +127,8 @@
       avizo # Nice brightnessctl and audio volume visualization for wayland.
       brightnessctl # Brightness control in waybar.
       playerctl # Player control in waybar.
+
+      waybar # The top bar.
     ];
 
     extraSessionCommands = ''
@@ -157,14 +160,17 @@
 
   security.polkit.enable = true; # https://discourse.nixos.org/t/sway-does-not-start/22354/5
 
-  programs.waybar.enable = true;
-
   fonts.packages = with pkgs; [
     # Waybar
     font-awesome
     cantarell-fonts
     noto-fonts
     noto-fonts-emoji
-    (nerdfonts.override {fonts = ["Noto" "JetBrainsMono"];})
+    (nerdfonts.override {
+      fonts = [
+        "Noto"
+        "JetBrainsMono"
+      ];
+    })
   ];
 }

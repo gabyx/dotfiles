@@ -11,7 +11,7 @@ assign [class="(?i).*element.*"] $comm-ws
 
 assign [class="(?i).*bitwarden.*"] $creds-ws
 
-# Some sepcial setup for comm-ws:
+# Some special setup for comm-ws:
 for_window [class="(?i).*element.*"] layout tabbed
 for_window [class="(?i).*signal.*"] layout tabbed
 

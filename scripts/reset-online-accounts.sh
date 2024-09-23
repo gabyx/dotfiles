@@ -14,7 +14,7 @@ systemctl --user stop evolution-calendar-factory.service
 systemctl --user stop evolution-source-registry.service
 systemctl --user daemon-reload
 
-echo "Apply evolution configs"
+echo "Apply evolution configs, press enter:"
 read -r
 
 sed -i -E \
@@ -25,10 +25,10 @@ sed -i -E \
 just cm init
 just cm apply
 
-find ~/.config/evolution/sources -type f -name "*.source" |
-    xargs -I {} sed -iE "s@NeedsInitialSetup=false@NeedsInitialSetup=true@" {}
+find ~/.config/evolution/sources -type f -name "*.source" -print0 |
+    xargs -0 -I {} sed -i -E "s@NeedsInitialSetup=false@NeedsInitialSetup=true@" {}
 
-rm ~/.config/chezmoi/chezmoistate.boltdb
+# rm ~/.config/chezmoi/chezmoistate.boltdb
 
 sed -i -E \
     -e "s@^# .config/evolution/sources@.config/evolution/sources@" \

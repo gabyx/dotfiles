@@ -148,11 +148,6 @@ Skip to step 3 on a fresh system.
 
 1. Delete all evolution settings and state:
 
-   ```shell
-   rm -rf ~/.config/evolution
-   rm -rf ~/.local/share/evolution
-   ```
-
    Stop also the services for `evolution`:
 
    ```shell
@@ -162,6 +157,11 @@ Skip to step 3 on a fresh system.
    systemctl --user daemon-reload
    ```
 
+   ```shell
+   rm -rf ~/.config/evolution
+   rm -rf ~/.local/share/evolution
+   ```
+
 1. Apply the two folders `~/.config/goa-1.0` and `~/.config/evolution/sources`
    with (**uncomment the ignore in `.chezmoiignore`**).
 
@@ -169,7 +169,7 @@ Skip to step 3 on a fresh system.
    just cm apply
 
    find ~/.config/evolution/sources -type f -name "*.source" | \
-      xargs -I {} sed -iE "s@NeedsInitialSetup=false@NeedsInitialSetup=true@" {}
+      xargs -I {} sed -i -E "s@NeedsInitialSetup=false@NeedsInitialSetup=true@" {}
    ```
 
 1. Restart the `dbus` service, as it controls the
