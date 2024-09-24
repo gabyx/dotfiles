@@ -1,5 +1,6 @@
-{lib, ...}:
-with lib.hm.gvariant; {
+{ lib, ... }:
+with lib.hm.gvariant;
+{
   dconf.settings = {
     "org/gnome/calendar" = {
       active-view = "week";
@@ -32,21 +33,32 @@ with lib.hm.gvariant; {
     "org/gnome/evolution/mail" = {
       browser-close-on-reply-policy = "ask";
       composer-mode = "markdown-html";
+      composer-request-dsn = true;
+      composer-request-receipt = true;
       composer-show-from-override = false;
+      composer-sign-reply-if-signed = false;
       composer-signature-in-new-only = true;
+      composer-spell-languages = [ "en_US" ];
       composer-visually-wrap-long-lines = false;
-      forward-style-name = "attached";
+      forward-style = 1;
+      forward-style-name = "inline";
       image-loading-policy = "never";
       junk-check-custom-header = true;
       junk-empty-on-exit-days = 0;
       junk-lookup-addressbook = false;
+      mark-seen-timeout = 0;
       message-list-sort-on-header-click = "always";
       prompt-check-if-default-mailer = false;
+      prompt-on-accel-send = false;
       prompt-on-composer-mode-switch = false;
+      prompt-on-empty-subject = false;
+      prompt-on-mark-all-read = false;
       prompt-on-unwanted-html = false;
-      reply-style-name = "quoted";
+      reply-style = 3;
+      reply-style-name = "outlook";
       show-to-do-bar = false;
-      trash-empty-on-exit-days = 0;
+      trash-empty-on-exit = true;
+      trash-empty-on-exit-days = 30;
     };
 
     "org/gnome/evolution/plugin/mail-notification" = {
