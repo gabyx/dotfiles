@@ -53,16 +53,17 @@
 
     # Optional to use google/nextcloud calendar
     gnome.gnome-online-accounts.enable = true;
-    environment.systemPackages = with pkgs; [
-      # Only for online accounts.
-      gnome-control-center
-    ];
 
     davmail = {
       enable = true;
       url = "https://mail.ethz.ch/EWS/Exchange.asmx";
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    # Only for online accounts.
+    gnome-control-center
+  ];
 
   programs.dconf.enable = true;
 
