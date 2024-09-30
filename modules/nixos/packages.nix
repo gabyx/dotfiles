@@ -4,7 +4,8 @@
   pkgsStable,
   inputs,
   ...
-}: {
+}:
+{
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -48,6 +49,7 @@
     wget
     curl
     openvpn
+    keychain # ssh agent.
 
     btop
     killall

@@ -2,9 +2,13 @@
   osConfig,
   pkgs,
   ...
-}: {
+}:
+{
   ### Calendar Syncing ========================================================
-  home.packages = with pkgs; [vdirsyncer davmail];
+  home.packages = with pkgs; [
+    vdirsyncer
+    davmail
+  ];
 
   services = {
     vdirsyncer = {

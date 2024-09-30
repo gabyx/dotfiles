@@ -2,14 +2,15 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   ### Services ================================================================
   services = {
     # TODO: Needs goeclue setup.
     # localtimed.enable = true;
 
     # UDev settings.
-    udev.packages = [pkgs.headsetcontrol];
+    udev.packages = [ pkgs.headsetcontrol ];
 
     # Dbus settings.
     dbus = {
@@ -23,11 +24,11 @@
     upower.enable = true;
     locate.enable = true;
 
-    # For `udisksctl power-off` etc.
-    udisks2.enable = true;
-
     # Keyring Service
     gnome.gnome-keyring.enable = true;
+
+    # For `udisksctl power-off` etc.
+    udisks2.enable = true;
 
     gvfs.enable = true; # Mount, trash, and other functionalities.
     tumbler.enable = true; # Thumbnailing DBus service.
@@ -39,18 +40,23 @@
     # Enable the OpenSSH daemon.
     openssh = {
       enable = false;
-      ports = [50022];
+      ports = [ 50022 ];
       settings = {
         PermitRootLogin = "no";
-        AllowUsers = [config.settings.user.name];
+        AllowUsers = [ config.settings.user.name ];
         PasswordAuthentication = true;
         KbdInteractiveAuthentication = true;
       };
     };
 
     gnome.evolution-data-server.enable = true;
-    # optional to use google/nextcloud calendar
+
+    # Optional to use google/nextcloud calendar
     gnome.gnome-online-accounts.enable = true;
+    environment.systemPackages = with pkgs; [
+      # Only for online accounts.
+      gnome-control-center
+    ];
 
     davmail = {
       enable = true;
@@ -59,11 +65,6 @@
   };
 
   programs.dconf.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    # Only for online accounts.
-    gnome.gnome-control-center
-  ];
 
   # ===========================================================================
 }

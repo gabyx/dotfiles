@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   ### Program Settings ========================================================
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -18,7 +19,7 @@
 
     gnupg.agent = {
       enable = true;
-      enableSSHSupport = true;
+      enableSSHSupport = false;
     };
 
     git = {
@@ -46,7 +47,7 @@
     # Email.
     evolution = {
       enable = true;
-      plugins = with pkgs; [evolution-ews];
+      plugins = with pkgs; [ evolution-ews ];
     };
   };
   # ===========================================================================

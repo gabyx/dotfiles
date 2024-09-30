@@ -279,11 +279,11 @@
       },
       "locked": {
         "dir": "nix",
-        "lastModified": 1719694127,
-        "narHash": "sha256-pwErlNAHbW4qeQb5KoKMyiQSKrUIiQ1UvH+NxC0emrU=",
+        "lastModified": 1726838313,
+        "narHash": "sha256-9IsE9XGeMgOPPEyBvGLZaZKyz5HjnugiELP76+alFmU=",
         "owner": "gabyx",
         "repo": "githooks",
-        "rev": "ffb44040cad8e95cf9af2c9cb96e67cca452b33d",
+        "rev": "2518709c974adeca7c8944dd2ad9169ded9aa91c",
         "type": "github"
       },
       "original": {

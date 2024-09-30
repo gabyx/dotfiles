@@ -139,6 +139,11 @@
       export MOZ_ENABLE_WAYLAND=1
       export XDG_SESSION_TYPE=wayland
       export XDG_CURRENT_DESKTOP=sway
+
+      if command -v gnome-keyring-daemon; then
+        eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh);
+        export SSH_AUTH_SOCK;
+      fi
     '';
   };
 
