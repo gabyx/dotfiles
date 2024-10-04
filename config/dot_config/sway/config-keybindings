@@ -74,7 +74,10 @@ bindsym $mod+Shift+Right move right
 # Workspaces
 
 # Switch to workspace
-bindsym $mod+i workspace back_and_forth
+#
+# Bind a switch key, which focuses the previously focused window
+bindsym $mod+i [con_mark=_back] focus
+
 bindcode $mod+10 workspace number $ws-1
 bindcode $mod+11 workspace number $ws-2
 bindcode $mod+12 workspace number $ws-3
