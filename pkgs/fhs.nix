@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 # Create an FHS (Filesystem Hierarchy Standard) environment using the command `fhs`,
 # enabling the execution of non-NixOS packages in NixOS!
 # See https://nixos.org/manual/nixpkgs/stable/#sec-fhs-environments.
@@ -11,11 +11,14 @@ let
     # Feel free to add more packages here if needed.
   ];
 in
-  pkgs.buildFHSUserEnv (base
-    // {
-      name = "fhs";
+pkgs.buildFHSUserEnv (
+  base
+  // {
+    name = "fhs";
 
-      targetPkgs = pkgs: (
+    targetPkgs =
+      pkgs:
+      (
         # pkgs.buildFHSUserEnv provides only a minimal FHS environment,
         # lacking many basic packages needed by most software.
         # Therefore, we need to add them manually.
@@ -24,7 +27,8 @@ in
         (base.targetPkgs pkgs) ++ addPkgs
       );
 
-      profile = "export FHS=1";
-      runScript = "zsh";
-      extraOutputsToInstall = ["dev"];
-    })
+    profile = "export FHS=1";
+    runScript = "zsh";
+    extraOutputsToInstall = [ "dev" ];
+  }
+)

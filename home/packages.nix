@@ -5,7 +5,8 @@
   inputs,
   outputs,
   ...
-}: let
+}:
+let
   # Define some special packages.
   wezterm-nightly = inputs.wezterm.packages."${pkgs.system}".default;
   githooks = inputs.githooks.packages."${pkgs.system}".default;
@@ -14,7 +15,8 @@
   # https://github.com/NixOS/nixpkgs/issues/244609
   llvmPkgs = pkgs.llvmPackages_15;
   clangTools = pkgs.clang-tools_15;
-in {
+in
+{
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   home.packages = [

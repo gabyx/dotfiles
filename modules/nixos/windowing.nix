@@ -100,6 +100,7 @@
       swaylock-effects # Swaylock but with more effects.
       swayidle
       swaynotificationcenter
+      i3-back
       libnotify
 
       way-displays # Manage your displays.

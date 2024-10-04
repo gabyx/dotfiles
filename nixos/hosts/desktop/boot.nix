@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   boot = {
     # Your `hardware-configuration.nix` should configure the LUKS device setup.
     # It should not be included here.
@@ -34,7 +35,7 @@
     };
     # ===========================================================================
 
-    supportedFilesystems = ["zfs"];
+    supportedFilesystems = [ "zfs" ];
     zfs.forceImportRoot = false;
     ### Temp Files ==============================================================
     tmp.useTmpfs = true;

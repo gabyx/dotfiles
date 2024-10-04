@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   boot = {
     # Enable all sysrq functions (useful to recover from some issues):
     # Documentation: https://www.kernel.org/doc/html/latest/admin-guide/sysrq.html

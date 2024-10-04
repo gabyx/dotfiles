@@ -4,7 +4,8 @@
   pkgs,
   outputs,
   ...
-}: {
+}:
+{
   ### Virtualisation ==========================================================
   users.users.${config.settings.user.name}.extraGroups = [
     "docker"
@@ -16,7 +17,7 @@
   services.qemuGuest.enable = true;
   services.spice-vdagentd.enable = true;
   # boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "sr_mod" "virtio_blk" ];
-  boot.kernelModules = ["kvm-amd"];
+  boot.kernelModules = [ "kvm-amd" ];
 
   virtualisation.libvirtd = {
     enable = true;
@@ -42,7 +43,7 @@
     # Auto prune podman resources.
     autoPrune = {
       dates = "weekly";
-      flags = ["--external"];
+      flags = [ "--external" ];
     };
   };
   # =======================================
@@ -63,7 +64,7 @@
     # Auto prune podman resources.
     autoPrune = {
       dates = "weekly";
-      flags = ["--external"];
+      flags = [ "--external" ];
     };
   };
 

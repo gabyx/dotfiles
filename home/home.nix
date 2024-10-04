@@ -9,7 +9,8 @@
   inputs,
   outputs,
   ...
-}: {
+}:
+{
   # You can import other home-manager modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/home-manager):
@@ -45,7 +46,7 @@
     homeDirectory = "/home/${osConfig.settings.user.name}";
 
     # Add support for .local/bin
-    sessionPath = ["${homeDirectory}/.local/bin"];
+    sessionPath = [ "${homeDirectory}/.local/bin" ];
   };
 
   # Enable home-manager and git

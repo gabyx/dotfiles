@@ -2,8 +2,9 @@
   lib,
   pkgs,
   ...
-}: let
-  toml = pkgs.formats.toml {};
+}:
+let
+  toml = pkgs.formats.toml { };
 
   # containers storage settings.
   # Use fuse-overlayfs instead of kernel overlay2.
@@ -17,6 +18,7 @@
       # };
     };
   };
-in {
+in
+{
   xdg.configFile."containers/storage.conf".source = toml.generate "storage.conf" storage-settings;
 }

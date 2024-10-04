@@ -16,8 +16,9 @@
 # just a no-go.
 let
   user = "age1l2ych6z5kzdthuh7vu58jfcps0axrhfflvmk0978jkka6clg39fsl98t08";
-in {
+in
+{
   # The name `secret1` corresponds to a corresponding `age.secrets.secret1.file` entry
   # somewhere in the NixOS configuration which defines encrypted file.
-  "secret1.age".publicKeys = [user];
+  "secret1.age".publicKeys = [ user ];
 }

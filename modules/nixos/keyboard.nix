@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   ### Keyboard Settings =================================================
 
   # Waylands input service which handles mouse and touchpad.
@@ -30,13 +31,13 @@
 
       extraLayouts.programmer-defy = {
         description = "Prog. Defy (US)"; # Must have the same naming as in the file !!!
-        languages = ["eng"];
+        languages = [ "eng" ];
         symbolsFile = ../../config/keyboard/linux/symbols/programmer-defy;
       };
 
       extraLayouts.programmer = {
         description = "Prog. Mx (US)";
-        languages = ["eng"];
+        languages = [ "eng" ];
         symbolsFile = ../../config/keyboard/linux/symbols/programmer;
       };
     };

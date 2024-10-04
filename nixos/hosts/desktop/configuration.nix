@@ -8,14 +8,16 @@
   outputs,
   settings,
   ...
-}: let
+}:
+let
   pkgsStable = import inputs.nixpkgsStable {
     system = pkgs.system;
     config = {
       allowUnfree = true;
     };
   };
-in {
+in
+{
   imports = [
     # If you want to use modules your own flake exports (from modules/nixos):
     # outputs.nixosModules.example
@@ -38,7 +40,7 @@ in {
     ./hardware.nix
 
     # Include all other specifications.
-    (outputs.nixosModules.windowing {inherit config pkgs pkgsStable;})
+    (outputs.nixosModules.windowing { inherit config pkgs pkgsStable; })
     outputs.nixosModules.display
     outputs.nixosModules.keyboard
     outputs.nixosModules.fonts
@@ -54,7 +56,14 @@ in {
 
     outputs.nixosModules.virtualization
 
-    (outputs.nixosModules.packages {inherit config pkgs pkgsStable inputs;})
+    (outputs.nixosModules.packages {
+      inherit
+        config
+        pkgs
+        pkgsStable
+        inputs
+        ;
+    })
     outputs.nixosModules.programs
 
     outputs.nixosModules.user
@@ -63,7 +72,14 @@ in {
 
     # Load home-manager as a part of the NixOS configuration.
     inputs.home-manager.nixosModules.home-manager
-    (outputs.nixosModules.home-manager {inherit config inputs outputs pkgsStable;})
+    (outputs.nixosModules.home-manager {
+      inherit
+        config
+        inputs
+        outputs
+        pkgsStable
+        ;
+    })
   ];
 
   nixpkgs = {

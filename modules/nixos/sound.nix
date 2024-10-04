@@ -3,16 +3,15 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   ### Sound Settings ==========================================================
   security.rtkit.enable = true;
 
   # Disable Pulseaudio because Pipewire is used.
   hardware.pulseaudio.enable = lib.mkForce false;
 
-  environment.systemPackages = with pkgs; [
-    pavucontrol
-  ];
+  environment.systemPackages = with pkgs; [ pavucontrol ];
 
   services.pipewire = {
     enable = true;

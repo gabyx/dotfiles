@@ -9,9 +9,7 @@
 
     apparmor = {
       enable = true;
-      packages = with pkgs; [
-        apparmor-profiles
-      ];
+      packages = with pkgs; [ apparmor-profiles ];
     };
 
     pam.services = {

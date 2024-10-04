@@ -1,6 +1,7 @@
 # My own settings to build the NixOS configurations.
-{lib, ...}:
-with lib; {
+{ lib, ... }:
+with lib;
+{
   # Some option declarations which can be used to specify
   # in `config.settings.???`
   options = {

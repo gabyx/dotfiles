@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   ### User Settings ==========================================================
   users = {
     users.${config.settings.user.name} = {
@@ -27,9 +28,7 @@
         "dialout" # For bazecor and the Dygma keyboard.
       ];
 
-      openssh.authorizedKeys.keyFiles = [
-        ../../config/private_dot_ssh/gabyx_ed25519.pub
-      ];
+      openssh.authorizedKeys.keyFiles = [ ../../config/private_dot_ssh/gabyx_ed25519.pub ];
     };
   };
   # ===========================================================================

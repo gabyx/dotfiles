@@ -3,7 +3,8 @@
   outputs,
   ...
 }:
-with inputs; {
+with inputs;
+{
   # The NixOs running on bare metal.
   desktop = nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
@@ -50,7 +51,9 @@ with inputs; {
       ./hosts/settings.nix
       ./hosts/desktop/configuration.nix
     ];
-    specialArgs = {inherit inputs outputs;};
+    specialArgs = {
+      inherit inputs outputs;
+    };
   };
 
   # The Tuxedo Pulse-14 Gen3 Laptop.
@@ -60,7 +63,9 @@ with inputs; {
       ./hosts/settings.nix
       ./hosts/tuxedo-pulse-14/configuration.nix
     ];
-    specialArgs = {inherit inputs outputs;};
+    specialArgs = {
+      inherit inputs outputs;
+    };
   };
 
   # The NixOs for the virtual machine.
@@ -69,6 +74,8 @@ with inputs; {
       ./hosts/settings.nix
       ./hosts/vm/configuration.nix
     ];
-    specialArgs = {inherit inputs outputs;};
+    specialArgs = {
+      inherit inputs outputs;
+    };
   };
 }

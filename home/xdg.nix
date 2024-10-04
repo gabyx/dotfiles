@@ -4,9 +4,10 @@
   pkgsStab,
   inputs,
   ...
-}: let
-  browser = ["google-chrome.desktop"];
-  archiver = ["file-roller.desktop"];
+}:
+let
+  browser = [ "google-chrome.desktop" ];
+  archiver = [ "file-roller.desktop" ];
 
   associations = {
     "text/html" = browser;
@@ -26,8 +27,8 @@
     "application/x-extension-xht" = browser;
 
     "image/*" = "nomacs.desktop";
-    "audio/*" = ["vlc.desktop"];
-    "video/*" = ["vlc.desktop"];
+    "audio/*" = [ "vlc.desktop" ];
+    "video/*" = [ "vlc.desktop" ];
 
     # Archives
     "application/zip" = archiver;
@@ -47,12 +48,13 @@
     "application/x-ace-compressed" = archiver;
     "application/x-lzma" = archiver;
 
-    "text/calendar" = ["thunderbird.desktop"]; # ".ics"  iCalendar format
+    "text/calendar" = [ "thunderbird.desktop" ]; # ".ics"  iCalendar format
 
     "application/json" = browser; # ".json"  JSON format
-    "application/pdf" = browser ++ ["com.github.jeromerobert.pdfarranger.desktop"];
+    "application/pdf" = browser ++ [ "com.github.jeromerobert.pdfarranger.desktop" ];
   };
-in {
+in
+{
   # Enable all XDG directories.
   xdg.enable = true;
 

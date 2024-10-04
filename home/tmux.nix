@@ -6,7 +6,8 @@
   pkgsStable,
   inputs,
   ...
-}: {
+}:
+{
   programs = {
     tmux = {
       enable = true;
@@ -33,9 +34,7 @@
     };
   };
 
-  home.packages = with pkgs; [
-    tmuxifier
-  ];
+  home.packages = with pkgs; [ tmuxifier ];
 
   # We need this file to source in `~/.config/sway/scripts/start-up.sh`
   # to be able to properly start tmux because these variables are not

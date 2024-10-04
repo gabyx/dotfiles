@@ -1,6 +1,7 @@
 # Custom packages, that can be defined similarly to ones from nixpkgs
 # You can build them using 'nix build .#example'
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   # example = pkgs.callPackage ./example { };
 
   # Package which ads a Filesystem Hierarchy Standard environment
@@ -8,8 +9,7 @@
   # fhs = pkgs.callPackage ./fhs.nix {};
 
   # Batman Timezone Converter
-  batz = pkgs.callPackage ./batz {};
+  batz = pkgs.callPackage ./batz { };
 
-  # # Google calendar integration into waybar.
-  # nextmeeting = pkgs.callPackage ./nextmeeting {};
+  i3-back = pkgs.callPackage ./i3-back { };
 }

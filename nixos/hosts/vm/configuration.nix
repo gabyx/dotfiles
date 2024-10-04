@@ -7,7 +7,8 @@
   inputs,
   outputs,
   ...
-}: let
+}:
+let
   modules = inputs.self + /nixos/modules;
 
   pkgsStable = import inputs.nixpkgsStable {
@@ -16,7 +17,8 @@
       allowUnfree = true;
     };
   };
-in {
+in
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -27,7 +29,7 @@ in {
     inputs.agenix.nixosModules.default
 
     # Include all other specifications.
-    (outputs.nixosModules.windowing {inherit config pkgs pkgsStable;})
+    (outputs.nixosModules.windowing { inherit config pkgs pkgsStable; })
     outputs.nixosModules.display
     outputs.nixosModules.keyboard
     outputs.nixosModules.fonts
@@ -43,16 +45,23 @@ in {
 
     outputs.nixosModules.virtualization
 
-    (outputs.nixosModules.packages {inherit config pkgs pkgsStable;})
+    (outputs.nixosModules.packages { inherit config pkgs pkgsStable; })
     outputs.nixosModules.programs
 
-    (outputs.nixosModules.user {inherit config pkgs settings;})
+    (outputs.nixosModules.user { inherit config pkgs settings; })
 
     outputs.nixosModules.nix
 
     # Load home-manager as a part of the NixOS configuration.
     inputs.home-manager.nixosModules.home-manager
-    (outputs.nixosModules.home-manager {inherit config inputs outputs pkgsStable;})
+    (outputs.nixosModules.home-manager {
+      inherit
+        config
+        inputs
+        outputs
+        pkgsStable
+        ;
+    })
   ];
 
   ### NixOS Release Settings===================================================

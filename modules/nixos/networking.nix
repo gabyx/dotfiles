@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   networking = {
     ### Networking ==============================================================
     hostName = "linux-nixos"; # Define your hostname.
@@ -25,7 +26,10 @@
     # Open ports in the firewall.
     firewall = {
       enable = true;
-      allowedTCPPorts = [50022 433];
+      allowedTCPPorts = [
+        50022
+        433
+      ];
       # allowedUDPPorts = [ ... ];
     };
     # ===========================================================================
