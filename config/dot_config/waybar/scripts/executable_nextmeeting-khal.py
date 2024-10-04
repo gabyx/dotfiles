@@ -83,6 +83,7 @@ def main():
             "--json=calendar-color",
             "--json=repeat-pattern",
             "--json=description",
+            "--json=location",
             "--json=status",
         ],
         encoding="utf-8",
