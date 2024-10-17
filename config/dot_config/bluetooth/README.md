@@ -24,3 +24,14 @@ connect <MAC-address> # to connect to a device already paired.
 trust <MAC-address> # To trust a new device.
 pair <MAC-address> # To pair a device
 ```
+
+## How to Pair
+
+Press the bluetooth button on the Arctis Headset long to go into pairing mode
+again (?): Then do inside `bluetoothctl`:
+
+```shell
+connect 28:9A:4B:78:80:84
+trust 28:9A:4B:78:80:84
+pair 28:9A:4B:78:80:84
+```
