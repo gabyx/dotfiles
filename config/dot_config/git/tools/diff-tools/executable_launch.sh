@@ -35,15 +35,15 @@ local=$(wrapPath "$1")
 remote=$(wrapPath "$2")
 
 if [ "$tool" = "bcompare" ]; then
-    "$toolPath"  "$local" "$remote" /lefttitle="Original[$local]" /righttitle="Mine[$remote]"
+    "$toolPath" "$local" "$remote" /lefttitle="Original[$local]" /righttitle="Mine[$remote]"
 elif [ "$tool" = "bcompare-unix" ]; then
-    "$toolPath"  "$local" "$remote" -lefttitle="Original[$local]" -righttitle="Mine[$remote]"
+    "$toolPath" "$local" "$remote" -lefttitle="Original[$local]" -righttitle="Mine[$remote]"
 elif [ "$tool" = "edp" ]; then
     "$toolPath" "-dn1:Diff::Original[$local]" "-dn2:Mine[$remote]" -nh -- "$local" "$remote"
 elif [ "$tool" = "meld" ]; then
     "$toolPath" "$local" "$remote" --label "Diff::Original|Mine"
 elif [ "$tool" = "nvim" ]; then
-    "$toolPath" -d "$local" "$remote" 
+    "$toolPath" -d "$local" "$remote"
 elif [ "$tool" = "vscode" ]; then
     "$toolPath" --wait --diff "$local" "$remote"
 elif [ "$tool" = "vsdiffmerge" ]; then

@@ -6,14 +6,14 @@ function get_platform_os() {
     local platformOSDist=""
     local platformOSVersion=""
 
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    if [[ $OSTYPE == "linux-gnu"* ]]; then
         _platformOS="linux"
-    elif [[ "$OSTYPE" == "linux-musl"* ]]; then
+    elif [[ $OSTYPE == "linux-musl"* ]]; then
         # Alpine linux
         _platformOS="linux"
-    elif [[ "$OSTYPE" == "darwin"* ]]; then
+    elif [[ $OSTYPE == "darwin"* ]]; then
         _platformOS="darwin"
-    elif [[ "$OSTYPE" == "freebsd"* ]]; then
+    elif [[ $OSTYPE == "freebsd"* ]]; then
         _platformOS="freebsd"
     else
         # Resort to `uname` for windows stuff.

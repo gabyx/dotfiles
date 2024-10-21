@@ -199,7 +199,7 @@ for i in "${nixGens[@]}"; do
     IFS=' ' read -r -a iGenArr <<<"$i"
     genNumber=${iGenArr[0]}
     genDate=${iGenArr[1]}
-    if [[ "$i" =~ current ]]; then
+    if [[ $i =~ current ]]; then
         currentGen=$genNumber
         printf "%-30s %s\n" "current generation:" $currentGen
         currentDate=$genDate

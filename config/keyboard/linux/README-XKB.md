@@ -600,8 +600,8 @@ From my experience, for these reasons:
    shift:both_capslock: activates CAPS LOCK by pressing the two SHIFTS
    together \* lv3:rwin_switch: sets which key activates the 3rd level modifier
    is used to print the symbols displayed on the right side of some keyboard
-   keys like “ ° € ™ ® Á ù ” (see the Italian QWERTY layout above). In this case
-   lv3 is the Right Window key but you can set something else.
+   keys like “ ° € ™ ® Á ù ” (see the Italian QWERTY layout above). In this
+   case lv3 is the Right Window key but you can set something else.
 3. _Remapping 3rd level symbols_. Take English and Italian: they share the same
    Latin charset but English doesn’t use (anymore as far as I know) vowel with
    diacritics like: à ò è ù ì or á ó è ú í . Italian does. With XKB I was

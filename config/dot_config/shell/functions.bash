@@ -39,7 +39,7 @@ function gabyx::compress_pdf() {
     local output="$2"
     local level="${3:-screen}"
 
-    if [[ ! "$level" =~ (screen|ebook|prepress|default) ]]; then
+    if [[ ! $level =~ (screen|ebook|prepress|default) ]]; then
         gabyx::print_error "The level must be something of 'screen|ebook|prepress|default'." >&2
         return 1
     fi
@@ -261,10 +261,10 @@ function gabyx::nixos_rebuild() {
             cd "$(readlink ~/nixos-config)" &&
                 just rebuild "$what" "$host"
 
-            if [[ "$what" =~ switch\|test ]]; then
+            if [[ $what =~ switch\|test ]]; then
                 gabyx::print_info "Differences are:"
                 just diff 1
-            elif [[ "$what" =~ build ]]; then
+            elif [[ $what =~ build ]]; then
                 gabyx::print_info "Differences are:"
                 just diff /run/current-system result
             fi

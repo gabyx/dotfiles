@@ -117,7 +117,7 @@ diff-closure dest_ref="/" src_ref="origin/main" host="":
 
 # Format the whole repository.
 format:
-    cd "{{root_dir}}" &&
+    cd "{{root_dir}}" && \
       nix fmt
 
 # Run Nix garbage-collection on the system-profile.

@@ -3,6 +3,8 @@
   # Used to find the project root
   projectRootFile = ".git/config";
 
+  settings.global.excludes = [ "wezterm/shell-integration.sh" ];
+
   # Markdown, JSON, YAML, etc.
   programs.prettier.enable = true;
 

@@ -58,15 +58,15 @@ tmux list-sessions || {
 echo "-----------"
 
 echo "Start workspaces"
-swaymsg "workspace \$ws-2; exec \$term-start AstroNVim \$term-start-cmd"
-swaymsg "workspace \$ws-3; exec \$term-start Main-1 \$term-start-cmd"
-swaymsg "workspace \$ws-4; exec \$term-start Main-2 \$term-start-cmd"
-swaymsg "workspace \$ws-1; exec \$term-start NixOS \$term-start-cmd"
+swaymsg 'workspace $ws-2; exec $term-start AstroNVim $term-start-cmd'
+swaymsg 'workspace $ws-3; exec $term-start Main-1 $term-start-cmd'
+swaymsg 'workspace $ws-4; exec $term-start Main-2 $term-start-cmd'
+swaymsg 'workspace $ws-1; exec $term-start NixOS $term-start-cmd'
 
 echo "Start 'way-displays -g' to reassign the workspaces if needed."
 echo "Somehow 'way-displays' crashed on start-up sometimes and this helps."
 # See: https://github.com/alex-courtis/way-displays/issues/171
 sleep 1
-swaymsg exec "\$display-manager -g"
+swaymsg exec '$display-manager -g'
 
 echo "Finished"

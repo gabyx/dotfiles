@@ -21,14 +21,14 @@ fi
 what_datasets="${1:-all}"
 
 # Mount sources.
-if [[ "$what_datasets" =~ work|all ]]; then
+if [[ $what_datasets =~ work|all ]]; then
     unmount zfs-pool-data work || true
     if [ "$unmount" = "false" ]; then
         mount zfs-pool-data work "data"
     fi
 fi
 
-if [[ "$what_datasets" =~ personal|all ]]; then
+if [[ $what_datasets =~ personal|all ]]; then
     unmount zfs-pool-data personal || true
     if [ "$unmount" = "false" ]; then
         mount zfs-pool-data personal "data"
