@@ -30,7 +30,10 @@ function mount() {
 
     gabyx::print_info "Mount zfs: $pool, dataset: $dataset at: '$mount/$dataset"
     sudo zfs set -u mountpoint="$mount/$dataset" "$pool/$dataset"
-    sudo zfs mount -l "$pool/$dataset"
+    sudo zfs mount -l "$pool/$dataset" || {
+        echo
+        echo "Could not mount volume '$mount/$dataset'. -> Skip." >&2
+    }
 }
 
 function unmount() {

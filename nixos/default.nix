@@ -3,10 +3,12 @@
   outputs,
   ...
 }:
-with inputs;
+let
+  nixosSystem = inputs.nixpkgs.lib.nixosSystem;
+in
 {
   # The NixOs running on bare metal.
-  desktop = nixpkgs.lib.nixosSystem {
+  desktop = nixosSystem {
     system = "x86_64-linux";
 
     # The Nix module system can modularize configuration,
@@ -57,7 +59,7 @@ with inputs;
   };
 
   # The Tuxedo Pulse-14 Gen3 Laptop.
-  tuxedo = nixpkgs.lib.nixosSystem {
+  tuxedo = nixosSystem {
     system = "x86_64-linux";
     modules = [
       ./hosts/settings.nix
@@ -69,7 +71,8 @@ with inputs;
   };
 
   # The NixOs for the virtual machine.
-  vm = nixpkgs.lib.nixosSystem {
+  vm = nixosSystem {
+    system = "x86_64-linux";
     modules = [
       ./hosts/settings.nix
       ./hosts/vm/configuration.nix

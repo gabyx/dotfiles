@@ -86,23 +86,6 @@
   };
   # =======================================
 
-  # Extent the user `uid/gid` ranges to make podman work better.
-  # This is for using https://gitlab.com/qontainers/pipglr
-  users.extraUsers.${config.settings.user.name} = {
-    subUidRanges = [
-      {
-        startUid = 100000;
-        count = 65539;
-      }
-    ];
-    subGidRanges = [
-      {
-        startGid = 100000;
-        count = 65539;
-      }
-    ];
-  };
-
   security.pam.loginLimits = [
     {
       domain = "*";
@@ -128,8 +111,6 @@
     kubectl
     kind # Simple kubernetes for local development.
     k9s # Kubernetes management CLI tool
-    podman-compose
-
     podman-compose
 
     # Other virtualisation stuff.

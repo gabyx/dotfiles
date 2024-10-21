@@ -9,11 +9,36 @@ set -u
 
 . ~/.config/restic/scripts/mount-disks.sh
 
+DISK_PATH=/dev/disk/by-uuid/4877700394137381369
 PERSONAL_SRC=/mnt/data/personal
 PERSONAL_DEST=/mnt/external-ssd/data-backups/personal
 
 WORK_SRC=/mnt/data/work
 WORK_DEST=/mnt/external-ssd/data-backups/work
+
+# Flags:
+LIST="true"
+NONINTERACTIVE="false"
+
+function parse_args() {
+    # Loop through all the arguments
+    for arg in "$@"; do
+        case $arg in
+        --list)
+            LIST="true"
+            shift
+            ;;
+        --non-interactive)
+            NONINTERACTIVE="true"
+            shift
+            ;;
+        *)
+            # Default case for unknown arguments
+            echo "Unknown argument: $arg"
+            ;;
+        esac
+    done
+}
 
 function restic_backup() {
     local src="$1"
@@ -50,6 +75,18 @@ function backup_list_and_check() {
     restic check -r "$WORK_DEST"
 }
 
+function notify() {
+    local what="$1"
+    if command -v notify-send &>/dev/null; then
+        notify-send --category "$what" "$@" || true
+    fi
+}
+
+function is_non_interactive() {
+    [ "${NONINTERACTIVE}" = "true" ] || return 1
+    return 0
+}
+
 function prompt_password() {
     if command -v githooks-dialog &>/dev/null; then
         exe="githooks-dialog"
@@ -76,7 +113,7 @@ function export_backup_password() {
 }
 
 function run_backup_list() {
-    export_backup_password
+    export_backup_passwordjj
 
     gabyx::print_info "Import all zfs pools"
     sudo zpool import -f -a
@@ -88,6 +125,7 @@ function run_backup_list() {
 }
 
 function run_backup() {
+    notify "Starting restic backup."
     general_excludes=~/.config/restic/general-excludes.txt
 
     export_backup_password
@@ -113,6 +151,8 @@ function run_backup() {
     # Unmount for sure the encrypted disk.
     unmount zfs-pool-data work
     # unmount zfs-pool-data personal
+
+    notify "Backup finished."
 }
 
 function unmount_power_off_backup_drive() {
@@ -120,7 +160,7 @@ function unmount_power_off_backup_drive() {
     sudo zpool export zfs-pool-external-ssd
 
     # Powerdone external drive.
-    sudo udisksctl power-off -b /dev/disk/by-uuid/4877700394137381369
+    sudo udisksctl power-off -b "$DISK_PATH"
 }
 
 function clean_up() {
@@ -128,10 +168,14 @@ function clean_up() {
     unmount_power_off_backup_drive &>/dev/null || true
 }
 
-trap clean_up EXIT
+function on_error() {
+    notify warning "An error occurred in the backup script."
+}
 
-if [ "${1:-}" = "--list" ]; then
-    shift
+trap clean_up EXIT
+trap on_error ERROR
+
+if [ "$LIST" = "true" ]; then
     run_backup_list
 else
     run_backup

@@ -45,10 +45,10 @@ in
 
     outputs.nixosModules.virtualization
 
-    (outputs.nixosModules.packages { inherit config pkgs pkgsStable; })
+    outputs.nixosModules.packages
     outputs.nixosModules.programs
 
-    (outputs.nixosModules.user { inherit config pkgs settings; })
+    outputs.nixosModules.user
 
     outputs.nixosModules.nix
 
