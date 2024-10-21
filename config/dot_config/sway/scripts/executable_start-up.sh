@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1091,SC2034,SC1090
+# shellcheck disable=SC1091,SC2034,SC1090,SC2016
 # set -e
 # set -u
 

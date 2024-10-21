@@ -14,7 +14,7 @@ declare -A LOC_ENABLE=(["en"]="enabled" ["ru"]="включен" ["de"]="aktivier
 
 # get current locale
 CURRLOCALE=$(locale | grep 'LANG=[a-z]*' -o | sed 's/^LANG=//g')
-# 'enabled' in currnet locale
+# 'enabled' in currenet locale
 ENABLED="${LOC_ENABLE["$CURRLOCALE"]}"
 
 # get current uuid

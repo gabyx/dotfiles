@@ -1,3 +1,4 @@
 patterns:
   - "**/*.md"
   - "**/*export-staged"
+  - "ns:githooks-shell/pre-commit/**/format-*"

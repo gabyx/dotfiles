@@ -1,5 +1,3 @@
 version: 1
 urls:
   - https://github.com/gabyx/githooks-shell.git@main
-  - https://github.com/gabyx/githooks-docs.git@main
-  - https://github.com/gabyx/githooks-configs.git@main
