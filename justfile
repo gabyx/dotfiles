@@ -115,6 +115,11 @@ diff-closure dest_ref="/" src_ref="origin/main" host="":
         ".?ref={{src_ref}}#nixosConfigurations.$host.config.system.build.toplevel" \
         ".?ref={{dest_ref}}#nixosConfigurations.$host.config.system.build.toplevel"
 
+# Format the whole repository.
+format:
+    cd "{{root_dir}}" &&
+      nix fmt
+
 # Run Nix garbage-collection on the system-profile.
 gc:
     echo "Remove test profile"

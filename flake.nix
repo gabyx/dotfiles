@@ -47,6 +47,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Format the repo with nix-treefmt.
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Terminal `wezterm` nightly
     wezterm = {
       url = "github:wez/wezterm?dir=nix";
@@ -117,9 +123,16 @@
       # Accessible through 'nix build', 'nix shell', etc
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
 
-      # Formatter for your nix files, available through 'nix fmt'
-      # Other options beside 'alejandra' include 'nixpkgs-fmt'
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
+      # Formatter for all files.
+      formatter = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          treefmtEval = inputs.treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
+          treefmt = treefmtEval.config.build.wrapper;
+        in
+        treefmt
+      );
 
       # Your custom packages and modifications, exported as overlays
       overlays = import ./overlays { inherit inputs; };
