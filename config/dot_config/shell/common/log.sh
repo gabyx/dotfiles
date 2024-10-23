@@ -44,7 +44,7 @@ function gabyx::print_error() {
     _print "[0;31m" "" "ERROR: " "$@" >&2
 }
 
-function die() {
+function gabyx::die() {
     gabyx::print_error "$@"
     exit 1
 }
