@@ -6,8 +6,30 @@
   installShellFiles,
   python3,
 }:
+let
+  python = python3.override {
+    packageOverrides = self: super: {
+      # https://github.com/pimutils/khal/issues/1361
+      icalendar = super.icalendar.overridePythonAttrs (old: rec {
+        version = "5.0.13";
+        src = fetchFromGitHub {
+          owner = "collective";
+          repo = "icalendar";
+          rev = "refs/tags/v${version}";
+          hash = "sha256-2gpWfLXR4HThw23AWxY2rY9oiK6CF3Qiad8DWHCs4Qk=";
+        };
+        patches = [ ];
+        build-system = with self; [ setuptools ];
+        dependencies = with self; [
+          python-dateutil
+          pytz
+        ];
+      });
+    };
+  };
+in
 # We need latest calendar CLI on `main` with `--json` support.
-python3.pkgs.buildPythonApplication rec {
+python.pkgs.buildPythonApplication rec {
   pname = "khal";
   version = "0.12.0";
   pyproject = true;
@@ -19,18 +41,17 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-azkyxuJ/OgxARYgQqP7728InfkIHlP8pL4Bwv8/+5sQ=";
   };
 
-  nativeBuildInputs =
-    [
-      glibcLocales
-      installShellFiles
-    ]
-    ++ (with python3.pkgs; [
-      setuptools-scm
-      sphinx
-      sphinxcontrib-newsfeed
-    ]);
+  build-system = with python.pkgs; [
+    setuptools
+    setuptools-scm
+  ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  nativeBuildInputs = [
+    glibcLocales
+    installShellFiles
+  ];
+
+  propagatedBuildInputs = with python.pkgs; [
     atomicwrites
     click
     click-log
