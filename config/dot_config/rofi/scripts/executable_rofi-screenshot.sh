@@ -61,6 +61,18 @@ if [ "$WITH_CURSOR" = "yes" ]; then
     CURSOR_ARG="--cursor"
 fi
 
+# If swappy is installed, prompt the user to
+# edit the captured screenshot
+EDIT_CHOICE="no"
+if command -v swappy $ >/dev/null; then
+    EDIT_CHOICE=$(
+        rofi -dmenu -p 'Edit the shot?' -lines 2 <<EOF
+no
+yes
+EOF
+    )
+fi
+
 SAVEDIR=${SWAY_ROFI_SCREENSHOT_SAVEDIR:=$HOME/Pictures}
 # Expand potential '~'
 SAVEDIR="${SAVEDIR/#\~/$HOME}"
@@ -92,22 +104,13 @@ case "$CHOICE" in
     ;;
 esac
 
-# If swappy is installed, prompt the user to edit the captured screenshot
-if command -v swappy $ >/dev/null; then
-    EDIT_CHOICE=$(
-        rofi -dmenu -p 'Edit the shot?' -lines 2 <<EOF
-no
-yes
-EOF
-    )
-    case "$EDIT_CHOICE" in
-    yes)
-        swappy -f "$FILENAME" -o "$FILENAME"
-        ;;
-    no) ;;
-    '') ;;
-    esac
-fi
+case "$EDIT_CHOICE" in
+yes)
+    swappy -f "$FILENAME" -o "$FILENAME"
+    ;;
+no) ;;
+'') ;;
+esac
 
 # Copyq if available has some trouble when
 # copying to big images, therefore disable it an load it manually
