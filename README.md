@@ -211,9 +211,24 @@ Skip to step 3 on a fresh system.
 
 #### Troubleshooting
 
-When I log out and in again, evolution gets sometimes really stuck in
-authentication and what helps is to do
+- When I log out and in again, evolution gets sometimes really stuck in
+  authentication and what helps is to do
 
-```shell
-   systemctl --user restart dbus-broker
-```
+  ```shell
+     systemctl --user restart dbus-broker
+  ```
+
+- When `vdirsyncer sync` fails you can get the offending calendar entries by
+  doing:
+
+  ```shell
+     curl -u "$user:$password" http://localhost:1080/users/gabriel.nuetzi@sdsc.ethz.ch/calendar/<file-path>
+  ```
+
+  or delete it with
+
+  ```shell
+     curl -u "$user:$password" -X DELETE http://localhost:1080/users/gabriel.nuetzi@sdsc.ethz.ch/calendar/<file-path>
+  ```
+
+  which resolves duplicate items issues.
