@@ -11,10 +11,12 @@ let
   wezterm-nightly = inputs.wezterm.packages."${pkgs.system}".default;
   githooks = inputs.githooks.packages."${pkgs.system}".default;
 
-  # llvm 16 packages have a problem:
-  # https://github.com/NixOS/nixpkgs/issues/244609
-  llvmPkgs = pkgs.llvmPackages_15;
-  clangTools = pkgs.clang-tools_15;
+  bazecore =
+    let
+      p = import inputs.test { system = pkgs.system; };
+    in
+    p.bazecor;
+
 in
 {
   # List packages installed in system profile. To search, run:
@@ -156,7 +158,7 @@ in
     # MultiMedia
     pkgs.bitwarden # Password manager
     pkgs.bitwarden-cli
-    pkgs.bazecor # Dygma Defy Keyboard.
+    bazecore # Dygma Defy Keyboard.
     pkgs.signal-desktop # Messaging app
     pkgs.element-desktop # Matrix client.
     pkgs.slack # Messaging app

@@ -71,7 +71,7 @@
     # virt-manager
 
     # Nix tools
-    inputs.nvd-tool.packages."${system}".nvd
+    nvd
     nix-output-monitor
   ];
 }
