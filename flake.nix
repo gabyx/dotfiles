@@ -88,10 +88,6 @@
       url = "github:AdnanHodzic/auto-cpufreq";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # # Test tuxedo-drivers on this PR: https://github.com/NixOS/nixpkgs/pull/293017
-    # tuxedo.url = "github:CutestNekoAqua/nixpkgs?ref=76427d3992c7a2a3293485d8322b98730afd20db";
-
   };
 
   outputs =

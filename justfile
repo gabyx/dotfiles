@@ -89,14 +89,14 @@ diff last="1" current_profile="/run/current-system":
     current_profile="$2"
 
     if [[ "$last" =~ [0-9]* ]]; then
-        last_profile="$(find /nix/var/nix/profiles -type l -name '*system*' | sort -u | tail "-1" | head -1)"
+        last_profile="$(find /nix/var/nix/profiles -type l -name '*system-*' | sort -u | tail "-1" | head -1)"
 
         if [[ "$(readlink last_profile)" = "$(readlink /nix/var/nix/profiles/current-system)" ]]; then
             echo "Last profile '$last_profile' points to 'nix/var/nix/profiles/current-system' -> Skip."
             last=$(($last + 1)) # skip current system.
         fi
 
-        last_profile="$(find /nix/var/nix/profiles -type l -name '*system*' | sort -u | tail "-$last" | head -1)"
+        last_profile="$(find /nix/var/nix/profiles -type l -name '*system-*' | sort -u | tail "-$last" | head -1)"
     else
         last_profile="$last"
     fi

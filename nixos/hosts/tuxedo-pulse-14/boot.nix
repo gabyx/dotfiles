@@ -13,15 +13,6 @@
     # Documentation: https://www.kernel.org/doc/html/latest/admin-guide/sysrq.html
     kernel.sysctl."kernel.sysrq" = 1; # NixOS default: 16 (only the sync command)
 
-    kernelPackages = pkgs.linuxPackages.extend (
-      final: prev: {
-        # OR `callPackage` it to download less packages
-        tuxedo-drivers = prev.callPackage (
-          inputs.tuxedo + "/pkgs/os-specific/linux/tuxedo-keyboard/default.nix"
-        ) { };
-      }
-    );
-
     # Bootloader ================================================================
     loader = {
       grub = {

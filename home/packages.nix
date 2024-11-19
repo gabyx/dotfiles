@@ -10,13 +10,6 @@ let
   # Define some special packages.
   wezterm-nightly = inputs.wezterm.packages."${pkgs.system}".default;
   githooks = inputs.githooks.packages."${pkgs.system}".default;
-
-  bazecore =
-    let
-      p = import inputs.test { system = pkgs.system; };
-    in
-    p.bazecor;
-
 in
 {
   # List packages installed in system profile. To search, run:
@@ -158,7 +151,7 @@ in
     # MultiMedia
     pkgs.bitwarden # Password manager
     pkgs.bitwarden-cli
-    bazecore # Dygma Defy Keyboard.
+    pkgs.bazecor # Dygma Defy Keyboard.
     pkgs.signal-desktop # Messaging app
     pkgs.element-desktop # Matrix client.
     pkgs.slack # Messaging app
