@@ -10,7 +10,10 @@
     # localtimed.enable = true;
 
     # UDev settings.
-    udev.packages = [ pkgs.headsetcontrol ];
+    udev.packages = [
+      pkgs.headsetcontrol
+      pkgs.bazecor
+    ];
 
     # Dbus settings.
     dbus = {
