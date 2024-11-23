@@ -104,6 +104,11 @@ if command direnv &>/dev/null; then
     eval "$(direnv hook zsh)"
 fi
 
+# Zoxide hook.
+if command zoxide &>/dev/null; then
+    eval "$(zoxide init zsh)"
+fi
+
 # Wezterm shell integration.
 if [ -n "$WEZTERM_EXECUTABLE" ]; then
     if [ -f "$HOME/.config/wezterm/shell-integration.sh" ]; then
