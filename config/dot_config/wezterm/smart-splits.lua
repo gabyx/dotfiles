@@ -18,7 +18,7 @@ M.split_nav = function(resize_or_move, key, mod)
     return {
         key = key,
 
-        mods = resize_or_move == "resize" and "META" or "CTRL",
+        mods = resize_or_move == "resize" and "CTRL|SHIFT" or "CTRL",
 
         action = w.action_callback(function(win, pane)
             if is_vim(pane) then
