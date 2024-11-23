@@ -90,6 +90,13 @@ install_plugins
 source "$ZDOTDIR/.zsh_plugins.zsh"
 # ==============================================================================
 
+# Wezterm shell integration.
+if [ -n "$WEZTERM_EXECUTABLE" ]; then
+    if [ -f "$HOME/.config/wezterm/shell-integration.sh" ]; then
+        source "$HOME/.config/wezterm/shell-integration.sh"
+    fi
+fi
+
 # Promp setup.
 if [ -f "$ZDOTDIR/.p10k.zsh" ]; then
     # To customize prompt, run 'p10k configure' or edit $ZDOTDIR/.p10k.zsh.
@@ -100,21 +107,15 @@ fi
 source "$HOME/.config/zsh/.zshrc-tmux.zsh"
 
 # Direnv hook.
-if command direnv &>/dev/null; then
+if command -v direnv &>/dev/null; then
     eval "$(direnv hook zsh)"
 fi
 
 # Zoxide hook.
-if command zoxide &>/dev/null; then
+if command -v zoxide &>/dev/null; then
     eval "$(zoxide init zsh)"
 fi
 
-# Wezterm shell integration.
-if [ -n "$WEZTERM_EXECUTABLE" ]; then
-    if [ -f "$HOME/.config/wezterm/shell-integration.sh" ]; then
-        source "$HOME/.config/wezterm/shell-integration.sh"
-    fi
-fi
 
 # Fuzzy Find integration
 if command -v fzf &>/dev/null; then
