@@ -16,6 +16,7 @@ in
   # $ nix search wget
   home.packages = [
     # Basics
+    pkgs.zoxide # A smarter cd.
     pkgs.age # Encryption tool.
     pkgs.libsecret # secret-tool to access gnome-keyring
     pkgs.git
