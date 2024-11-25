@@ -5,21 +5,21 @@ local astrodark = require("colors/astrodark")
 local ssplit = require("smart-splits")
 local status = require("status")
 
-local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
-resurrect.periodic_save({ interval_seconds = 30 })
-local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
-
 local act = wezterm.action
 local mux = wezterm.mux
 
 -- This table will hold the configuration.
 local config = wezterm.config_builder()
 
+local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
+local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
+
 local terminfo_dir = os.getenv("TERMINFO_DIRS")
 config.set_environment_variables = {
     TERMINFO_DIRS = os.getenv("HOME") .. "/.terminfo" .. (terminfo_dir ~= nil and (":" .. terminfo_dir) or ""),
     WSLENV = "TERMINFO_DIRS",
 }
+
 -- This is where you actually apply your config choices
 config = {
     font_size = 12,
@@ -224,6 +224,10 @@ config.mouse_bindings = {
     },
 }
 
+resurrect.periodic_save({ interval_seconds = 30 })
+resurrect.change_state_save_dir(os.getenv("HOME") .. "/.config/wezterm/resurrect/state/")
+workspace_switcher.apply_to_config(config)
+
 wezterm.on("gui-startup", function(cmd)
     local tab, pane, window = mux.spawn_window(cmd or {})
     window:gui_window():maximize()
@@ -237,7 +241,7 @@ wezterm.on("gui-startup", function(cmd)
 end)
 
 -- Set the status on the top.
-status.set_status()
+-- status.set_status()
 
 -- local function get_current_working_dir(tab)
 --     local current_dir = tab.active_pane and tab.active_pane.current_working_dir or { file_path = "" }
@@ -276,11 +280,8 @@ status.set_status()
 --     }
 -- end)
 
-workspace_switcher.apply_to_config(config)
-
 wezterm.on("smart_workspace_switcher.workspace_switcher.created", function(window, path, label)
     local workspace_state = resurrect.workspace_state
-
     workspace_state.restore_workspace(resurrect.load_state(label, "workspace"), {
         window = window,
         relative = true,
@@ -297,11 +298,14 @@ end)
 local resurrect_event_listeners = {
     "resurrect.error",
     "resurrect.save_state.finished",
+    "resurrect.workspace_state.restore_workspace.finished",
 }
+
 local is_periodic_save = false
 wezterm.on("resurrect.periodic_save", function()
     is_periodic_save = true
 end)
+
 for _, event in ipairs(resurrect_event_listeners) do
     wezterm.on(event, function(...)
         if event == "resurrect.save_state.finished" and is_periodic_save then
@@ -313,9 +317,21 @@ for _, event in ipairs(resurrect_event_listeners) do
         for _, v in ipairs(args) do
             msg = msg .. " " .. tostring(v)
         end
-        wezterm.gui.gui_windows()[1]:toast_notification("Wezterm - resurrect", msg, nil, 4000)
+        wezterm.gui.gui_windows()[1]:toast_notification("Wezterm - resurrect", msg, nil, 0)
     end)
 end
+
+wezterm.on("mux-startup", function()
+    local _, _, window = mux.spawn_window()
+    local workspace_state = resurrect.workspace_state
+
+    -- workspace_state.restore_workspace(resurrect.load_state("custodian", "workspace"), {
+    --     window = window,
+    --     relative = true,
+    --     restore_text = true,
+    --     on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+    -- })
+end)
 
 -- and finally, return the configuration to wezterm
 return config
