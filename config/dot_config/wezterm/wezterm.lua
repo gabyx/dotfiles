@@ -7,79 +7,54 @@ local act = wezterm.action
 local mux = wezterm.mux
 
 -- This table will hold the configuration.
-local config = {}
+local config = wezterm.config_builder()
 
--- In newer versions of wezterm, use the config_builder which will
--- help provide clearer error messages
-if wezterm.config_builder then
-    config = wezterm.config_builder()
-end
-
-wezterm.on("gui-startup", function(cmd)
-    local _, _, window = mux.spawn_window(cmd or {})
-    window:gui_window():maximize()
-end)
-
-terminfo_dir = os.getenv("TERMINFO_DIRS")
+local terminfo_dir = os.getenv("TERMINFO_DIRS")
 config.set_environment_variables = {
     TERMINFO_DIRS = os.getenv("HOME") .. "/.terminfo" .. (terminfo_dir ~= nil and (":" .. terminfo_dir) or ""),
     WSLENV = "TERMINFO_DIRS",
 }
--- Setting it to `wezterm` disable cursor small/bold in the vim plugin.
-config.term = "xterm-256color"
 
 -- This is where you actually apply your config choices
-config.colors = astrodark.colors()
-config.window_frame = astrodark.window_frame()
+config = {
+    font_size = 12,
+    font = wezterm.font_with_fallback({
+        { family = "JetBrainsMono Nerd Font", weight = "Medium" },
+        { family = "Noto Color Emoji",        weight = "Medium" },
+    }),
 
-config.font_size = 12
-config.warn_about_missing_glyphs = false
-config.font = wezterm.font_with_fallback({
-    { family = "JetBrainsMono Nerd Font", weight = "Medium" },
-    { family = "Noto Color Emoji",        weight = "Medium" },
-})
+    term = "xterm-256color",
+    warn_about_missing_glyphs = false,
+    colors = astrodark.colors(),
+    window_frame = astrodark.window_frame(),
+    hide_tab_bar_if_only_one_tab = true,
+    use_fancy_tab_bar = false,
 
--- config.font_rules = {
---     {
---         intensity = "Normal",
---         italic = true,
---         font = wezterm.font({
---             family = "JetBrainsMono Nerd Font",
---             italic = true,
---             weight = "Medium",
---         }),
---     },
---     {
---         intensity = "Bold",
---         italic = false,
---         font = wezterm.font({
---             family = "JetBrainsMono Nerd Font",
---             weight = "ExtraBold",
---         }),
---     },
---     {
---         intensity = "Bold",
---         italic = true,
---         font = wezterm.font({
---             family = "JetBrainsMono Nerd Font",
---             italic = true,
---             weight = "ExtraBold",
---         }),
---     },
--- }
+    unix_domains = {
+        {
+            name = "unix",
+        },
+    },
+    -- default_gui_startup_args = { "connect", "unix" },
 
-config.skip_close_confirmation_for_processes_named = {
-    "bash",
-    "sh",
-    "zsh",
-    "fish",
-    "tmux",
-    "cmd.exe",
-    "pwsh.exe",
-    "powershell.exe",
-    "lf",
-    "btop",
-    "journalctl",
+    disable_default_key_bindings = true,
+    enable_csi_u_key_encoding = false,
+    enable_kitty_keyboard = true,
+    debug_key_events = false, -- Start `wezterm start --always-new-process` to see the keys
+
+    skip_close_confirmation_for_processes_named = {
+        "bash",
+        "sh",
+        "zsh",
+        "fish",
+        "tmux",
+        "cmd.exe",
+        "pwsh.exe",
+        "powershell.exe",
+        "lf",
+        "btop",
+        "journalctl",
+    },
 }
 
 if environment.os == "linux" then
@@ -88,29 +63,26 @@ else
     config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 end
 
-config.hide_tab_bar_if_only_one_tab = true
-config.enable_csi_u_key_encoding = false
-config.enable_kitty_keyboard = true
-config.debug_key_events = false -- Start `wezterm start --always-new-process` to see the keys
-config.disable_default_key_bindings = true
-
-config.leader = { key = "n", mods = "CTRL", timeout_milliseconds = 1000 }
+config.leader = { key = "g", mods = "CTRL", timeout_milliseconds = 1000 }
 config.keys = {
-    -- Copy
     { key = "c", mods = "SHIFT|CTRL", action = act.CopyTo("Clipboard") },
-    -- { key = "c", mods = "SUPER", action = act.CopyTo("Clipboard") },
 
-    -- Paste
+    -- Paste.
     { key = "v", mods = "SHIFT|CTRL", action = act.PasteFrom("Clipboard") },
-    -- { key = "v", mods = "SUPER", action = act.PasteFrom("Clipboard") },
+
+    -- Activate copy mode or vim mode.
+    {
+        mods = "LEADER",
+        key = "Enter",
+        action = wezterm.action.ActivateCopyMode,
+    },
 
     -- Leader stuff
-    { key = "p", mods = "LEADER",     action = act.ActivateCommandPalette },
-    { key = "n", mods = "LEADER",     action = act.SpawnWindow },
+    { mods = "LEADER", key = "p",       action = act.ActivateCommandPalette },
 
     -- Font Size
-    { key = "=", mods = "LEADER",     action = act.IncreaseFontSize },
-    { key = "-", mods = "LEADER",     action = act.DecreaseFontSize },
+    { key = "j",       mods = "LEADER", action = act.IncreaseFontSize },
+    { key = "k",       mods = "LEADER", action = act.DecreaseFontSize },
 }
 
 config.mouse_bindings = {
@@ -129,6 +101,18 @@ config.mouse_bindings = {
         action = act.DecreaseFontSize,
     },
 }
+
+wezterm.on("gui-startup", function(cmd)
+    local tab, pane, window = mux.spawn_window(cmd or {})
+    window:gui_window():maximize()
+
+    -- Create a split occupying the right 1/3 of the screen
+    -- local right = pane:split({ size = 0.5, direction = "Right" })
+    -- Create another split in the right of the remaining 2/3
+    -- of the space; the resultant split is in the middle
+    -- 1/3 of the display and has the focus.
+    -- right:split({ size = 0.5, direction = "Bottom" })
+end)
 
 -- and finally, return the configuration to wezterm
 return config
