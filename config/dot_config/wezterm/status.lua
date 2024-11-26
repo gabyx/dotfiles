@@ -36,15 +36,20 @@ M.set_status = function()
         end
 
         table.insert(cells, window:active_workspace())
+        table.insert(cells, string.format("Domain: %s", pane:get_domain_name()))
+        local mux_id = window:mux_window()
+        if mux_id ~= nil then
+            table.insert(cells, string.format("Mux: %s", mux_id:window_id()))
+        end
 
         -- I like my date/time in this style: "Wed Mar 3 08:14"
         -- local date = wezterm.strftime("%a %b %-d %H:%M")
         -- table.insert(cells, date)
 
         -- An entry for each battery (typically 0 or 1 battery)
-        for _, b in ipairs(wezterm.battery_info()) do
-            table.insert(cells, string.format("%.0f%%", b.state_of_charge * 100))
-        end
+        -- for _, b in ipairs(wezterm.battery_info()) do
+        --     table.insert(cells, string.format("%.0f%%", b.state_of_charge * 100))
+        -- end
 
         -- The powerline < symbol
         local LEFT_ARROW = utf8.char(0xe0b3)

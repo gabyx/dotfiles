@@ -23,13 +23,14 @@ config.set_environment_variables = {
 -- This is where you actually apply your config choices
 config = {
     font_size = 12,
+    warn_about_missing_glyphs = false,
     font = wezterm.font_with_fallback({
         { family = "JetBrainsMono Nerd Font", weight = "Medium" },
         { family = "Noto Color Emoji",        weight = "Medium" },
     }),
 
     term = "xterm-256color",
-    warn_about_missing_glyphs = false,
+
     colors = astrodark.colors(),
     window_frame = astrodark.window_frame(),
     hide_tab_bar_if_only_one_tab = false,
@@ -40,13 +41,12 @@ config = {
             name = "unix",
         },
     },
-    default_gui_startup_args = { "connect", "unix" },
+    -- default_gui_startup_args = { "connect", "unix" },
 
+    disable_default_key_bindings = true,
     enable_csi_u_key_encoding = false,
     enable_kitty_keyboard = true,
     debug_key_events = false, -- Start `wezterm start --always-new-process` to see the keys
-
-    disable_default_key_bindings = true,
 
     skip_close_confirmation_for_processes_named = {
         "bash",
@@ -61,6 +61,8 @@ config = {
         "btop",
         "journalctl",
     },
+
+    leader = { key = "g", mods = "CTRL", timeout_milliseconds = 1000 },
 }
 
 if environment.os == "linux" then
@@ -69,7 +71,6 @@ else
     config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 end
 
-config.leader = { key = "g", mods = "CTRL", timeout_milliseconds = 1000 }
 config.keys = {
     { key = "c", mods = "SHIFT|CTRL", action = act.CopyTo("Clipboard") },
 
@@ -180,31 +181,30 @@ config.keys = {
 
     -- Show the launcher in fuzzy selection mode and have it list all workspaces
     -- and allow activating one.
-    -- {
-    --     mods = "LEADER",
-    --     key = "w",
-    --     action = act.ShowLauncherArgs({
-    --         flags = "FUZZY|WORKSPACES",
-    --     }),
-    -- },
-
+    {
+        mods = "LEADER",
+        key = "w",
+        action = act.ShowLauncherArgs({
+            flags = "FUZZY|WORKSPACES",
+        }),
+    },
     {
         key = "w",
         mods = "LEADER",
         action = workspace_switcher.switch_workspace(),
     },
-    {
-        key = "S",
-        mods = "LEADER",
-        action = workspace_switcher.switch_to_prev_workspace(),
-    },
-    {
-        key = "w",
-        mods = "LEADER",
-        action = wezterm.action_callback(function(win, pane)
-            resurrect.save_state(resurrect.workspace_state.get_workspace_state())
-        end),
-    },
+    -- {
+    --     key = "S",
+    --     mods = "LEADER",
+    --     action = workspace_switcher.switch_to_prev_workspace(),
+    -- },
+    -- {
+    --     key = "w",
+    --     mods = "LEADER",
+    --     action = wezterm.action_callback(function(win, pane)
+    --         resurrect.save_state(resurrect.workspace_state.get_workspace_state())
+    --     end),
+    -- },
 }
 
 config.mouse_bindings = {
@@ -225,7 +225,7 @@ config.mouse_bindings = {
 }
 
 resurrect.periodic_save({ interval_seconds = 30 })
-resurrect.change_state_save_dir(os.getenv("HOME") .. "/.config/wezterm/resurrect/state/")
+-- resurrect.change_state_save_dir(os.getenv("HOME") .. "/.config/wezterm/resurrect/state/")
 workspace_switcher.apply_to_config(config)
 
 wezterm.on("gui-startup", function(cmd)
@@ -241,53 +241,21 @@ wezterm.on("gui-startup", function(cmd)
 end)
 
 -- Set the status on the top.
--- status.set_status()
-
--- local function get_current_working_dir(tab)
---     local current_dir = tab.active_pane and tab.active_pane.current_working_dir or { file_path = "" }
---     local HOME_DIR = string.format("file://%s", os.getenv("HOME"))
---
---     return current_dir == HOME_DIR and "~" or string.gsub(current_dir.file_path, ".*/(.*)", "%1")
--- end
-
--- wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
---     local has_unseen_output = false
---     if not tab.is_active then
---         for _, pane in ipairs(tab.panes) do
---             if pane.has_unseen_output then
---                 has_unseen_output = true
---                 break
---             end
---         end
---     end
---
---     local cwd = wezterm.format({
---         { Attribute = { Intensity = "Bold" } },
---         { Text = get_current_working_dir(tab) },
---     })
---
---     local title = string.format(" [%s] %s", tab.tab_index + 1, cwd)
---
---     if has_unseen_output then
---         return {
---             { Foreground = { Color = "#8866bb" } },
---             { Text = title },
---         }
---     end
---
---     return {
---         { Text = title },
---     }
--- end)
+status.set_status()
 
 wezterm.on("smart_workspace_switcher.workspace_switcher.created", function(window, path, label)
     local workspace_state = resurrect.workspace_state
+
     workspace_state.restore_workspace(resurrect.load_state(label, "workspace"), {
         window = window,
         relative = true,
         restore_text = true,
         on_pane_restore = resurrect.tab_state.default_on_pane_restore,
     })
+
+    window:gui_window():maximize()
+
+    -- wezterm.gui.gui_windows()[1]:toast_notification("Wezterm", "restored: " .. label, nil, 1000)
 end)
 
 wezterm.on("smart_workspace_switcher.workspace_switcher.selected", function(window, path, label)
@@ -297,8 +265,8 @@ end)
 
 local resurrect_event_listeners = {
     "resurrect.error",
-    "resurrect.save_state.finished",
-    "resurrect.workspace_state.restore_workspace.finished",
+    -- "resurrect.save_state.finished",
+    -- "resurrect.workspace_state.restore_workspace.finished",
 }
 
 local is_periodic_save = false
@@ -317,21 +285,21 @@ for _, event in ipairs(resurrect_event_listeners) do
         for _, v in ipairs(args) do
             msg = msg .. " " .. tostring(v)
         end
-        wezterm.gui.gui_windows()[1]:toast_notification("Wezterm - resurrect", msg, nil, 0)
+        wezterm.gui.gui_windows()[1]:toast_notification("Wezterm", msg, nil, 1000)
     end)
 end
 
-wezterm.on("mux-startup", function()
-    local _, _, window = mux.spawn_window()
-    local workspace_state = resurrect.workspace_state
-
-    -- workspace_state.restore_workspace(resurrect.load_state("custodian", "workspace"), {
-    --     window = window,
-    --     relative = true,
-    --     restore_text = true,
-    --     on_pane_restore = resurrect.tab_state.default_on_pane_restore,
-    -- })
-end)
+-- wezterm.on("mux-startup", function()
+--     local _, _, window = mux.spawn_window()
+--     local workspace_state = resurrect.workspace_state
+--
+--     -- workspace_state.restore_workspace(resurrect.load_state("custodian", "workspace"), {
+--     --     window = window,
+--     --     relative = true,
+--     --     restore_text = true,
+--     --     on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+--     -- })
+-- end)
 
 -- and finally, return the configuration to wezterm
 return config

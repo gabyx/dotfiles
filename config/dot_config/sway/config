@@ -26,7 +26,7 @@ set $right l
 # Your preferred terminal emulator
 # ==================================================
 # Wezterm
-set $term wezterm wezterm start --always-new-process
+set $term wezterm start --always-new-process
 
 # # A wrapper script to start the terminal with additional env. variables.
 # # e.g. to jump directly into Tmux session.
