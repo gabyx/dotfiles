@@ -195,24 +195,6 @@
         "systems": "systems_4"
       },
       "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "flake-utils_4": {
-      "inputs": {
-        "systems": "systems_5"
-      },
-      "locked": {
         "lastModified": 1726560853,
         "narHash": "sha256-X6rJYSESBVr3hBoH0WbKE5KvhPU5bloyZ2L4K60/fPQ=",
         "owner": "numtide",
@@ -597,27 +579,6 @@
         "type": "github"
       }
     },
-    "nvd-tool": {
-      "inputs": {
-        "flake-utils": "flake-utils_3",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1730682811,
-        "narHash": "sha256-ch1WLwxaos5eNW0entGwkWTWByTykuihndieut8f/vo=",
-        "owner": "khumba",
-        "repo": "nvd",
-        "rev": "6118dc11682531eced90f686cacf11f7a7f95f6d",
-        "type": "gitlab"
-      },
-      "original": {
-        "owner": "khumba",
-        "repo": "nvd",
-        "type": "gitlab"
-      }
-    },
     "root": {
       "inputs": {
         "agenix": "agenix",
@@ -630,7 +591,6 @@
         "nixAlien": "nixAlien",
         "nixpkgs": "nixpkgs",
         "nixpkgsStable": "nixpkgsStable",
-        "nvd-tool": "nvd-tool",
         "treefmt-nix": "treefmt-nix",
         "wezterm": "wezterm"
       }
@@ -716,21 +676,6 @@
         "type": "github"
       }
     },
-    "systems_5": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
@@ -753,7 +698,7 @@
     },
     "wezterm": {
       "inputs": {
-        "flake-utils": "flake-utils_4",
+        "flake-utils": "flake-utils_3",
         "freetype2": "freetype2",
         "harfbuzz": "harfbuzz",
         "libpng": "libpng",

@@ -77,12 +77,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # NVD tool.
-    nvd-tool = {
-      url = "gitlab:khumba/nvd";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Tool to regulate CPU power.
     auto-cpufreq = {
       url = "github:AdnanHodzic/auto-cpufreq";

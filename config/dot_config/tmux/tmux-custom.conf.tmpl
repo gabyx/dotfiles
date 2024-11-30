@@ -4,18 +4,19 @@
 # Use | and - to split a window vertically and horizontally instead of " and % respoectively
 unbind '"'
 unbind %
-bind-key | split-window -h -c "#{pane_current_path}"
+bind-key \\ split-window -h -c "#{pane_current_path}"
 bind-key - split-window -v -c "#{pane_current_path}"
 
 # Open ~/.tmux.conf in vim and reload settings on quit
 unbind e
 bind-key e new-window -n '~/.config/tmux/tmux.conf' "sh -c 'nvim ~/.config/tmux/tmux.conf && tmux source ~/.config/tmux/tmux.conf'"
 
-# Resize panes with hjkl
-bind-key -n 'C-S-h' resize-pane -L 2
-bind-key -n 'C-S-l' resize-pane -R 2
-bind-key -n 'C-S-k' resize-pane -U 2
-bind-key -n 'C-S-j' resize-pane -D 2
+# Resize panes with Ctrl+Alt+hjkl
+bind-key -n 'C-M-h' resize-pane -L 2
+bind-key -n 'C-M-l' resize-pane -R 2
+bind-key -n 'C-M-k' resize-pane -U 2
+bind-key -n 'C-M-j' resize-pane -D 2
+
 
 # Smart pane switching with awareness of Vim splits.
 # See: https://github.com/christoomey/vim-tmux-navigator
