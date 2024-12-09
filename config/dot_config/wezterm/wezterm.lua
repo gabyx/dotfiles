@@ -112,8 +112,8 @@ config.keys = {
     },
 
     -- Font Size
-    { key = "=",       mods = "LEADER", action = act.IncreaseFontSize },
-    { key = "-",       mods = "LEADER", action = act.DecreaseFontSize },
+    { key = "j",       mods = "LEADER", action = act.IncreaseFontSize },
+    { key = "k",       mods = "LEADER", action = act.DecreaseFontSize },
     -- Split vertical.
     {
         mods = "LEADER",
