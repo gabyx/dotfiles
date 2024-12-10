@@ -1,28 +1,35 @@
 if [ "$CHEZMOI_OS" = "darwin" ]; then
 
-test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
-test -f /usr/local/bin/brew && eval "$(/usr/local/bin/brew shellenv)"
+    homebrew_path=(~/.linuxbrew /opt/homebrew/ /usr/local)
 
-PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/gnu-which/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/gnu-time/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/gnu-getopt/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/corutils/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/binutils/libexec/gnubin:$PATH"
+    for p in "${homebrew_path[@]}"; do
+        if [ -f "$p/bin/brew" ]; then
+            eval "$("$p/bin/brew" shellenv)"
+            homebrew_dir="$p"
+        fi
+    done
 
-PATH="/usr/local/opt/llvm@16/bin:$PATH"
-PATH="/usr/local/opt/gcc@13/bin:$PATH"
+    if [ -z "$HOMEBREW_PREFIX" ]; then
+        echo "Homebrew directory is not found." >&2
+        exit 0
+    fi
+    unset homebrew_paths
 
-PATH="/usr/local/opt/llvm@13/bin:$PATH"
-PATH="/usr/local/opt/gcc@11/bin:$PATH"
-export PATH
+    PATH="$HOMEBREW_PREFIX/opt/grep/libexec/gnubin:$PATH"
+    PATH="$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH"
+    PATH="$HOMEBREW_PREFIX/opt/gnu-tar/libexec/gnubin:$PATH"
+    PATH="$HOMEBREW_PREFIX/opt/gnu-which/libexec/gnubin:$PATH"
+    PATH="$HOMEBREW_PREFIX/opt/findutils/libexec/gnubin:$PATH"
+    PATH="$HOMEBREW_PREFIX/opt/gnu-time/libexec/gnubin:$PATH"
+    PATH="$HOMEBREW_PREFIX/opt/gnu-getopt/libexec/gnubin:$PATH"
+    PATH="$HOMEBREW_PREFIX/opt/corutils/libexec/gnubin:$PATH"
+    PATH="$HOMEBREW_PREFIX/opt/binutils/libexec/gnubin:$PATH"
+
+    export PATH
 
 else
 
-test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
-test -d /home/linuxbrew/.linuxbrew/bin && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
+    test -d /home/linuxbrew/.linuxbrew/bin && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 fi
