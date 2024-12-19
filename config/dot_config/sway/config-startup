@@ -14,7 +14,7 @@ exec $comm
 exec $comm-matrix
 exec $comm-slack
 exec $creds
-exec $nightshifter
+# exec $nightshifter
 
 exec ~/.config/sway/scripts/start-up.sh
 ### ===========================================================================

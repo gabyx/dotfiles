@@ -85,7 +85,7 @@ git:
   parseEmoji: false
   log:
     order: topo-order
-    showGraph: when-maximised
+    showGraph: always
     showWholeGraph: false
   diffContextSize: 3
 update:
