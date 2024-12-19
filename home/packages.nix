@@ -159,6 +159,7 @@ in
     pkgs.transmission_3-gtk
     pkgs.ffmpeg # Movie converter
     pkgs.vlc # Movie player
+    pkgs.amberol # Music player
     pkgs.showmethekey # Screencast the key-presses.
 
     pkgs.inkscape # Vector graphics
