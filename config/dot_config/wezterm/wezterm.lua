@@ -34,6 +34,7 @@ config = {
     colors = astrodark.colors(),
     window_frame = astrodark.window_frame(),
     hide_tab_bar_if_only_one_tab = false,
+    tab_bar_at_bottom = true,
     use_fancy_tab_bar = false,
 
     unix_domains = {
@@ -45,7 +46,7 @@ config = {
 
     disable_default_key_bindings = true,
     enable_csi_u_key_encoding = false,
-    enable_kitty_keyboard = true,
+    enable_kitty_keyboard = false,
     debug_key_events = false, -- Start `wezterm start --always-new-process` to see the keys
 
     skip_close_confirmation_for_processes_named = {
@@ -241,7 +242,7 @@ wezterm.on("gui-startup", function(cmd)
 end)
 
 -- Set the status on the top.
-status.set_status()
+-- status.set_status()
 
 wezterm.on("smart_workspace_switcher.workspace_switcher.created", function(window, path, label)
     local workspace_state = resurrect.workspace_state
