@@ -27,7 +27,7 @@
   };
 
   services.mpd = {
-    enable = true;
+    enable = false;
     musicDirectory = "/home/nixos/Music";
 
     extraConfig = ''

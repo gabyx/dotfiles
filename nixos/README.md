@@ -178,7 +178,8 @@ benefit, that the swap partition will also be encrypted.
 
 1. Create subvolumes as follows:
 
-   - `root`: The subvolume for `/`, which will be cleared on every boot.
+   - `root`: The subvolume for `/`, which can be cleared on every boot (we dont
+     do this).
    - `home`: The subvolume for `/home`, which should be backed up.
    - `nix`: The subvolume for `/nix`, which needs to be persistent but is not
      worth backing up, as it’s trivial to reconstruct.
