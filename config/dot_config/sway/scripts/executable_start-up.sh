@@ -19,6 +19,7 @@ swaymsg exec \$clipboard
 
 if true; then
     notify-send "Using wezterm: not starting tmux" || true
+    exit 0
 fi
 
 # Start tmux and make sessions.

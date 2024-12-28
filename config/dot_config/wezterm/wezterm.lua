@@ -190,11 +190,6 @@ config.keys = {
             flags = "FUZZY|WORKSPACES",
         }),
     },
-    {
-        key = "w",
-        mods = "LEADER",
-        action = workspace_switcher.switch_workspace(),
-    },
 }
 
 config.mouse_bindings = {

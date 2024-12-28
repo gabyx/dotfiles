@@ -70,16 +70,16 @@ in
 
     outputs.nixosModules.nix
 
-    # # Load home-manager as a part of the NixOS configuration.
-    # inputs.home-manager.nixosModules.home-manager
-    # (outputs.nixosModules.home-manager {
-    #   inherit
-    #     config
-    #     inputs
-    #     outputs
-    #     pkgsStable
-    #     ;
-    # })
+    # Load home-manager as a part of the NixOS configuration.
+    inputs.home-manager.nixosModules.home-manager
+    (outputs.nixosModules.home-manager {
+      inherit
+        config
+        inputs
+        outputs
+        pkgsStable
+        ;
+    })
   ];
 
   nixpkgs = {
