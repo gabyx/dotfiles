@@ -70,16 +70,16 @@ in
 
     outputs.nixosModules.nix
 
-    # Load home-manager as a part of the NixOS configuration.
-    inputs.home-manager.nixosModules.home-manager
-    (outputs.nixosModules.home-manager {
-      inherit
-        config
-        inputs
-        outputs
-        pkgsStable
-        ;
-    })
+    # # Load home-manager as a part of the NixOS configuration.
+    # inputs.home-manager.nixosModules.home-manager
+    # (outputs.nixosModules.home-manager {
+    #   inherit
+    #     config
+    #     inputs
+    #     outputs
+    #     pkgsStable
+    #     ;
+    # })
   ];
 
   nixpkgs = {
@@ -87,7 +87,7 @@ in
     overlays = [
       # NOTE: We are not eagerly using overlays so far, we pass inputs directly to modules.
       #       Overlays is a recursive mechanism which is only used when a
-      #       package needs to be overwrittern globaly.
+      #       package needs to be overwrittern globally.
 
       # Add overlays of your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions

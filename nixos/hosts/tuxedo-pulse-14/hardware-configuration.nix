@@ -28,8 +28,7 @@
     options = [ "subvol=root" ];
   };
 
-  boot.initrd.luks.devices."enc-physical-vol".device =
-    "/dev/disk/by-uuid/c770819c-1193-4a1e-a94d-3e13dc634a2e";
+  boot.initrd.luks.devices."enc-physical-vol".device = "/dev/disk/by-uuid/c770819c-1193-4a1e-a94d-3e13dc634a2e";
 
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/6fbd4c98-9ca9-4a8a-966f-24491282220b";

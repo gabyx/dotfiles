@@ -33,8 +33,7 @@
     ];
   };
 
-  boot.initrd.luks.devices."enc-physical-vol".device =
-    "/dev/disk/by-uuid/9cfdf03f-6872-499d-afd4-78fd74bd2e6b";
+  boot.initrd.luks.devices."enc-physical-vol".device = "/dev/disk/by-uuid/9cfdf03f-6872-499d-afd4-78fd74bd2e6b";
 
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/7d77bcf2-d5f4-4ff4-992d-de583df23032";
