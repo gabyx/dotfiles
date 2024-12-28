@@ -45,7 +45,7 @@
         "custom/vpn",
         "network",
         "bluetooth",
-//        "pulseaudio",
+        "pulseaudio",
         "battery",
         "custom/notification",
         "custom/powermenu",
