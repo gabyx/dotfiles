@@ -4,6 +4,17 @@ set -e
 set -u
 set -o pipefail
 
+if [ "$CHEZMOI_COMMAND" = "apply" ] &&
+    echo "$CHEZMOI_ARGS" | grep -q "exclude encrypted"; then
+    # When chezmoi `apply` command is run and encrypted files are excluded
+    # we shall not decrypt the keyfile, also making this non-interactive!
+    # We need this when configs are installed over NixOS `setup-configs.sh`
+
+    echo "Decrypting chezmoi's encryption key-file (age) NOT necessary!" \
+        "We are not applying encrypted files."
+    exit 0
+fi
+
 REPO_DIR="$CHEZMOI_WORKING_TREE"
 
 if ! command -v gpg &>/dev/null; then

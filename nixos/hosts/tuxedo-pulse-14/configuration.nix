@@ -17,9 +17,8 @@ let
   };
 in
 {
-  disabledModules =
-    [
-    ];
+  disabledModules = [
+  ];
 
   imports = [
     # If you want to use modules your own flake exports (from modules/nixos):

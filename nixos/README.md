@@ -218,31 +218,23 @@ NixOS on them. At this point activating the swap (if you created one) is a good
 idea. The `/boot` partition is mounted in a new folder `/mnt/boot` inside the
 root partition.
 
-1. Mount all filesystems by doing:
+1. Mount all file systems by doing:
 
    ```shell
    DISKMAP=/dev/mapper/enc-physical-vol
    MNTPNT="/mnt"
-   sudo mkdir -p $MNTPNT
+
    sudo mount -o subvol=root,compress=zstd,noatime $DISKMAP $MNTPNT
 
-   sudo mkdir -p $MNTPNT/home
+   sudo mkdir -p $MNTPNT/{boot,home,nix,persist,var/log,swap}
+
    sudo mount -o subvol=home,compress=zstd,noatime $DISKMAP $MNTPNT/home
-
-   sudo mkdir -p $MNTPNT/nix
    sudo mount -o subvol=nix,compress=zstd,noatime $DISKMAP $MNTPNT/nix
-
-   sudo mkdir -p $MNTPNT/persist
    sudo mount -o subvol=persist,compress=zstd,noatime $DISKMAP $MNTPNT/persist
-
-   sudo mkdir -p $MNTPNT/var/log
    sudo mount -o subvol=log,compress=zstd,noatime $DISKMAP $MNTPNT/var/log
-
-   sudo mkdir -p $MNTPNT/swap
    sudo mount -o subvol=swap,defaults,noatime $DISKMAP $MNTPNT/swap
 
    # Don't forget this!
-   sudo mkdir -p $MNTPNT/boot
    sudo mount "${MYDISK}1" $MNTPNT/boot
 
    # Enable swap
