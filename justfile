@@ -65,8 +65,10 @@ history:
     echo "History in 'system' profile:"
     nix profile history --profile /nix/var/nix/profiles/system
 
-    echo "History in 'test' profile:"
-    nix profile history --profile /nix/var/nix/profiles/system-profiles/test
+    if [ -s /nix/var/nix/profiles/system-profiles/test ]; then
+        echo "History in 'test' profile:"
+        nix profile history --profile /nix/var/nix/profiles/system-profiles/test
+    fi
 
 # Run the trim script to reduce the amount of generations kept on the system.
 # Usage with `--help`.
@@ -178,17 +180,26 @@ decrypt-edit file:
 # This needs `store-kefile-private-key` to be run.
 [no-cd]
 cm *args:
-    pkey=$(secret-tool lookup chezmoi keyfile-private-key 2>/dev/null) && \
-        echo "$pkey" | \
-            age -d -i - "{{root_dir}}/config/dot_config/chezmoi/key.age" > \
-                        ~/.config/chezmoi/key && \
-        chezmoi "$@" && \
-        rm -rf ~/.config/chezmoi/key || \
-        rm -rf ~/.config/chezmoi/key 2>/dev/null
+    #!/usr/bin/env bash
+    set -u
+    set -e
+
+    pkey=$(secret-tool lookup chezmoi keyfile-private-key) || true
+    if [ -z "$pkey" ]; then
+        echo "You did not execute 'just store-private-key'!" >&2
+        exit 1
+    fi
+
+    echo "$pkey" | \
+        age -d -i - "{{root_dir}}/config/dot_config/chezmoi/key.age" > \
+                    ~/.config/chezmoi/key && \
+    chezmoi "$@" && \
+    rm -rf ~/.config/chezmoi/key || \
+    rm -rf ~/.config/chezmoi/key 2>/dev/null
 
 # Store the private-key for the keyfile 'key.age'
 # into the keyring.
-store-kefile-private-key:
+store-private-key:
     secret-tool store --label='Chezmoi Key-File Private Key' \
         chezmoi keyfile-private-key
 
