@@ -58,6 +58,8 @@
     zsh
     bash
     just
+    git
+    git-lfs
 
     # Other virtualisation stuff.
     # libguestfs # Needed to virt-sparsify qcow2 files
