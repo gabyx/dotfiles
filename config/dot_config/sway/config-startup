@@ -3,6 +3,7 @@ exec_always --no-startup-id flashfocus
 
 # Start the daemon which listens to focus changes and sets _back mark
 exec --no-startup-id i3-back
+# exec --no-startup-id wezterm-mux-server
 
 exec avizo-service
 exec $display-manager 2>&1 > ~/.way-displays.log

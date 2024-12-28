@@ -17,6 +17,10 @@ sleep 0.5
 echo "Start clipboard."
 swaymsg exec \$clipboard
 
+if true; then
+    notify-send "Using wezterm: not starting tmux" || true
+fi
+
 # Start tmux and make sessions.
 echo "Start tmux, let it recreate the workspaces with resurrect"
 
