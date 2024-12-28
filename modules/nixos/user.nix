@@ -21,6 +21,7 @@
         "audio"
         "video"
         "input"
+        "messagebus"
         "systemd-journal"
         "networkmanager"
         "network"

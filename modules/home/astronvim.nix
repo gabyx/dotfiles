@@ -37,7 +37,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       neovim
-      neovim-nightly
+      # neovim-nightly
       tree-sitter
     ];
 
