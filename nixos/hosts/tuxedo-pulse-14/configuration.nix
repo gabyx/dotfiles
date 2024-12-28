@@ -17,9 +17,8 @@ let
   };
 in
 {
-  disabledModules =
-    [
-    ];
+  disabledModules = [
+  ];
 
   imports = [
     # If you want to use modules your own flake exports (from modules/nixos):
@@ -105,7 +104,7 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.autoUpgrade.enable = true;
+  system.autoUpgrade.enable = false;
   system.autoUpgrade.allowReboot = true;
   system.stateVersion = "24.05";
   # ===========================================================================
