@@ -222,7 +222,7 @@ wezterm.on("gui-startup", function(cmd)
 end)
 
 -- Set the status on the top.
--- status.set_status()
+status.set_status()
 
 -- and finally, return the configuration to wezterm
 return config
