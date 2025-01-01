@@ -19,6 +19,7 @@ docs
 
 {{- if ne .chezmoi.os "linux" }}
 # Ignore if not on linux
+.face
 .config/flashfocus
 .config/hypr
 .config/mako
