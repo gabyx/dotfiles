@@ -1,5 +1,9 @@
 # My own settings to build the NixOS configurations.
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  ...
+}:
 let
   setts = config.settings;
 in
@@ -25,9 +29,15 @@ with lib;
           ];
         };
 
-        profilePicture = mkOption {
+        icon = mkOption {
           description = "The profile picture in PNG to use. (you can set it to a )";
-          default = "/home/${setts.user.name}/.config/profile-icons/nixos.png";
+          default = ../../config/dot_config/profile-icons/nixos.png;
+          type = types.path;
+        };
+
+        opensshAuthKeyFiles = mkOption {
+          description = "The profile picture in PNG to use. (you can set it to a )";
+          default = [ ../../config/private_dot_ssh/gabyx_ed25519.pub ];
           type = types.oneOf [
             types.str
             types.path

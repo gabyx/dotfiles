@@ -5,12 +5,13 @@
 }:
 let
   settings = config.settings;
-  userName = settings.user.name;
 in
 {
+  imports = [ ./user-icon.nix ];
+
   ### User Settings ==========================================================
   users = {
-    users.${userName} = {
+    users.${settings.user.name} = {
       shell = pkgs.zsh;
 
       useDefaultShell = false;
@@ -48,31 +49,10 @@ in
         }
       ];
 
-      openssh.authorizedKeys.keyFiles = [ ../../config/private_dot_ssh/gabyx_ed25519.pub ];
+      # Authorized keys to access the machine if openssh is enabled.
+      openssh.authorizedKeys.keyFiles = settings.user.opensshAuthKeyFiles;
     };
 
   };
-
-  # Place a user image if there is a `.face` (needs to be PNG) in the
-  # user folder.
-  system.activationScripts.script.text = ''
-    mkdir -p /var/lib/AccountsService/{icons,users}
-    pic="${config.settings.user.profilePicture}"
-
-    if [ ! -f "$pic" ]; then
-      echo "User image not existing in '$pic' -> Skip setup."
-      exit 0
-    fi
-
-    echo "User image existing in '$pic' -> Setup."
-    cp "$pic" /var/lib/AccountsService/icons/${userName}
-    echo -e "[User]\nIcon=/var/lib/AccountsService/icons/${userName}\n" > /var/lib/AccountsService/users/${userName}
-
-    chown root:root /var/lib/AccountsService/users/${userName}
-    chmod 0600 /var/lib/AccountsService/users/${userName}
-
-    chown root:root /var/lib/AccountsService/icons/${userName}
-    chmod 0444 /var/lib/AccountsService/icons/${userName}
-  '';
   # ===========================================================================
 }

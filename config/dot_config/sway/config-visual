@@ -26,4 +26,4 @@ gaps outer 5
 smart_gaps on
 
 # Default wallpaper (more resolutions are available in /run/current-system/sw/share/backgrounds/sway/)
-output * bg ~/.config/wallpapers/background-space.jpg fill
+output * bg ~/.config/wallpapers/background-sand.jpg fill
