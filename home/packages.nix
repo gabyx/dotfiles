@@ -166,7 +166,7 @@ in
     pkgs.krita # Painting
     pkgs.nomacs # Image viewer
     pkgs.zathura # Simple document viewer
-    pkgs.kdePackages.okular # Another PDF viewer
+    pkgs.xournalpp # Another PDF viewer
     pkgs.pdfarranger # PDF arranger
     pkgs.ghostscript
     pkgs.imagemagick_light # Converter tools
