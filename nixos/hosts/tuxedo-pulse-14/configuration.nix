@@ -8,14 +8,6 @@
   outputs,
   ...
 }:
-let
-  pkgsStable = import inputs.nixpkgsStable {
-    system = pkgs.system;
-    config = {
-      allowUnfree = true;
-    };
-  };
-in
 {
   disabledModules = [
   ];
@@ -41,7 +33,7 @@ in
     ./hardware.nix
 
     # Include all other specifications.
-    (outputs.nixosModules.windowing { inherit config pkgs pkgsStable; })
+    (outputs.nixosModules.windowing { inherit config pkgs; })
     outputs.nixosModules.display
     outputs.nixosModules.keyboard
     outputs.nixosModules.fonts
@@ -61,7 +53,6 @@ in
       inherit
         config
         pkgs
-        pkgsStable
         inputs
         ;
     })
@@ -78,7 +69,6 @@ in
         config
         inputs
         outputs
-        pkgsStable
         ;
     })
   ];
@@ -93,7 +83,7 @@ in
       # Add overlays of your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
       outputs.overlays.modifications
-      # outputs.overlays.unstable-packages
+      outputs.overlays.unstable
     ];
   };
 

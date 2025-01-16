@@ -8,8 +8,9 @@
   # with `fhs`. Build with `nix build .#fhs`
   # fhs = pkgs.callPackage ./fhs.nix {};
 
-  # Batman Timezone Converter
-  batz = pkgs.callPackage ./batz { };
+  # Batman Timezone Converter.
+  # batz = pkgs.callPackage ./batz { };
 
+  # I3 helper also for Sway.
   i3-back = pkgs.callPackage ./i3-back { };
 }

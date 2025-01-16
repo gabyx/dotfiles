@@ -10,13 +10,6 @@
 }:
 let
   modules = inputs.self + /nixos/modules;
-
-  pkgsStable = import inputs.nixpkgsStable {
-    system = pkgs.system;
-    config = {
-      allowUnfree = true;
-    };
-  };
 in
 {
   imports = [
@@ -29,7 +22,7 @@ in
     inputs.agenix.nixosModules.default
 
     # Include all other specifications.
-    (outputs.nixosModules.windowing { inherit config pkgs pkgsStable; })
+    (outputs.nixosModules.windowing { inherit config pkgs; })
     outputs.nixosModules.display
     outputs.nixosModules.keyboard
     outputs.nixosModules.fonts
@@ -59,7 +52,6 @@ in
         config
         inputs
         outputs
-        pkgsStable
         ;
     })
   ];

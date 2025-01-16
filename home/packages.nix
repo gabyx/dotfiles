@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  pkgsStable,
   inputs,
   outputs,
   ...
@@ -16,195 +15,153 @@ in
   # $ nix search wget
   home.packages = [
     # Basics
-    pkgs.zoxide # A smarter cd.
-    pkgs.age # Encryption tool.
-    pkgs.libsecret # secret-tool to access gnome-keyring
-    pkgs.git
-    pkgs.git-lfs
-    pkgs.git-town
+    pkgs.unstable.zoxide # A smarter cd.
+    pkgs.unstable.age # Encryption tool.
+    pkgs.unstable.libsecret # secret-tool to access gnome-keyring
+    pkgs.unstable.git
+    pkgs.unstable.git-lfs
+    pkgs.unstable.git-town
     githooks
-    pkgs.tig
-    pkgs.seahorse
-    pkgs.zenity # For dialogs over githooks and calendar.
+    pkgs.unstable.tig
+    pkgs.unstable.seahorse
+    pkgs.unstable.zenity # For dialogs over githooks and calendar.
 
     # Terminal
-    pkgs.starship
-    pkgs.kitty
+    pkgs.unstable.kitty
+    pkgs.unstable.ghostty
     wezterm-nightly
 
     # Editors
-    pkgs.vscode
+    pkgs.unstable.vscode
     # neovim configured in `astronvim.nix`
 
     # Tools
-    pkgs.restic # Backup tool
-    pkgs.lf # File manager
-    pkgs.chafa # For Sixel pictures in terminal
-    pkgs.exiftool # For image meta preview.
-    pkgs.atool # For archive preview
-    pkgs.bat # For text preview with syntax highlight and Git integration.
-    pkgs.poppler_utils # For image conversions.
-    pkgs.ffmpegthumbnailer # For video thumbnails.
-    pkgs.trash-cli # Trash command line to move stuff to trash.
-    pkgs.gparted # Disk utility.
-    pkgs.gnome-disk-utility # Easy disk utility `gdisk`.
+    pkgs.unstable.restic # Backup tool
+    pkgs.unstable.lf # File manager
+    pkgs.unstable.chafa # For Sixel pictures in terminal
+    pkgs.unstable.exiftool # For image meta preview.
+    pkgs.unstable.atool # For archive preview
+    pkgs.unstable.bat # For text preview with syntax highlight and Git integration.
+    pkgs.unstable.poppler_utils # For image conversions.
+    pkgs.unstable.ffmpegthumbnailer # For video thumbnails.
+    pkgs.unstable.trash-cli # Trash command line to move stuff to trash.
+    pkgs.unstable.gparted # Disk utility.
+    pkgs.unstable.gnome-disk-utility # Easy disk utility `gdisk`.
 
     # Programming
-    (lib.hiPrio pkgs.parallel)
-    pkgs.chezmoi
-    pkgs.lazygit
-    pkgs.delta
-    pkgs.meld
-    pkgs.kubectl
-    pkgs.kind # Simple kubernetes for local development.
-    pkgs.k9s # Kubernetes management CLI tool
-    pkgs.kdiff3
-    pkgs.jq
-    pkgs.yq-go
-    pkgs.yarn
-    pkgs.just
-    pkgs.dive # Inspect container images.
+    pkgs.unstable.parallel
+    (lib.hiPrio pkgs.unstable.chezmoi)
+    pkgs.unstable.lazygit
+    pkgs.unstable.delta
+    pkgs.unstable.meld
+    pkgs.unstable.kubectl
+    pkgs.unstable.kind # Simple kubernetes for local development.
+    pkgs.unstable.k9s # Kubernetes management CLI tool
+    pkgs.unstable.kdiff3
+    pkgs.unstable.jq
+    pkgs.unstable.yq-go
+    pkgs.unstable.yarn
+    pkgs.unstable.just
+    pkgs.unstable.dive # Inspect container images.
 
     # FHS Environment with nix-alien
     inputs.nixAlien.packages.${pkgs.system}.nix-alien
 
     # Linters
-    pkgs.markdownlint-cli
-    pkgs.yamllint
-    pkgs.nodePackages.jsonlint
-    pkgs.codespell
-    pkgs.typos
-    pkgs.shfmt
-    pkgs.shellcheck
+    pkgs.unstable.markdownlint-cli
+    pkgs.unstable.yamllint
+    pkgs.unstable.nodePackages.jsonlint
+    pkgs.unstable.codespell
+    pkgs.unstable.typos
+    pkgs.unstable.shfmt
+    pkgs.unstable.shellcheck
 
     ## Lsp
     # rust-analyzer and clangd come with
     # the toolchain.
-    pkgs.gopls
-    pkgs.golangci-lint-langserver
-    pkgs.texlab
-    pkgs.typos-lsp
-    pkgs.nixd
-    pkgs.marksman
-    pkgs.lua-language-server
-    pkgs.nodePackages.dockerfile-language-server-nodejs
-    pkgs.nodePackages.bash-language-server
-    pkgs.nodePackages.vscode-json-languageserver
-    pkgs.nodePackages.yaml-language-server
-
-    ## Debug Adapters
-    # lldb-code is installed in llvm
-    pkgs.delve
-
-    ## C
-    pkgs.gnumake
-    pkgs.autoconf
-    pkgs.libtool
-    pkgs.pkg-config
-
-    ## C++
-    pkgs.cmake
-
-    ## Go
-    pkgs.go
-    pkgs.goreleaser
-    pkgs.golangci-lint
-    pkgs.gotools
-
-    ## Node
-    pkgs.nodejs
-
-    ## Java
-    pkgs.openjdk
-
-    ## Rust
-    pkgs.rustup
+    pkgs.unstable.gopls
+    pkgs.unstable.golangci-lint-langserver
+    pkgs.unstable.texlab
+    pkgs.unstable.typos-lsp
+    pkgs.unstable.nixd
+    pkgs.unstable.marksman
+    pkgs.unstable.lua-language-server
+    pkgs.unstable.nodePackages.dockerfile-language-server-nodejs
+    pkgs.unstable.nodePackages.bash-language-server
+    pkgs.unstable.nodePackages.vscode-json-languageserver
+    pkgs.unstable.nodePackages.yaml-language-server
 
     ## Python
-    pkgs.python311
-    pkgs.python311Packages.pip
-    pkgs.python311Packages.isort
-    pkgs.python311Packages.black
-    pkgs.pyright
+    pkgs.unstable.python313
+    pkgs.unstable.python313Packages.pip
+    pkgs.unstable.python313Packages.isort
+    pkgs.unstable.python313Packages.black
+    pkgs.unstable.pyright
 
     ## Nix
-    pkgs.nix-tree
-    pkgs.nixpkgs-lint
-    pkgs.stdenv.cc # for neovim treesitter.
-    pkgs.alejandra
-    pkgs.nixfmt-rfc-style
-    pkgs.dconf2nix # To generate the `dconf` settings.
+    pkgs.unstable.nix-tree
+    pkgs.unstable.nixpkgs-lint
+    pkgs.unstable.stdenv.cc # for neovim treesitter.
+    pkgs.unstable.nixfmt-rfc-style
+    pkgs.unstable.dconf2nix # To generate the `dconf` settings.
 
     ## Lua
-    pkgs.stylua
+    pkgs.unstable.stylua
 
     # Config Files
-    pkgs.nodePackages.prettier
+    pkgs.unstable.nodePackages.prettier
 
     # Writing
-    pkgs.texlive.combined.scheme-full
-    pkgs.pandoc
+    pkgs.unstable.texlive.combined.scheme-full
+    pkgs.unstable.pandoc
 
     # Calendar/Mail
     pkgs.khal # CLI Calendar
-    pkgs.batz # Timezone converter (for nextmeeting)
 
     # MultiMedia
-    pkgs.bitwarden # Password manager
-    pkgs.bitwarden-cli
-    pkgs.bazecor # Dygma Defy Keyboard.
-    pkgs.signal-desktop # Messaging app
-    pkgs.element-desktop # Matrix client.
-    pkgs.slack # Messaging app
-    pkgs.transmission_3-gtk
-    pkgs.ffmpeg # Movie converter
-    pkgs.vlc # Movie player
-    pkgs.amberol # Music player
-    pkgs.showmethekey # Screencast the key-presses.
+    pkgs.unstable.bitwarden # Password manager
+    pkgs.unstable.bitwarden-cli
+    pkgs.unstable.bazecor # Dygma Defy Keyboard.
+    pkgs.unstable.signal-desktop # Messaging app
+    pkgs.unstable.element-desktop # Matrix client.
+    pkgs.unstable.slack # Messaging app
+    pkgs.unstable.transmission_3-gtk
+    pkgs.unstable.ffmpeg # Movie converter
+    pkgs.unstable.vlc # Movie player
+    pkgs.unstable.amberol # Music player
+    pkgs.unstable.showmethekey # Screencast the key-presses.
 
-    pkgs.inkscape # Vector graphics
-    pkgs.krita # Painting
-    pkgs.nomacs # Image viewer
-    pkgs.zathura # Simple document viewer
-    pkgs.xournalpp # Another PDF viewer
-    pkgs.pdfarranger # PDF arranger
-    pkgs.ghostscript
-    pkgs.imagemagick_light # Converter tools
-    pkgs.ymuse # Sound player
-    pkgs.zoom-us # Video calls
-    pkgs.deluge # Bittorrent client
-    pkgs.firefox
-    pkgs.google-chrome
-    pkgs.libreoffice
+    pkgs.unstable.inkscape # Vector graphics
+    pkgs.unstable.krita # Painting
+    pkgs.unstable.nomacs # Image viewer
+    pkgs.unstable.zathura # Simple document viewer
+    pkgs.unstable.xournalpp # Another PDF viewer
+    pkgs.unstable.pdfarranger # PDF arranger
+    pkgs.unstable.ghostscript
+    pkgs.unstable.imagemagick_light # Converter tools
+    pkgs.unstable.ymuse # Sound player
+    pkgs.unstable.zoom-us # Video calls
+    pkgs.unstable.deluge # Bittorrent client
+    pkgs.unstable.firefox
+    pkgs.unstable.google-chrome
+    pkgs.unstable.libreoffice
 
     # Sound
-    pkgs.headsetcontrol
-    pkgs.noson # Sonos device
+    pkgs.unstable.headsetcontrol
+    pkgs.unstable.noson # Sonos device
 
     # VPN
-    pkgs.wgnord
+    pkgs.unstable.wgnord
 
     # Remote Desks
-    pkgs.anydesk
+    pkgs.unstable.anydesk
 
     # Dictionaries
-    pkgs.aspell
-    pkgs.aspellDicts.en
-    pkgs.aspellDicts.en-computers
-    pkgs.hunspell
-    pkgs.hunspellDicts.en-us
+    pkgs.unstable.aspell
+    pkgs.unstable.aspellDicts.en
+    pkgs.unstable.aspellDicts.en-computers
+    pkgs.unstable.hunspell
+    pkgs.unstable.hunspellDicts.en-us
   ];
 
-  # # Install Neovim nightly if needed. Careful with Astrovim Setup.
-  # nixpkgs.overlays = [
-  #   (import (builtins.fetchTarball {
-  #     url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-  #   }))
-  #   (self: super: {
-  #    neovim = super.neovim.override {
-  #      viAlias = true;
-  #      vimAlias = true;
-  #    };
-  #  })
-  # ];
 }

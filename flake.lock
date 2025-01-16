@@ -5,7 +5,7 @@
         "darwin": "darwin",
         "home-manager": "home-manager",
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgsUnstable"
         ],
         "systems": "systems"
       },
@@ -26,7 +26,7 @@
     "auto-cpufreq": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgsUnstable"
         ]
       },
       "locked": {
@@ -256,7 +256,7 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgsUnstable"
         ]
       },
       "locked": {
@@ -418,7 +418,7 @@
         "hercules-ci-effects": "hercules-ci-effects",
         "neovim-src": "neovim-src",
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgsUnstable"
         ]
       },
       "locked": {
@@ -514,7 +514,7 @@
         "nix-filter": "nix-filter",
         "nix-index-database": "nix-index-database_2",
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgsUnstable"
         ]
       },
       "locked": {
@@ -547,18 +547,18 @@
         "type": "github"
       }
     },
-    "nixpkgsStable": {
+    "nixpkgsUnstable": {
       "locked": {
-        "lastModified": 1735264675,
-        "narHash": "sha256-MgdXpeX2GuJbtlBrH9EdsUeWl/yXEubyvxM1G+yO4Ak=",
+        "lastModified": 1736883708,
+        "narHash": "sha256-uQ+NQ0/xYU0N1CnXsa2zghgNaOPxWpMJXSUJJ9W7140=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "d49da4c08359e3c39c4e27c74ac7ac9b70085966",
+        "rev": "eb62e6aa39ea67e0b8018ba8ea077efe65807dc8",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-24.11",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -590,7 +590,7 @@
         "nix-index-database": "nix-index-database",
         "nixAlien": "nixAlien",
         "nixpkgs": "nixpkgs",
-        "nixpkgsStable": "nixpkgsStable",
+        "nixpkgsUnstable": "nixpkgsUnstable",
         "treefmt-nix": "treefmt-nix",
         "wezterm": "wezterm"
       }
@@ -679,7 +679,7 @@
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgsUnstable"
         ]
       },
       "locked": {

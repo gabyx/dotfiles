@@ -5,7 +5,7 @@
 }:
 {
   ### Calendar Syncing ========================================================
-  home.packages = with pkgs; [
+  home.packages = with pkgs.unstable; [
     vdirsyncer
     davmail
   ];
@@ -14,6 +14,7 @@
     vdirsyncer = {
       enable = true;
       frequency = "*:0/2"; # Sync every 2 minutes.
+      package = pkgs.unstable.vdirsyncer;
     };
     # ===========================================================================
 
