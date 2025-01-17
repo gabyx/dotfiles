@@ -28,11 +28,15 @@ function mount() {
     get_mount_point mountpoint
     local mount="$mountpoint/$3"
 
+    if [ "$(zfs get mounted "$pool/$dataset" -o value -H)" = "yes" ]; then
+        gabyx::print_info "Already mounted zfs: $pool, dataset: $dataset"
+        return 0
+    fi
+
     gabyx::print_info "Mount zfs: $pool, dataset: $dataset at: '$mount/$dataset"
     sudo zfs set -u mountpoint="$mount/$dataset" "$pool/$dataset"
     sudo zfs mount -l "$pool/$dataset" || {
-        echo
-        echo "Could not mount volume '$mount/$dataset'. -> Skip." >&2
+        gabyx::die "Could not mount volume '$mount/$dataset'. -> Skip." >&2
     }
 }
 
@@ -40,6 +44,13 @@ function unmount() {
     local pool="$1"
     local dataset="$2"
 
+    if [ "$(zfs get mounted "$pool/$dataset" -o value -H)" = "no" ]; then
+        gabyx::print_info "Already unmounted zfs: $pool, dataset: $dataset"
+        return 0
+    fi
+
     gabyx::print_info "Unmount zfs: $pool, dataset: $dataset"
-    sudo zfs unmount "$pool/$dataset"
+    sudo zfs unmount "$pool/$dataset" ||
+        gabyx::die "Could not unmount volume '$mount/$dataset'"
+
 }

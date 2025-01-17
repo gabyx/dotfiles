@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090
+# TODO: Script will fail if the sudo cache is reset
+#       which will again need sudo password.
 
 set -e
 set -u
@@ -10,15 +12,13 @@ set -u
 . ~/.config/restic/scripts/mount-disks.sh
 
 DISK_PATH=/dev/disk/by-uuid/4877700394137381369
-PERSONAL_SRC=/mnt/data/personal
-PERSONAL_DEST=/mnt/external-ssd/data-backups/personal
-
-WORK_SRC=/mnt/data/work
-WORK_DEST=/mnt/external-ssd/data-backups/work
 
 # Flags:
-LIST="true"
+LIST="false"
 NONINTERACTIVE="false"
+POWEROFF="true"
+DATASETS_DEFAULT=(personal work)
+DATASETS=()
 
 function parse_args() {
     # Loop through all the arguments
@@ -26,6 +26,14 @@ function parse_args() {
         case $arg in
         --list)
             LIST="true"
+            shift
+            ;;
+        --dataset)
+            DATASETS+=("$2")
+            shift 2
+            ;;
+        --no-power-off)
+            POWEROFF="false"
             shift
             ;;
         --non-interactive)
@@ -38,6 +46,56 @@ function parse_args() {
             ;;
         esac
     done
+
+    if [ "${#DATASETS[@]}" -eq 0 ]; then
+        DATASETS=("${DATASETS_DEFAULT[@]}")
+    fi
+
+    gabyx::print_info \
+        "NONINTERACTIVE: $NONINTERACTIVE" \
+        "DATASETS:\n$(printf ' - %s\n' "${DATASETS[@]}")" \
+        "POWEROFF: $POWEROFF"
+}
+
+function get_src() {
+    local dataset="$1"
+    if [ "$dataset" = "personal" ]; then
+        echo "/mnt/data/personal"
+    elif [ "$dataset" = "work" ]; then
+        echo "/mnt/data/work"
+    else
+        gabyx::die "Dataset '$dataset' not implemented"
+    fi
+}
+
+function get_dest() {
+    local dataset="$1"
+    if [ "$dataset" = "personal" ]; then
+        echo "/mnt/external-ssd/data-backups/personal"
+    elif [ "$dataset" = "work" ]; then
+        echo "/mnt/external-ssd/data-backups/work"
+    else
+        gabyx::die "Dataset '$dataset' not implemented"
+    fi
+}
+
+function keep_sudo_alive() {
+    # Might as well ask for password up-front, right?
+    sudo -v
+
+    # Keep-alive: update existing sudo time stamp if set, otherwise do nothing.
+    # Explanation:
+    # $$ is the PID of the parent process.
+    # kill -0 PID exits with an exit code of 0 if the PID is
+    # of a running process, otherwise exits with an exit code of 1.
+    # So, basically, `kill -0 "$$" || exit`
+    # aborts the while loop child process as soon as the
+    # parent process is no longer running.
+    while true; do
+        sudo true
+        sleep 60
+        kill -0 "$$" || exit
+    done 2>/dev/null &
 }
 
 function restic_backup() {
@@ -48,31 +106,38 @@ function restic_backup() {
         "Backing up '$src' to '$dest' with restic."
     (cd "$src" &&
         restic backup -r "$dest" --exclude-file "$general_excludes" ./) ||
-        die "Backup failed."
+        gabyx::die "Backup failed."
     gabyx::print_info "==============================="
 }
 
-function backup_all() {
+function backup() {
     echo "Starting backup of all disks..."
 
-    restic_backup "$PERSONAL_SRC" "$PERSONAL_DEST"
-    restic_backup "$WORK_SRC" "$WORK_DEST"
-    backup_list_and_check
+    for dataset in "${DATASETS[@]}"; do
+        restic_backup \
+            "$(get_src "$dataset")" \
+            "$(get_dest "$dataset")"
+
+        if [ "$dataset" = "work" ]; then
+            # Unmount for sure the encrypted disk.
+            unmount zfs-pool-data work
+        fi
+    done
+
+    list_and_check
+
+    notify "Backup finished."
 }
 
-function backup_list_and_check() {
+function list_and_check() {
     # export_backup_password
-    echo "Snapshots for '$PERSONAL_DEST'."
-    restic snapshots -r "$PERSONAL_DEST"
+    for dataset in "${DATASETS[@]}"; do
+        echo "Snapshots for '$dataset'."
+        restic snapshots -r "$(get_dest "$dataset")"
 
-    echo "Snapshots for '$WORK_DEST'."
-    restic snapshots -r "$WORK_DEST"
-
-    echo "Checks for '$PERSONAL_DEST'."
-    restic check -r "$PERSONAL_DEST"
-
-    echo "Checks for '$WORK_DEST'."
-    restic check -r "$WORK_DEST"
+        echo "Checks for '$dataset'."
+        restic check -r "$(get_dest "$dataset")"
+    done
 }
 
 function notify() {
@@ -100,20 +165,21 @@ function prompt_password() {
 function export_backup_password() {
     password_file=~/.config/restic/backup-pass
 
-    if [ ! -f "$password_file" ]; then
+    if ! is_non_interactive && [ ! -f "$password_file" ]; then
         RESTIC_PASSWORD=$(prompt_password) ||
-            die "Could not prompt for password."
+            gabyx::die "Could not prompt for password."
     else
-        RESTIC_PASSWORD=$(cat "$password_file")
+        RESTIC_PASSWORD=$(cat "$password_file") ||
+            gabyx::die "Could not read password file '$password_file'"
     fi
 
-    [ -n "$RESTIC_PASSWORD" ] || die "Password is empty."
+    [ -n "$RESTIC_PASSWORD" ] || gabyx::die "Password is empty."
 
     export RESTIC_PASSWORD
 }
 
-function run_backup_list() {
-    export_backup_passwordjj
+function run_list() {
+    export_backup_password
 
     gabyx::print_info "Import all zfs pools"
     sudo zpool import -f -a
@@ -121,7 +187,7 @@ function run_backup_list() {
     unmount zfs-pool-external-ssd data-backups || true
     mount zfs-pool-external-ssd data-backups "external-ssd"
 
-    backup_list_and_check
+    list_and_check
 }
 
 function run_backup() {
@@ -133,11 +199,11 @@ function run_backup() {
     gabyx::print_info "Import all zfs pools"
     sudo zpool import -f -a
 
-    # Mount sources.
-    unmount zfs-pool-data work || true
-    unmount zfs-pool-data personal || true
-    mount zfs-pool-data work "data"
-    mount zfs-pool-data personal "data"
+    # Mount datasets.
+    for dataset in "${DATASETS[@]}"; do
+        unmount zfs-pool-data "$dataset" || true
+        mount zfs-pool-data "$dataset" "data"
+    done
 
     # Mount targets
     unmount zfs-pool-external-ssd data-backups || true
@@ -146,37 +212,37 @@ function run_backup() {
         exit 1
     }
 
-    backup_all
-
-    # Unmount for sure the encrypted disk.
-    unmount zfs-pool-data work
-    # unmount zfs-pool-data personal
-
-    notify "Backup finished."
+    backup
 }
 
 function unmount_power_off_backup_drive() {
+    echo "Unmount backup drive for safety."
     # Export the pool, will unmount everything.
     sudo zpool export zfs-pool-external-ssd
 
-    # Powerdone external drive.
-    sudo udisksctl power-off -b "$DISK_PATH"
+    if [ "$POWEROFF" = "true" ]; then
+        echo "Poweroff backup drive for safety."
+        # Powerdone external drive.
+        sudo udisksctl power-off -b "$DISK_PATH"
+    fi
 }
 
 function clean_up() {
-    echo "Unmount and power off backup drive for safety."
-    unmount_power_off_backup_drive &>/dev/null || true
+    unmount_power_off_backup_drive || true
 }
 
 function on_error() {
     notify warning "An error occurred in the backup script."
 }
 
-trap clean_up EXIT
-trap on_error ERROR
+trap clean_up EXIT INT
+trap on_error ERR
+
+parse_args "$@"
 
 if [ "$LIST" = "true" ]; then
-    run_backup_list
+    run_list
 else
+    keep_sudo_alive
     run_backup
 fi
