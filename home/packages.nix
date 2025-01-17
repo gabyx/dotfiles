@@ -98,6 +98,9 @@ in
     pkgs.unstable.python313Packages.black
     pkgs.unstable.pyright
 
+    ## Node (markdown-preview)
+    pkgs.unstable.nodejs
+
     ## Nix
     pkgs.unstable.nix-tree
     pkgs.unstable.nixpkgs-lint
