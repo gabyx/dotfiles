@@ -41,7 +41,7 @@ docs
 {{- end }}
 
 # Evolution (ignore after apply)
-# .config/evolution/sources
+.config/evolution/sources
 .config/goa-1.0
 
 # Google Chrome Bookmarks
