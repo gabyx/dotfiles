@@ -1,21 +1,21 @@
 [Data Source]
 DisplayName=gabriel.nuetzi@sdsc.ethz.ch
 Enabled=true
-Parent=1b0b6f32c2071e7bbf3965fd5e75368dc42ea482
+Parent=526f45ba93fb539462a35f016872acd5f808ec98
 
 [Mail Submission]
-SentFolder=folder://628b91904b85e8bfe4a17db666d6512163062c55/Sent%20Items
-TransportUid=22a0cd4431f61379fdac7660a48f00baedaa8890
+SentFolder=folder://8ab84720074a14261b1ca7e3cb06877e74b53852/Sent%20Items
+TransportUid=1f8aea06514a5e5242470d74a885b61cde31fdb4
 RepliesToOriginFolder=false
 UseSentFolder=true
 
 [Mail Composition]
 Bcc=
 Cc=
-DraftsFolder=folder://628b91904b85e8bfe4a17db666d6512163062c55/Drafts
+DraftsFolder=folder://8ab84720074a14261b1ca7e3cb06877e74b53852/Drafts
 ReplyStyle=default
 SignImip=true
-TemplatesFolder=folder://628b91904b85e8bfe4a17db666d6512163062c55/Templates
+TemplatesFolder=folder://local/Templates
 StartBottom=inconsistent
 TopSignature=inconsistent
 Language=
@@ -23,8 +23,8 @@ Language=
 [Mail Identity]
 Address=gabriel.nuetzi@sdsc.ethz.ch
 Aliases=
-Name=Gabriel Nützi
-Organization=ETH Zurich
+Name=gabriel.nuetzi@sdsc.ethz.ch
+Organization=
 ReplyTo=
 SignatureUid=none
 
@@ -51,3 +51,10 @@ EncryptToSelf=true
 SigningAlgorithm=
 SigningCertificate=
 SignByDefault=false
+
+[Microsoft365 Folder]
+Id=
+IsDefault=false
+GroupId=
+DisplayName=
+Color=

@@ -1,0 +1,31 @@
+[Data Source]
+DisplayName=nuetzig@polybox.ethz.ch
+Enabled=true
+Parent=
+
+[Authentication]
+Host=
+Method=none
+Port=0
+ProxyUid=system-proxy
+RememberPassword=true
+User=
+CredentialName=
+IsExternal=true
+
+[Collection]
+BackendName=webdav
+CalendarEnabled=false
+ContactsEnabled=false
+Identity=nuetzig
+MailEnabled=true
+AllowSourcesRename=false
+CalendarUrl=
+ContactsUrl=
+
+[GNOME Online Accounts]
+AccountId=account_1718023002_0
+CalendarUrl=
+ContactsUrl=
+Name=
+Address=

@@ -1,0 +1,14 @@
+[Data Source]
+DisplayName=gabriel.nuetzi@sdsc.ethz.ch
+Enabled=true
+Parent=526f45ba93fb539462a35f016872acd5f808ec98
+
+[Mail Transport]
+BackendName=microsoft365
+
+[Microsoft365 Folder]
+Id=
+IsDefault=false
+GroupId=
+DisplayName=
+Color=

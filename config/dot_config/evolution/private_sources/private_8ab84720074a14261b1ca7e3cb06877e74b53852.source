@@ -1,0 +1,25 @@
+[Data Source]
+DisplayName=gabriel.nuetzi@sdsc.ethz.ch
+Enabled=true
+Parent=526f45ba93fb539462a35f016872acd5f808ec98
+
+[Mail Account]
+BackendName=microsoft365
+IdentityUid=5b602db5aaa7a343f4ca49a6487609b4764d395c
+ArchiveFolder=folder://8ab84720074a14261b1ca7e3cb06877e74b53852/Archive
+NeedsInitialSetup=false
+MarkSeen=inconsistent
+MarkSeenTimeout=1500
+Builtin=false
+
+[Refresh]
+Enabled=true
+EnabledOnMeteredNetwork=true
+IntervalMinutes=60
+
+[Microsoft365 Folder]
+Id=
+IsDefault=false
+GroupId=
+DisplayName=
+Color=
