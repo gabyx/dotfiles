@@ -58,6 +58,8 @@ IgnoreSharedFoldersNamespace=false
 FullUpdateOnMeteredNetwork=true
 SendClientId=false
 SingleClientMode=false
+RealNotJunkPath=
+UseRealNotJunkPath=false
 
 [Refresh]
 Enabled=true

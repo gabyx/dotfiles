@@ -39,7 +39,7 @@ PreferInline=false
 LocateKeys=true
 SendPublicKey=true
 SendPreferEncrypt=true
-AskSendPublicKey=true
+AskSendPublicKey=false
 
 [Message Disposition Notifications]
 ResponsePolicy=ask
