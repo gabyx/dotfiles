@@ -3,6 +3,9 @@
   pkgs,
   ...
 }:
+let
+  settings = config.settings;
+in
 {
   ### Services ================================================================
   services = {
@@ -56,11 +59,6 @@
 
     # Optional to use google/nextcloud calendar
     gnome.gnome-online-accounts.enable = true;
-
-    # davmail = {
-    #   enable = true;
-    #   url = "https://mail.ethz.ch/EWS/Exchange.asmx";
-    # };
   };
 
   environment.systemPackages = with pkgs; [

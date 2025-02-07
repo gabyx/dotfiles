@@ -1,14 +1,25 @@
 # DavMail settings, see http://davmail.sourceforge.net/ for documentation
 
 # Turn this to `false` to do the OAuth2 authentication.
+# With
+#
+# `davmail ~/.config/davmail/properties`
+#
+# and then run
+#
+# `vdirsyncer discover work_default`
+#
 davmail.server=true
 davmail.server.certificate.hash=
 
 davmail.mode=O365Interactive
 davmail.url={{ .calendar.work.exchange.url }}
 
+# We use the client id of `Evolution`
+# (inspect it in the O365 account settings)
+# which apparently works.
 davmail.oauth.clientId=20460e5d-ce91-49af-a3a5-70b6be7486d1
-davmail.oauth.tokenFilePath=/home/nixos/.local/state/davmail/secrets/token
+## davmail.oauth.tokenFilePath=~/.local/state/davmail/secrets/token
 davmail.oauth.redirectUri=
 davmail.oauth.tenantId=
 
@@ -18,59 +29,4 @@ davmail.popPort=
 davmail.smtpPort=
 davmail.imapPort=
 
-davmail.allowRemote=false
-davmail.bindAddress=
-
-davmail.caldavAlarmSound=
-davmail.caldavAutoSchedule=true
-davmail.caldavEditNotifications=false
-davmail.caldavPastDelay=0
-davmail.carddavReadPhoto=true
-
-davmail.clientSoTimeout=
-davmail.defaultDomain=
-davmail.disableGuiNotifications=false
-davmail.disableTrayActivitySwitch=false
-davmail.disableUpdateCheck=false
-davmail.enableKeepAlive=false
-davmail.enableKerberos=false
-davmail.enableProxy=false
-davmail.folderSizeLimit=
-davmail.forceActiveSyncUpdate=false
-davmail.imapAlwaysApproxMsgSize=false
-davmail.imapAutoExpunge=true
-davmail.imapIdleDelay=
-davmail.keepDelay=30
-davmail.logFilePath=
-davmail.logFileSize=
-davmail.noProxyFor=
-davmail.popMarkReadOnRetr=false
-davmail.proxyHost=
-davmail.proxyPassword=
-davmail.proxyPort=
-davmail.proxyUser=
-davmail.sentKeepDelay=0
-davmail.showStartupBanner=true
-davmail.smtpSaveInSent=true
-davmail.ssl.clientKeystoreFile=
-davmail.ssl.clientKeystorePass=
-davmail.ssl.clientKeystoreType=
-davmail.ssl.keyPass=
-davmail.ssl.keystoreFile=
-davmail.ssl.keystorePass=
-davmail.ssl.keystoreType=
-davmail.ssl.nosecurecaldav=false
-davmail.ssl.nosecureimap=false
-davmail.ssl.nosecureldap=false
-davmail.ssl.nosecurepop=false
-davmail.ssl.nosecuresmtp=false
-davmail.ssl.pkcs11Config=
-davmail.ssl.pkcs11Library=
-davmail.useSystemProxies=false
-log4j.logger.davmail=DEBUG
-log4j.logger.httpclient=WARN
-log4j.logger.httpclient.wire=WARN
-log4j.logger.org.apache.http.conn.ssl=WARN
-log4j.logger.org.apache.http=WARN
-log4j.logger.org.apache.http.wire=WARN
-log4j.rootLogger=WARN
+davmail.logFilePath=~/.local/state/davmail/davmail.log

@@ -90,15 +90,22 @@ diff last="1" current_profile="/run/current-system":
     last="$1" # skip current system.
     current_profile="$2"
 
+    function sort_profiles() {
+        find /nix/var/nix/profiles -type l -name '*system-*' -printf '%T@ %p\0' |
+        sort -zk 1nr |
+        sed -z 's/^[^ ]* //' |
+        tr '\0' '\n'
+    }
+
     if [[ "$last" =~ [0-9]* ]]; then
-        last_profile="$(find /nix/var/nix/profiles -type l -name '*system-*' | sort -u | tail "-1" | head -1)"
+        last_profile="$(sort_profiles | head -n "$last" | tail -n 1)"
 
         if [[ "$(readlink last_profile)" = "$(readlink /nix/var/nix/profiles/current-system)" ]]; then
             echo "Last profile '$last_profile' points to 'nix/var/nix/profiles/current-system' -> Skip."
             last=$(($last + 1)) # skip current system.
         fi
 
-        last_profile="$(find /nix/var/nix/profiles -type l -name '*system-*' | sort -u | tail "-$last" | head -1)"
+        last_profile="$(sort_profiles | head -n "$last" | tail -n 1)"
     else
         last_profile="$last"
     fi

@@ -10,6 +10,17 @@
  * Keyframes
  * -------------------------------------------------------------------------- */
 
+@keyframes blink-normal {
+  70% {
+    color: white;
+  }
+
+  to {
+    color: white;
+    background-color: #6495ed;
+  }
+}
+
 @keyframes blink-warning {
   70% {
     color: white;
@@ -160,12 +171,17 @@ tooltip {
   color: #6495ed;
 }
 
-#custom-agenda.togo {
-  color: #6495ed;
-}
-
 #custom-agenda.soon {
   color: #f0e373;
+}
+
+#custom-agenda.togo {
+  color: #6495ed;
+  animation-name: blink-normal;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
 #custom-agenda.soon-urgent {

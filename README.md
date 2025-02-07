@@ -104,7 +104,7 @@ encrypted files can be decrypted in one go. The decrypted key is then again
 deleted in a _after_ hook](config/run_after_delete-decrypted-private-key.sh).
 
 The "passphrase" `P` can be stored into the login keyring to make
-`just apply-configs` **pass non-interactively**:
+`just cm apply` **pass non-interactively**:
 
 ```shell
 secret-tool store --label='Chezmoi Key-File Passphrase' chezmoi keyfile-private-key
@@ -208,6 +208,14 @@ Skip to step 3 on a fresh system.
 1. Start `evolution` and you should see now all accounts be connected and
    working. If `evolution` starts up without having picked up the accounts, you
    probably need another `dbus` restart above or logout or complete `restart`.
+
+#### Calendar Syncing for NextMeeting Script
+
+The script in
+[](./config/dot_config/waybar/scripts/executable_nextmeeting-khal.py) uses
+`khal` to read the synced calendar entries with `vdirsyncer`. It syncs google
+calendar and also the Outlook calendar over `davmail` which is
+[configured with this file](./config/dot_config/davmail/properties.tmpl).
 
 #### Troubleshooting
 
