@@ -213,9 +213,13 @@ Skip to step 3 on a fresh system.
 
 The script in
 [](./config/dot_config/waybar/scripts/executable_nextmeeting-khal.py) uses
-`khal` to read the synced calendar entries with `vdirsyncer`. It syncs google
-calendar and also the Outlook calendar over `davmail` which is
+`khal` to read the synced calendar entries with `vdirsyncer` which runs
+periodically.
+
+It syncs google calendar and also the Outlook calendar over `davmail` which is
 [configured with this file](./config/dot_config/davmail/properties.tmpl).
+Davmail will popup a window for the OAuth authentication if the token is not
+there.
 
 #### Troubleshooting
 
