@@ -45,6 +45,7 @@
     fzf-git-sh
     eza
 
+    nmap
     wget
     curl
     openvpn
