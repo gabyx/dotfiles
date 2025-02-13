@@ -28,6 +28,11 @@ function _print() {
         echo $flags -e "${s}${color}-- $header$msg${s}${e}"
     fi
 }
+
+function gabyx::print_debug() {
+    _print "[38;5;240m" "" "" "$@"
+}
+
 function gabyx::print_info() {
     _print "[0;94m" "" "" "$@"
 }
