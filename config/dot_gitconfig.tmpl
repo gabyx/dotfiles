@@ -20,7 +20,7 @@
     diffFilter = delta --color-only --features=interactive
 [push]
     autoSetupRemote = true
-    default = simple
+    default = upstream
     followTags = false
 [include]
     path = {{ .git.configPath }}/gitconfig-shared
@@ -53,13 +53,6 @@
     containerManager = "podman,docker"
 [init]
     defaultBranch = main
-[git-town]
-    main-branch = "main"
-    perennial-branches = "main"
-    sync-feature-strategy = rebase
-    sync-perennial-strategy = rebase
-    sync-upstream = true
-    sync-before-ship = true
 [filter "lfs"]
     process = git-lfs filter-process
     required = true
