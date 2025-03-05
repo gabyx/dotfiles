@@ -61,6 +61,7 @@ in
     pkgs.unstable.jq
     pkgs.unstable.yq-go
     pkgs.unstable.yarn
+    pkgs.unstable.remarshal
     pkgs.unstable.just
     pkgs.unstable.dive # Inspect container images.
 

@@ -10,7 +10,7 @@ let
   # Use fuse-overlayfs instead of kernel overlay2.
   storage-settings = {
     storage = {
-      driver = "btrfs";
+      driver = "overlay"; # btrfs is also a thing.
       # options.overlay = {
       #   # mount_program = lib.getExe pkgs.fuse-overlayfs;
       #   # mountopt = "nodev,fsync=0";

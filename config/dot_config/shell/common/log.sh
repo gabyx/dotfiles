@@ -2,7 +2,7 @@
 # shellcheck disable=SC1090,SC1091
 # shellcheck disable=SC2154,SC2086
 
-function _print() {
+function gabyx::_print() {
     local color="$1"
     local flags="$2"
     local header="$3"
@@ -30,23 +30,23 @@ function _print() {
 }
 
 function gabyx::print_debug() {
-    _print "[38;5;240m" "" "" "$@"
+    gabyx::_print "[38;5;240m" "" "" "$@"
 }
 
 function gabyx::print_info() {
-    _print "[0;94m" "" "" "$@"
+    gabyx::_print "[0;94m" "" "" "$@"
 }
 
 function gabyx::print_warning() {
-    _print "[0;31m" "" "WARN: " "$@" >&2
+    gabyx::_print "[0;31m" "" "WARN: " "$@" >&2
 }
 
 function gabyx::print_prompt() {
-    _print "[0;32m" "-n" "" "$@" >&2
+    gabyx::_print "[0;32m" "-n" "" "$@" >&2
 }
 
 function gabyx::print_error() {
-    _print "[0;31m" "" "ERROR: " "$@" >&2
+    gabyx::_print "[0;31m" "" "ERROR: " "$@" >&2
 }
 
 function gabyx::die() {
