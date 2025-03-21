@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  inputs,
   ...
 }:
 {
@@ -45,7 +43,7 @@
     fzf-git-sh
     eza
 
-    nmap
+    netcat-gnu
     wget
     curl
     openvpn
@@ -61,14 +59,8 @@
     just
     git
     git-lfs
+    git-filter-repo
     kitty
-
-    # Other virtualisation stuff.
-    # libguestfs # Needed to virt-sparsify qcow2 files
-    # libvirt
-    # spice # For automatic window resize if this conf is used as OS in VM
-    # spice-vdagent
-    # virt-manager
 
     # Nix tools
     nvd

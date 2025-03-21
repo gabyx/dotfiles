@@ -1,0 +1,40 @@
+shortcuts:
+  log_follow:
+    toggle_description:
+      false: Follow Off
+      true: Follow On
+    shortcut: f
+  log_screen:
+    toggle_description:
+      false: Half Screen
+      true: Full Screen
+    shortcut: l
+  log_wrap:
+    toggle_description:
+      false: Wrap Off
+      true: Wrap On
+    shortcut: w
+  process_restart:
+    description: Restart
+    shortcut: R
+  process_info:
+    shortcut: i
+  process_scale:
+    shortcut: S
+  process_screen:
+    toggle_description:
+      false: Half Screen
+      true: Full Screen
+    shortcut: h
+  process_start:
+    description: Start
+    shortcut: S
+  process_stop:
+    description: Stop
+    shortcut: K
+
+  find:
+    shortcut: /
+  quit:
+    description: Quit
+    shortcut: q

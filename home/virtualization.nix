@@ -21,4 +21,13 @@ let
 in
 {
   xdg.configFile."containers/storage.conf".source = toml.generate "storage.conf" storage-settings;
+
+  # Virt-manager settings.
+  # https://nixos.wiki/wiki/Virt-manager
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = [ "qemu:///system" ];
+      uris = [ "qemu:///system" ];
+    };
+  };
 }

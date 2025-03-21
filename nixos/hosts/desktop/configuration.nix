@@ -6,15 +6,10 @@
   pkgs,
   inputs,
   outputs,
-  settings,
   ...
 }:
 {
   imports = [
-    # If you want to use modules your own flake exports (from modules/nixos):
-    # outputs.nixosModules.example
-
-    # Or modules from other flakes (such as nixos-hardware):
     inputs.hardware.nixosModules.common-cpu-amd
     inputs.hardware.nixosModules.common-gpu-amd
     inputs.hardware.nixosModules.common-pc-ssd
@@ -22,9 +17,6 @@
     # Load the NixOS age encryption module to encrypt/decrypt
     # secrets with this NixOS configuration
     inputs.agenix.nixosModules.default
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./users.nix
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
@@ -46,6 +38,7 @@
     outputs.nixosModules.sound
     outputs.nixosModules.printing
 
+    outputs.nixosModules.containerization
     outputs.nixosModules.virtualization
 
     (outputs.nixosModules.packages {
@@ -93,8 +86,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.autoUpgrade.enable = false;
-  system.autoUpgrade.allowReboot = true;
   system.stateVersion = "24.11";
   # ===========================================================================
 }

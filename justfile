@@ -1,46 +1,48 @@
 set positional-arguments
+set dotenv-load := true
 set shell := ["bash", "-cue"]
 root_dir := justfile_directory()
 
-# Get the defined host inside the `.env` file.
-[private]
-get-host:
-    #!/usr/bin/env bash
-    set -eu
-    cd "{{root_dir}}"
-    [ -f .env ] || { echo "Place a .env inside '{{root_dir}}'."; exit 1; }
-    source ".env" &>/dev/null && echo "$host"
+# The host for which most commands work below.
+default_host := env("NIXOS_HOST", "desktop")
 
+# Default command to list all commands.
+list:
+    just --list
+
+# Format the whole repository.
+format:
+    cd "{{root_dir}}" && \
+      nix fmt
+
+## Flake maintenance commands =================================================
+# Update the flake lock file, use `update-single` for updating a single input.
+update *args:
+    cd "{{root_dir}}" && nix flake update "$@"
+
+# Update a single input in the lock file.
+update-single *args:
+    cd "{{root_dir}}" && nix flake lock --update-input "$@"
+
+## NixOS Commands to execute on NixOS systems =================================
 # Prints the NixOS version (based on nixpkgs repository).
 version:
     nixos-version --revision
 
-# NixOS rebuild command for the `host` (defined in the flake).
-rebuild how *args:
-    #!/usr/bin/env bash
-    set -eu
-    cd "{{root_dir}}"
-
-    host="${2:-}"
-    [ -n "$host" ] || host=$(just get-host) || exit 1
-
-    echo "----"
-    echo nixos-rebuild {{how}} --flake ".#$host" --use-remote-sudo "${@:3}"
-    echo "----"
-
-    nixos-rebuild {{how}} --flake ".#$host" --use-remote-sudo "${@:3}"
-
 # Switch the `host` (`$1`) to the latest configuration.
 switch *args:
-    sudo just rebuild switch "${1:-}" "${@:2}"
+    just rebuild switch "${1:-}" "${@:2}"
 
 # Build with nix-output-monitor.
 switch-visual *args:
-    # We need sudo, because output-monitor will not show the prompt.
-    sudo echo "Starting" && \
+    #!/usr/bin/env bash
+    set -eu
     just rebuild switch "${1:-}" \
-        --show-trace --verbose --log-format internal-json \
-        "${@:2}" |& nom --json && \
+        --show-trace \
+        --verbose \
+        --log-format internal-json \
+        "${@:2}" |& nom --json
+
     just diff 2
 
 # Switch the `host` (`$1`) to the latest
@@ -48,15 +50,24 @@ switch-visual *args:
 switch-test *args:
     sudo just rebuild switch "${1:-}" -p test "${@:2}"
 
-# Update the flake lock file.
-# You can also do `--update-input XXX` to
-# only update one input.
-update *args:
-    cd "{{root_dir}}" && nix flake update "$@"
+# NixOS rebuild command for the `host` (defined in the flake).
+[private]
+rebuild how host *args:
+    #!/usr/bin/env bash
+    set -eu
+    cd "{{root_dir}}"
 
-# Update a single input in the lock file.
-update-single *args:
-    cd "{{root_dir}}" && nix flake lock --update-input "$@"
+    host="${2:-"{{default_host}}"}"
+
+    echo "----"
+    echo nixos-rebuild {{how}} \
+        --flake ".#$host" \
+        --use-remote-sudo "${@:3}"
+    echo "----"
+
+    nixos-rebuild {{how}} \
+        --flake ".#$host" \
+        --use-remote-sudo "${@:3}"
 
 # Show the history of the system profile and test profiles.
 history:
@@ -112,29 +123,22 @@ diff last="1" current_profile="/run/current-system":
 
     nvd diff "$last_profile" "$current_profile"
 
-# Run nix-tree to get the tree of all packages.
-tree:
-    nix-tree
-
 # Diff closures from `dest_ref` to `src_ref`. This builds and
 # computes the closure which might take some time.
-diff-closure dest_ref="/" src_ref="origin/main" host="":
+diff-closure dest_ref="/" src_ref="origin/main" host="{{host}}":
     #!/usr/bin/env bash
     set -eu
 
     host="{{host}}"
-    [ -n "$host" ] || host=$(just get-host) || exit 1
-
     echo "Diffing closures of host '$host' from '{{src_ref}}' to '{{dest_ref}}'"
 
     nix store diff-closures \
         ".?ref={{src_ref}}#nixosConfigurations.$host.config.system.build.toplevel" \
         ".?ref={{dest_ref}}#nixosConfigurations.$host.config.system.build.toplevel"
 
-# Format the whole repository.
-format:
-    cd "{{root_dir}}" && \
-      nix fmt
+# Run nix-tree to get the tree of all packages.
+tree *args:
+    nix-tree "$@"
 
 # Run Nix garbage-collection on the system-profile.
 gc:

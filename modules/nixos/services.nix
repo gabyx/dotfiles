@@ -3,9 +3,6 @@
   pkgs,
   ...
 }:
-let
-  settings = config.settings;
-in
 {
   ### Services ================================================================
   services = {

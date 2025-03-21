@@ -153,6 +153,7 @@ in
     # Sound
     pkgs.unstable.headsetcontrol
     pkgs.unstable.noson # Sonos device
+    pkgs.ardour # Music recording
 
     # VPN
     pkgs.unstable.wgnord

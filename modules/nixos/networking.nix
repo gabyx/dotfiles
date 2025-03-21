@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   ...
 }:
@@ -27,8 +26,8 @@
     firewall = {
       enable = true;
       allowedTCPPorts = [
-        50022
-        433
+        # 50022
+        # 433
       ];
       # allowedUDPPorts = [ ... ];
     };

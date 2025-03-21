@@ -22,7 +22,6 @@ in
       extraGroups = [
         "wheel"
         "disk"
-        "libvirtd"
         "audio"
         "video"
         "input"
