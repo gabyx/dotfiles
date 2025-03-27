@@ -20,6 +20,7 @@ docs
 {{- if ne .chezmoi.os "linux" }}
 # Ignore if not on linux
 .face
+.config/Bazecor
 .config/flashfocus
 .config/hypr
 .config/mako
