@@ -15,23 +15,23 @@
   "layerNames": [
     {
       "id": 0,
-      "name": "Base"
+      "name": "1-Base"
     },
     {
       "id": 1,
-      "name": "Navigation"
+      "name": "2-Navigation"
     },
     {
       "id": 2,
-      "name": "Sway"
+      "name": "3-Sway"
     },
     {
       "id": 3,
-      "name": "Brackets"
+      "name": "4-Brackets"
     },
     {
       "id": 4,
-      "name": "SpecialChars+Numbers"
+      "name": "5-SpecialChars+Numbers"
     },
     {
       "id": 5,
@@ -39,11 +39,11 @@
     },
     {
       "id": 6,
-      "name": "Navigation-Vim-Move"
+      "name": "7-Navigation-Vim-Move"
     },
     {
       "id": 7,
-      "name": "System - Terminals"
+      "name": "8-System-Terminals"
     },
     {
       "id": 8,
@@ -172,7 +172,7 @@
     {
       "keyCode": 2130,
       "label": "↑",
-      "extraLabel": "S+"
+      "extraLabel": ""
     },
     {
       "keyCode": 0,
@@ -261,17 +261,17 @@
     {
       "keyCode": 2128,
       "label": "←",
-      "extraLabel": "S+"
+      "extraLabel": ""
     },
     {
       "keyCode": 2129,
       "label": "↓",
-      "extraLabel": "S+"
+      "extraLabel": ""
     },
     {
       "keyCode": 2127,
       "label": "→",
-      "extraLabel": "S+"
+      "extraLabel": ""
     },
     {
       "keyCode": 0,
@@ -306,22 +306,22 @@
     {
       "keyCode": 2128,
       "label": "←",
-      "extraLabel": "S+"
+      "extraLabel": ""
     },
     {
       "keyCode": 2129,
       "label": "↓",
-      "extraLabel": "S+"
+      "extraLabel": ""
     },
     {
       "keyCode": 2130,
       "label": "↑",
-      "extraLabel": "S+"
+      "extraLabel": ""
     },
     {
       "keyCode": 2127,
       "label": "→",
-      "extraLabel": "S+"
+      "extraLabel": ""
     },
     {
       "keyCode": 0,

@@ -15,35 +15,35 @@
   "layerNames": [
     {
       "id": 0,
-      "name": "Base"
+      "name": "1-Base"
     },
     {
       "id": 1,
-      "name": "Navigation"
+      "name": "2-Navigation"
     },
     {
       "id": 2,
-      "name": "Sway"
+      "name": "3-Sway"
     },
     {
       "id": 3,
-      "name": "Brackets"
+      "name": "4-Brackets"
     },
     {
       "id": 4,
-      "name": "SpecialChars+Numbers"
+      "name": "5-SpecialChars+Numbers"
     },
     {
       "id": 5,
-      "name": "System"
+      "name": "6-System"
     },
     {
       "id": 6,
-      "name": "Navigation-Vim-Move"
+      "name": "7-Navigation-Vim-Move"
     },
     {
       "id": 7,
-      "name": "System - Terminals"
+      "name": "8-System-Terminals"
     },
     {
       "id": 8,
@@ -64,27 +64,27 @@
     {
       "keyCode": 542,
       "label": "1",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 543,
       "label": "2",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 544,
       "label": "3",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 545,
       "label": "4",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 546,
       "label": "5",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 0,
@@ -113,27 +113,27 @@
     {
       "keyCode": 547,
       "label": "6",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 548,
       "label": "7",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 549,
       "label": "8",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 550,
       "label": "9",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 551,
       "label": "0",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 0,
@@ -150,27 +150,27 @@
     {
       "keyCode": 532,
       "label": "Q",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 538,
       "label": "W",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 520,
       "label": "E",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 533,
       "label": "R",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 535,
       "label": "T",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 0,
@@ -199,7 +199,7 @@
     {
       "keyCode": 540,
       "label": "Y",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 0,
@@ -210,7 +210,7 @@
     {
       "keyCode": 524,
       "label": "I",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 0,
@@ -221,7 +221,7 @@
     {
       "keyCode": 531,
       "label": "P",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 0,
@@ -238,33 +238,32 @@
     {
       "keyCode": 516,
       "label": "A",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 534,
       "label": "S",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 519,
       "label": "D",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 521,
       "label": "F",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 557,
       "label": "-",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
-      "keyCode": 0,
-      "label": "KEY",
-      "extraLabel": "NO",
-      "verbose": "Disabled"
+      "keyCode": 558,
+      "label": "=",
+      "extraLabel": ""
     },
     {
       "keyCode": 65535,
@@ -287,22 +286,22 @@
     {
       "keyCode": 523,
       "label": "H",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 525,
       "label": "J",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 526,
       "label": "K",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 527,
       "label": "L",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 0,
@@ -337,7 +336,7 @@
     {
       "keyCode": 518,
       "label": "C",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 226,
@@ -347,7 +346,7 @@
     {
       "keyCode": 561,
       "label": "\\",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 65535,
@@ -376,22 +375,22 @@
     {
       "keyCode": 529,
       "label": "N",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 528,
       "label": "M",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
-      "keyCode": 0,
-      "label": "KEY",
-      "extraLabel": "NO",
-      "verbose": "Disabled"
+      "keyCode": 566,
+      "label": ",",
+      "extraLabel": ""
     },
     {
-      "keyCode": 101,
-      "label": "MENU"
+      "keyCode": 567,
+      "label": ".",
+      "extraLabel": ""
     },
     {
       "keyCode": 0,
@@ -474,7 +473,7 @@
     {
       "keyCode": 552,
       "label": "ENTER",
-      "extraLabel": "A+"
+      "extraLabel": ""
     },
     {
       "keyCode": 65535,
@@ -484,7 +483,7 @@
     },
     {
       "keyCode": 53981,
-      "label": "Sway-",
+      "label": "2",
       "extraLabel": "SUPER"
     },
     {
@@ -501,15 +500,15 @@
     }
   ],
   "colormap": [
-    14, 4, 4, 4, 4, 4, 14, 14, 11, 5, 5, 5, 5, 14, 14, 5, 5, 9, 5, 3, 14, 14,
-    14, 14, 5, 11, 3, 4, 11, 3, 5, 6, 9, 14, 14, 14, 4, 4, 4, 4, 4, 14, 14, 5,
-    14, 5, 5, 5, 14, 14, 14, 3, 3, 3, 3, 14, 14, 14, 13, 14, 5, 5, 4, 11, 5, 3,
-    4, 9, 14, 14, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
+    14, 4, 4, 4, 4, 4, 14, 14, 11, 5, 5, 5, 5, 14, 14, 5, 5, 9, 5, 3, 4, 14, 14,
+    14, 5, 11, 3, 4, 11, 3, 5, 6, 9, 14, 14, 14, 4, 4, 4, 4, 4, 14, 14, 5, 14,
+    5, 5, 5, 14, 14, 14, 3, 3, 3, 3, 4, 14, 14, 4, 4, 5, 5, 4, 11, 5, 3, 4, 9,
+    14, 14, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
     12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
     12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
     12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
     12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
-    12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 15
+    12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 15
   ],
   "palette": [
     {
