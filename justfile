@@ -16,13 +16,9 @@ format:
       nix fmt
 
 ## Flake maintenance commands =================================================
-# Update the flake lock file, use `update-single` for updating a single input.
+# Update the flake lock file. Use arguments to specify single inputs.
 update *args:
     cd "{{root_dir}}" && nix flake update "$@"
-
-# Update a single input in the lock file.
-update-single *args:
-    cd "{{root_dir}}" && nix flake lock --update-input "$@"
 
 ## NixOS Commands to execute on NixOS systems =================================
 # Prints the NixOS version (based on nixpkgs repository).
