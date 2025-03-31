@@ -192,7 +192,7 @@ function gabyx::file_regex_replace() {
 }
 
 # Print the keycodes of the active keyboard.
-function gabyx::gabyx::print_keycode_table {
+function gabyx::print_keycode_table {
     xmodmap -pke
 }
 
