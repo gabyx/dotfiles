@@ -116,7 +116,7 @@ in
     pkgs.unstable.nodePackages.prettier
 
     # Writing
-    pkgs.unstable.texlive.combined.scheme-full
+    # pkgs.unstable.texlive.combined.scheme-full
     pkgs.unstable.pandoc
 
     # Calendar/Mail
