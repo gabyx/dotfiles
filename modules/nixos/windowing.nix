@@ -140,10 +140,9 @@
       export XDG_SESSION_TYPE=wayland
       export XDG_CURRENT_DESKTOP=sway
 
-      if command -v gnome-keyring-daemon; then
-        eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh);
-        export SSH_AUTH_SOCK;
-      fi
+      export GNOME_KEYRING_CONTROL=/run/user/$UID/keyring
+      export SSH_AUTH_SOCK=/run/user/$UID/keyring/ssh
+      eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg);
     '';
   };
 
