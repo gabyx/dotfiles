@@ -8,6 +8,7 @@ common
 docs
 
 .config/chezmoi/key
+.config/element
 
 {{- if ne .chezmoi.os "darwin" }}
 # Ignore if not on darwin
