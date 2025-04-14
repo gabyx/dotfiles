@@ -53,6 +53,7 @@ in
     (lib.hiPrio pkgs.unstable.chezmoi)
     pkgs.unstable.lazygit
     pkgs.unstable.delta
+    pkgs.unstable.difftastic
     pkgs.unstable.meld
     pkgs.unstable.kubectl
     pkgs.unstable.kind # Simple kubernetes for local development.
@@ -82,7 +83,7 @@ in
     # the toolchain.
     pkgs.unstable.gopls
     pkgs.unstable.golangci-lint-langserver
-    pkgs.unstable.texlab
+    # pkgs.unstable.texlab
     pkgs.unstable.typos-lsp
     pkgs.unstable.nixd
     pkgs.unstable.marksman

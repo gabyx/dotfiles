@@ -46,6 +46,8 @@ elif [ "$tool" = "nvim" ]; then
     "$toolPath" -d "$local" "$remote"
 elif [ "$tool" = "vscode" ]; then
     "$toolPath" --wait --diff "$local" "$remote"
+elif [ "$tool" = "difftastic" ]; then
+    "$toolPath" --wait --diff "$local" "$remote"
 elif [ "$tool" = "vsdiffmerge" ]; then
     # git-bash.exe (MSYS) converts paths
     # https://github.com/git-for-windows/build-extra/blob/main/ReleaseNotes.md#known-issues

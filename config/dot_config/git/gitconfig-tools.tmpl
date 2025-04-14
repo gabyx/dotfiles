@@ -3,6 +3,10 @@
 	cmd = \"{{ .git.toolsPath }}//diff-tools/launch.sh\" vscode \"$LOCAL\" \"$REMOTE\"
 	path = code
 
+[difftool "difftastic"]
+	cmd = \"{{ .git.toolsPath }}//diff-tools/launch.sh\" difftastic \"$LOCAL\" \"$REMOTE\"
+	path = difft
+
 [difftool "bcompare"]
 	cmd = \"{{ .git.toolsPath }}/diff-tools/launch.sh\" bcompare \"$LOCAL\" \"$REMOTE\"
 	path = bcomp
