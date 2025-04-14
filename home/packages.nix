@@ -67,7 +67,7 @@ in
     pkgs.unstable.dive # Inspect container images.
 
     # FHS Environment with nix-alien
-    inputs.nixAlien.packages.${pkgs.system}.nix-alien
+    inputs.nix-alien.packages.${pkgs.system}.nix-alien
 
     # Linters
     pkgs.unstable.markdownlint-cli
@@ -120,14 +120,14 @@ in
     # pkgs.unstable.texlive.combined.scheme-full
     pkgs.unstable.pandoc
 
-    # Calendar/Mail
+    # Calendar/Mail (our version)
     pkgs.khal # CLI Calendar
 
     # MultiMedia
     pkgs.unstable.bitwarden # Password manager
     pkgs.unstable.bitwarden-cli
     pkgs.unstable.bazecor # Dygma Defy Keyboard.
-    pkgs.unstable.signal-desktop # Messaging app
+    pkgs.unstable.signal-desktop-bin # Messaging app
     pkgs.unstable.element-desktop # Matrix client.
     pkgs.unstable.slack # Messaging app
     pkgs.unstable.transmission_3-gtk

@@ -10,7 +10,4 @@
 
   # Batman Timezone Converter.
   # batz = pkgs.callPackage ./batz { };
-
-  # I3 helper also for Sway.
-  i3-back = pkgs.callPackage ./i3-back { };
 }

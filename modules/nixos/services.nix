@@ -11,8 +11,8 @@
 
     # UDev settings.
     udev.packages = [
-      pkgs.headsetcontrol
-      pkgs.bazecor
+      pkgs.unstable.headsetcontrol
+      pkgs.unstable.bazecor
     ];
 
     # Dbus settings.

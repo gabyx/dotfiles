@@ -1,5 +1,5 @@
 { pkgs, ... }:
-pkgs.python311.withPackages (ps: [
+pkgs.python313.withPackages (ps: [
   ps.matplotlib
   ps.numpy
 

@@ -12,7 +12,7 @@ You can connect to them by
 rofi-bluetooth
 ```
 
-or with the `bluetoothctl` utility
+or with the `bluetoothctl` utility or with `blueman-manger` (GUI):
 
 ```shell
 bluetoothctl
@@ -35,3 +35,8 @@ connect 28:9A:4B:78:80:84
 trust 28:9A:4B:78:80:84
 pair 28:9A:4B:78:80:84
 ```
+
+## Defy Dygma
+
+Dygma Defy keyboard sends a connection password which needs to be entered on the
+keyboard after the lights appear when the connection has been established.

@@ -12,8 +12,8 @@
     # '';
 
     packages = [
-      pkgs.headsetcontrol
-      pkgs.bazecor
+      pkgs.unstable.headsetcontrol
+      pkgs.unstable.bazecor
     ];
 
   };

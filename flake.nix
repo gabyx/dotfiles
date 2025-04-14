@@ -22,7 +22,7 @@
 
     # Nixpkgs (unstable stuff for certain packages.)
     # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
-    nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Index the nix-store.
     nix-index-database = {
@@ -42,15 +42,15 @@
     };
 
     # Nix-Alien
-    nixAlien = {
+    nix-alien = {
       url = "github:thiagokokada/nix-alien";
-      inputs.nixpkgs.follows = "nixpkgsUnstable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Format the repo with nix-treefmt.
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgsUnstable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Terminal `wezterm` nightly
@@ -62,25 +62,25 @@
     # Githooks.
     githooks = {
       url = "github:gabyx/githooks?dir=nix";
-      inputs.nixpkgs.follows = "nixpkgsUnstable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Neovim Nightly.
     neovim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
-      inputs.nixpkgs.follows = "nixpkgsUnstable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Age Encryption Tool for NixOS.
     agenix = {
       url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgsUnstable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Tool to regulate CPU power.
     auto-cpufreq = {
       url = "github:AdnanHodzic/auto-cpufreq";
-      inputs.nixpkgs.follows = "nixpkgsUnstable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
