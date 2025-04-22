@@ -206,7 +206,7 @@ def find_url(event: Event) -> str | None:
                 return w
         return None
 
-    for key in ["description", "location"]:
+    for key in ["location", "description"]:
         if key not in event.raw:
             continue
 
