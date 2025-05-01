@@ -23,6 +23,8 @@ config.set_environment_variables = {
 
 -- This is where you actually apply your config choices
 config = {
+    front_end = "WebGPU",
+
     font_size = 12,
     warn_about_missing_glyphs = false,
     font = wezterm.font_with_fallback({
@@ -65,12 +67,25 @@ config = {
     },
 
     leader = { key = "g", mods = "CTRL", timeout_milliseconds = 1000 },
+
+    tiling_desktop_environments = {
+        "Wayland",
+    },
 }
 
 if environment.os == "linux" then
     config.window_decorations = "NONE"
 else
     config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
+end
+
+-- Set GPU
+for _, gpu in ipairs(wezterm.gui.enumerate_gpus()) do
+    if gpu.backend == "Vulkan" then
+        config.webgpu_preferred_adapter = gpu
+        config.front_end = "WebGpu"
+        break
+    end
 end
 
 config.keys = {
@@ -87,7 +102,7 @@ config.keys = {
     },
 
     -- Leader stuff
-    { mods = "LEADER", key = "p",       action = act.ActivateCommandPalette },
+    { mods = "LEADER",  key = "p",     action = act.ActivateCommandPalette },
     {
         mods = "LEADER|SHIFT",
         key = "c",
@@ -114,8 +129,8 @@ config.keys = {
     },
 
     -- Font Size
-    { key = "j",       mods = "LEADER", action = act.IncreaseFontSize },
-    { key = "k",       mods = "LEADER", action = act.DecreaseFontSize },
+    { key = "mapped:=", mods = "CTRL", action = act.IncreaseFontSize },
+    { key = "mapped:-", mods = "CTRL", action = act.DecreaseFontSize },
     -- Split vertical.
     {
         mods = "LEADER",
