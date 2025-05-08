@@ -4,7 +4,7 @@ set shell := ["bash", "-cue"]
 root_dir := justfile_directory()
 
 # The host for which most commands work below.
-default_host := env("NIXOS_HOST", "desktop")
+default_host := env("NIXOS_HOST", "not-defined")
 
 # Default command to list all commands.
 list:
@@ -24,6 +24,10 @@ update *args:
 # Prints the NixOS version (based on nixpkgs repository).
 version:
     nixos-version --revision
+
+# Build the new configuration and set it the boot default.
+boot *args:
+    just rebuild boot "${1:-}" "${@:2}"
 
 # Switch the `host` (`$1`) to the latest configuration.
 switch *args:
