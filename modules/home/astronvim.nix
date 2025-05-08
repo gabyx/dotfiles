@@ -35,10 +35,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      neovim
-      # neovim-nightly
-      tree-sitter
+    home.packages = [
+      pkgs.unstable.neovim
+      neovim-nightly
+      pkgs.unstable.tree-sitter
     ];
 
     # Let home-manager clone the repos from the store and
