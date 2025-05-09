@@ -3,7 +3,8 @@ export FZF_DEFAULT_OPTS="
   --color=fg:#dedbdb,bg:#1A1D23,hl:#5f87af
   --color=fg+:#ededed,bg+:#595959,hl+:#5fd7ff
   --color=info:#b3b312,prompt:#f23000,pointer:#af5fff
-  --color=marker:#87ff00,spinner:#af5fff,header:#87afaf"
+  --color=marker:#87ff00,spinner:#af5fff,header:#87afaf
+  --bind=ctrl-d:down,ctrl-u:up"
 
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -14,11 +15,11 @@ KEYTIMEOUT=300
 
 # Preview file content using bat (https://github.com/sharkdp/bat)
 export FZF_CTRL_T_OPTS="
-  --walker-skip .git,node_modules,target
+  --walker-skip .git,node_modules
   --preview 'bat -n --color=always {}'
   --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 
-# Shift+/ to toggle small preview window to see the full command
+# Ctrl + / to toggle small preview window to see the full command
 export FZF_CTRL_R_OPTS="
   --preview 'echo {}' --preview-window up:3:hidden:wrap
   --bind 'ctrl-/:toggle-preview'
