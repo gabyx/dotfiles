@@ -6,7 +6,8 @@
 {
   ### Virtualisation ==========================================================
   users.users.${config.settings.user.name}.extraGroups = [
-    "docker"
+    # "docker" # If you do this, you dont need to run `sudo`
+    # but this gives root shell access.
     "podman"
   ];
 

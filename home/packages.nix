@@ -160,6 +160,7 @@ in
     pkgs.unstable.wgnord
 
     # Remote Desks
+    pkgs.unstable.rustdesk # Remote desktop
     pkgs.unstable.anydesk
 
     # Dictionaries
