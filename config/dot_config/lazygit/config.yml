@@ -218,7 +218,7 @@ keybinding:
     revertCommit: t
     cherryPickCopy: c
     cherryPickCopyRange: C
-    pasteCommits: v
+    pasteCommits: <c-v>
     markCommitAsBaseForRebase: B
     tagCommit: T
     checkoutCommit: <space>

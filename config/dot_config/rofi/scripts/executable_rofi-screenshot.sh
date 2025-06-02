@@ -33,6 +33,8 @@ trap on_error ERR
 
 assert_exe grimshot
 assert_exe rofi
+assert_exe copyq
+assert_exe swappy
 
 if ! out=$(grimshot check 2>&1); then
     show_error "Grimshot has not all tools available. Run 'grimshot check':\n$out."
