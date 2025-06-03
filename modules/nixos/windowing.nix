@@ -170,11 +170,7 @@
     cantarell-fonts
     noto-fonts
     noto-fonts-emoji
-    (nerdfonts.override {
-      fonts = [
-        "Noto"
-        "JetBrainsMono"
-      ];
-    })
+    nerd-fonts.noto
+    nerd-fonts.jetbrains-mono
   ];
 }

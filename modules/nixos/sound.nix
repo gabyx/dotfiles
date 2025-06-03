@@ -8,7 +8,7 @@
   security.rtkit.enable = true;
 
   # Disable Pulseaudio because Pipewire is used.
-  hardware.pulseaudio.enable = lib.mkForce false;
+  services.pulseaudio.enable = lib.mkForce false;
 
   environment.systemPackages = with pkgs; [ pavucontrol ];
 

@@ -24,21 +24,15 @@
       noto-fonts
       noto-fonts-emoji
       google-fonts
-      (nerdfonts.override {
-        fonts = [
-          "FiraCode"
-          "Noto"
-          "JetBrainsMono"
-          "SourceCodePro"
-        ];
-      })
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.noto
+      nerd-fonts.sauce-code-pro
+      nerd-fonts.fira-code
     ];
   };
 
   environment.systemPackages = with pkgs; [
-    # TODO: Currently has build problems:
-    # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1069358
-    # font-manager
+    font-manager
   ];
 
   # ===========================================================================

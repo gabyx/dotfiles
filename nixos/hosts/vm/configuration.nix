@@ -8,9 +8,6 @@
   outputs,
   ...
 }:
-let
-  modules = inputs.self + /nixos/modules;
-in
 {
   imports = [
     # Include the results of the hardware scan.
