@@ -32,6 +32,7 @@ boot *args:
 # Switch the `host` (`$1`) to the latest configuration.
 switch *args:
     just rebuild switch "${1:-}" "${@:2}"
+    just diff 2
 
 # Build with nix-output-monitor.
 switch-visual *args:

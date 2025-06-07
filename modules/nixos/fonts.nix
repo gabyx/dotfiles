@@ -11,7 +11,10 @@
       defaultFonts = {
         serif = [ "NotoSerif Nerd Font" ];
         sansSerif = [ "NotoSans Nerd Font" ];
-        monospace = [ "JetBrainsMono Nerd Font" ];
+        monospace = [
+          "JetBrainsMono Nerd Font"
+          "DejaVuSansM Nerd Font Mono"
+        ];
         emoji = [ "Noto Color Emoji" ];
       };
     };
@@ -20,12 +23,16 @@
     packages = with pkgs; [
       corefonts
       ubuntu_font_family
+
       fira
+
       noto-fonts
       noto-fonts-emoji
+
       google-fonts
+
       nerd-fonts.jetbrains-mono
-      nerd-fonts.noto
+      nerd-fonts.dejavu-sans-mono
       nerd-fonts.sauce-code-pro
       nerd-fonts.fira-code
     ];

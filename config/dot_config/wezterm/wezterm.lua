@@ -29,7 +29,8 @@ config = {
     warn_about_missing_glyphs = false,
     font = wezterm.font_with_fallback({
         { family = "JetBrainsMono Nerd Font", weight = "Medium" },
-        { family = "Noto Color Emoji",        weight = "Medium" },
+        { family = "DejaVu Sans Mono",        weight = "Medium" },
+        "Noto Color Emoji",
     }),
 
     term = "xterm-256color",

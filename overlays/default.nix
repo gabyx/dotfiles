@@ -15,9 +15,6 @@ let
   modifications = final: prev: {
     # We need a patched version with some dependencies (for the systemd service).
     vdirsyncer = prev.callPackage ../pkgs/vdirsyncer { vdirsyncer = prev.vdirsyncer; };
-
-    # We need latest calendar CLI on `main` with `--json` support.
-    khal = prev.callPackage ../pkgs/khal { };
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
