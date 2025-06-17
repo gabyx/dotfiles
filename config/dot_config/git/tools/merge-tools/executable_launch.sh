@@ -47,7 +47,7 @@ elif [ "$tool" = "meld" ]; then
 elif [ "$tool" = "nvim" ]; then
     # wincmd w focuses the last window because $ always references the highest window number.
     # wincmd J moves the focused window to the bottom, so in this case the window for the merged file view.
-    "$toolPath" -d "$local" "$remote" "$merged" -c 'wincmd w' -c 'wincmd J'
+    "$toolPath" -d "$local" "$merged" "$remote" -c 'wincmd w'
 elif [ "$tool" = "vscode" ]; then
     "$toolPath" --wait -m "$local" "$remote" "$base" "$merged"
 elif [ "$tool" = "vsdiffmerge" ]; then
