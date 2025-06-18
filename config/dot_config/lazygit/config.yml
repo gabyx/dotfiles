@@ -114,8 +114,8 @@ keybinding:
     scrollRight: L
     gotoTop: <
     gotoBottom: ">"
-    prevBlock: <left>
-    nextBlock: <right>
+    prevBlock: "["
+    nextBlock: "]"
     prevBlock-alt: h
     nextBlock-alt: l
     nextBlock-alt2: <tab>
