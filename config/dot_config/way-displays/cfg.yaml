@@ -23,13 +23,11 @@ ORDER:
   #
   # Any other stupid monitor comes always before laptop.
   - "!^DP-.*"
-
-  # Laptop monitors.
   - "!^Tianma.*TL140ADXP24.*" # Tuxedo: Laptop Monitor comes always last.
   - "!^eDP-*" # The laptop monitor.
 
 # Enable scaling, overrides AUTO_SCALE and SCALE
-SCALING: TRUE
+SCALING: FALSE
 
 # The default is to scale each display by DPI.
 # This may be disabled and scale 1 will be used, unless a SCALE has been specified.
@@ -52,13 +50,15 @@ MODE:
   - NAME_DESC: "!^Philips.*PHL 275E2F.*UHB2307008083.*" # Home - External
     WIDTH: 2560
     HEIGHT: 1440
-    HZ: 75
+    HZ: 60
 
   - NAME_DESC: "!^Dell.*U2724DE.*4TPGCP3.*" # Home - External
-    MAX: TRUE
+    WIDTH: 2560
+    HEIGHT: 1440
+    HZ: 60
 
-  - NAME_DESC: "!^DP-.*" # Any other external monitor.
-    MAX: TRUE
+  # - NAME_DESC: "!^DP-.*" # Any other external monitor.
+  #   MAX: TRUE
 
   - NAME_DESC: "!^Tianma.*TL140ADXP24.*" # Tuxedo - Internal
     WIDTH: 1920
@@ -85,7 +85,7 @@ CHANGE_SUCCESS_CMD: "cd ~ && ~/.config/way-displays/scripts/on-change.sh"
 #LAPTOP_DISPLAY_PREFIX: 'eDP'
 
 # One of: ERROR, WARNING, INFO (default), DEBUG
-LOG_THRESHOLD: INFO
+LOG_THRESHOLD: DEBUG
 
 # Disable the specified displays.
 DISABLED:
