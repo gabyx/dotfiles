@@ -1,10 +1,10 @@
 local M = {}
 
 local c = {
-  none = "NONE",
-  syntax = {},
-  ui = {},
-  term = {},
+    none = "NONE",
+    syntax = {},
+    ui = {},
+    term = {},
 }
 
 --------------------------------
@@ -92,65 +92,65 @@ c.term.foreground = c.ui.text
 --------------------------------
 
 local active_tab = {
-  bg_color = c.ui.base,
-  fg_color = c.ui.text_active,
+    bg_color = c.ui.base,
+    fg_color = c.ui.text_active,
 }
 
 local inactive_tab = {
-  bg_color = c.ui.tabline,
-  fg_color = c.ui.text_inactive,
+    bg_color = c.ui.tabline,
+    fg_color = c.ui.text_inactive,
 }
 
 function M.colors()
-  return {
-    foreground = c.ui.text,
-    background = c.term.background,
-    cursor_bg = c.ui.text,
-    cursor_border = c.ui.text,
-    cursor_fg = c.ui.black,
-    selection_bg = c.ui.selection,
-    selection_fg = c.ui.text_active,
-    scrollbar_thumb = c.ui.winbar,
+    return {
+        foreground = c.ui.text,
+        background = c.term.background,
+        cursor_bg = c.ui.text,
+        cursor_border = c.ui.text,
+        cursor_fg = c.ui.black,
+        selection_bg = c.ui.selection,
+        selection_fg = c.ui.text_active,
+        scrollbar_thumb = c.ui.winbar,
 
-    ansi = {
-      c.term.black,
-      c.term.red,
-      c.term.green,
-      c.term.yellow,
-      c.term.blue,
-      c.term.purple,
-      c.term.cyan,
-      c.term.white,
-    },
+        ansi = {
+            c.term.black,
+            c.term.red,
+            c.term.green,
+            c.term.yellow,
+            c.term.blue,
+            c.term.purple,
+            c.term.cyan,
+            c.term.white,
+        },
 
-    brights = {
-      c.term.bright_black,
-      c.term.bright_red,
-      c.term.bright_green,
-      c.term.bright_yellow,
-      c.term.bright_blue,
-      c.term.bright_purple,
-      c.term.bright_cyan,
-      c.term.bright_white,
-    },
+        brights = {
+            c.term.bright_black,
+            c.term.bright_red,
+            c.term.bright_green,
+            c.term.bright_yellow,
+            c.term.bright_blue,
+            c.term.bright_purple,
+            c.term.bright_cyan,
+            c.term.bright_white,
+        },
 
-    tab_bar = {
-      background = c.ui.tabline,
-      active_tab = active_tab,
-      inactive_tab = inactive_tab,
-      inactive_tab_hover = active_tab,
-      new_tab = inactive_tab,
-      new_tab_hover = active_tab,
-      inactive_tab_edge = c.ui.none_text,
-    },
-  }
+        tab_bar = {
+            background = c.ui.tabline,
+            active_tab = active_tab,
+            inactive_tab = inactive_tab,
+            inactive_tab_hover = active_tab,
+            new_tab = inactive_tab,
+            new_tab_hover = active_tab,
+            inactive_tab_edge = c.ui.none_text,
+        },
+    }
 end
 
 function M.window_frame() -- (Fancy tab bar only)
-  return {
-    active_titlebar_bg = active_tab.bg_color,
-    inactive_titlebar_bg = inactive_tab.bg_color,
-  }
+    return {
+        active_titlebar_bg = active_tab.bg_color,
+        inactive_titlebar_bg = inactive_tab.bg_color,
+    }
 end
 
 return M

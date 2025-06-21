@@ -29,7 +29,7 @@ config = {
     warn_about_missing_glyphs = false,
     font = wezterm.font_with_fallback({
         { family = "JetBrainsMono Nerd Font", weight = "Medium" },
-        { family = "DejaVu Sans Mono",        weight = "Medium" },
+        { family = "DejaVu Sans Mono", weight = "Medium" },
         "Noto Color Emoji",
     }),
 
@@ -103,7 +103,7 @@ config.keys = {
     },
 
     -- Leader stuff
-    { mods = "LEADER",  key = "p",     action = act.ActivateCommandPalette },
+    { mods = "LEADER", key = "p", action = act.ActivateCommandPalette },
     {
         mods = "LEADER|SHIFT",
         key = "c",
