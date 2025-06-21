@@ -19,6 +19,14 @@
     indent_size = 4;
   };
 
+  programs.shellcheck.enable = true;
+
+  # Lua.
+  programs.stylua.enable = true;
+
+  # Typos.
+  programs.typos.enable = false;
+
   # Nix.
   programs.nixfmt.enable = true;
 }

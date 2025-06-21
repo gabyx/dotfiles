@@ -1,3 +1,5 @@
+# shellcheck disable=SC1090
+
 source <(fzf --bash)
 source ~/.config/fzf/settings.zsh
 

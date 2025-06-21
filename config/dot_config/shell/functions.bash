@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2015
+# shellcheck disable=SC2015,SC1091
 # =========================================================================================
 # Chezmoi Setup
 #
@@ -224,7 +224,7 @@ function gabyx::nixos_systemd_log() {
 
 # Get the log of the systemd service with name `$1`.
 # User log is: `user@1000`.
-function gabyx::nixos_systemd_log() {
+function gabyx::nixos_systemd_log_for() {
     local service="$1"
     journalctl -u "$service.service" -e
 }
