@@ -1,1 +1,1 @@
-export KUBECONFIG="$HOME/.config/kube/config:$HOME/.kube/config"
+export KUBECONFIG="$HOME/.config/kube/config:$HOME/.config/kube/swissfega:$HOME/.kube/config"
