@@ -1,0 +1,45 @@
+background = 1A1D23
+foreground = 9B9FA9
+
+font-size = 14
+font-family = "JetBrainsMono Nerd Font"
+font-style = "Medium"
+
+window-padding-x = 10
+window-padding-x = 5
+
+auto-update = off
+
+window-decoration = none
+gtk-titlebar = false
+gtk-tabs-location = bottom
+gtk-wide-tabs = false
+
+quick-terminal-screen = main
+quick-terminal-position = center
+quick-terminal-autohide = true
+
+shell-integration = detect
+shell-integration-features = cursor,sudo,title
+
+
+## Keybindings
+keybind = ctrl+g>q=toggle_quick_terminal
+
+keybind = ctrl+g>c=new_tab
+keybind = ctrl+g>x=close_tab
+
+keybind = ctrl+g>-=new_split:down
+keybind = ctrl+g>\=new_split:right
+
+keybind = ctrl+;=previous_tab
+keybind = ctrl+'=next_tab
+
+keybind = ctrl+g>g=scroll_to_top
+keybind = ctrl+d=scroll_page_down
+keybind = ctrl+u=scroll_page_up
+
+keybind = ctrl+shift+l=resize_split:left,40
+keybind = ctrl+shift+h=resize_split:right,40
+keybind = ctrl+shift+k=resize_split:up,40
+keybind = ctrl+shift+j=resize_split:down,40
