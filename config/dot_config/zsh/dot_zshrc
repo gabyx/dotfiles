@@ -64,7 +64,8 @@ function install_plugins() {
     fi
 
     # Destination not existing -> force.
-    if [ -f "$zsh_plugins" ]; then
+    if [ ! -f "$zsh_plugins" ]; then
+        echo "Zsh plugin bundle file '$zsh_plugins' not existing."
         force_bundle="true"
     fi
 
@@ -75,10 +76,7 @@ function install_plugins() {
         touch "$zsh_plugins_src"
     }
 
-    # Generate static file in a subshell when
-    # source plugin list is updated.
-    if [[ "$zsh_plugins_src" -nt "$zsh_plugins" ]] ||
-        [ "$force_bundle" = "true" ]; then
+    if [ "$force_bundle" = "true" ]; then
         echo "Generate static plugins file '$zsh_plugins' from '$zsh_plugins_src'..."
         antidote bundle <"$ZDOTDIR/.zplugins" >"$zsh_plugins"
     fi
@@ -128,7 +126,7 @@ source "$HOME/.config/shell/aliases.zsh"
 source "$HOME/.config/shell/functions.bash"
 
 # Python environment.
-echo "Do not activate python env by default."
+# Do not activate python env by default.
 # source "$HOME/.config/zsh/.zshrc-python.zsh"
 
 # Keybindings
