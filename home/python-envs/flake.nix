@@ -17,24 +17,15 @@
   };
 
   inputs = {
-    # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # You can access packages and modules from different nixpkgs revs
-    # at the same time. Here's an working example:
-    nixpkgsStable.url = "github:nixos/nixpkgs/nixos-23.11";
-    # Also see the 'stable-packages' overlay at 'overlays/default.nix'.
   };
 
   outputs =
     {
-      self,
       nixpkgs,
-      home-manager,
       ...
-    }@inputs:
+    }:
     let
-      inherit (self) outputs;
-
       # Supported systems for your flake packages, shell, etc.
       systems = [
         "aarch64-linux"
@@ -47,7 +38,7 @@
       # pass to it, with each system as an argument
       forAllSystems = nixpkgs.lib.genAttrs systems;
 
-      python-envs-inline-mod = pkgs: {
+      python-envs = pkgs: {
         python-envs = {
           default = pkgs.callPackage ./default/default.nix { };
         };
@@ -56,7 +47,7 @@
     {
       # Your custom packages
       # Accessible through 'nix build', 'nix shell', etc
-      packages = forAllSystems (system: (python-envs-inline-mod nixpkgs.legacyPackages.${system}));
+      packages = forAllSystems (system: (python-envs nixpkgs.legacyPackages.${system}));
 
       # Formatter for your nix files, available through 'nix fmt'
       # Other options beside 'alejandra' include 'nixpkgs-fmt'
