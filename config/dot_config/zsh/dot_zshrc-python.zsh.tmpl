@@ -1,12 +1,6 @@
-echo "Do not activate python env by default."
-exit 0
-
 {{- if eq .chezmoi.osRelease.id "nixos" }}
-if [ "$CHEZMOI_OS_RELEASE_ID" = "nixos" ]; then
     gabyx::nixos_activate_python_environment default || true
-else
+{{ else }}
     if [ -f "$HOME/python-envs/default/bin/activate" ]; then
         source "$HOME/python-envs/default/bin/activate"
-    fi
-fi
 {{- end }}
