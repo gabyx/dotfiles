@@ -7,6 +7,7 @@
     abbrev = 10
     fsmonitor = false
     pager = delta
+    excludeFiles = {{ .git.configPath }}/gitignore
 [user]
     name = {{ .git.userName | quote }}
     email = {{ .git.userEmail | quote }}
