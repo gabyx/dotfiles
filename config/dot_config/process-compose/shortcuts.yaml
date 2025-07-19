@@ -20,7 +20,7 @@ shortcuts:
   process_info:
     shortcut: i
   process_scale:
-    shortcut: S
+    shortcut:
   process_screen:
     toggle_description:
       false: Half Screen

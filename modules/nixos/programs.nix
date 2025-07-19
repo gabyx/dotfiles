@@ -12,7 +12,10 @@
     nix-ld.enable = true;
 
     # Shell
-    zsh.enable = true;
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+    };
 
     mtr.enable = true;
 

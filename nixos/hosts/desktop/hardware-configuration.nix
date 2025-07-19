@@ -4,10 +4,13 @@
 {
   config,
   lib,
-  pkgs,
   modulesPath,
   ...
 }:
+let
+  # Use script: `scripts/compute-swap-offset.nix`.
+  swapConfig = import ./swap-offset.nix;
+in
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
@@ -22,6 +25,12 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+
+  boot.kernelParams = [
+    # Hibernation parameters
+    "resume=UUID=${builtins.baseNameOf config.fileSystems."/swap".device}"
+    "resume_offset=${toString swapConfig.resumeOffset}"
+  ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/7d77bcf2-d5f4-4ff4-992d-de583df23032";
@@ -83,6 +92,7 @@
     options = [
       "subvol=swap"
       "defaults"
+      "nodatacow"
       "noatime"
     ];
   };
@@ -116,5 +126,4 @@
   # networking.interfaces.wlp10s0f3u4.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
