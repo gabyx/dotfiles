@@ -8,6 +8,10 @@
   modulesPath,
   ...
 }:
+let
+  # Use script: `scripts/compute-swap-offset.nix`.
+  swapConfig = import ./swap-offset.nix;
+in
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
@@ -18,9 +22,28 @@
     "sd_mod"
   ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelParams = [ ]; # ["amdgpu.aspm=0"];
+
+  boot.resumeDevice = config.fileSystems."/swap".device;
+  boot.kernelParams = [
+    # Hibernation parameters
+    "resume=UUID=${builtins.baseNameOf config.fileSystems."/swap".device}"
+    "resume_offset=${toString swapConfig.resumeOffset}"
+
+    # GPU Freezes:
+    # https://www.reddit.com/r/tuxedocomputers/comments/1jjzye7/amdgpu_especially_780m_is_not_ready/
+    # See: https://codeberg.org/balint/nixos-configs/src/branch/main/hosts/tuxedo/conf.nix
+    "amdgpu.dpm=0"
+    "amdgpu.dcdebugmask=0x10"
+    # "amdgpu.aspm=0"
+    # Kernels: 6.6.87 had no problem, 6.12.31 probably started the problems.
+  ];
+
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+
+  # TODO: Check if this kernel works without running into
+  # amdgpu freezes.
+  boot.kernelPackages = pkgs.linuxPackages_xanmod;
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/6fbd4c98-9ca9-4a8a-966f-24491282220b";

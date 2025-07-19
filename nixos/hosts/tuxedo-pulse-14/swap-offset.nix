@@ -1,0 +1,3 @@
+{
+  resumeOffset = 533760;
+}

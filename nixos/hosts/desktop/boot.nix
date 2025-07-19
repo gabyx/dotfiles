@@ -36,7 +36,9 @@
     # ===========================================================================
 
     supportedFilesystems = [ "zfs" ];
+    zfs.allowHibernation = true;
     zfs.forceImportRoot = false;
+
     ### Temp Files ==============================================================
     tmp.useTmpfs = true;
     tmp.cleanOnBoot = true;
