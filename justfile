@@ -169,7 +169,7 @@ apply-configs-exclude-encrypted:
 # This is using the public key.
 [no-cd]
 encrypt file:
-    chezmoi encrypt "{{file}}"
+    just cm encrypt "{{file}}"
 
 # Decrypt a file using the encryption configured.
 # You need `store-kefile-private-key` executed.
@@ -196,6 +196,11 @@ cm *args:
     set -u
     set -e
 
+    trap cleanup EXIT
+    function cleanup() {
+        rm -rf ~/.config/chezmoi/key 2>/dev/null || true
+    }
+
     pkey=$(secret-tool lookup chezmoi keyfile-private-key) || true
     if [ -z "$pkey" ]; then
         echo "You did not execute 'just store-private-key'!" >&2
@@ -205,9 +210,7 @@ cm *args:
     echo "$pkey" | \
         age -d -i - "{{root_dir}}/config/dot_config/chezmoi/key.age" > \
                     ~/.config/chezmoi/key && \
-    chezmoi "$@" && \
-    rm -rf ~/.config/chezmoi/key || \
-    rm -rf ~/.config/chezmoi/key 2>/dev/null
+    chezmoi "$@" && cleanup || cleanup
 
 # Store the private-key for the keyfile 'key.age'
 # into the keyring.

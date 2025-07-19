@@ -21,7 +21,7 @@
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
 
-    inputs.nix-index-database.hmModules.nix-index
+    inputs.nix-index-database.homeModules.nix-index
     inputs.agenix.homeManagerModules.default
 
     ./environment.nix

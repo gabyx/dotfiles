@@ -159,6 +159,9 @@ in
     # VPN
     pkgs.unstable.wgnord
 
+    # Camera
+    pkgs.unstable.guvcview # Camera control
+
     # Remote Desks
     pkgs.unstable.rustdesk # Remote desktop
     pkgs.unstable.anydesk
