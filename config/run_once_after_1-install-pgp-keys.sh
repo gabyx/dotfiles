@@ -42,7 +42,7 @@ for private_file in "${private_files[@]}"; do
 
     public_file="${private_file%%-private.asc.age}-public.asc"
     passphrase_file="${private_file%%.asc.age}.passphrase.age"
-
+    echo "Use passphrase file '$passphrase_file'"
     # Import private key.
     gpg --import \
         --passphrase-file <(just cm decrypt "$passphrase_file") \

@@ -43,8 +43,8 @@ fi
 
 CHOICE=$(
     rofi -dmenu -p 'Screenshot' <<EOF
-Active Window
 Manual Area
+Active Window
 Manual Window
 Current Screen
 All Screens

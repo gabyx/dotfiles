@@ -226,6 +226,11 @@ tooltip {
   animation-duration: 2s;
 }
 
+#battery.supercritical.discharging {
+  animation-name: blink-critical;
+  animation-duration: 0.5s;
+}
+
 #clock {
   font-weight: bold;
 }

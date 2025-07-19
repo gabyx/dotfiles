@@ -108,7 +108,8 @@
         "interval": 10,
         "states": {
             "warning": 30,
-            "critical": 15
+            "critical": 15,
+            "supercritical": 8
         },
         // Connected to AC
         "format": "  {icon}  {capacity}%", // Icon: bolt
