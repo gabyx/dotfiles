@@ -66,8 +66,13 @@
     };
 
     # Neovim Nightly.
-    neovim-nightly = {
+    nvim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    nvim-nvf = {
+      url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
@@ -88,6 +93,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       ...
     }@inputs:
     let
@@ -101,19 +107,33 @@
         "aarch64-darwin"
         "x86_64-darwin"
       ];
+
+      overlays = import ./overlays { inherit inputs; };
+
       # This is a function that generates an attribute by calling a function you
       # pass to it, with each system as an argument
       forAllSystems = nixpkgs.lib.genAttrs systems;
+
+      importNixpkgs =
+        system:
+        import nixpkgs {
+          inherit system;
+          overlays = [
+            overlays.additions
+            overlays.unstable
+            overlays.modifications
+          ];
+        };
     in
     {
       # Your custom packages: Accessible through 'nix build', 'nix shell', etc.
-      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      packages = forAllSystems (system: (importNixpkgs system).additions);
 
       # Formatter for all files.
       formatter = forAllSystems (
         system:
         let
-          pkgs = nixpkgs.legacyPackages.${system};
+          pkgs = nixpkgs-unstable.legacyPackages.${system};
           treefmtEval = inputs.treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
           treefmt = treefmtEval.config.build.wrapper;
         in
@@ -121,7 +141,7 @@
       );
 
       # Your custom packages and modifications, exported as overlays
-      overlays = import ./overlays { inherit inputs; };
+      inherit overlays;
 
       # Reusable NixOS modules you might want to export.
       nixosModules = import ./modules/nixos;

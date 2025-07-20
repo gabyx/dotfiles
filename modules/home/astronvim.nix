@@ -10,11 +10,22 @@ let
   cfg = config.astronvim;
 
   # Add the nightly neovim too.
-  neovim-nightly =
+  nvim-nightly =
     let
-      neovim-n = inputs.neovim-nightly.packages.${pkgs.system}.neovim;
+      neovim-n = inputs.nvim-nightly.packages.${pkgs.system}.neovim;
     in
     (pkgs.writeShellScriptBin "nvim-nightly" "exec -a $0 ${neovim-n}/bin/nvim $@");
+
+  # TODO: Bundle treesitter.
+  # Mic92 uses also astronvim and lazy
+  # src: https://github.com/Mic92/dotfiles/tree/main/home/.config/nvim
+  # all treesitter parsers are bundled with nvim:
+  # https://github.com/Mic92/dotfiles/blob/d2b255785d3a70cbbf100993f1dc2a4171d75bcf/home-manager/modules/neovim/flake-module.nix
+  # He uses the `nvim-treesitter-install` inside:
+  # https://github.com/Mic92/dotfiles/blob/main/home/.config/nvim/init.lua#L52
+  # https://github.com/Mic92/dotfiles/blob/main/home/.config/nvim/lua/plugins/treesitter.lua#L3
+
+  neovim = pkgs.unstable.neovim;
 in
 {
   # Options for nvim configuration repositories.
@@ -36,8 +47,8 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = [
-      pkgs.unstable.neovim
-      neovim-nightly
+      neovim
+      nvim-nightly
       pkgs.unstable.tree-sitter
     ];
 
