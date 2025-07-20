@@ -49,7 +49,14 @@ switch-visual *args:
 # Switch the `host` (`$1`) to the latest
 # configuration but under boot entry `test`.
 switch-test *args:
-    sudo just rebuild switch "${1:-}" -p test "${@:2}"
+    #!/usr/bin/env bash
+    set -eu
+    just rebuild switch "${1:-}" -p test  \
+        --show-trace \
+        --verbose \
+        "${@:2}"
+
+    just diff 2
 
 # NixOS rebuild command for the `host` (defined in the flake).
 [private]
