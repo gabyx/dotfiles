@@ -112,6 +112,12 @@ secret-tool store --label='Chezmoi Key-File Passphrase' chezmoi keyfile-private-
 
 Inspect the store with `seahorse`.
 
+### Element Desktop
+
+Sometimes it does not start due to credential backend changes (?). Specify
+`element-desktop --password-store="gnome-libsecret"` once, which should fix
+that.
+
 ### Mail & Calendar
 
 I am using `gnome-online-accounts` because they work flawlessly for a various of
