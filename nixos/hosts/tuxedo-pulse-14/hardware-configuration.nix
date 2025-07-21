@@ -23,11 +23,14 @@ in
   ];
   boot.initrd.kernelModules = [ ];
 
-  boot.resumeDevice = config.fileSystems."/swap".device;
+  # Hibernation parameters
+  # TODO: Does not work yet, it hibernated but cannot resume...
+  # boot.resumeDevice = config.fileSystems."/swap".device;
+
   boot.kernelParams = [
     # Hibernation parameters
-    "resume=UUID=${builtins.baseNameOf config.fileSystems."/swap".device}"
-    "resume_offset=${toString swapConfig.resumeOffset}"
+    # "resume=UUID=${builtins.baseNameOf config.fileSystems."/swap".device}"
+    # "resume_offset=${toString swapConfig.resumeOffset}"
 
     # GPU Freezes:
     # https://www.reddit.com/r/tuxedocomputers/comments/1jjzye7/amdgpu_especially_780m_is_not_ready/
