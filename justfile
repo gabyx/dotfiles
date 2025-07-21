@@ -15,6 +15,15 @@ format:
     cd "{{root_dir}}" && \
       nix fmt
 
+# Build the NixOS.
+build host="":
+    #!/usr/bin/env bash
+    set -eu
+    host="${host:-{{default_host}}}"
+    nix build \
+        --show-trace \
+        ".#nixosConfigurations.$host.config.system.build.toplevel"
+
 ## Flake maintenance commands =================================================
 # Update the flake lock file. Use arguments to specify single inputs.
 update *args:
@@ -92,7 +101,7 @@ history:
 # Run the trim script to reduce the amount of generations kept on the system.
 # Usage with `--help`.
 trim *args:
-    ./scripts/trim-generations.sh {{args}}
+    ./tools/scripts/trim-generations.sh {{args}}
 
 # Diff the profile `current-system` with the last system profile
 # to see the differences.
