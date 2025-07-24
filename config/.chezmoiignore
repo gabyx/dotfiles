@@ -7,7 +7,6 @@ keyboard
 common
 docs
 
-.config/nvim
 .config/chezmoi/key
 .config/element
 

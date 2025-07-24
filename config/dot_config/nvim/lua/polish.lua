@@ -3,7 +3,7 @@ vim.filetype.add({
     extension = {},
     filename = {
         ["Tiltfile"] = "tiltfile",
-        ["justfile"] = "make",
+        ["justfile"] = "just",
     },
     pattern = {},
 })

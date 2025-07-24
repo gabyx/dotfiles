@@ -62,9 +62,10 @@ writeShellScriptBin name ''
   export NVIM_APPNAME="${nvimConfigDir}"
 
   # Set up XDG directories if not already defined
-  XDG_CACHE_HOME="''${XDG_CACHE_HOME:-$HOME/.cache}"
-  XDG_CONFIG_HOME="''${XDG_CONFIG_HOME:-$HOME/.config}"
-  XDG_DATA_HOME="''${XDG_DATA_HOME:-$HOME/.local/share}"
+  export XDG_CACHE_HOME="''${XDG_CACHE_HOME:-$HOME/.cache}"
+  export XDG_CONFIG_HOME="''${XDG_CONFIG_HOME:-$HOME/.config}"
+  export XDG_DATA_HOME="''${XDG_DATA_HOME:-$HOME/.local/share}"
+  export XDG_STATE_HOME="''${XDG_STATE_HOME:-$HOME/.local/state}"
 
   nvimConfigDir="$XDG_CONFIG_HOME/$NVIM_APPNAME"
   nvimConfigDirSrc="$XDG_DATA_HOME/chezmoi/config/dot_config/nvim"
@@ -73,6 +74,7 @@ writeShellScriptBin name ''
     echo "Force resetting NVIM config dirs."
     rm -rf "$XDG_CACHE_HOME/$NVIM_APPNAME" || true
     rm -rf "$XDG_DATA_HOME/$NVIM_APPNAME" || true
+    rm -rf "$XDG_STATE_HOME/$NVIM_APPNAME" || true
     rm -rf "$nvimConfigDir" || true
 
     if [ "$FORCE_RESET_ONLY" = "true" ]; then
@@ -84,12 +86,12 @@ writeShellScriptBin name ''
   mkdir -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME"
 
   # Check if nvim config needs to be copied.
-  if [ ! -d "$nvimConfigDir" ]; then
+  # if [ ! -d "$nvimConfigDir" ]; then
     echo "Copying lua config '${lua-config}' to '$nvimConfigDir'"
     mkdir -p "$nvimConfigDir"
     cp -arfT '${lua-config}'/ "$nvimConfigDir"
     chmod -R u+w "$nvimConfigDir"
-  fi
+  # fi
 
   # Check if treesitter needs updating.
   lock_file="$nvimConfigDir/lazy-lock.json"
