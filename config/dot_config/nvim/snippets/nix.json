@@ -1,0 +1,31 @@
+{
+  "setup": {
+    "prefix": ["fdoc"],
+    "body": [
+      "/**",
+      "${1:Function description.}",
+      "",
+      "# Inputs",
+      "",
+      "`${2:Argument name.}`",
+      "",
+      ": ${3:Argument 1}",
+      "",
+      "# Type",
+      "",
+      "```",
+      "$5 :: ${6:a -> a}",
+      "```",
+      "",
+      "# Examples",
+      ":::{.example}",
+      "",
+      "```nix",
+      "$5 ${7:arguments}",
+      "```",
+      ":::",
+      "*/"
+    ],
+    "description": "Nix function documentation."
+  }
+}

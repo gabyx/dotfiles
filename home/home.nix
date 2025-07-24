@@ -37,7 +37,6 @@
 
     outputs.homeManagerModules.settings
     outputs.homeManagerModules.chezmoi
-    outputs.homeManagerModules.astronvim
   ];
 
   home = rec {
@@ -59,13 +58,6 @@
     url = "https://github.com/gabyx/dotfiles.git";
     ref = "main";
     workspace = "private";
-  };
-
-  # Enable astronmvim setup.
-  astronvim = {
-    enable = true;
-    url = "https://github.com/gabyx/astrovim.git";
-    ref = "main";
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

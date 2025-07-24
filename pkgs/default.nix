@@ -1,15 +1,26 @@
 # Custom packages, that can be defined similarly to ones from nixpkgs
 # You can build them using 'nix build .#example'
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  nvimBuilds = import ./nvim {
-    inherit inputs;
+  # nvfBuilds = import ./nvf {
+  #   inherit inputs;
+  #   pkgs = pkgs.unstable;
+  # };
+
+  nvimBuilds = import ./neovim {
+    inherit inputs lib;
     pkgs = pkgs.unstable;
   };
 in
 {
-  # Neovim builds.
-  inherit (nvimBuilds) nvim-gabyx nvim-gabyx-nightly nvim-gabyx-config;
+  # Neovim.
+  # inherit (nvfBuilds) nvim-gabyx nvim-gabyx-nightly nvim-gabyx-config;
+  inherit (nvimBuilds) nvim nvim-nightly nvim-treesitter-install;
 
   # Package which ads a Filesystem Hierarchy Standard environment
   # with `fhs`. Build with `nix build .#fhs`

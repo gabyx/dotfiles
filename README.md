@@ -250,3 +250,11 @@ there.
   ```
 
   which resolves duplicate items issues.
+
+## Todos
+
+- [] Consider using flake-parts and every file is a flake-part module It makes
+  it much easier:
+  - https://discourse.nixos.org/t/pattern-every-file-is-a-flake-parts-module/61271/16
+  - https://github.com/vic/vix/blob/03d9abb6b8d664119fc6b16dd863b4aa038ef95a/modules/vic/doom.nix#L4
+  - https://github.com/vic/vix/tree/main/modules

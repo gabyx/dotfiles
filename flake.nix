@@ -71,8 +71,14 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    nvim-nvf = {
-      url = "github:notashelf/nvf";
+    # nvim-nvf = {
+    #   url = "github:notashelf/nvf";
+    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # };
+
+    # Sandboxing applications.
+    nixpak = {
+      url = "github:nixpak/nixpak";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
@@ -108,7 +114,8 @@
         "x86_64-darwin"
       ];
 
-      overlays = import ./overlays { inherit inputs; };
+      lib = nixpkgs-unstable.lib;
+      overlays = import ./overlays { inherit inputs lib; };
 
       # This is a function that generates an attribute by calling a function you
       # pass to it, with each system as an argument

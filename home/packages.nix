@@ -33,7 +33,8 @@ in
 
     # Editors
     pkgs.unstable.vscode
-    # neovim configured in `astronvim.nix`
+    pkgs.additions.nvim
+    pkgs.additions.nvim-nightly
 
     # Tools
     pkgs.unstable.restic # Backup tool
