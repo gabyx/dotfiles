@@ -6,9 +6,12 @@
   nvim,
   nvim-treesitter-install,
   name ? "nvim",
-  nvimConfigDir ? "nvim",
+  nvimConfigName ? "",
   lua-config ? ../../config/dot_config/nvim,
 }:
+let
+  nvimAppName = if nvimConfigName == "" then name else nvimConfigName;
+in
 # Create a nvim startup script which checks for treesitter
 # updates and uses a dedicated folder for nvim config `NVIM_APPNAME`.
 #
@@ -20,7 +23,7 @@ writeShellScriptBin name ''
   set -efu
 
   FORCE_SYNC="false"
-  FORCE_PLUGINS_UPDATE="false"
+  FORCE_PLUGINS_UPDATE="true"
   FORCE_RESET_ONLY="false"
   FORCE_RESET="false"
   POSITIONAL_ARGS=()
@@ -57,7 +60,7 @@ writeShellScriptBin name ''
 
     # Set up PATH to extras and Neovim.
     export PATH="${nvim-treesitter-install}/bin:$PATH"
-    export NVIM_APPNAME="${nvimConfigDir}"
+    export NVIM_APPNAME="${nvimAppName}"
 
     # Set up XDG directories if not already defined
     export XDG_CACHE_HOME="''${XDG_CACHE_HOME:-$HOME/.cache}"
@@ -83,8 +86,11 @@ writeShellScriptBin name ''
     treesitter_rev="$nvimConfigDir/treesitter-rev"
 
     # Check if treesitter needs updating.
-    if ! "${gnugrep}/bin/grep" -q "${nvim-treesitter-install.rev}" "$lock_file"; then
-      echo "Updating nvim-treesitter plugin revision, cause not current with 'nvim-treesitter-install'."
+    local rev=$("${jq}/bin/jq" -r '.["nvim-treesitter"].commit' "$lock_file") || true
+
+    if [ "$rev" != "${nvim-treesitter-install.rev}" ]; then
+      echo "Updating nvim-treesitter plugin revision, cause not current with " \
+            "'nvim-treesitter-install.rev = ${nvim-treesitter-install.rev}'."
 
       "${jq}/bin/jq" \
         '.["nvim-treesitter"].commit |= "${nvim-treesitter-install.rev}"' \
@@ -102,6 +108,9 @@ writeShellScriptBin name ''
         echo "Could not update 'nvim' plugins."
       }
     else
+      echo "Not updating nvim-treesitter plugin revision, cause current with " \
+            "'nvim-treesitter-install.rev = ${nvim-treesitter-install.rev}'."
+
       # Just check and install plugins if needed
       "${nvim}/bin/nvim" --headless -c 'quitall' || {
         echo "Could not check and install 'nvim' plugins."

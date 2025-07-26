@@ -22,14 +22,12 @@ let
   # Define Neovim launch scripts.
   nvim = pkgs.callPackage (import ./nvim-standalone.nix) {
     name = "nvim";
-    nvimConfigDir = "nvim";
     nvim = nvimDrv;
     inherit nvim-treesitter-install;
   };
 
   nvim-nightly = pkgs.callPackage (import ./nvim-standalone.nix) {
     name = "nvim-nightly";
-    nvimConfigDir = "nvim-nightly";
     nvim = nvimNightlyDrv;
     inherit nvim-treesitter-install;
   };
