@@ -1,6 +1,6 @@
 ### Applications ==============================================================
 
-assign [class="(?i).*chrome.*"] $web-ws
+assign [app_id="(?i).*chrome.*"] $web-ws
 assign [app_id="(?i).*firefox.*"] $web-ws
 
 assign [app_id="(?i).*evolution.*"] $mail-ws
