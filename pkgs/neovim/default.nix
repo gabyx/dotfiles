@@ -19,21 +19,11 @@ let
     }
   );
 
-  nvimBoxedDrv = pkgs.callPackage (import ./nvim-sandbox.nix) {
-    inherit (inputs) nixpak;
-    nvim = nvimDrv;
-  };
-  nvimNightlBoxedDrv = pkgs.callPackage (import ./nvim-sandbox.nix) {
-    inherit (inputs) nixpak;
-    nvim = nvimNightlyDrv;
-  };
-
   # Define Neovim launch scripts.
   nvim = pkgs.callPackage (import ./nvim-standalone.nix) {
     name = "nvim";
     nvimConfigDir = "nvim";
     nvim = nvimDrv;
-    nvim-sandboxed = nvimDrv;
     inherit nvim-treesitter-install;
   };
 
@@ -41,7 +31,6 @@ let
     name = "nvim-nightly";
     nvimConfigDir = "nvim-nightly";
     nvim = nvimNightlyDrv;
-    nvim-sandboxed = nvimNightlyDrv;
     inherit nvim-treesitter-install;
   };
 
