@@ -28,7 +28,7 @@ writeShellScriptBin name ''
   FORCE_RESET="false"
   POSITIONAL_ARGS=()
 
-  while [[ $# -gt 0 ]]; do
+  shile [[ $# -gt 0 ]]; do
     case "$1" in
       --force-reset)
         FORCE_RESET="true"
@@ -46,6 +46,12 @@ writeShellScriptBin name ''
       --force-no-plugin-update)
         FORCE_PLUGINS_UPDATE="false"
         shift
+        ;;
+      -h|--help)
+        echo "Use '--force-reset' to reset nvim and all cache/state folders." >&2
+        echo "Use '--force-reset-only' to only reset and exit." >&2
+        echo "Use '--force-sync' to sync ~/.config/nvim back to the Git repo." >&2
+        echo "Use '--force-no-plugin-update' to do no plugin update." >&2
         ;;
       *)
         POSITIONAL_ARGS+=("$1")
@@ -89,7 +95,7 @@ writeShellScriptBin name ''
     local rev=$("${jq}/bin/jq" -r '.["nvim-treesitter"].commit' "$lock_file") || true
 
     if [ "$rev" != "${nvim-treesitter-install.rev}" ]; then
-      echo "Updating nvim-treesitter plugin revision, cause not current with " \
+      echo "Updating nvim-treesitter plugin revision, cause not current sith " \
             "'nvim-treesitter-install.rev = ${nvim-treesitter-install.rev}'."
 
       "${jq}/bin/jq" \
