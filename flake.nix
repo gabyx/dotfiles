@@ -16,7 +16,41 @@
     ];
   };
 
+  # We use flake-parts to assemble all flake outputs.
+  # This gives nicer modularity. All `.mod` files are
+  # `flake-parts` files.
+  outputs =
+    inputs:
+    let
+      lib = inputs.nixpkgs.lib;
+    in
+    inputs.flake-parts.lib.mkFlake
+      {
+        inherit inputs;
+      }
+      (
+        lib.pipe inputs.import-tree [
+          (i: i.map (x: lib.info "Importing :${x}" x))
+          (i: i.filter (lib.hasInfix ".mod."))
+          (i: i ./nix)
+        ]
+      );
+
   inputs = {
+    import-tree = {
+      url = "github:vic/import-tree";
+    };
+
+    systems = {
+      # Using `nix-systems` flake specification.
+      url = "path:./nix/flake/systems.nix";
+      flake = false;
+    };
+
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+    };
+
     # Nixpkgs (stuff for the system.)
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
 
@@ -71,17 +105,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # nvim-nvf = {
-    #   url = "github:notashelf/nvf";
-    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
-    # };
-
-    # Sandboxing applications.
-    nixpak = {
-      url = "github:nixpak/nixpak";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     # Age Encryption Tool for NixOS.
     agenix = {
       url = "github:ryantm/agenix";
@@ -94,69 +117,4 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
-
-  outputs =
-    {
-      self,
-      nixpkgs,
-      nixpkgs-unstable,
-      ...
-    }@inputs:
-    let
-      inherit (self) outputs;
-
-      # Supported systems for your flake packages, shell, etc.
-      systems = [
-        "aarch64-linux"
-        "i686-linux"
-        "x86_64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
-      ];
-
-      lib = nixpkgs-unstable.lib;
-      overlays = import ./overlays { inherit inputs lib; };
-
-      # This is a function that generates an attribute by calling a function you
-      # pass to it, with each system as an argument
-      forAllSystems = nixpkgs.lib.genAttrs systems;
-
-      importNixpkgs =
-        system:
-        import nixpkgs {
-          inherit system;
-          overlays = [
-            overlays.additions
-            overlays.unstable
-            overlays.modifications
-          ];
-        };
-    in
-    {
-      # Your custom packages: Accessible through 'nix build', 'nix shell', etc.
-      packages = forAllSystems (system: (importNixpkgs system).additions);
-
-      # Formatter for all files.
-      formatter = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgs-unstable.legacyPackages.${system};
-          treefmtEval = inputs.treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
-          treefmt = treefmtEval.config.build.wrapper;
-        in
-        treefmt
-      );
-
-      # Your custom packages and modifications, exported as overlays
-      inherit overlays;
-
-      # Reusable NixOS modules you might want to export.
-      nixosModules = import ./modules/nixos;
-
-      # Reusable home-manager modules you might want to export.
-      homeManagerModules = import ./modules/home;
-
-      # NixOS configurations: Available through 'nixos-rebuild --flake .#your-hostname'
-      nixosConfigurations = import ./nixos { inherit inputs outputs; };
-    };
 }

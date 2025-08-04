@@ -19,10 +19,22 @@ format:
 build host="":
     #!/usr/bin/env bash
     set -eu
-    host="${host:-{{default_host}}}"
-    nix build \
-        --show-trace \
+    host="${1:-}"
+    if [ -z "$host" ]; then
+        host="{{default_host}}"
+    fi
+
+    cmd=(nix build
+        --verbose
+        --show-trace
         ".#nixosConfigurations.$host.config.system.build.toplevel"
+    )
+
+    echo "----"
+    echo "${cmd[@]}"
+    echo "----"
+
+    "${cmd[@]}"
 
 ## Flake maintenance commands =================================================
 # Update the flake lock file. Use arguments to specify single inputs.
@@ -74,17 +86,20 @@ rebuild how host *args:
     set -eu
     cd "{{root_dir}}"
 
-    host="${2:-"{{default_host}}"}"
+    host="${2:-}"
+    if [ -z "$host" ]; then
+        host="{{default_host}}"
+    fi
+    cmd=(nixos-rebuild {{how}}
+        --flake ".#$host"
+        --use-remote-sudo "${@:3}"
+    )
 
     echo "----"
-    echo nixos-rebuild {{how}} \
-        --flake ".#$host" \
-        --use-remote-sudo "${@:3}"
+    echo "${cmd[@]}"
     echo "----"
 
-    nixos-rebuild {{how}} \
-        --flake ".#$host" \
-        --use-remote-sudo "${@:3}"
+    "${cmd[@]}"
 
 # Show the history of the system profile and test profiles.
 history:
