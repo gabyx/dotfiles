@@ -17,7 +17,7 @@
 These are my [dotfiles](config) managed with
 [chezmoi.io](https://www.chezmoi.io) for Linux and MacOS (and partially the
 other shit OS which desperately tries to convert itself into a \*nix OS) and
-[NixOS](nixos) configurations for Desktop and VM.
+[NixOS](nix) configurations for Desktop and VM.
 
 ![Screenshot](./nixos/docs/screenshot.png)
 
@@ -43,8 +43,8 @@ other shit OS which desperately tries to convert itself into a \*nix OS) and
 
 ## NixOS Configurations
 
-See the [documentation](nixos/README.md) to learn how to install NixOS on to
-your system or in a VM.
+See the [documentation](docs/nixos/README.md) to learn how to install NixOS on
+to your system or in a VM.
 
 ## Configuration Files
 
