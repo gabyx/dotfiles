@@ -157,6 +157,9 @@ in
     pkgsUnstable.google-chrome
     pkgsUnstable.libreoffice
 
+    # News
+    pkgsUnstable.newsflash # RSS Reader
+
     # Sound
     pkgsUnstable.headsetcontrol
     pkgsUnstable.noson # Sonos device
