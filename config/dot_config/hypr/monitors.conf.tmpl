@@ -1,0 +1,5 @@
+{{- if eq .workspace "work" }}
+source ~/.config/hypr/workspace-work.conf
+{{- else }}
+source ~/.config/hypr/workspace-private.conf
+{{- end }}

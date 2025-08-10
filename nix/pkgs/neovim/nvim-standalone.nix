@@ -27,7 +27,7 @@ writeShellScriptBin name ''
   FORCE_RESET="false"
   POSITIONAL_ARGS=()
 
-  shile [[ $# -gt 0 ]]; do
+  while [[ $# -gt 0 ]]; do
     case "$1" in
       --force-reset)
         FORCE_RESET="true"

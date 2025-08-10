@@ -13,6 +13,17 @@ with lib;
   # in `config.settings.???`
   options = {
     settings = {
+      windowing = {
+        manager = mkOption {
+          description = "Window manager to use.";
+          default = "sway";
+          type = types.enum [
+            "sway"
+            "hyprland"
+          ];
+        };
+      };
+
       user = {
         name = mkOption {
           description = "The main user.";

@@ -6,15 +6,16 @@ exec --no-startup-id i3-back
 # exec --no-startup-id wezterm-mux-server
 
 exec avizo-service
+exec $clipboard
 exec $display-manager 2>&1 > ~/.way-displays.log
 exec $notifications
+
 exec $mail
 exec $web
 exec $comm
 exec $comm-matrix
 exec $comm-slack
 exec $creds
-# exec $nightshifter
 
 exec ~/.config/sway/scripts/start-up.sh
 ### ===========================================================================
