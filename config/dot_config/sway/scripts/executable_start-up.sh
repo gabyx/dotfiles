@@ -53,14 +53,6 @@ function start_tmux() {
     swaymsg 'workspace $ws-1; exec $term-start NixOS $term-start-cmd'
 }
 
-function start_display_manager() {
-    echo "Start 'way-displays -g' to reassign the workspaces if needed."
-    echo "Somehow 'way-displays' crashed on start-up sometimes and this helps."
-    # See: https://github.com/alex-courtis/way-displays/issues/171
-    sleep 1
-    swaymsg exec '$display-manager -g'
-}
-
 function start_davmail() {
     echo "Start davmail to sync calendar items."
 
@@ -73,10 +65,6 @@ function start_davmail() {
 
     swaymsg exec davmail ~/.config/davmail/properties
 }
-function start_clipboard() {
-    echo "Start clipboard."
-    swaymsg exec \$clipboard
-}
 
 # Save stdout and stderr to file
 exec 3>&1 4>&2 >"$LOG" 2>&1
@@ -84,11 +72,7 @@ exec 3>&1 4>&2 >"$LOG" 2>&1
 echo "============"
 sleep 0.5
 
-start_clipboard
 start_davmail
-
-# Seems to be fixed.
-# display_manager
 
 if true; then
     notify-send "Using wezterm: not starting tmux" || true

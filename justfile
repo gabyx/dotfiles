@@ -175,7 +175,8 @@ tree *args:
 # Run Nix garbage-collection on the system-profile.
 gc:
     echo "Remove test profile"
-    sudo rm -rf /nix/var/nix/profiles/system-profile/test
+    sudo rm -rf /nix/var/nix/profiles/system-profiles/test
+    sudo rm -rf /nix/var/nix/profiles/system-profiles/test-*
 
     echo "Remove all generations older than 7 days"
     sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d
