@@ -79,6 +79,17 @@ switch-test *args:
 
     just diff 2
 
+# Build the new configuration under the boot entry `test`.
+boot-test *args:
+    #!/usr/bin/env bash
+    set -eu
+    just rebuild boot "${1:-}" -p test  \
+        --show-trace \
+        --verbose \
+        "${@:2}"
+
+    just diff 2
+
 # NixOS rebuild command for the `host` (defined in the flake).
 [private]
 rebuild how host *args:
