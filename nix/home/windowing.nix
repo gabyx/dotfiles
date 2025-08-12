@@ -1,18 +1,15 @@
 {
+  osConfig,
   config,
   lib,
   pkgs,
   ...
 }:
 let
-  windowMgr = config.settings.windowing.manager;
+  windowMgr = osConfig.settings.windowing.manager;
 
   sessionType = "wayland";
-  desktopType =
-    assert lib.assertMsg (
-      windowMgr == "sway" || windowMgr == "hyprland"
-    ) "Incorrect window manager name.";
-    if windowMgr == "sway" then "sway" else "Hyprland";
+  desktopType = if windowMgr == "sway" then "sway" else "Hyprland";
 
   waylandEnvs = {
     XDG_SESSION_TYPE = sessionType;
@@ -29,7 +26,7 @@ let
     _JAVA_AWT_WM_NONREPARENTING = "1";
   };
 
-  desktopEnvs = {
+  windowEnvs = {
     XDG_SESSION_DESKTOP = desktopType;
     XDG_CURRENT_DESKTOP = desktopType;
   };
@@ -39,8 +36,9 @@ let
 
   adjustKeyring = ''
     # Adds some more components to the gnome keyring daemon.
-    export GNOME_KEYRING_CONTROL=/run/user/$UID/keyring
-    eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg);
+    # export GNOME_KEYRING_CONTROL=/run/user/$UID/keyring
+    # export SSH_AUTH_SOCK=/run/user/$UID/keyring/ssh
+    # eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg);
   '';
 
   commonPkgs = with pkgs; [
@@ -85,35 +83,16 @@ let
   ];
 in
 {
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.autorun = true;
-
-  # Display Manager ===========================================================
-  services.displayManager = {
-    autoLogin.enable = false;
-    autoLogin.user = "nixos";
-  };
-
-  services.xserver.displayManager = {
-    gdm = {
-      enable = true;
-      wayland = true;
-    };
-  };
-
-  hardware = {
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
-  };
-  # ===========================================================================
+  assertions = [
+    {
+      assertion = (windowMgr == "sway" || windowMgr == "hyprland");
+      message = "Incorrect window manager name.";
+    }
+  ];
 
   # Hyprland Window Manager ===================================================
-  programs.hyprland = {
-    enable = (windowMgr == "hyprland");
+  wayland.windowManager.hyprland = lib.mkIf (windowMgr == "hyprland") {
+    enable = true;
     xwayland.enable = true; # Bridge to Wayland API for X11 apps.
     # TODO: Make homemanager config.
   };
@@ -121,22 +100,17 @@ in
 
   # Sway Window Manager
   # ===========================================================================
-  programs.sway = {
-    enable = (windowMgr == "sway");
-    xwayland.enable = true;
+  wayland.windowManager.sway = lib.mkIf (windowMgr == "sway") {
+    enable = true;
     wrapperFeatures.gtk = true; # so that gtk works properly
 
     extraPackages = [
       pkgs.i3-back # last workspace
     ] ++ commonPkgs;
 
-    extraSessionCommands = (envToShell waylandEnvs) + (envToShell desktopEnvs) + adjustKeyring;
+    extraSessionCommands = (envToShell waylandEnvs) + (envToShell windowEnvs) + adjustKeyring;
   };
   # ===========================================================================
-
-  environment.variables = {
-    XDG_SESSION_TYPE = sessionType;
-  } // desktopEnvs;
 
   # To make screencasting work in Chrome and other Apps communicating
   # over DBus.
@@ -157,14 +131,15 @@ in
   security = {
     polkit.enable = true; # https://discourse.nixos.org/t/sway-does-not-start/22354/5
 
-    pam.services = {
-      login.enableGnomeKeyring = true;
-    };
-    # Enable Keyring for sway and swaylock.
-    # // (lib.mkIf (config.settings.windowing.manager == "sway") {
-    #   sway.enableGnomeKeyring = true;
-    #   swaylock.enableGnomeKeyring = true;
-    # });
+    pam.services =
+      {
+        login.enableGnomeKeyring = true;
+      }
+      # Enable Keyring for sway and swaylock.
+      // (lib.mkIf (config.settings.windowing.manager == "sway") {
+        sway.enableGnomeKeyring = true;
+        swaylock.enableGnomeKeyring = true;
+      });
   };
 
   fonts.packages = with pkgs; [
