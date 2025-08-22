@@ -77,7 +77,7 @@ switch-test *args:
         --verbose \
         "${@:2}"
 
-    just diff 2
+    just diff 2 "test"
 
 # Build the new configuration under the boot entry `test`.
 boot-test *args:
@@ -88,7 +88,7 @@ boot-test *args:
         --verbose \
         "${@:2}"
 
-    just diff 2
+    just diff 2 "test"
 
 # NixOS rebuild command for the `host` (defined in the flake).
 [private]
@@ -131,7 +131,8 @@ trim *args:
 
 # Diff the profile `current-system` with the last system profile
 # to see the differences.
-diff last="1" current_profile="/run/current-system":
+# `last` can be an number or a path to the link in `/nix/var/nix/profiles/...`
+diff last="1" profile_name="system" current_profile="/run/current-system":
     #!/usr/bin/env bash
     set -eu
 
@@ -142,10 +143,11 @@ diff last="1" current_profile="/run/current-system":
 
     set -euo pipefail
     last="$1" # skip current system.
-    current_profile="$2"
+    profile_name="$2"
+    current_profile="$3"
 
     function sort_profiles() {
-        find /nix/var/nix/profiles -type l -name '*system-*' -printf '%T@ %p\0' |
+        find /nix/var/nix/profiles -type l -name "*${profile_name}*" -printf '%T@ %p\0' |
         sort -zk 1nr |
         sed -z 's/^[^ ]* //' |
         tr '\0' '\n'
@@ -154,8 +156,8 @@ diff last="1" current_profile="/run/current-system":
     if [[ "$last" =~ [0-9]* ]]; then
         last_profile="$(sort_profiles | head -n "$last" | tail -n 1)"
 
-        if [[ "$(readlink last_profile)" = "$(readlink /nix/var/nix/profiles/current-system)" ]]; then
-            echo "Last profile '$last_profile' points to 'nix/var/nix/profiles/current-system' -> Skip."
+        if [[ "$(readlink last_profile)" = "$(readlink /run/current-system)" ]]; then
+            echo "Last profile '$last_profile' points to '/run/current-system' -> Skip."
             last=$(($last + 1)) # skip current system.
         fi
 
