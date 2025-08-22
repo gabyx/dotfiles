@@ -34,6 +34,14 @@
     # ===========================================================================
   };
 
+  services.resolved = {
+    enable = true;
+    fallbackDns = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ]; # Example fallback DNS servers (Cloudflare, Google)
+  };
+
   environment.systemPackages = with pkgs; [
     wirelesstools
     networkmanagerapplet
