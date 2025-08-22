@@ -25,9 +25,9 @@ writeShellScriptBin name ''
   FORCE_PLUGINS_UPDATE="true"
   FORCE_RESET_ONLY="false"
   FORCE_RESET="false"
-  POSITIONAL_ARGS=()
+  NVIM_ARGS=()
 
-  shile [[ $# -gt 0 ]]; do
+  while [[ $# -gt 0 ]]; do
     case "$1" in
       --force-reset)
         FORCE_RESET="true"
@@ -46,14 +46,20 @@ writeShellScriptBin name ''
         FORCE_PLUGINS_UPDATE="false"
         shift
         ;;
-      -h|--help)
+      --help)
         echo "Use '--force-reset' to reset nvim and all cache/state folders." >&2
         echo "Use '--force-reset-only' to only reset and exit." >&2
         echo "Use '--force-sync' to sync ~/.config/nvim back to the Git repo." >&2
         echo "Use '--force-no-plugin-update' to do no plugin update." >&2
+        exit 0
+        ;;
+      --)
+        shift
+        NVIM_ARGS+=("$@")
+        break
         ;;
       *)
-        POSITIONAL_ARGS+=("$1")
+        NVIM_ARGS+=("$1")
         shift
         ;;
     esac
@@ -165,6 +171,6 @@ writeShellScriptBin name ''
   fi
 
   echo
-  echo "Starting '${nvim}'" "''${POSITIONAL_ARGS[@]}"
-  exec "${nvim}/bin/nvim" "''${POSITIONAL_ARGS[@]}"
+  echo "Starting '${nvim}'" "''${NVIM_ARGS[@]}"
+  exec "${nvim}/bin/nvim" "''${NVIM_ARGS[@]}"
 ''
