@@ -12,5 +12,5 @@ if [ -f "$script" ]; then
         # echo -e "OnChanged:: Workspace moved\n$out" >>~/.way-displays.log ||
         # echo -e "OnChanged:: Workspace not moved\n$out" >>~/.way-displays.log
         notify-send "Display changed." "$(echo -e "Workspace moved:\n$out")" ||
-        notify-send -u critical "Display changed." "$(echo -e "Workspace not moved:\n$out")"
+        notify-send -u normal "Display changed." "$(echo -e "Workspace not moved:\n$out")"
 fi
