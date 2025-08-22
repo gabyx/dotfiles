@@ -20,6 +20,10 @@
     sound = import ./sound.nix;
     time = import ./time.nix;
     user = import ./user.nix;
+
+    vpn = import ./vpn.nix;
+    vpn-wgnord = import ./vpn-wgnord.nix; # Pure Module.
+
     virtualization = import ./virtualization.nix;
     containerization = import ./containerization.nix;
     windowing = import ./windowing.nix;

@@ -60,27 +60,12 @@ function gabyx::bitwarden() {
 
 # Connect the NordVPN connection.
 function gabyx::nordvpn_connect() {
-    local region="${1:-ch}"
-    # Create some folders such that wgnord does not have troubles.
-    #
-    sudo mkdir -p /etc/wireguard
-    sudo mkdir -p /var/lib/wgnord
-
-    sudo chmod -R 600 /etc/wireguard/
-
-    if [ -f /etx/wireguard/wgnord.conf ]; then
-        sudo chmod o=-r,-w /etc/wireguard/wgnord.conf
-    fi
-
-    sudo curl -sL --output "/var/lib/wgnord/template.conf" \
-        "https://raw.githubusercontent.com/phirecc/wgnord/a5ffc4ddb87de23d4165d13bf4d8dc1e06a49fbd/template.conf"
-
-    sudo wgnord connect "$region"
+    wgnord-up "$@"
 }
 
 # Disconnect the NordVPN connection.
 function gabyx::nordvpn_disconnect() {
-    sudo wgnord disconnect
+    wgnord-down "$@"
 }
 
 # Connect to the named VPN connection.
