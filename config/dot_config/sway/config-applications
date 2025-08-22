@@ -1,5 +1,4 @@
 ### Applications ==============================================================
-
 assign [app_id="(?i).*chrome.*"] $web-ws
 assign [app_id="(?i).*firefox.*"] $web-ws
 
@@ -11,16 +10,10 @@ assign [app_id="(?i).*element.*"] $comm-ws
 
 assign [app_id="(?i).*bitwarden.*"] $creds-ws
 
-# TODO: Remove this since not needed anymore in newer versions.
-assign [class="(?i).*slack.*"] $comm-ws
-assign [class="(?i).*signal.*"] $comm-ws
-assign [class="(?i).*element.*"] $comm-ws
-assign [class="(?i).*bitwarden.*"] $creds-ws
-# TODO: Remove above
-
 # Some special setup for comm-ws:
-for_window [class="(?i).*element.*"] layout tabbed
-for_window [class="(?i).*signal.*"] layout tabbed
+for_window [app_id="(?i).*slack.*"] layout tabbed
+for_window [app_id="(?i).*element.*"] layout tabbed
+for_window [app_id="(?i).*signal.*"] layout tabbed
 
 # Set floating mode for generated windows
 for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable
