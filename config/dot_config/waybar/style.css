@@ -158,6 +158,13 @@ window.eDP-1 #custom-powermenu {
 /* -----------------------------------------------------------------------------
  * Module styles
  * -------------------------------------------------------------------------- */
+
+/* General hover style */
+:hover {
+  /* background-color: #4d4d4d; */
+  color: #b9cced;
+}
+
 tooltip {
   border: 1.5px solid #6495ed;
   border-radius: 4px;
