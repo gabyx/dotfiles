@@ -67,28 +67,28 @@ switch-visual *args:
 
     just diff 2
 
-# Switch the `host` (`$1`) to the latest
-# configuration but under boot entry `test`.
-switch-test *args:
+# Switch to the latest configuration of the `host` (`$2`)
+# but under boot entry `name`.
+switch-test name="test" *args:
     #!/usr/bin/env bash
     set -eu
-    just rebuild switch "${1:-}" -p test  \
+    just rebuild switch "${2:-}" -p "{{name}}"  \
         --show-trace \
         --verbose \
-        "${@:2}"
+        "${@:3}"
 
-    just diff 2 "test"
+    just diff 2 "{{name}}"
 
-# Build the new configuration under the boot entry `test`.
-boot-test *args:
+# Build the host `$2` and put it under the boot entry `name`.
+boot-test name="test" *args:
     #!/usr/bin/env bash
     set -eu
-    just rebuild boot "${1:-}" -p test  \
+    just rebuild boot "${2:-}" -p "{{name}}"  \
         --show-trace \
         --verbose \
-        "${@:2}"
+        "${@:3}"
 
-    just diff 2 "test"
+    just diff 2 "{{name}}"
 
 # NixOS rebuild command for the `host` (defined in the flake).
 [private]
