@@ -25,6 +25,7 @@ in
 {
   flake.nixosConfigurations = {
     desktop = mkSystem "x86_64-linux" "desktop";
+    desktop-steam = mkSystem "x86_64-linux" "desktop-steam";
     tuxedo = mkSystem "x86_64-linux" "tuxedo-pulse-14";
     vm = mkSystem "x86_64-linux" "vm";
   };
