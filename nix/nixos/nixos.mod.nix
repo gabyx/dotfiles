@@ -21,6 +21,8 @@
     time = import ./time.nix;
     user = import ./user.nix;
 
+    steam = import ./steam.nix;
+
     vpn = import ./vpn.nix;
     vpn-wgnord = import ./vpn-wgnord.nix; # Pure Module.
 
