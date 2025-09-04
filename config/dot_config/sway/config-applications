@@ -15,6 +15,13 @@ for_window [app_id="(?i).*slack.*"] layout tabbed
 for_window [app_id="(?i).*element.*"] layout tabbed
 for_window [app_id="(?i).*signal.*"] layout tabbed
 
+# TODO: Remove this since not needed anymore in newer versions.
+assign [class="(?i).*slack.*"] $comm-ws
+assign [class="(?i).*signal.*"] $comm-ws
+assign [class="(?i).*element.*"] $comm-ws
+assign [class="(?i).*bitwarden.*"] $creds-ws
+# TODO: Remove above
+
 # Set floating mode for generated windows
 for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable
 for_window [window_role="pop-up"] floating enable
