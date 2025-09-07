@@ -115,6 +115,7 @@ in
     pkgsUnstable.stdenv.cc # for neovim treesitter.
     pkgsUnstable.nixfmt-rfc-style
     pkgsUnstable.dconf2nix # To generate the `dconf` settings.
+    pkgsUnstable.comma # Run , jellyfin to quickly run a nix package.
 
     ## Lua
     pkgsUnstable.stylua
