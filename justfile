@@ -166,7 +166,7 @@ diff last="1" profile_name="system" current_profile="/run/current-system":
         last_profile="$last"
     fi
 
-    nvd diff "$last_profile" "$current_profile"
+    nvd diff "$current_profile" "$last_profile"
 
 # Diff closures from `dest_ref` to `src_ref`. This builds and
 # computes the closure which might take some time.
@@ -191,8 +191,12 @@ gc:
     sudo rm -rf /nix/var/nix/profiles/system-profiles/test
     sudo rm -rf /nix/var/nix/profiles/system-profiles/test-*
 
+    echo "Remove steam profile"
+    sudo rm -rf /nix/var/nix/profiles/system-profiles/steam
+    sudo rm -rf /nix/var/nix/profiles/system-profiles/steam-*
+
     echo "Remove all generations older than 7 days"
-    sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d
+    sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 60d
 
     echo "Garbage collect all unused nix store entries"
     sudo nix store gc --debug
