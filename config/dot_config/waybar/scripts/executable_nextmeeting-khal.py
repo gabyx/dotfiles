@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 from html import escape
 from itertools import chain
 from typing import Dict
+from urllib.parse import urlparse
 
 DATE_FORMAT = "%d/%m/%Y"
 DATETIME_FORMAT = f"{DATE_FORMAT} %H:%M"
@@ -196,31 +197,52 @@ def main():
 
 
 # Find the meeting URL for the event.
-def find_url(event: Event) -> str | None:
-    zoom_re = re.compile(r"\(?https://.*\.zoom\..*\)?")
-    google_re = re.compile(r"\(?https://meet\.google.*\)?")
+def find_url(event: Event) -> str:
+    zoom_re = re.compile(r".*\(?(https://.*\.zoom\.[^\s\)]+)\)?")
+    teams_re = re.compile(r".*<?(https://teams\.microsoft\.com.*-join[^\s>]+)>?")
+    google_re = re.compile(r".*\(?(https://meet\.google\.[^\s\)]+)\)?")
 
-    def match(line):
+    def match(line) -> re.Match[str] | None:
         for w in line.split(" "):
-            if zoom_re.match(w) is not None or google_re.match(w) is not None:
-                return w
+            m = zoom_re.match(w)
+            if m is not None:
+                return m
+
+            m = google_re.match(w)
+            if m is not None:
+                return m
+
+            m = teams_re.match(w)
+            if m is not None:
+                return m
+
         return None
 
     for key in ["location", "description"]:
         if key not in event.raw:
             continue
-
+        debug(f"Check {key}")
         desc = event.raw[key].splitlines()
         for l in desc:
             m = match(l)
             if m is not None:
-                return m
+                return m.group(1)
 
     raise RuntimeError(f"Did not find any URL in event.")
 
 
 # Open a URL in the browser.
 def open_url(url: str):
+    try:
+        p = urlparse(url)
+
+        if not all([p.scheme, p.netloc]):
+            raise
+    except:
+        raise RuntimeError(
+            f"Url '{url}' cannot be parsed.",
+        )
+
     try:
         subprocess.check_call(["notify-send", "Opening URL in browser.", f"URL: {url}"])
     except:
