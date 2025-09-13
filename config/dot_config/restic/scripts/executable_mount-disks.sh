@@ -36,7 +36,7 @@ function mount() {
     gabyx::print_info "Mount zfs: $pool, dataset: $dataset at: '$mount/$dataset"
     sudo zfs set -u mountpoint="$mount/$dataset" "$pool/$dataset"
     sudo zfs mount -l "$pool/$dataset" || {
-        gabyx::die "Could not mount volume '$mount/$dataset'. -> Skip." >&2
+        gabyx::die "Could not mount volume '$pool/$dataset'. -> Skip." >&2
     }
 }
 
@@ -51,6 +51,6 @@ function unmount() {
 
     gabyx::print_info "Unmount zfs: $pool, dataset: $dataset"
     sudo zfs unmount "$pool/$dataset" ||
-        gabyx::die "Could not unmount volume '$mount/$dataset'"
+        gabyx::die "Could not unmount volume '$pool/$dataset'"
 
 }

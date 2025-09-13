@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090
-# TODO: Script will fail if the sudo cache is reset
-#       which will again need sudo password.
+# TODO: Script will fail if the run_sudo cache is reset
+#       which will again need run_sudo password.
 
 set -e
 set -u
@@ -12,6 +12,11 @@ set -u
 . ~/.config/restic/scripts/mount-disks.sh
 
 DISK_PATH=/dev/disk/by-uuid/4877700394137381369
+BACKUP_VOLUME_MOUNTED="false"
+PASSWORD_FILE_ROOT=/run/secrets/restic/backup-pass
+PASSWORD_FILE_USER=~/.config/restic/backup-pass
+RESTIC_PASSWORD_FILE=""
+USER_UID=1000
 
 # Flags:
 LIST="false"
@@ -22,8 +27,9 @@ DATASETS=()
 
 function parse_args() {
     # Loop through all the arguments
-    for arg in "$@"; do
-        case $arg in
+    while [[ $# -gt 0 ]]; do
+        local arg="$1"
+        case "$arg" in
         --list)
             LIST="true"
             shift
@@ -42,7 +48,7 @@ function parse_args() {
             ;;
         *)
             # Default case for unknown arguments
-            echo "Unknown argument: $arg"
+            gabyx::die "Unknown argument: $arg"
             ;;
         esac
     done
@@ -57,42 +63,71 @@ function parse_args() {
         "POWEROFF: $POWEROFF"
 }
 
-function get_src() {
-    local dataset="$1"
-    if [ "$dataset" = "personal" ]; then
-        echo "/mnt/data/personal"
-    elif [ "$dataset" = "work" ]; then
-        echo "/mnt/data/work"
+function running_as_root() {
+    [ "$(id -u)" == 0 ] || false
+}
+
+function running_as_user() {
+    [ "$(id -u)" == "$USER_UID" ] || false
+}
+
+function run_sudo() {
+    if ! running_as_root; then
+        gabyx::print_debug "Run: sudo $(printf '"%s" ' "$@")"
+        sudo "$@"
     else
-        gabyx::die "Dataset '$dataset' not implemented"
+        "$@"
     fi
 }
 
+# The location to backup.
+function get_src() {
+    local dataset="$1"
+
+    case "$dataset" in
+    personal)
+        echo "/mnt/data/personal"
+        ;;
+    work)
+        echo "/mnt/data/work"
+        ;;
+    *)
+        gabyx::die "Dataset '$dataset' not implemented"
+        ;;
+    esac
+}
+
+# The location to backup to.
 function get_dest() {
     local dataset="$1"
-    if [ "$dataset" = "personal" ]; then
+
+    case "$dataset" in
+    personal)
         echo "/mnt/external-ssd/data-backups/personal"
-    elif [ "$dataset" = "work" ]; then
+        ;;
+    work)
         echo "/mnt/external-ssd/data-backups/work"
-    else
+        ;;
+    *)
         gabyx::die "Dataset '$dataset' not implemented"
-    fi
+        ;;
+    esac
 }
 
 function keep_sudo_alive() {
     # Might as well ask for password up-front, right?
-    sudo -v
+    run_sudo -v
 
-    # Keep-alive: update existing sudo time stamp if set, otherwise do nothing.
+    # Keep-alive: update existing run_sudo time stamp if set, otherwise do nothing.
     # Explanation:
-    # $$ is the PID of the parent process.
+    # $$ is the PID of this script's process.
     # kill -0 PID exits with an exit code of 0 if the PID is
     # of a running process, otherwise exits with an exit code of 1.
     # So, basically, `kill -0 "$$" || exit`
     # aborts the while loop child process as soon as the
     # parent process is no longer running.
     while true; do
-        sudo true
+        run_sudo true
         sleep 60
         kill -0 "$$" || exit
     done 2>/dev/null &
@@ -104,9 +139,16 @@ function restic_backup() {
 
     gabyx::print_info "===============================" \
         "Backing up '$src' to '$dest' with restic."
-    (cd "$src" &&
-        restic backup -r "$dest" --exclude-file "$general_excludes" ./) ||
+
+    [ -d "$src" ] || gabyx::die "Src: '$src' does not exist."
+    [ -d "$dest" ] || gabyx::die "Dest: '$dest' does not exist."
+
+    run_sudo restic backup \
+        --password-file "$RESTIC_PASSWORD_FILE" \
+        -r "$dest" \
+        --exclude-file "$general_excludes" "$src/" ||
         gabyx::die "Backup failed."
+
     gabyx::print_info "==============================="
 }
 
@@ -162,27 +204,41 @@ function prompt_password() {
     "$exe" entry --title "Restic Backup" --text "Enter the password:" --hide-entry
 }
 
-function export_backup_password() {
-    password_file=~/.config/restic/backup-pass
+function set_password_file() {
+    if running_as_root; then
 
-    if ! is_non_interactive && [ ! -f "$password_file" ]; then
-        RESTIC_PASSWORD=$(prompt_password) ||
-            gabyx::die "Could not prompt for password."
+        if ! [[ -e $PASSWORD_FILE_ROOT && -r $PASSWORD_FILE_ROOT ]]; then
+            gabyx::die "Could not read password file '$PASSWORD_FILE_ROOT'"
+        fi
+        gabyx::print_info "Using passfile '$PASSWORD_FILE_ROOT'."
+        RESTIC_PASSWORD_FILE="$PASSWORD_FILE_ROOT"
+
+    elif running_as_user; then
+
+        if [[ -e $PASSWORD_FILE_USER && -r $PASSWORD_FILE_USER ]]; then
+            gabyx::print_info "Using passfile '$PASSWORD_FILE_USER'."
+            RESTIC_PASSWORD_FILE="$PASSWORD_FILE_USER"
+        elif ! is_non_interactive; then
+            local pass
+            pass=$(prompt_password) ||
+                gabyx::die "Could not prompt for password."
+
+            RESTIC_PASSWORD_FILE=$(mktemp -p /dev/shm)
+            echo "$pass" >"$RESTIC_PASSWORD_FILE"
+        else
+            gabyx::die "Could not read password from file '$PASSWORD_FILE_USER' or prompt."
+        fi
+
     else
-        RESTIC_PASSWORD=$(cat "$password_file") ||
-            gabyx::die "Could not read password file '$password_file'"
+        gabyx::die "Nor root or user!"
     fi
-
-    [ -n "$RESTIC_PASSWORD" ] || gabyx::die "Password is empty."
-
-    export RESTIC_PASSWORD
 }
 
 function run_list() {
-    export_backup_password
+    set_password_file
 
     gabyx::print_info "Import all zfs pools"
-    sudo zpool import -f -a
+    run_sudo zpool import -f -a
 
     unmount zfs-pool-external-ssd data-backups || true
     mount zfs-pool-external-ssd data-backups "external-ssd"
@@ -194,48 +250,60 @@ function run_backup() {
     notify "Starting restic backup."
     general_excludes=~/.config/restic/general-excludes.txt
 
-    export_backup_password
+    set_password_file
 
     gabyx::print_info "Import all zfs pools"
-    sudo zpool import -f -a
+    run_sudo zpool import -f -a
 
-    # Mount datasets.
+    gabyx::print_info "Mount datasets..."
     for dataset in "${DATASETS[@]}"; do
         unmount zfs-pool-data "$dataset" || true
         mount zfs-pool-data "$dataset" "data"
     done
 
-    # Mount targets
+    gabyx::print_info "Mount targets..."
     unmount zfs-pool-external-ssd data-backups || true
     mount zfs-pool-external-ssd data-backups "external-ssd" || {
         echo "Did you plugin the external-ssd backup disk?" >&2
         exit 1
     }
+    BACKUP_VOLUME_MOUNTED="true"
 
     backup
 }
 
 function unmount_power_off_backup_drive() {
+    if [ "$BACKUP_VOLUME_MOUNTED" != "true" ]; then
+        return 0
+    fi
+
     echo "Unmount backup drive for safety."
     # Export the pool, will unmount everything.
-    sudo zpool export zfs-pool-external-ssd
+    run_sudo zpool export zfs-pool-external-ssd
 
     if [ "$POWEROFF" = "true" ]; then
         echo "Poweroff backup drive for safety."
         # Powerdone external drive.
-        sudo udisksctl power-off -b "$DISK_PATH"
+        run_sudo udisksctl power-off -b "$DISK_PATH"
     fi
 }
 
 function clean_up() {
+    gabyx::print_info "Clean up..."
     unmount_power_off_backup_drive || true
+}
+
+function interrupt() {
+    trap - INT
+    gabyx::print_info "Interrupt handled."
 }
 
 function on_error() {
     notify warning "An error occurred in the backup script."
 }
 
-trap clean_up EXIT INT
+trap interrupt INT
+trap clean_up EXIT
 trap on_error ERR
 
 parse_args "$@"
@@ -243,6 +311,6 @@ parse_args "$@"
 if [ "$LIST" = "true" ]; then
     run_list
 else
-    keep_sudo_alive
+    running_as_root || keep_sudo_alive
     run_backup
 fi
