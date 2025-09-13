@@ -5,7 +5,6 @@
 {
   networking = {
     ### Networking ==============================================================
-    hostName = "linux-nixos"; # Define your hostname.
     networkmanager.enable = true;
     # networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
 

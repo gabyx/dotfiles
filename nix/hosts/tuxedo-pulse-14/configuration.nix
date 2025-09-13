@@ -30,6 +30,7 @@
 
     # Include all other specifications.
     inputs.self.modules.nixos.settings
+    ./settings.nix
 
     inputs.self.modules.nixos.windowing
     inputs.self.modules.nixos.display

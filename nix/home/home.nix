@@ -28,7 +28,7 @@
 
   home = rec {
     username = osConfig.settings.user.name;
-    homeDirectory = "/home/${osConfig.settings.user.name}";
+    homeDirectory = osConfig.settings.user.home;
 
     # Add support for .local/bin
     sessionPath = [ "${homeDirectory}/.local/bin" ];

@@ -49,7 +49,7 @@ in
       ];
 
       # Authorized keys to access the machine if openssh is enabled.
-      openssh.authorizedKeys.keyFiles = settings.user.opensshAuthKeyFiles;
+      openssh.authorizedKeys.keyFiles = settings.user.openssh.authKeyFiles;
     };
 
   };

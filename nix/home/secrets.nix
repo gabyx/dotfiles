@@ -1,24 +1,30 @@
 {
   pkgs,
   config,
+  osConfig,
   inputs,
   ...
 }:
 {
-  # Setup encryption for secrets in this NixOS configuration.
-  # So far we do not use this yet, since we would need to provide a non-passhrase protected
-  # private key which we dont want.
-  age = {
-    identityPaths = [
-      # This is the private SSH key, which is passphrase-protected.
-      # This wont work with the `agenix.service` since the underlying `age`
-      # prompts for a password.
-      "${config.home.homeDirectory}/.ssh/gabyx_ed25519"
-    ];
+  config = {
+    # Setup encryption for secrets in this NixOS configuration.
+    # So far we do not use this yet, since we would need to provide a non-passhrase protected
+    # private key which we dont want.
+    age = {
+      # Private keys:
+      # Defaults to `config.services.openssh.hostKeys`.
+      identityPaths = [
+        # Passphrase protected keys dont work.
+
+        # Add another possible location for a root key.
+        #  - sudo chown root:root host-ed25519
+        #  - sudo chmod 600 host-ed25519
+        #  - sudo chmod 644 host-ed25519.pub
+        "${config.home.homeDirectory}/.ssh/host-ed25519_key"
+      ];
+    };
+
+    # Add `agenix` tool to the packages.
+    home.packages = [ inputs.agenix.packages.${pkgs.system}.default ];
   };
-
-  # Add `agenix` tool to the packages.
-  home.packages = [ inputs.agenix.packages.${pkgs.system}.default ];
-
-  # age.secrets.mysecret.file = ./secrets/secret1.age;
 }
