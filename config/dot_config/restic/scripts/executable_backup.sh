@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090
-# TODO: Script will fail if the run_sudo cache is reset
-#       which will again need run_sudo password.
 
 set -e
 set -u
@@ -9,6 +7,7 @@ set -u
 . ~/.config/shell/common/log.sh
 . ~/.config/shell/common/platform.sh
 
+. ~/.config/restic/scripts/run-root.sh
 . ~/.config/restic/scripts/mount-disks.sh
 
 DISK_PATH=/dev/disk/by-uuid/4877700394137381369
@@ -16,7 +15,11 @@ BACKUP_VOLUME_MOUNTED="false"
 PASSWORD_FILE_ROOT=/run/secrets/restic/backup-pass
 PASSWORD_FILE_USER=~/.config/restic/backup-pass
 RESTIC_PASSWORD_FILE=""
+
+# User/group permissions.
 USER_UID=1000
+USER_GID=$(id "$USER_UID" -g)
+CHOWN_TO_USER="false"
 
 # Flags:
 LIST="false"
@@ -42,6 +45,10 @@ function parse_args() {
             POWEROFF="false"
             shift
             ;;
+        --chwon-to-user)
+            CHOWN_TO_USER="true"
+            shift
+            ;;
         --non-interactive)
             NONINTERACTIVE="true"
             shift
@@ -61,23 +68,6 @@ function parse_args() {
         "NONINTERACTIVE: $NONINTERACTIVE" \
         "DATASETS:\n$(printf ' - %s\n' "${DATASETS[@]}")" \
         "POWEROFF: $POWEROFF"
-}
-
-function running_as_root() {
-    [ "$(id -u)" == 0 ] || false
-}
-
-function running_as_user() {
-    [ "$(id -u)" == "$USER_UID" ] || false
-}
-
-function run_sudo() {
-    if ! running_as_root; then
-        gabyx::print_debug "Run: sudo $(printf '"%s" ' "$@")"
-        sudo "$@"
-    else
-        "$@"
-    fi
 }
 
 # The location to backup.
@@ -143,11 +133,17 @@ function restic_backup() {
     [ -d "$src" ] || gabyx::die "Src: '$src' does not exist."
     [ -d "$dest" ] || gabyx::die "Dest: '$dest' does not exist."
 
+    # Run restic as the user who
     run_sudo restic backup \
         --password-file "$RESTIC_PASSWORD_FILE" \
         -r "$dest" \
         --exclude-file "$general_excludes" "$src/" ||
         gabyx::die "Backup failed."
+
+    if [ "$CHOWN_TO_USER" = "true" ]; then
+        gabyx::print_info "Chown everything to '$USER_UID:$USER_GID'"
+        run_sudo chown -R "$USER_UID:$USER_GID" "$dest"
+    fi
 
     gabyx::print_info "==============================="
 }
@@ -175,10 +171,10 @@ function list_and_check() {
     # export_backup_password
     for dataset in "${DATASETS[@]}"; do
         echo "Snapshots for '$dataset'."
-        restic snapshots -r "$(get_dest "$dataset")"
+        run_sudo restic --password-file "$RESTIC_PASSWORD_FILE" snapshots -r "$(get_dest "$dataset")"
 
         echo "Checks for '$dataset'."
-        restic check -r "$(get_dest "$dataset")"
+        run_sudo restic --password-file "$RESTIC_PASSWORD_FILE" check -r "$(get_dest "$dataset")"
     done
 }
 

@@ -7,6 +7,8 @@ set -u
 . ~/.config/shell/common/log.sh
 . ~/.config/shell/common/platform.sh
 
+. ~/.config/restic/scripts/run-root.sh
+
 function get_mount_point() {
     local -n _mountpoint="$1"
 
@@ -34,8 +36,8 @@ function mount() {
     fi
 
     gabyx::print_info "Mount zfs: $pool, dataset: $dataset at: '$mount/$dataset"
-    sudo zfs set -u mountpoint="$mount/$dataset" "$pool/$dataset"
-    sudo zfs mount -l "$pool/$dataset" || {
+    run_sudo zfs set -u mountpoint="$mount/$dataset" "$pool/$dataset"
+    run_sudo zfs mount -l "$pool/$dataset" || {
         gabyx::die "Could not mount volume '$pool/$dataset'. -> Skip." >&2
     }
 }
@@ -50,7 +52,7 @@ function unmount() {
     fi
 
     gabyx::print_info "Unmount zfs: $pool, dataset: $dataset"
-    sudo zfs unmount "$pool/$dataset" ||
+    run_sudo sudo zfs unmount "$pool/$dataset" ||
         gabyx::die "Could not unmount volume '$pool/$dataset'"
 
 }

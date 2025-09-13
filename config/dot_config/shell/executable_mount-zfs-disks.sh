@@ -18,7 +18,7 @@ if [ "${1:-}" = "--unmount" ]; then
     unmount=true
 fi
 
-what_datasets="${1:-all}"
+what_datasets="${1:-personal}"
 
 # Mount sources.
 if [[ $what_datasets =~ work|all ]]; then
@@ -32,5 +32,13 @@ if [[ $what_datasets =~ personal|all ]]; then
     unmount zfs-pool-data personal || true
     if [ "$unmount" = "false" ]; then
         mount zfs-pool-data personal "data"
+    fi
+fi
+
+if [[ $what_datasets =~ backups|all ]]; then
+    unmount zfs-pool-external-ssd data-backups || true
+    if [ "$unmount" = "false" ]; then
+        mount zfs-pool-external-ssd data-backups \
+            "external-ssd"
     fi
 fi
