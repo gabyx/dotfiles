@@ -14,10 +14,12 @@
 
       # Batman Timezone Converter.
       # batz = pkgs.callPackage ./batz { };
+
+      gabyx = import ./scripts { inherit pkgsUnstable; };
     in
     {
       packages = {
         inherit (nvimBuilds) nvim nvim-nightly nvim-treesitter-install;
-      };
+      } // gabyx;
     };
 }

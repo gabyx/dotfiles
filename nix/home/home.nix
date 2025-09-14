@@ -14,6 +14,7 @@
 
     ./environment.nix
     ./packages.nix
+    ./scripts.nix
     ./tmux.nix
     ./programs.nix
     ./services.nix

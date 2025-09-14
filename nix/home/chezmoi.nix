@@ -2,12 +2,33 @@
   config,
   pkgs,
   lib,
-  inputs,
   ...
 }:
 with lib;
 let
   cfg = config.chezmoi;
+
+  script = ./scripts/shell/chezmoi/setup.sh;
+
+  scriptDrv = pkgs.writeShellApplication {
+    name = "setup";
+
+    runtimeInputs = [
+      pkgs.git-lfs
+      pkgs.gitFull
+      pkgs.chezmoi
+      pkgs.libsecret
+      pkgs.systemd
+      pkgs.gnupg
+      pkgs.age
+    ];
+
+    text =
+      # bash
+      ''
+        ${script} "${cfg.url}" "${cfg.ref}" "${cfg.workspace}"
+      '';
+  };
 in
 {
   # Options for chezmoi configuration
@@ -44,9 +65,7 @@ in
     home.packages = with pkgs; [ chezmoi ];
 
     home.activation.install-chezmoi = hm.dag.entryAfter [ "installPackages" ] ''
-      export PATH="${pkgs.git-lfs}/bin:${pkgs.gitFull}/bin:${pkgs.chezmoi}/bin:${pkgs.age}/bin:${pkgs.systemd}/bin:${pkgs.libsecret}/bin:$PATH"
-      ${builtins.toPath ./scripts/setup-configs.sh} \
-        "${cfg.url}" "${cfg.ref}" "${cfg.workspace}"
+      ${scriptDrv}/bin/setup
     '';
   };
 }

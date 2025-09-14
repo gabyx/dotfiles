@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1090
+# shellcheck disable=SC2015,SC1091,SC2153
+#
+# Backup all ZFS disks.
 
 set -e
 set -u
 
-. ~/.config/shell/common/log.sh
-. ~/.config/shell/common/platform.sh
-
-. ~/.config/restic/scripts/run-root.sh
-. ~/.config/restic/scripts/mount-disks.sh
+SCRIPT_DIR=$(cd -- "$(dirname -- "$0")" &>/dev/null && pwd)
+. "$SCRIPT_DIR/../common/source.sh"
+. "$SCRIPT_DIR/zfs.sh"
 
 DISK_PATH=/dev/disk/by-uuid/4877700394137381369
 BACKUP_VOLUME_MOUNTED="false"
@@ -106,9 +106,9 @@ function get_dest() {
 
 function keep_sudo_alive() {
     # Might as well ask for password up-front, right?
-    run_sudo -v
+    gabyx::sudo -v
 
-    # Keep-alive: update existing run_sudo time stamp if set, otherwise do nothing.
+    # Keep-alive: update existing gabyx::sudo time stamp if set, otherwise do nothing.
     # Explanation:
     # $$ is the PID of this script's process.
     # kill -0 PID exits with an exit code of 0 if the PID is
@@ -117,7 +117,7 @@ function keep_sudo_alive() {
     # aborts the while loop child process as soon as the
     # parent process is no longer running.
     while true; do
-        run_sudo true
+        gabyx::sudo true
         sleep 60
         kill -0 "$$" || exit
     done 2>/dev/null &
@@ -134,7 +134,7 @@ function restic_backup() {
     [ -d "$dest" ] || gabyx::die "Dest: '$dest' does not exist."
 
     # Run restic as the user who
-    run_sudo restic backup \
+    gabyx::sudo restic backup \
         --password-file "$RESTIC_PASSWORD_FILE" \
         -r "$dest" \
         --exclude-file "$general_excludes" "$src/" ||
@@ -142,7 +142,7 @@ function restic_backup() {
 
     if [ "$CHOWN_TO_USER" = "true" ]; then
         gabyx::print_info "Chown everything to '$USER_UID:$USER_GID'"
-        run_sudo chown -R "$USER_UID:$USER_GID" "$dest"
+        gabyx::sudo chown -R "$USER_UID:$USER_GID" "$dest"
     fi
 
     gabyx::print_info "==============================="
@@ -158,7 +158,7 @@ function backup() {
 
         if [ "$dataset" = "work" ]; then
             # Unmount for sure the encrypted disk.
-            unmount zfs-pool-data work
+            gabyx::unmount_zfs zfs-pool-data work
         fi
     done
 
@@ -171,10 +171,10 @@ function list_and_check() {
     # export_backup_password
     for dataset in "${DATASETS[@]}"; do
         echo "Snapshots for '$dataset'."
-        run_sudo restic --password-file "$RESTIC_PASSWORD_FILE" snapshots -r "$(get_dest "$dataset")"
+        gabyx::sudo restic --password-file "$RESTIC_PASSWORD_FILE" snapshots -r "$(get_dest "$dataset")"
 
         echo "Checks for '$dataset'."
-        run_sudo restic --password-file "$RESTIC_PASSWORD_FILE" check -r "$(get_dest "$dataset")"
+        gabyx::sudo restic --password-file "$RESTIC_PASSWORD_FILE" check -r "$(get_dest "$dataset")"
     done
 }
 
@@ -201,7 +201,7 @@ function prompt_password() {
 }
 
 function set_password_file() {
-    if running_as_root; then
+    if gabyx::is_root; then
 
         if ! [[ -e $PASSWORD_FILE_ROOT && -r $PASSWORD_FILE_ROOT ]]; then
             gabyx::die "Could not read password file '$PASSWORD_FILE_ROOT'"
@@ -209,7 +209,7 @@ function set_password_file() {
         gabyx::print_info "Using passfile '$PASSWORD_FILE_ROOT'."
         RESTIC_PASSWORD_FILE="$PASSWORD_FILE_ROOT"
 
-    elif running_as_user; then
+    elif gabyx::is_user "$USER_UID"; then
 
         if [[ -e $PASSWORD_FILE_USER && -r $PASSWORD_FILE_USER ]]; then
             gabyx::print_info "Using passfile '$PASSWORD_FILE_USER'."
@@ -234,10 +234,10 @@ function run_list() {
     set_password_file
 
     gabyx::print_info "Import all zfs pools"
-    run_sudo zpool import -f -a
+    gabyx::sudo zpool import -f -a
 
-    unmount zfs-pool-external-ssd data-backups || true
-    mount zfs-pool-external-ssd data-backups "external-ssd"
+    gabyx::unmount_zfs zfs-pool-external-ssd data-backups || true
+    gabyx::mount_zfs zfs-pool-external-ssd data-backups "external-ssd"
 
     list_and_check
 }
@@ -249,17 +249,17 @@ function run_backup() {
     set_password_file
 
     gabyx::print_info "Import all zfs pools"
-    run_sudo zpool import -f -a
+    gabyx::sudo zpool import -f -a
 
     gabyx::print_info "Mount datasets..."
     for dataset in "${DATASETS[@]}"; do
-        unmount zfs-pool-data "$dataset" || true
-        mount zfs-pool-data "$dataset" "data"
+        gabyx::unmount_zfs zfs-pool-data "$dataset" || true
+        gabyx::mount_zfs zfs-pool-data "$dataset" "data"
     done
 
     gabyx::print_info "Mount targets..."
-    unmount zfs-pool-external-ssd data-backups || true
-    mount zfs-pool-external-ssd data-backups "external-ssd" || {
+    gabxy::unmount zfs-pool-external-ssd data-backups || true
+    gabxy::mount zfs-pool-external-ssd data-backups "external-ssd" || {
         echo "Did you plugin the external-ssd backup disk?" >&2
         exit 1
     }
@@ -275,12 +275,12 @@ function unmount_power_off_backup_drive() {
 
     echo "Unmount backup drive for safety."
     # Export the pool, will unmount everything.
-    run_sudo zpool export zfs-pool-external-ssd
+    gabyx::sudo zpool export zfs-pool-external-ssd
 
     if [ "$POWEROFF" = "true" ]; then
         echo "Poweroff backup drive for safety."
         # Powerdone external drive.
-        run_sudo udisksctl power-off -b "$DISK_PATH"
+        gabyx::sudo udisksctl power-off -b "$DISK_PATH"
     fi
 }
 
@@ -307,6 +307,6 @@ parse_args "$@"
 if [ "$LIST" = "true" ]; then
     run_list
 else
-    running_as_root || keep_sudo_alive
+    gabyx::is_root || keep_sudo_alive
     run_backup
 fi

@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1090
+# shellcheck disable=SC1090,SC1091
 #
 # Mount all ZFS disks.
 
 set -u
 set -e
 
-. ~/.config/shell/common/log.sh
-. ~/.config/restic/scripts/mount-disks.sh
+SCRIPT_DIR=$(cd -- "$(dirname -- "$0")" &>/dev/null && pwd)
+. "$SCRIPT_DIR/../common/source.sh"
+. "$SCRIPT_DIR/zfs.sh"
 
 gabyx::print_info "Import all ZFS pools and mount disks."
 sudo zpool import -f -a
@@ -22,23 +23,23 @@ what_datasets="${1:-personal}"
 
 # Mount sources.
 if [[ $what_datasets =~ work|all ]]; then
-    unmount zfs-pool-data work || true
+    gabyx::unmount_zfs zfs-pool-data work || true
     if [ "$unmount" = "false" ]; then
-        mount zfs-pool-data work "data"
+        gabyx::mount_zfs zfs-pool-data work "data"
     fi
 fi
 
 if [[ $what_datasets =~ personal|all ]]; then
-    unmount zfs-pool-data personal || true
+    gabyx::unmount_zfs zfs-pool-data personal || true
     if [ "$unmount" = "false" ]; then
-        mount zfs-pool-data personal "data"
+        gabyx::mount_zfs zfs-pool-data personal "data"
     fi
 fi
 
 if [[ $what_datasets =~ backups|all ]]; then
-    unmount zfs-pool-external-ssd data-backups || true
+    gabyx::unmount_zfs zfs-pool-external-ssd data-backups || true
     if [ "$unmount" = "false" ]; then
-        mount zfs-pool-external-ssd data-backups \
+        gabyx::mount_zfs zfs-pool-external-ssd data-backups \
             "external-ssd"
     fi
 fi

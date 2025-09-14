@@ -23,7 +23,7 @@ function get_platform_os() {
         CYGWIN*) _platformOS="windows" && platformOSDist="cygwin" ;;
         MINGW*) _platformOS="windows" && platformOSDist="mingw" ;;
         *Msys) _platformOS="windows" && platformOSDist="msys" ;;
-        *) die "Platform: '$name' not supported." ;;
+        *) gabyx::die "Platform: '$name' not supported." ;;
         esac
     fi
 
@@ -50,7 +50,7 @@ function get_platform_os() {
             platformOSVersion=$(grep -m 1 "VERSION_ID=" "/etc/os-release" |
                 sed -E 's|.*="?([0-9]+\.[0-9]+).*|\1|')
         else
-            die "Linux Distro '/etc/os-release' not supported currently:" \
+            gabyx::die "Linux Distro '/etc/os-release' not supported currently:" \
                 "$(cat /etc/os-release 2>/dev/null)"
         fi
 
@@ -70,7 +70,7 @@ function get_platform_os() {
         platformOSVersion=$(systeminfo | grep -m 1 'OS Version:' | sed -E "s/.*:\s+([0-9]+\.[0-9]+\.[0-9]+).*/\1/")
         platformOSVersion="${platformOSVersion// /}"
     else
-        die "Platform '$_platformOS' not supported currently."
+        gabyx::die "Platform '$_platformOS' not supported currently."
     fi
 
     if [ -n "${2:-}" ]; then
@@ -99,6 +99,6 @@ function get_platform_arch() {
     elif uname -a | grep -q -E "aarch64|arm64" &>/dev/null; then
         _arch="arm64"
     else
-        die "Architecture: '$(uname -m)' not supported."
+        gabyx::die "Architecture: '$(uname -m)' not supported."
     fi
 }

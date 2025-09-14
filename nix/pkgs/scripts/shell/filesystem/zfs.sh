@@ -1,15 +1,9 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1090
+# shellcheck disable=SC1090,SC1091
 
-set -e
-set -u
+. "$GABYX_LIB_DIR/common/source.sh"
 
-. ~/.config/shell/common/log.sh
-. ~/.config/shell/common/platform.sh
-
-. ~/.config/restic/scripts/run-root.sh
-
-function get_mount_point() {
+function gabyx::mountpoint_zfs() {
     local -n _mountpoint="$1"
 
     local os=""
@@ -22,12 +16,12 @@ function get_mount_point() {
     fi
 }
 
-function mount() {
+function gabyx::mount_zfs() {
     local pool="$1"
     local dataset="$2"
 
     local mountpoint=""
-    get_mount_point mountpoint
+    gabyx::mountpoint_zfs mountpoint
     local mount="$mountpoint/$3"
 
     if [ "$(zfs get mounted "$pool/$dataset" -o value -H)" = "yes" ]; then
@@ -36,13 +30,13 @@ function mount() {
     fi
 
     gabyx::print_info "Mount zfs: $pool, dataset: $dataset at: '$mount/$dataset"
-    run_sudo zfs set -u mountpoint="$mount/$dataset" "$pool/$dataset"
-    run_sudo zfs mount -l "$pool/$dataset" || {
+    gabyx::sudo zfs set -u mountpoint="$mount/$dataset" "$pool/$dataset"
+    gabyx::sudo zfs mount -l "$pool/$dataset" || {
         gabyx::die "Could not mount volume '$pool/$dataset'. -> Skip." >&2
     }
 }
 
-function unmount() {
+function gabyx::unmount_zfs() {
     local pool="$1"
     local dataset="$2"
 
@@ -52,7 +46,7 @@ function unmount() {
     fi
 
     gabyx::print_info "Unmount zfs: $pool, dataset: $dataset"
-    run_sudo sudo zfs unmount "$pool/$dataset" ||
+    gabyx::sudo sudo zfs unmount "$pool/$dataset" ||
         gabyx::die "Could not unmount volume '$pool/$dataset'"
 
 }

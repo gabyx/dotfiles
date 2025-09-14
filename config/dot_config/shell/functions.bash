@@ -1,38 +1,9 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2015,SC1091
-# =========================================================================================
-# Chezmoi Setup
-#
-# @date 17.3.2023
-# @author Gabriel Nützi, gnuetzi@gmail.com
-# =========================================================================================
-SCRIPT_DIR=$(cd -- "$(dirname -- "$0")" &>/dev/null && pwd)
-if [ ! -f "$SCRIPT_DIR" ]; then
-    SCRIPT_DIR="$HOME/.config/shell"
-fi
 
-. "$SCRIPT_DIR/common/log.sh" || {
-    echo "Could not source 'log.sh'."
+eval "$(gabyx::shell-source)" || {
+    echo "Could not 'eval \$(gabyx::source)'."
 } >&2
-
-# Mount all ZFS disks.
-function gabyx::mount_zfs_disks() {
-    ~/.config/shell/mount-zfs-disks.sh "$@"
-}
-
-# Unmount all ZFS disks.
-function gabyx::unmount_zfs_disks() {
-    ~/.config/shell/mount-zfs-disks.sh --unmount "$@"
-}
-
-# Find recent files in the dir `$1`.
-function gabyx::find_recent() {
-    local dir="$1"
-    shift 1
-
-    fd "$@" "$dir" --exec find {} -printf "%T@ %Td-%Tb-%TY %TT %p\n" |
-        sort -n | cut -d " " -f 2-
-}
 
 function gabyx::compress_pdf() {
     local file="$1"
@@ -129,53 +100,6 @@ function gabyx::tmux_resurrect_restore() {
     }
 }
 
-# Remove `docker` or `podman` images with a regex `$1`.
-# Use `--use-podman` as first argument if
-# you want `podman` instead of `docker`.
-function gabyx::remove_docker_images() {
-    local builder="docker"
-
-    if [ "$1" = "--use-podman" ]; then
-        shift 1
-        builder="podman"
-    fi
-
-    [ -z "$1" ] && {
-        gabyx::print_error "Empty regex given."
-        return 1
-    }
-    images=$("$builder" images --format '{{.ID}}|{{.Repository}}:{{.Tag}}' | grep -v '<none>' |
-        grep -xE "(\w+)\|$1" | sed -E "s/(\w+)\|.*/\1/g")
-    [ -z "$images" ] && {
-        gabyx::print_warning "No images found."
-        return 0
-    }
-
-    gabyx::print_info "Deleting images:"
-    echo "$images"
-    echo "$images" | xargs -n 1 "$builder" rmi --force
-}
-
-function gabyx::copy_images_to_podman() {
-    transport="docker-daemon"
-
-    [ -z "$1" ] && {
-        gabyx::print_error "Empty regex given."
-        return 1
-    }
-
-    gabyx::print_info "Copying images with regex '$1' from docker to podman."
-    images=$(docker images --format "$transport:{{.Repository}}:{{.Tag}}" | grep -v 'wnonew' | grep -xE "$transport:$1")
-
-    echo "$images" | xargs printf "  - '%s'\n"
-    echo "$images" | xargs podman pull
-}
-
-# Call my file regex/replace script.
-function gabyx::file_regex_replace() {
-    "$HOME/.config/shell/file-regex-replace.py" "$@"
-}
-
 # Print the keycodes of the active keyboard.
 function gabyx::print_keycode_table {
     xmodmap -pke
@@ -222,16 +146,6 @@ function gabyx::nixos_hm_log() {
 # List all running kernel modules.
 function gabyx::nixos_kernel_modules() {
     lsmod
-}
-
-# Run the backup script.
-function gabyx::backup_zfs() {
-    ~/.config/restic/scripts/backup.sh
-}
-
-# List all backups.
-function gabyx::list_backups() {
-    ~/.config/restic/scripts/backup.sh --list
 }
 
 # Rebuild the system with Nix.
@@ -322,17 +236,4 @@ function gabyx::tmux_new_session() {
         TMUXIFIER_SESSION_NAME="$name" \
         TMUXIFIER_WINDOW_LAYOUT="$window_layout" \
         tmuxifier load-session "$session_layout"
-}
-
-# Deletes branches which have not received any commit for a '$1' weeks (default 8).
-# Will only delete if there is no branch on the remote with the same name
-function gabyx::delete_merged_branches() {
-    "$SCRIPT_DIR/delete-merged-branches.sh" "$@"
-}
-
-# Deletes local branches (and also remotely)
-# which have not received any commit for a '$1' weeks (default 8).
-# Will only delete if there is no branch on the remote with the same name
-function gabyx::delete_branches_older_than_weeks() {
-    "$SCRIPT_DIR/delete-branches-older-than-weeks.sh" "$@"
 }

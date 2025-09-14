@@ -62,6 +62,9 @@ if [ ! -f ~/.config/chezmoi/key.txt ]; then
     if is_keyring_unlocked; then
         echo "Using keyring to get private-key ..."
         private_key=$(get_password_from_keyring)
+    elif echo "$CHEZMOI_ARGS" | grep -q '--no-tty'; then
+        echo "Chezmoi running without TTY -> cannot get encryption private-key."
+        exit 1
     else
         echo -n "Enter encryption private key for 'key.age':"
         read -rs private_key

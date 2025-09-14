@@ -104,6 +104,7 @@ window.eDP-1 * {
 #pulseaudio,
 #battery,
 #custom-notification,
+#custom-backup,
 #custom-powermenu {
   padding-left: 4pt;
   padding-right: 4pt;
@@ -150,6 +151,7 @@ window.eDP-1 #bluetooth,
 window.eDP-1 #pulseaudio,
 window.eDP-1 #battery,
 window.eDP-1 #custom-notification,
+window.eDP-1 #custom-backup,
 window.eDP-1 #custom-powermenu {
   padding-left: 2pt;
   padding-right: 2pt;
@@ -204,6 +206,21 @@ tooltip {
   color: #fc0303;
   animation-name: blink-critical;
   animation-duration: 0.8s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#custom-backup.success {
+  color: #f0e373;
+}
+#custom-backup.failed {
+  color: #fc0303;
+}
+#custom-backup.running {
+  color: #6495ed;
+  animation-name: blink-normal;
+  animation-duration: 2s;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   animation-direction: alternate;

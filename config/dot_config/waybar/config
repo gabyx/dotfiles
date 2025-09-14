@@ -35,6 +35,7 @@
         "custom/emoji",
         "custom/password",
         "custom/screenshot",
+        "custom/backup",
         "backlight",
         "memory",
         "cpu",
@@ -100,6 +101,19 @@
         "format-icons": {
            "none": "󰌺",
            "some": "󰌹"
+        },
+        "tooltip": true,
+    },
+
+    "custom/backup" : {
+        "format": "{icon}",
+        "return-type": "json",
+        "exec": "~/.config/waybar/scripts/backup-watcher.sh",
+        "interval": 5,
+        "format-icons": {
+           "running": "󰦘",
+           "failure": "󰲼",
+           "success": "󰦕",
         },
         "tooltip": true,
     },

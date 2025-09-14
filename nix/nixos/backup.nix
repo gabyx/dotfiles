@@ -1,5 +1,6 @@
 {
   config,
+  outputs,
   pkgs,
   lib,
   ...
@@ -17,32 +18,21 @@ let
 
   homeDir = dir: mkPath "home" "/${config.settings.user.name}/${dir}";
   rootDir = dir: mkPath "root" "${dir}";
+  persistDir = dir: mkPath "persist" "${dir}";
 
-  paths = [
-    (rootDir "/var/lib/NetworkManager")
-    (rootDir "/var/lib/AccountsService")
+  gabyx-shell-source = outputs.packages.${pkgs.system}.gabyx-shell-source;
 
-    (rootDir "/persist/music")
-
-    (homeDir "Pictures")
-    (homeDir "Documents")
-    (homeDir "Downloads")
-
-    # Keyrings
-    (homeDir ".local/share/keyrings")
-
-    # Signal
-    (homeDir ".config/Signal")
-
-    # Elements
-    (homeDir ".config/Element")
-
-    # Evolution
-    (homeDir ".config/evolution")
-    (homeDir ".local/share/evolution*")
-
-    # Dconf
-    (homeDir ".config/dconf")
+  macOSExcludes = [
+    ".DS_Store"
+    ".AppleDouble*"
+    "._*"
+    ".DocumentRevisions*"
+    ".Spotlight-*"
+    ".fseventsd*"
+    ".TemporaryItem*"
+    ".Trash*"
+    ".VolumeIcon*"
+    ".PKInstallSandboxManager"
   ];
 in
 {
@@ -110,7 +100,34 @@ in
       backups."${cfg.name}" = lib.mkIf cfg.enable {
         initialize = true;
 
-        inherit paths;
+        paths = [
+          (rootDir "/var/lib/NetworkManager")
+          (rootDir "/var/lib/AccountsService")
+
+          (persistDir "/persist/music")
+
+          (homeDir "Pictures")
+          (homeDir "Documents")
+          (homeDir "Downloads")
+
+          # Keyrings
+          (homeDir ".local/share/keyrings")
+
+          # Signal
+          (homeDir ".config/Signal")
+
+          # Elements
+          (homeDir ".config/Element")
+
+          # Evolution
+          (homeDir ".config/evolution")
+          (homeDir ".local/share/evolution*")
+
+          # Dconf
+          (homeDir ".config/dconf")
+        ];
+
+        exclude = macOSExcludes;
 
         extraBackupArgs = [
           "--skip-if-unchanged"
@@ -165,6 +182,50 @@ in
 
         timerConfig = {
           OnCalendar = "12:00";
+        };
+      };
+
+      backups.data-personal = lib.mkIf cfg.enable {
+        initialize = true;
+
+        paths = [
+          "/mnt/data/personal"
+        ];
+
+        exclude = macOSExcludes;
+
+        backupPrepareCommand =
+          # bash
+          ''
+            export PATH="${gabyx-shell-source}/bin:$PATH"
+            set -eu
+            eval "$(gabyx::shell-source)"
+            gabyx::mount_zfs_disks personal
+          '';
+
+        backupCleanupCommand =
+          # bash
+          ''
+            export PATH="${gabyx-shell-source}/bin:$PATH"
+            set -eu
+            eval "$(gabyx::shell-source)"
+            gabyx::unmount_zfs_disks personal
+          '';
+
+        extraBackupArgs = [
+          "--skip-if-unchanged"
+          "--cleanup-cache"
+        ];
+
+        pruneOpts = [
+          "--keep-monthly 5"
+        ];
+
+        passwordFile = config.age.secrets.backup-password.path;
+        repositoryFile = config.age.secrets.backup-repository-name.path;
+
+        timerConfig = {
+          OnCalendar = "Mon/2 12:00";
         };
       };
 

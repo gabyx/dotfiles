@@ -4,13 +4,7 @@
 set -euo pipefail
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "$0")" &>/dev/null && pwd)
-if [ ! -f "$SCRIPT_DIR" ]; then
-    SCRIPT_DIR="$HOME/.config/shell"
-fi
-
-. "$SCRIPT_DIR/common/log.sh" || {
-    echo "Could not source 'log.sh'."
-} >&2
+. "$SCRIPT_DIR/../common/source.sh"
 
 function main() {
 
