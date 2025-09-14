@@ -21,7 +21,6 @@
     hdparm
     exfatprogs
     zfs
-    baobab # Analyze disks.
 
     dmidecode # BIOS read tool.
     lshw
@@ -56,6 +55,7 @@
     # Some minimal stuff, for basic admin stuff.
     zsh
     bash
+    neovim
     just
     git
     git-lfs

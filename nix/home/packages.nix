@@ -42,7 +42,6 @@ in
     nvim-nightly
 
     # Tools
-    pkgsUnstable.restic # Backup tool
     pkgsUnstable.lf # File manager
     pkgsUnstable.chafa # For Sixel pictures in terminal
     pkgsUnstable.exiftool # For image meta preview.
@@ -51,6 +50,11 @@ in
     pkgsUnstable.poppler_utils # For image conversions.
     pkgsUnstable.ffmpegthumbnailer # For video thumbnails.
     pkgsUnstable.trash-cli # Trash command line to move stuff to trash.
+
+    # Disk
+    pkgsUnstable.dua # Disk Usage Analyzer.
+    pkgsUnstable.baobab # Analyze disks.
+    pkgsUnstable.restic # Backup tool
     pkgsUnstable.gparted # Disk utility.
     pkgsUnstable.gnome-disk-utility # Easy disk utility `gdisk`.
 

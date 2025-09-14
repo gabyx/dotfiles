@@ -5,6 +5,7 @@
   ...
 }:
 let
+  inherit (lib) types mkOption;
   windowMgr = config.settings.windowing.manager;
 
   sessionType = "wayland";
@@ -89,95 +90,110 @@ let
   ];
 in
 {
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.autorun = true;
-
-  # Display Manager ===========================================================
-  services.displayManager = {
-    autoLogin.enable = false;
-    autoLogin.user = "nixos";
-  };
-
-  services.xserver.displayManager = {
-    gdm = {
-      enable = true;
-      wayland = true;
+  options = {
+    # My settings.
+    settings.windowing = {
+      manager = mkOption {
+        description = "Window manager to use.";
+        default = "sway";
+        type = types.enum [
+          "sway"
+          "hyprland"
+        ];
+      };
     };
   };
 
-  hardware = {
-    graphics = {
-      enable = true;
-      enable32Bit = true;
+  config = {
+    # Enable the X11 windowing system.
+    services.xserver.enable = true;
+    services.xserver.autorun = true;
+
+    # Display Manager ===========================================================
+    services.displayManager = {
+      autoLogin.enable = false;
+      autoLogin.user = "nixos";
     };
-  };
-  # ===========================================================================
 
-  # Hyprland Window Manager ===================================================
-  programs.hyprland = {
-    enable = (windowMgr == "hyprland");
-    xwayland.enable = true; # Bridge to Wayland API for X11 apps.
-    # TODO: Make homemanager config.
-  };
-  # ===========================================================================
+    services.xserver.displayManager = {
+      gdm = {
+        enable = true;
+        wayland = true;
+      };
+    };
 
-  # Sway Window Manager
-  # ===========================================================================
-  programs.sway = {
-    enable = (windowMgr == "sway");
-    xwayland.enable = true;
-    wrapperFeatures.gtk = true; # so that gtk works properly
+    hardware = {
+      graphics = {
+        enable = true;
+        enable32Bit = true;
+      };
+    };
+    # ===========================================================================
 
-    extraPackages = [
-      pkgs.i3-back # last workspace
-    ] ++ commonPkgs;
+    # Hyprland Window Manager ===================================================
+    programs.hyprland = {
+      enable = (windowMgr == "hyprland");
+      xwayland.enable = true; # Bridge to Wayland API for X11 apps.
+      # TODO: Make homemanager config.
+    };
+    # ===========================================================================
 
-    extraSessionCommands = (envToShell waylandEnvs) + (envToShell desktopEnvs) + adjustKeyring;
-  };
-  # ===========================================================================
+    # Sway Window Manager
+    # ===========================================================================
+    programs.sway = {
+      enable = (windowMgr == "sway");
+      xwayland.enable = true;
+      wrapperFeatures.gtk = true; # so that gtk works properly
 
-  environment.variables = {
-    XDG_SESSION_TYPE = sessionType;
-  } // desktopEnvs;
+      extraPackages = [
+        pkgs.i3-back # last workspace
+      ] ++ commonPkgs;
 
-  # To make screencasting work in Chrome and other Apps communicating
-  # over DBus.
-  xdg.portal = {
-    enable = true;
-    extraPortals = [
-      (
-        if windowMgr == "sway" then pkgs.xdg-desktop-portal-wlr else config.programs.hyprland.portalPackage
-      )
-      pkgs.xdg-desktop-portal-gtk
+      extraSessionCommands = (envToShell waylandEnvs) + (envToShell desktopEnvs) + adjustKeyring;
+    };
+    # ===========================================================================
+
+    environment.variables = {
+      XDG_SESSION_TYPE = sessionType;
+    } // desktopEnvs;
+
+    # To make screencasting work in Chrome and other Apps communicating
+    # over DBus.
+    xdg.portal = {
+      enable = true;
+      extraPortals = [
+        (
+          if windowMgr == "sway" then pkgs.xdg-desktop-portal-wlr else config.programs.hyprland.portalPackage
+        )
+        pkgs.xdg-desktop-portal-gtk
+      ];
+    };
+
+    # Keyring Service
+    services.gnome.gnome-keyring = {
+      enable = true;
+    };
+    security = {
+      polkit.enable = true; # https://discourse.nixos.org/t/sway-does-not-start/22354/5
+
+      pam.services = {
+        login.enableGnomeKeyring = true;
+      };
+      # Enable Keyring for sway and swaylock.
+      # // (lib.mkIf (config.settings.windowing.manager == "sway") {
+      #   sway.enableGnomeKeyring = true;
+      #   swaylock.enableGnomeKeyring = true;
+      # });
+    };
+
+    fonts.packages = with pkgs; [
+      # Waybar
+      font-awesome
+      cantarell-fonts
+      noto-fonts
+      noto-fonts-emoji
+      nerd-fonts.noto
+      nerd-fonts.jetbrains-mono
     ];
   };
-
-  # Keyring Service
-  services.gnome.gnome-keyring = {
-    enable = true;
-  };
-  security = {
-    polkit.enable = true; # https://discourse.nixos.org/t/sway-does-not-start/22354/5
-
-    pam.services = {
-      login.enableGnomeKeyring = true;
-    };
-    # Enable Keyring for sway and swaylock.
-    # // (lib.mkIf (config.settings.windowing.manager == "sway") {
-    #   sway.enableGnomeKeyring = true;
-    #   swaylock.enableGnomeKeyring = true;
-    # });
-  };
-
-  fonts.packages = with pkgs; [
-    # Waybar
-    font-awesome
-    cantarell-fonts
-    noto-fonts
-    noto-fonts-emoji
-    nerd-fonts.noto
-    nerd-fonts.jetbrains-mono
-  ];
 }

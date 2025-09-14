@@ -20,9 +20,9 @@
     ./cpu.nix
     ./boot.nix
     ./hardware.nix
+    ./settings.nix
 
     # Include all other specifications.
-    inputs.self.modules.nixos.settings
 
     inputs.self.modules.nixos.windowing
     inputs.self.modules.nixos.display
@@ -32,7 +32,8 @@
     inputs.self.modules.nixos.environment
     inputs.self.modules.nixos.networking
     inputs.self.modules.nixos.security
-
+    inputs.self.modules.nixos.backup
+    inputs.self.modules.nixos.secrets
     inputs.self.modules.nixos.services
 
     inputs.self.modules.nixos.sound

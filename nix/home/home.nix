@@ -21,14 +21,13 @@
     ./xdg.nix
     ./virtualization.nix
     ./mail.nix
-    ./secrets.nix
 
     outputs.modules.homeManager.chezmoi
   ];
 
   home = rec {
     username = osConfig.settings.user.name;
-    homeDirectory = "/home/${osConfig.settings.user.name}";
+    homeDirectory = osConfig.settings.user.home;
 
     # Add support for .local/bin
     sessionPath = [ "${homeDirectory}/.local/bin" ];
