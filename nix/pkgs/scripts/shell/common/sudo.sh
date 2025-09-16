@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2015,SC1091,SC2153
+
+source "$GABYX_LIB_DIR/common/guard.sh" || return
+source "$GABYX_LIB_DIR/common/log.sh"
 
 function gabyx::is_root() {
     [ "$(id -u)" == 0 ] || false

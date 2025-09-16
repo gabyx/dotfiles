@@ -10,43 +10,15 @@ let
   inherit (lib) types mkOption;
   cfg = config.settings.backup;
 
-  mkPath =
-    vol: dir:
-    assert lib.asserts.assertMsg (lib.isString dir) "Path `${dir}` must be string.";
-    assert lib.asserts.assertMsg (lib.hasPrefix "/" dir) "Path `${dir}` must have `/` prefix.";
-    "${cfg.btrfsSnapshotDir}/${vol}${dir}";
-
-  homeDir = dir: mkPath "home" "/${config.settings.user.name}/${dir}";
-  rootDir = dir: mkPath "root" "${dir}";
-  persistDir = dir: mkPath "persist" "${dir}";
-
   gabyx-shell-source = outputs.packages.${pkgs.system}.gabyx-shell-source;
-
-  macOSExcludes = [
-    ".DS_Store"
-    ".AppleDouble*"
-    "._*"
-    ".DocumentRevisions*"
-    ".Spotlight-*"
-    ".fseventsd*"
-    ".TemporaryItem*"
-    ".Trash*"
-    ".VolumeIcon*"
-    ".PKInstallSandboxManager"
-  ];
 in
 {
-  options = {
-    # My settings.
-    settings = {
-      backup = {
-        enable = mkOption {
-          type = types.bool;
-          default = false;
-        };
-
-        name = mkOption {
-          default = config.networking.hostName;
+  options =
+    let
+      defName =
+        name:
+        mkOption {
+          default = name;
           type = types.str;
           apply =
             v:
@@ -55,188 +27,404 @@ in
           description = "The backup name.";
         };
 
-        btrfsVolumes = mkOption {
-          default = [
-            "/"
-            "/home"
-            "/persist"
-          ];
-          type = types.listOf types.str;
-          description = "The volumes to first snapshot and backup.";
-        };
-
-        btrfsSnapshotDir = mkOption {
-          default = "/mnt/snapshots";
+      defRepo =
+        bk:
+        mkOption {
+          default = "${cfg.storageURL}//home/backups/${bk.name}";
           type = types.str;
-          description = "Btrfs snapshot directory.";
+          description = "The backup repository URL.";
+        };
+
+      defReportDir =
+        bk:
+        mkOption {
+          type = types.str;
+          default = "${cfg.reportDir}/${bk.name}";
+        };
+    in
+    {
+      # My settings.
+      settings = {
+        backup = {
+          enable = mkOption {
+            type = types.bool;
+            default = true;
+          };
+
+          storageURL = mkOption {
+            type = types.str;
+            default = "sftp://u492021@u492021.your-storagebox.de:23";
+          };
+
+          reportDir = mkOption {
+            type = types.str;
+            default = "/var/lib/backups";
+          };
+
+          backups = {
+            data-personal = {
+              enable = mkOption {
+                type = types.bool;
+                default = false;
+              };
+
+              name = defName "data-personal";
+              repository = defRepo cfg.backups.data-personal;
+              reportDir = defReportDir cfg.backups.data-personal;
+            };
+
+            # Backup the system.
+            system = {
+              enable = mkOption {
+                type = types.bool;
+                default = false;
+              };
+
+              name = defName config.networking.hostName;
+              repository = defRepo cfg.backups.system;
+              reportDir = defReportDir cfg.backups.system;
+
+              btrfsVolumes = mkOption {
+                default = [
+                  "/"
+                  "/home"
+                  "/persist"
+                ];
+                type = types.listOf types.str;
+                description = "The volumes to first snapshot and backup.";
+              };
+
+              btrfsSnapshotDir = mkOption {
+                default = "/mnt/snapshots";
+                type = types.str;
+                description = "Btrfs snapshot directory.";
+              };
+            };
+          };
         };
       };
     };
-  };
 
-  config = {
-    assertions = [
-      {
-        assertion = builtins.all (
-          name: lib.hasAttr name config.fileSystems && config.fileSystems.${name}.fsType == "btrfs"
-        ) cfg.btrfsVolumes;
-        message = ''
-          One or more expected Btrfs subvolumes are missing or not Btrfs!
-          Expected volumes: ${lib.concatStringsSep ", " cfg.btrfsVolumes}
-        '';
-      }
-    ];
+  config =
+    let
+      mkSysPath =
+        vol: dir:
+        assert lib.asserts.assertMsg (lib.isString dir) "Path `${dir}` must be string.";
+        assert lib.asserts.assertMsg (lib.hasPrefix "/" dir) "Path `${dir}` must have `/` prefix.";
+        "${cfg.backups.system.btrfsSnapshotDir}/${vol}${dir}";
 
-    age.secrets = lib.mkIf cfg.enable {
-      backup-password.file = ./secrets/backup-password.age;
+      homeDir = dir: mkSysPath "home" "/${config.settings.user.name}/${dir}";
+      rootDir = dir: mkSysPath "root" "${dir}";
+      persistDir = dir: mkSysPath "persist" "/${dir}";
 
-      backup-repository-name.file = ./secrets/backup-repository-${cfg.name}.age;
-      backup-storage-known-hosts.file = ./secrets/backup-storage-known-hosts.age;
-      backup-storage-ssh-key.file = ./secrets/backup-storage-ssh-ed25519.age;
-    };
+      excludeMacOS = [
+        ".DS_Store"
+        ".AppleDouble*"
+        "._*"
+        ".DocumentRevisions*"
+        ".Spotlight-*"
+        ".fseventsd*"
+        ".TemporaryItem*"
+        ".Trash*"
+        ".VolumeIcon*"
+        ".PKInstallSandboxManager"
+      ];
 
-    # Define the backup.
-    services.restic = {
-      backups."${cfg.name}" = lib.mkIf cfg.enable {
-        initialize = true;
+      exclude = excludeMacOS;
 
-        paths = [
-          (rootDir "/var/lib/NetworkManager")
-          (rootDir "/var/lib/AccountsService")
+      extraOptions = [
+        (
+          # These arguments get passed as `restic -o <arg>`.
+          "sftp.args='-i ${config.age.secrets.backup-storage-ssh-key.path} -o "
+          + "UserKnownHostsFile=${config.age.secrets.backup-storage-known-hosts.path}'"
+        )
+      ];
 
-          (persistDir "/persist/music")
+      passwordFile = config.age.secrets.backup-password.path;
 
-          (homeDir "Pictures")
-          (homeDir "Documents")
-          (homeDir "Downloads")
+      extraBackupArgs = [
+        "--skip-if-unchanged"
+        "--cleanup-cache"
+        "-v"
+      ];
 
-          # Keyrings
-          (homeDir ".local/share/keyrings")
+      serviceName = bk: "restic-backups-${bk.name}";
 
-          # Signal
-          (homeDir ".config/Signal")
+      fetchService =
+        bk:
+        let
+          extraOpts = lib.concatMapStrings (arg: "-o ${arg}") extraOptions;
+        in
+        {
+          "${serviceName bk}-fetch-snapshots" = {
+            description = "Backup fetch status.";
 
-          # Elements
-          (homeDir ".config/Element")
+            path = [
+              config.programs.ssh.package
+            ];
 
-          # Evolution
-          (homeDir ".config/evolution")
-          (homeDir ".local/share/evolution*")
+            script =
+              # bash
+              ''
+                set -eu
+                mkdir -p '${bk.reportDir}'
 
-          # Dconf
-          (homeDir ".config/dconf")
-        ];
+                resticCmd=(
+                '${lib.getExe config.services.restic.backups.${bk.name}.package}'
+                ${extraOpts}
+                --password-file "${passwordFile}"
+                -r '${bk.repository}'
+                )
 
-        exclude = macOSExcludes;
-
-        extraBackupArgs = [
-          "--skip-if-unchanged"
-          "--cleanup-cache"
-        ];
-
-        backupPrepareCommand =
-          # bash
-          ''
-            set -eu
-            export PATH="${pkgs.btrfs-progs}/bin:$PATH"
-
-            mkdir -p /mnt/backup-snapshots
-
-            for sub in "/" "/home" "/persist" ; do
-               name="$sub"
-               [ "$sub" = "/" ] && name="root"
-               echo "Creating snapshot of '$sub' in /mnt/snapshots"
-               btrfs subvolume snapshot -r "$sub" "/mnt/snapshots/$name"
-            done
-          '';
-
-        backupCleanupCommand =
-          # bash
-          ''
-            set -eu
-            export PATH="${pkgs.btrfs-progs}/bin:$PATH"
-
-            for sub in "/" "/home" "/persist" ; do
-               name="$sub"
-               [ "$sub" = "/" ] && name="root"
-              echo "Deleting snapshot of '$sub' in /mnt/snapshots"
-              btrfs subvolume delete "/mnt/snapshots/$name"
-            done
-          '';
-
-        pruneOpts = [
-          "--keep-daily 5"
-          "--keep-weekly 3"
-          "--keep-monthly 2"
-        ];
-
-        extraOptions = [
-          (
-            "sftp.args='-i /run/agenix/backup-storage-ssh-key "
-            + "-o UserKnownHostsFile=${config.age.secrets.backup-storage-known-hosts.path}'"
-          )
-        ];
-
-        passwordFile = config.age.secrets.backup-password.path;
-        repositoryFile = config.age.secrets.backup-repository-name.path;
-
-        timerConfig = {
-          OnCalendar = "12:00";
+                echo "Fetching snapshots from '${bk.repository}' -> '${bk.reportDir}/snapshots'"
+                "''${resticCmd[@]}" snapshots --json > '${bk.reportDir}/snapshots'
+              '';
+          };
         };
+
+      fetchServiceTimer =
+        bk:
+        let
+          name = "${serviceName bk}-fetch-snapshots";
+        in
+        {
+          ${name} = {
+            description = "Run backup fetch every 10 minutes.";
+            partOf = [ "${name}.service" ];
+            timerConfig = {
+              OnBootSec = "3min";
+              OnUnitActiveSec = "10min";
+            };
+            wantedBy = [ "timers.target" ];
+          };
+        };
+
+    in
+    {
+      assertions = [
+        {
+          assertion =
+            cfg.backups.system.enable
+            -> builtins.all (
+              name: lib.hasAttr name config.fileSystems && config.fileSystems.${name}.fsType == "btrfs"
+            ) cfg.backups.system.btrfsVolumes;
+
+          message = ''
+            One or more expected Btrfs subvolumes are missing or not Btrfs!
+            Expected volumes: ${lib.concatStringsSep ", " cfg.btrfsVolumes}
+          '';
+        }
+      ];
+
+      age.secrets = lib.mkIf (cfg.enable) {
+        backup-password.file = ./secrets/backup-password.age;
+        backup-storage-known-hosts.file = ./secrets/backup-storage-known-hosts.age;
+        backup-storage-ssh-key.file = ./secrets/backup-storage-ssh-ed25519.age;
       };
 
-      backups.data-personal = lib.mkIf cfg.enable {
-        initialize = true;
+      # Define the backup.
+      services.restic = {
+        backups."${cfg.backups.system.name}" =
+          let
+            bk = cfg.backups.system;
+          in
+          lib.mkIf bk.enable {
+            initialize = true;
 
-        paths = [
-          "/mnt/data/personal"
-        ];
+            paths = [
+              (rootDir "/var/lib/NetworkManager")
+              (rootDir "/var/lib/AccountsService")
 
-        exclude = macOSExcludes;
+              (persistDir "music")
 
-        backupPrepareCommand =
-          # bash
-          ''
-            export PATH="${gabyx-shell-source}/bin:$PATH"
-            set -eu
-            eval "$(gabyx::shell-source)"
-            gabyx::mount_zfs_disks personal
-          '';
+              (homeDir "Pictures")
+              (homeDir "Documents")
+              (homeDir "Downloads")
 
-        backupCleanupCommand =
-          # bash
-          ''
-            export PATH="${gabyx-shell-source}/bin:$PATH"
-            set -eu
-            eval "$(gabyx::shell-source)"
-            gabyx::unmount_zfs_disks personal
-          '';
+              # Keyrings
+              (homeDir ".local/share/keyrings")
 
-        extraBackupArgs = [
-          "--skip-if-unchanged"
-          "--cleanup-cache"
-        ];
+              # Signal
+              (homeDir ".config/Signal")
 
-        pruneOpts = [
-          "--keep-monthly 5"
-        ];
+              # Elements
+              (homeDir ".config/Element")
 
-        passwordFile = config.age.secrets.backup-password.path;
-        repositoryFile = config.age.secrets.backup-repository-name.path;
+              # Evolution
+              (homeDir ".config/evolution")
+              (homeDir ".local/share/evolution*")
 
-        timerConfig = {
-          OnCalendar = "Mon/2 12:00";
-        };
+              # Dconf
+              (homeDir ".config/dconf")
+            ];
+
+            inherit exclude;
+
+            backupPrepareCommand =
+              # bash
+              ''
+                set -eu
+                export PATH="${pkgs.btrfs-progs}/bin:$PATH"
+
+                mkdir -p /mnt/backup-snapshots
+
+                for sub in ${lib.escapeShellArgs bk.btrfsVolumes} ; do
+                   name="$sub"
+                   [ "$sub" = "/" ] && name="root"
+                   echo "Creating snapshot of '$sub' in /mnt/snapshots"
+                   btrfs subvolume snapshot -r "$sub" "/mnt/snapshots/$name"
+                done
+              '';
+
+            backupCleanupCommand =
+              # bash
+              ''
+                set -eu
+                export PATH="${pkgs.btrfs-progs}/bin:$PATH"
+
+                for sub in "/" "/home" "/persist" ; do
+                   name="$sub"
+                   [ "$sub" = "/" ] && name="root"
+                  echo "Deleting snapshot of '$sub' in /mnt/snapshots"
+                  btrfs subvolume delete "/mnt/snapshots/$name"
+                done
+              '';
+
+            pruneOpts = [
+              "--keep-daily 5"
+              "--keep-weekly 3"
+              "--keep-monthly 2"
+            ];
+
+            inherit extraBackupArgs;
+            inherit extraOptions;
+            inherit passwordFile;
+            inherit (bk) repository;
+
+            timerConfig = {
+              OnCalendar = "12:00";
+            };
+          };
+
+        backups.data-personal =
+          let
+            bk = cfg.backups.data-personal;
+          in
+          lib.mkIf bk.enable {
+            initialize = true;
+
+            paths = [
+              "/mnt/data/personal"
+            ];
+
+            inherit exclude;
+
+            backupPrepareCommand =
+              # bash
+              ''
+                export PATH="${gabyx-shell-source}/bin:$PATH"
+                set -eu
+                eval "$(gabyx::shell-source)"
+                gabyx::mount_zfs_disks personal
+
+                # Force the kernel to read all directory entries.
+                # Such that the stuff is there.
+                ls -R /mnt/data/personal >/dev/null
+                sleep 5
+              '';
+
+            backupCleanupCommand =
+              # bash
+              ''
+                export PATH="${gabyx-shell-source}/bin:$PATH"
+                set -eu
+                eval "$(gabyx::shell-source)"
+                gabyx::unmount_zfs_disks personal
+              '';
+
+            pruneOpts = [
+              "--keep-monthly 5"
+            ];
+
+            inherit extraBackupArgs;
+            inherit extraOptions;
+            inherit passwordFile;
+            inherit (bk) repository;
+
+            timerConfig = {
+              OnCalendar = "Mon/2 12:00";
+            };
+          };
       };
 
-    };
+      # Extra systemd jobs & configs.
+      systemd.services = lib.mkIf cfg.enable (
+        let
+          loadBalanceConfig = {
+            # Lower CPU priority
+            Nice = 19;
+            # Lower I/O priority
+            IOSchedulingClass = "idle";
+          };
 
-    # Extra systemd options to reduce load
-    systemd.services."restic-backups-${cfg.name}".serviceConfig = lib.mkIf cfg.enable {
-      # Lower CPU priority
-      Nice = 19;
-      # Lower I/O priority
-      IOSchedulingClass = "idle";
+          reportService =
+            bk: status:
+            let
+              reportFile = "${bk.reportDir}/status";
+              icon = if status == "failure" then "💣" else "🌻";
+
+              report =
+                pkgs.writeShellScriptBin ''report''
+                  #bash
+                  ''
+                    set -eu
+                    mkdir -p '${cfg.reportDir}' && touch '${reportFile}' &&
+                      chmod -R 644 '${reportFile}' # Make it readable for user.
+
+                    echo "${icon} '${bk.name}' ${status} ($(date)) " | \
+                      '${pkgs.coreutils}/bin/tee' -a '${reportFile}';
+                  '';
+            in
+            {
+              "${serviceName bk}-report-${status}" = {
+                description = "Backup report hook.";
+                serviceConfig = {
+                  Type = "oneshot";
+                  ExecStart = "${report}/bin/report";
+                };
+              };
+            };
+
+          createServices =
+            bk:
+            lib.optionalAttrs bk.enable {
+              # Create some reducing load settings.
+              ${serviceName bk} = lib.mkMerge [
+                {
+                  serviceConfig = loadBalanceConfig;
+                  onSuccess = [
+                    "${serviceName bk}-fetch-snapshots.service"
+                    "${serviceName bk}-report-success.service"
+                  ];
+                  onFailure = [
+                    "${serviceName bk}-fetch-snapshots.service"
+                    "${serviceName bk}-report-failure.service"
+                  ];
+                }
+              ];
+            }
+            // reportService bk "failure"
+            // reportService bk "success"
+            // fetchService bk;
+        in
+        lib.concatMapAttrs (name: bk: createServices bk) cfg.backups
+      );
+
+      # Some timers for the fetch snapshots.
+      systemd.timers = lib.mkIf cfg.enable (
+        let
+        in
+        lib.concatMapAttrs (name: bk: fetchServiceTimer bk) cfg.backups
+      );
     };
-  };
 }

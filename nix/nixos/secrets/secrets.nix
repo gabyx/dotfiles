@@ -16,16 +16,6 @@ let
       chezmoi
       hostDesktop
     ];
-    # Restic backup repository URL.
-    "backup-repository-nixos-desktop.age".publicKeys = [
-      chezmoi
-      hostDesktop
-    ];
-    # Restic backup repository URL.
-    "backup-repository-nixos-tuxedo.age".publicKeys = [
-      chezmoi
-      hostDesktop
-    ];
     # SSH Access to the backup storage.
     "backup-storage-ssh-ed25519.age".publicKeys = [
       chezmoi

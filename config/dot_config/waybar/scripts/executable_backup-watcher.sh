@@ -15,6 +15,25 @@ function exists() {
     echo "Unit '$unit' does not exist." >&2
     return 1
 }
+function last_status() {
+    local name="$1"
+    # break long lines.
+    tail -1 "/var/lib/backups/${name}/status" 2>/dev/null |
+        sed 's/.\{80\}/&\\n  /g' || true
+}
+
+function snapshot_count() {
+    local name="$1"
+    c=$(jq -r '.| length' "/var/lib/backups/${name}/snapshots")
+
+    if [ -z "$c" ]; then
+        echo "    · snapshots: not synced ⁉️"
+    elif [ "$c" -gt 0 ]; then
+        echo "    · snapshots: $c 😎"
+    elif [ "$c" -eq 0 ]; then
+        echo "    · snapshots: $c ❌"
+    fi
+}
 
 for name in "${BACKUPS[@]}"; do
 
@@ -25,31 +44,33 @@ for name in "${BACKUPS[@]}"; do
         continue
     fi
 
-    lastExitTime=$(systemctl show -p ExecMainExitTimestamp "$unit" | sed s/.*=//)
+    status=$(last_status "$name")
+    count=$(snapshot_count "$name")
 
-    if systemctl is-active --quiet "$unit" &>/dev/null; then
+    if [[ ! "$(systemctl is-active "$unit")" =~ inactive|failed ]]; then
         STATE="running"
-        STATUS+=("- '$name' 🏃🏽‍♀️...")
-
-    elif [ "$(systemctl show -p ExecMainStatus --value "$unit" 2>/dev/null)" = "0" ]; then
-        # only set the success status when not running or failure
-        [ "$STATE" != "running" ] && [ "$STATE" != "failure" ] &&
-            STATE="success"
-
-        STATUS+=("- '$name' 🌻 ($lastExitTime)")
-    elif [ "$(systemctl show -p ExecMainStatus --value "$unit" 2>/dev/null)" != "0" ]; then
-        [ "$STATE" != "running" ] && STATE="failure"
-
-        STATUS+=("- '$name' 💣 ($lastExitTime)")
+        STATUS+=("· 🏃🏽‍♀️ '$name' ..." "$count" "")
     else
-        echo "Could not determine status" >&2
-        STATUS+=("- '$name' ⁉️($lastExitTime)")
-    fi
+        if echo "$status" | grep -q "success"; then
+            # only set the success status when not running or failure
+            [ "$STATE" != "running" ] && [ "$STATE" != "failure" ] &&
+                STATE="success"
 
+            STATUS+=("· $status" "$count" "")
+        elif echo "$status" | grep -q "failure"; then
+            [ "$STATE" != "running" ] && STATE="failure"
+
+            STATUS+=("· $status" "$count")
+        else
+            echo "Could not determine status" >&2
+            [ "$STATE" != "running" ] && STATE="failure"
+            STATUS+=("· ⁉️ '$name'" "$count" "")
+        fi
+    fi
 done
 
 MSG="$(printf '%s\\n' "${STATUS[@]}")"
-MSG=$(echo "${STATUS[@]}" | sed '/^$/d')
+MSG=$(echo "$MSG" | sed '/^$/d')
 
 # shellcheck disable=SC2028
 printf '{"class":"%s", "text":"", "alt":"%s", "tooltip":"Backups:\\n%s"}' \

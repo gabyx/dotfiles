@@ -7,11 +7,12 @@ set -u
 set -e
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "$0")" &>/dev/null && pwd)
-. "$SCRIPT_DIR/../common/source.sh"
+. "$SCRIPT_DIR/../common/log.sh"
+. "$SCRIPT_DIR/../common/sudo.sh"
 . "$SCRIPT_DIR/zfs.sh"
 
 gabyx::print_info "Import all ZFS pools and mount disks."
-sudo zpool import -f -a
+gabyx::sudo zpool import -f -a
 
 unmount="false"
 if [ "${1:-}" = "--unmount" ]; then

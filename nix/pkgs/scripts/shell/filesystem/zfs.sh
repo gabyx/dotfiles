@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090,SC1091
 
-. "$GABYX_LIB_DIR/common/source.sh"
+source "$GABYX_LIB_DIR/common/guard.sh" || return
+source "$GABYX_LIB_DIR/common/log.sh"
+source "$GABYX_LIB_DIR/common/platform.sh"
 
 function gabyx::mountpoint_zfs() {
     local -n _mountpoint="$1"
 
     local os=""
-    get_platform_os os
+    gabyx::get_platform_os os
 
     if [ "$os" = "darwin" ]; then
         _mountpoint=/Volumes

@@ -93,7 +93,7 @@ function apply_to_gnome() {
 }
 
 dist=""
-get_platform_os os dist
+gabyx::get_platform_os os dist
 
 if ! command -v xmlstarlet &>/dev/null; then
     if [ "$dist" = "ubuntu" ]; then

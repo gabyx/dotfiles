@@ -2,10 +2,6 @@
 # shellcheck disable=SC2015,SC1091,SC2153
 
 if [ "${GABYX_LIB_FILESYSTEM:-}" != "loaded" ]; then
-
-    source "$GABYX_LIB_DIR/common/source.sh"
-    source "$GABYX_LIB_DIR/filesystem/search.sh"
-
     function gabyx::find_recent() {
         gabyx::shell-run "gabyx::internal::find_recent" "$@"
     }

@@ -5,6 +5,7 @@
   settings = {
     backup = {
       enable = true;
+      backups.system.enable = true;
     };
 
     chezmoi.workspace = "work";

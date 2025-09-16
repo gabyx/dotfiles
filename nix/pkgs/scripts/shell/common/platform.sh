@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090,SC1091,SC2034
 
-function get_platform_os() {
+function gabyx::get_platform_os() {
     local -n _platformOS="$1"
     local platformOSDist=""
     local platformOSVersion=""
@@ -86,7 +86,7 @@ function get_platform_os() {
     return 0
 }
 
-function get_platform_arch() {
+function gabyx::get_platform_arch() {
     local -n _arch="$1"
 
     _arch=""

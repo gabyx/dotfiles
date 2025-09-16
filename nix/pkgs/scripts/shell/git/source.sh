@@ -2,8 +2,6 @@
 # shellcheck disable=SC2015,SC1091,SC2153
 
 if [ "${GABYX_LIB_GIT:-}" != "loaded" ]; then
-    source "$GABYX_LIB_DIR/common/source.sh"
-
     # Deletes branches which have not received any commit for a '$1' weeks (default 8).
     # Will only delete if there is no branch on the remote with the same name
     function gabyx::delete_merged_branches() {

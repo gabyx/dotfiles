@@ -214,7 +214,7 @@ tooltip {
 #custom-backup.success {
   color: #f0e373;
 }
-#custom-backup.failed {
+#custom-backup.failure {
   color: #fc0303;
 }
 #custom-backup.running {

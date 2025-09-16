@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2015,SC1091
 
-. "$GABYX_LIB_DIR/common/source.sh"
+source "$GABYX_LIB_DIR/common/guard.sh"
+source "$GABYX_LIB_DIR/common/source.sh"
 
 # Find recent files in the dir `$1`.
 function gabyx::internal::find_recent() {

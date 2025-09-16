@@ -7,7 +7,8 @@ set -e
 set -u
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "$0")" &>/dev/null && pwd)
-. "$SCRIPT_DIR/../common/source.sh"
+. "$SCRIPT_DIR/../common/log.sh"
+. "$SCRIPT_DIR/../common/sudo.sh"
 . "$SCRIPT_DIR/zfs.sh"
 
 DISK_PATH=/dev/disk/by-uuid/4877700394137381369
