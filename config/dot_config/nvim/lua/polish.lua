@@ -1,12 +1,5 @@
--- Filetype mappings which are not autodetected.
-vim.filetype.add({
-    extension = {},
-    filename = {
-        ["Tiltfile"] = "tiltfile",
-        ["justfile"] = "just",
-    },
-    pattern = {},
-})
+-- Load additional filetypes.
+require("user.filetype")
 
 -- Load autocmds.
 require("user.autocmds")
