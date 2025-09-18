@@ -150,6 +150,8 @@ in
     pkgsUnstable.inkscape # Vector graphics
     pkgsUnstable.krita # Painting
     pkgsUnstable.nomacs # Image viewer
+    pkgsUnstable.viu # Terminal image viewer
+    pkgsUnstable.sxiv # Terminal image viewer
     pkgsUnstable.zathura # Simple document viewer
     pkgsUnstable.xournalpp # Another PDF viewer
     pkgsUnstable.pdfarranger # PDF arranger
