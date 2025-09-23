@@ -51,9 +51,15 @@ let
       "text/calendar" = [ "evolution.desktop" ]; # ".ics"  iCalendar format
 
       "application/json" = browser; # ".json"  JSON format
-      # "application/pdf" = browser ++ [ "com.github.jeromerobert.pdfarranger.desktop" ];
+      "application/pdf" = browser;
     }
-    // lib.genAttrs
+    // (lib.genAttrs
+      [
+        "image/*"
+        "image/png"
+        "image/jpeg"
+        "image/tiff"
+      ]
       (
         n:
         [
@@ -64,12 +70,7 @@ let
         ]
         ++ browser
       )
-      [
-        "image/*"
-        "image/png"
-        "image/jpg"
-        "image/tif"
-      ];
+    );
 in
 {
   # Enable all XDG directories.

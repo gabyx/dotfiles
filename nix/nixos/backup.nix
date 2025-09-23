@@ -397,25 +397,27 @@ in
 
           createServices =
             bk:
-            lib.optionalAttrs bk.enable {
-              # Create some reducing load settings.
-              ${serviceName bk} = lib.mkMerge [
-                {
-                  serviceConfig = loadBalanceConfig;
-                  onSuccess = [
-                    "${serviceName bk}-fetch-snapshots.service"
-                    "${serviceName bk}-report-success.service"
-                  ];
-                  onFailure = [
-                    "${serviceName bk}-fetch-snapshots.service"
-                    "${serviceName bk}-report-failure.service"
-                  ];
-                }
-              ];
-            }
-            // reportService bk "failure"
-            // reportService bk "success"
-            // fetchService bk;
+            lib.optionalAttrs bk.enable (
+              {
+                # Create some reducing load settings.
+                ${serviceName bk} = lib.mkMerge [
+                  {
+                    serviceConfig = loadBalanceConfig;
+                    onSuccess = [
+                      "${serviceName bk}-fetch-snapshots.service"
+                      "${serviceName bk}-report-success.service"
+                    ];
+                    onFailure = [
+                      "${serviceName bk}-fetch-snapshots.service"
+                      "${serviceName bk}-report-failure.service"
+                    ];
+                  }
+                ];
+              }
+              // reportService bk "failure"
+              // reportService bk "success"
+              // fetchService bk
+            );
         in
         lib.concatMapAttrs (name: bk: createServices bk) cfg.backups
       );

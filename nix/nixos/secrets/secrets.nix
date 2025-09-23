@@ -6,29 +6,35 @@ let
 
   # Host Keys (Desktop)
   # Private key must be placed manually.
-  hostDesktop = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEpmbTaLprMrAofmt2vmF3qlB0Kah2qLRQKv4zJ+pmS7 nixos@linux-nixos";
+  hostDesktop = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEpmbTaLprMrAofmt2vmF3qlB0Kah2qLRQKv4zJ+pmS7 nixos@nixos-desktop";
 
-  # TODO: Add tuxedo.
+  # Host Keys (Tuxedo)
+  # Private key must be placed manually.
+  hostTuxedo = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDiYpUkjzmeLpSwKoYaycY8QrFsSzOmQXuLXTVJobBJd nixos@nixos-tuxedo";
 
-  backup = {
+  rules = {
     # Restic backup repository password.
     "backup-password.age".publicKeys = [
       chezmoi
       hostDesktop
+      hostTuxedo
     ];
     # SSH Access to the backup storage.
     "backup-storage-ssh-ed25519.age".publicKeys = [
       chezmoi
       hostDesktop
+      hostTuxedo
     ];
     "backup-storage-ssh-ed25519.pub.age".publicKeys = [
       chezmoi
       hostDesktop
+      hostTuxedo
     ];
     "backup-storage-known-hosts.age".publicKeys = [
       chezmoi
       hostDesktop
+      hostTuxedo
     ];
   };
 in
-backup
+rules
