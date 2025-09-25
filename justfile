@@ -166,7 +166,7 @@ diff last="1" profile_name="system" current_profile="/run/current-system":
         last_profile="$last"
     fi
 
-    nvd diff "$current_profile" "$last_profile"
+    nvd diff "$last_profile" "$current_profile"
 
 # Diff closures from `dest_ref` to `src_ref`. This builds and
 # computes the closure which might take some time.
