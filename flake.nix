@@ -30,7 +30,7 @@
       }
       (
         lib.pipe inputs.import-tree [
-          (i: i.map (x: lib.info "Importing :${x}" x))
+          (i: i.map (x: lib.info "Importing: '${x}'" x))
           (i: i.filter (lib.hasInfix ".mod."))
           (i: i ./nix)
         ]
