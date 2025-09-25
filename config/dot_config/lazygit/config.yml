@@ -4,7 +4,7 @@ gui:
     "bugfix": "#3498eb"
     "feature": "#00ba3b"
     "main": "#bfd404"
-  scrollHeight: 2
+  scrollHeight: 20
   scrollPastBottom: true
   mouseEvents: true
   skipDiscardChangeWarning: false
