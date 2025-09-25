@@ -20,6 +20,7 @@
     {
       packages = {
         inherit (nvimBuilds) nvim nvim-nightly nvim-treesitter-install;
-      } // gabyx;
+      }
+      // gabyx;
     };
 }

@@ -147,7 +147,8 @@ in
 
       extraPackages = [
         pkgs.i3-back # last workspace
-      ] ++ commonPkgs;
+      ]
+      ++ commonPkgs;
 
       extraSessionCommands = (envToShell waylandEnvs) + (envToShell desktopEnvs) + adjustKeyring;
     };
@@ -155,7 +156,8 @@ in
 
     environment.variables = {
       XDG_SESSION_TYPE = sessionType;
-    } // desktopEnvs;
+    }
+    // desktopEnvs;
 
     # To make screencasting work in Chrome and other Apps communicating
     # over DBus.
