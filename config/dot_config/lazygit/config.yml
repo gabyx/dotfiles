@@ -28,67 +28,84 @@ gui:
       - blue
     selectedLineBgColor:
       - "#333333"
-    selectedRangeBgColor:
+    inactiveViewSelectedLineBgColor:
+      - bold
+    cherryPickedCommitFgColor:
       - blue
     cherryPickedCommitBgColor:
       - cyan
-    cherryPickedCommitFgColor:
+    markedBaseCommitFgColor:
       - blue
     markedBaseCommitBgColor:
       - yellow
-    markedBaseCommitFgColor:
-      - blue
     unstagedChangesColor:
       - "#cf0202"
     defaultFgColor:
       - default
   commitLength:
     show: true
-  skipNoStagedFilesWarning: false
   showListFooter: true
   showFileTree: true
+  showRootItemInFileTree: true
+  showNumstatInFilesView: false
   showRandomTip: true
   showCommandLog: true
   showBottomLine: true
-  showIcons: true # deprecated.
+  showPanelJumps: true
+  showIcons: false
   nerdFontsVersion: "2"
+  showFileIcons: true
+  commitAuthorShortLength: 2
+  commitAuthorLongLength: 17
+  commitHashLength: 8
   showBranchCommitHash: false
   commandLogSize: 8
   splitDiff: auto
-  skipRewordInEditorWarning: false
-  screenMode: ""
+  screenMode: normal
   border: single
   animateExplosion: true
 git:
   paging:
     colorArg: always
     pager: delta --paging=never
-  autoWrapCommitMessages: true
-  autoWrapWidth: 72
+    externalDiffCommand: ""
+    useExternalDiffGitConfig: false
   commit:
     signOff: false
+    autoWrapCommitMessage: true
+    autoWrapWidth: 72
   merging:
     manualCommit: false
     args: ""
+    squashMergeMessage: Squash merge {{selectedRef}} into {{currentBranch}}
   mainBranches:
     - master
     - main
   skipHookPrefix: WIP
   autoFetch: true
   autoRefresh: true
+  autoForwardBranches: onlyMainBranches
   fetchAll: true
+  autoStageResolvedConflicts: true
   branchLogCmd: git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --
+  allBranchesLogCmds:
+    - git log --graph --all --color=always --abbrev-commit --decorate --date=relative  --pretty=medium
+  ignoreWhitespaceInDiffView: false
+  diffContextSize: 3
+  renameSimilarityThreshold: 50
   overrideGpg: false
   disableForcePushing: false
+  commitPrefix: []
   commitPrefixes: {}
+  branchPrefix: "feat/"
   parseEmoji: false
   log:
     order: topo-order
     showGraph: always
     showWholeGraph: false
-  diffContextSize: 3
-  allBranchesLogCmds:
-    - git log --graph --all --color=always --abbrev-commit --decorate --date=relative  --pretty=medium
+  localBranchSortOrder: date
+  remoteBranchSortOrder: date
+  truncateCopiedCommitHashesTo: 12
 update:
   method: prompt
   days: 14
@@ -97,10 +114,16 @@ refresher:
   fetchInterval: 60
 confirmOnQuit: false
 quitOnTopLevelReturn: false
+disableStartupPopups: false
+customCommands: []
+services: {}
+notARepository: prompt
+promptToReturnFromSubprocess: false
 keybinding:
   universal:
     quit: q
     quit-alt1: <c-c>
+    suspendApp: <c-z>
     return: <esc>
     quitWithoutChangingDirectory: Q
     togglePanel: <tab>
@@ -114,6 +137,11 @@ keybinding:
     scrollRight: L
     gotoTop: <
     gotoBottom: ">"
+    gotoTop-alt: <home>
+    gotoBottom-alt: <end>
+    toggleRangeSelect: v
+    rangeSelectDown: <s-down>
+    rangeSelectUp: <s-up>
     prevBlock: "["
     nextBlock: "]"
     prevBlock-alt: h
@@ -129,12 +157,15 @@ keybinding:
     nextMatch: "n"
     prevMatch: "N"
     startSearch: /
-    optionMenu: ""
+    optionMenu: <disabled>
     optionMenu-alt1: "?"
     select: <space>
     goInto: <enter>
     confirm: <enter>
+    confirmMenu: <enter>
+    confirmSuggestion: <enter>
     confirmInEditor: <a-enter>
+    confirmInEditor-alt: <c-s>
     remove: d
     new: "n"
     edit: e
@@ -151,12 +182,12 @@ keybinding:
     pullFiles: p
     refresh: R
     createPatchOptionsMenu: <c-p>
-    nextTab: "]"
-    prevTab: "["
+    nextTab: "}"
+    prevTab: "{"
     nextScreenMode: +
     prevScreenMode: _
     undo: z
-    redo: <c-z>
+    redo: Z
     filteringMenu: <c-s>
     diffingMenu: W
     diffingMenu-alt: <c-e>
@@ -167,6 +198,9 @@ keybinding:
     toggleWhitespaceInDiffView: <c-w>
     increaseContextInDiffView: "}"
     decreaseContextInDiffView: "{"
+    increaseRenameSimilarityThreshold: )
+    decreaseRenameSimilarityThreshold: (
+    openDiffTool: <c-t>
   status:
     checkForUpdate: u
     recentRepos: <enter>
@@ -176,6 +210,8 @@ keybinding:
     commitChangesWithoutHook: w
     amendLastCommit: A
     commitChangesWithEditor: C
+    findBaseCommitForFixup: <c-f>
+    confirmDiscard: x
     ignoreFile: i
     refreshFiles: r
     stashAllChanges: s
@@ -186,21 +222,27 @@ keybinding:
     toggleTreeView: "`"
     openMergeTool: M
     openStatusFilter: <c-b>
+    copyFileInfoToClipboard: "y"
+    collapseAll: "-"
+    expandAll: =
   branches:
     createPullRequest: o
     viewPullRequestOptions: O
     copyPullRequestURL: <c-y>
     checkoutBranchByName: c
     forceCheckoutBranch: F
+    checkoutPreviousBranch: "-"
     rebaseBranch: r
     renameBranch: R
     mergeIntoCurrentBranch: M
+    moveCommitsToNewBranch: "N"
     viewGitFlowOptions: i
     fastForward: f
     createTag: T
     pushTag: P
     setUpstream: u
     fetchRemote: f
+    sortOrder: s
   worktrees:
     viewWorktreeOptions: w
   commits:
@@ -217,9 +259,8 @@ keybinding:
     resetCommitAuthor: a
     pickCommit: p
     revertCommit: t
-    cherryPickCopy: c
-    cherryPickCopyRange: C
-    pasteCommits: <c-v>
+    cherryPickCopy: C
+    pasteCommits: V
     markCommitAsBaseForRebase: B
     tagCommit: T
     checkoutCommit: <space>
@@ -228,14 +269,18 @@ keybinding:
     openLogMenu: <c-l>
     openInBrowser: o
     viewBisectOptions: b
+    startInteractiveRebase: i
+    selectCommitsOfCurrentBranch: "*"
+  amendAttribute:
+    resetAuthor: a
+    setAuthor: A
+    addCoAuthor: c
   stash:
     popStash: g
     renameStash: r
   commitFiles:
     checkoutCommitFile: c
   main:
-    toggleDragSelect: v
-    toggleDragSelect-alt: V
     toggleSelectHunk: a
     pickBothHunks: b
     editSelectHunk: E
@@ -243,8 +288,5 @@ keybinding:
     init: i
     update: u
     bulkMenu: b
-disableStartupPopups: false
-customCommands: []
-services: {}
-notARepository: prompt
-promptToReturnFromSubprocess: true
+  commitMessage:
+    commitMenu: <c-o>
