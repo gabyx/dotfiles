@@ -28,7 +28,7 @@ in
   boot.extraModulePackages = [ ];
 
   # TODO: Check if display daisy chain works on wakeup.
-  boot.kernelPackages = pkgs.linuxPackages_xanmod;
+  # boot.kernelPackages = pkgs.linuxPackages_xanmod;
 
   boot.kernelParams = [
     "amdgpu.dpm=0"
