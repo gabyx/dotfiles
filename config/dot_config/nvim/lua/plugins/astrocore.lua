@@ -76,6 +76,9 @@ return {
             notifier = {
                 timeout = 1000,
             },
+
+            -- Wrap words in picker right panel.
+            win = { preview = { wo = { wrap = true } } },
         },
     },
 }

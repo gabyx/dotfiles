@@ -141,7 +141,70 @@ return {
         opts = {},
     },
     -- Diff view plugin.
-    { lazy = true, "sindrets/diffview.nvim", cmd = { "DiffviewOpen" } },
+    {
+        lazy = true,
+        "sindrets/diffview.nvim",
+        cmd = { "DiffviewOpen" },
+        opts = function(_, opts)
+            local actions = require("diffview.actions")
+            return vim.tbl_deep_extend("force", opts, {
+                keymaps = {
+                    view = {
+                        -- The `view` bindings are active in the diff buffers, only when the current
+                        -- tabpage is a Diffview.
+                        {
+                            "n",
+                            "<leader>to",
+                            actions.conflict_choose("ours"),
+                            { desc = "Choose the OURS version of a conflict" },
+                        },
+                        {
+                            "n",
+                            "<leader>tt",
+                            actions.conflict_choose("theirs"),
+                            { desc = "Choose the THEIRS version of a conflict" },
+                        },
+                        {
+                            "n",
+                            "<leader>tb",
+                            actions.conflict_choose("base"),
+                            { desc = "Choose the BASE version of a conflict" },
+                        },
+                        {
+                            "n",
+                            "<leader>ta",
+                            actions.conflict_choose("all"),
+                            { desc = "Choose all the versions of a conflict" },
+                        },
+                        {
+                            "n",
+                            "<leader>tO",
+                            actions.conflict_choose_all("ours"),
+                            { desc = "Choose the OURS version of a conflict for the whole file" },
+                        },
+                        {
+                            "n",
+                            "<leader>tT",
+                            actions.conflict_choose_all("theirs"),
+                            { desc = "Choose the THEIRS version of a conflict for the whole file" },
+                        },
+                        {
+                            "n",
+                            "<leader>tB",
+                            actions.conflict_choose_all("base"),
+                            { desc = "Choose the BASE version of a conflict for the whole file" },
+                        },
+                        {
+                            "n",
+                            "<leader>tA",
+                            actions.conflict_choose_all("all"),
+                            { desc = "Choose all the versions of a conflict for the whole file" },
+                        },
+                    },
+                },
+            })
+        end,
+    },
     -- Trouble shows all diagnostics in a common window
     {
         "folke/trouble.nvim",
