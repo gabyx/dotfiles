@@ -14,7 +14,7 @@ M.set_status = function()
         end
         -- Otherwise, use the title from the active pane
         -- in that tab
-        return "untitled"
+        return "term"
     end
 
     wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)

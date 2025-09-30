@@ -59,6 +59,7 @@ in
     pkgsUnstable.gnome-disk-utility # Easy disk utility `gdisk`.
 
     # Programming
+    pkgs.shellclear
     pkgsUnstable.parallel
     (lib.hiPrio pkgsUnstable.chezmoi)
     pkgsUnstable.lazygit
