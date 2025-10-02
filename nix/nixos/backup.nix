@@ -302,7 +302,7 @@ in
             inherit (bk) repository;
 
             timerConfig = {
-              OnCalendar = "12:00";
+              OnCalendar = "*-*-* 12:00:00";
             };
           };
 
