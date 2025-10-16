@@ -352,7 +352,7 @@ in
             inherit (bk) repository;
 
             timerConfig = {
-              OnCalendar = "Mon/2 12:00";
+              OnCalendar = "*-*-* 12:00:00";
             };
           };
       };
