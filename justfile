@@ -2,6 +2,9 @@ set positional-arguments
 set dotenv-load := true
 set shell := ["bash", "-cue"]
 root_dir := justfile_directory()
+build_dir := root_dir / "build"
+
+mod vm "./tools/just/vm.just"
 
 # The host for which most commands work below.
 default_host := env("NIXOS_HOST", "not-defined")
@@ -35,6 +38,56 @@ build host="":
     echo "----"
 
     "${cmd[@]}"
+
+# Start the NixOS.
+start host="vm" remote_viewer="false":
+    #!/usr/bin/env bash
+    set -eu
+    host="${1:-}"
+    if [ -z "$host" ]; then
+        host="{{default_host}}"
+    fi
+
+    out_dir="{{build_dir}}/$host"
+    mkdir -p "$out_dir"
+
+    cmd=(nix build \
+        --out-link "$out_dir/vmWithDisko" \
+        --show-trace --verbose --log-format internal-json \
+        "{{root_dir}}#nixosConfigurations.$host.config.system.build.vmWithDisko")
+
+    echo "----"
+    echo "${cmd[@]}"
+    echo "----"
+
+    "${cmd[@]}" |& nom --json
+
+    qemu_args=()
+    if [ "{{remote_viewer}}" = "true" ]; then
+        qemu_args+=(
+            -spice unix=on,addr=$out_dir/spice.sock,disable-ticketing=on
+            -device virtio-serial-pci
+            -chardev spicevmc,id=ch1,name=vdagent
+            -device virtserialport,chardev=ch1,name=com.redhat.spice.0
+        )
+
+        echo "IMPORTANT: ----------------------"
+        echo "IMPORTANT: Connect with 'remote-viewer spice+unix://$out_dir/spice.sock'"
+        echo "IMPORTANT: ----------------------"
+    else
+        qemu_args+=(
+            -display gtk,gl=on
+        )
+    fi
+
+    if [ ! -f "$out_dir/vmWithDisko/bin/disko-vm" ]; then
+        echo "Host '$host' not build. Use 'just build'."
+    fi
+
+    echo "Starting with '$out_dir/vmWithDisko/bin/disk-vm"
+
+    # FIXME: Forward qemu opts like this: https://github.com/nix-community/disko/pull/1142
+    QEMU_OPTS="${qemu_args[@]}" "$out_dir/vmWithDisko/bin/disko-vm"
 
 ## Flake maintenance commands =================================================
 # Update the flake lock file. Use arguments to specify single inputs.

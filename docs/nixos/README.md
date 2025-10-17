@@ -1,10 +1,13 @@
 <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/4c449b822779d9f3fca2e0eed36c95b07d623fd9/ng/out/nix.svg" style="margin-left: 20pt" align="right">
 <h1>NixOS Installation</h1>
 
-The file [`configuration.nix`](configuration.nix) contains the whole NixOS
-configuration and will be used to install the complete system. It is influenced
-by
+The file [`configuration.nix`](./../../nix/hosts/desktop/configuration.nix)
+contains the whole NixOS configuration of a Desktop system and will be used to
+install the complete system. It was influenced by
 [`nixos-starter-configs`](https://github.com/Misterio77/nix-starter-configs/tree/main).
+and later on changed to a
+[Dendritic-alike](https://vic.github.io/dendrix/Dendritic.html) configuration
+using [flake-parts's modules](https://flake.parts/).
 
 The following steps describe how to end up with a NixOS installation. The best
 starting point is to test the VM inside `qemu` before installing it into
@@ -21,11 +24,10 @@ install.
   string") and `Path` (`/this/is/a/path`) which are two different things and
   treated differently.
 
-- Check out the manual [NixOs](https://nixos.org/manual/nixos/stable) when
+- Check out the manual [NixOS](https://nixos.org/manual/nixos/stable) when
   searching for entry point documentation.
 
 - During modifications consult the two pages:
-
   - [Package Search](https://search.nixos.org/packages?)
   - [Options Search](https://search.nixos.org/options?)
 
@@ -39,20 +41,30 @@ install.
   overlays, but just using plain old functions.
   [Read more here](docs/pass-inputs-to-modules.md).
 
-- This NixOS is using the `sway` (Wayland not X11) window manager. To get you
-  started when the VM is booted up:
+- Learn the
+  [Nix basics from the workshop](https://sdsc-ordes.github.io/technical-presentation/gh-pages/nix-workshop/part-1/#/title-slide).
 
-  - `Alt+d` to start a program or
-  - press `Alt+Enter` to open `wezterm` terminal with `zsh`.
-
-- The NixOS install is customized with my [`dotfiles`](../config) over `chezmoi`
-  it is not yet built into Nix's
-  [`homemanager`](https://github.com/nix-community/home-manager).
+- The NixOS installation is customized using my [`dotfiles`](../config) managed
+  through [`chezmoi`](https://www.chezmoi.io). The application of these
+  configuration files is only lightly integrated into the system. I
+  intentionally strike a balance between configuring **everything** through Nix
+  and maintaining a few traditional configuration files. Going all-in on
+  Nix-based configuration (especially with custom external NixOS module
+  extensions) can sometimes introduce unnecessary complexity — abstractions that
+  cause more problems than they solve.
 
 ## Install NixOS into QEMU Virtual Machine
 
 The documentation [NixOS Manual](https://nixos.org/manual/nixos/stable) provides
-useful information when going through these steps:
+useful information when going through these steps.
+
+> [!NOTE]
+>
+> This NixOS is using the `sway` (Wayland not X11) window manager. To get you
+> started when the VM is booted up:
+>
+> - `Alt+d` to start a program or
+> - press `Alt+Enter` to open `wezterm` terminal with `zsh`.
 
 1. Install `virt-manager` to create a QEMU virtual machine. On Debian systems
    use:
@@ -64,7 +76,11 @@ useful information when going through these steps:
 1. Download the NixOS ISO file from
    [here](https://nixos.org/download#download-nixos).
 
-1. Adjust `.env-os-vm` file from `.env-os.tmpl` for your variables.
+### Create VM with Script (recommended)
+
+1. Adjust `.env-vm` file from `.env-vm.tmpl` for your variables.
+1. Create the VM with `qemu` directly by doing `just vm::create` which should
+   boot into the installer.
 
 ### Create VM with `virt-manager` (not recommended)
 
@@ -73,29 +89,31 @@ useful information when going through these steps:
    Create a virtual disk `nixos.qcow2` somewhere.
 
 1. Boot up the virtual machine `nixos` in `virt-manager`. The graphical
-   installer should show up. Install NixOS by going through the
-   [graphical installer](https://nixos.org/manual/nixos/stable/#sec-installation-graphical).
-   Reboot after the install.
+   installer should show up.
 
-### Create VM with Script
+### Install VM NixOS Configuration
 
-1. Create the VM by doing `scripts/create-vm.sh` and clicking through the
-   installer. Use an LUKS encrypted disk.
+You can now click through the installer and install a base system **or** you can
+follow the below steps in a terminal to install directly a preconfigured system.
 
-### Install VM NixOS Configuration.
+1. Start the virtual machine with `just vm::start` and switch to the VM NixOS
+   configuration by doing the following
 
-1. Start the virtual machine with [`scripts/start-vm.sh`](scripts/start-vm.sh)
-   and switch to the VM NixOS configuration by doing
-
-   ```shell
-      nixos-install switch --flake github:gabyx/dotfiles#vm
-      reboot
+   ```bash
+   nixos-install /mnt --flake github:gabyx/dotfiles#vm
+   reboot
    ```
 
-   or directly from the repository with
+   or directly starting the VM with passing through the host repo with
+   [`VM_QEMU_MOUNT_REPO=true`](./.env-vm.tmpl) and then
 
-   ```shell
-   nixos-install --root /mnt --flake .#vm --impure
+   ```bash
+   # Mount the host share.
+   sudo mkdir -p /repo
+   sudo mount -t 9p -o trans=virtio,version=9p2000.L hostshare /repo
+
+   # Switch to the VM.
+   nixos-install --root /mnt --flake /repo#vm --impure
    reboot
    ```
 
@@ -110,7 +128,7 @@ Go to the section [first login](#first-login) for further instructions.
    ssh nixos@127.0.0.1 -p 60022
    ```
 
-## Install NixOs on Desktop Hardware
+## Install NixOS on Desktop Hardware
 
 We follow the tutorial from
 [Pablo Ovelleiro](https://pablo.tools/blog/computers/nixos-encrypted-install)
@@ -146,7 +164,6 @@ benefit, that the swap partition will also be encrypted.
    ```
 
 1. Then do the following:
-
    - `o` : Create empty `gpt` partition table.
    - `n` : Add partition, first sector: default, last sector: `+500M`, type
      `ef00 EFI` (this is `/dev/sda1`).
@@ -177,7 +194,6 @@ benefit, that the swap partition will also be encrypted.
    ```
 
 1. Create subvolumes as follows:
-
    - `root`: The subvolume for `/`, which can be cleared on every boot (we dont
      do this).
    - `home`: The subvolume for `/home`, which should be backed up.
@@ -248,7 +264,7 @@ root partition.
    ```
 
    which will generate two files `/mnt/etc/nixos/hardware-configuration.nix` and
-   a default NixOs configuration as `/mnt/etc/nixos/configuration.nix` (which we
+   a default NixOS configuration as `/mnt/etc/nixos/configuration.nix` (which we
    will not use to install our system).
 
    Now your hardware configuration should contain the following:

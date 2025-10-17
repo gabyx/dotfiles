@@ -23,7 +23,6 @@
     ./settings.nix
 
     # Include all other specifications.
-
     inputs.self.modules.nixos.windowing
     inputs.self.modules.nixos.display
     inputs.self.modules.nixos.keyboard

@@ -111,6 +111,12 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # Declarative Disk partitioning for VMs.
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Tool to regulate CPU power.
     auto-cpufreq = {
       url = "github:AdnanHodzic/auto-cpufreq";

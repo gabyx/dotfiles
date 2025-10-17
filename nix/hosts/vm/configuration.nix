@@ -2,56 +2,46 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
-  config,
-  pkgs,
   inputs,
-  outputs,
   ...
 }:
 {
   imports = [
+    inputs.disko.nixosModules.disko
+    inputs.agenix.nixosModules.default
+
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./boot.nix
 
-    # Load the NixOS age encryption module to encrypt/decrypt
-    # secrets with this NixOS configuration
-    inputs.agenix.nixosModules.default
-
     # Include all other specifications.
-    (outputs.nixosModules.windowing { inherit config pkgs; })
-    outputs.nixosModules.display
-    outputs.nixosModules.keyboard
-    outputs.nixosModules.fonts
-    outputs.nixosModules.time
-    outputs.nixosModules.environment
-    outputs.nixosModules.networking
-    outputs.nixosModules.security
+    inputs.self.modules.nixos.windowing
+    inputs.self.modules.nixos.display
+    inputs.self.modules.nixos.keyboard
+    inputs.self.modules.nixos.fonts
+    inputs.self.modules.nixos.time
+    inputs.self.modules.nixos.environment
+    inputs.self.modules.nixos.networking
+    inputs.self.modules.nixos.security
+    inputs.self.modules.nixos.backup
+    inputs.self.modules.nixos.secrets
+    inputs.self.modules.nixos.services
 
-    outputs.nixosModules.services
+    inputs.self.modules.nixos.sound
+    inputs.self.modules.nixos.printing
 
-    outputs.nixosModules.sound
-    outputs.nixosModules.printing
+    inputs.self.modules.nixos.containerization
+    inputs.self.modules.nixos.virtualization
 
-    outputs.nixosModules.containerization
-    outputs.nixosModules.virtualization
+    inputs.self.modules.nixos.packages
+    inputs.self.modules.nixos.programs
 
-    outputs.nixosModules.packages
-    outputs.nixosModules.programs
+    inputs.self.modules.nixos.user
 
-    outputs.nixosModules.user
-
-    outputs.nixosModules.nix
+    inputs.self.modules.nixos.nix
 
     # Load home-manager as a part of the NixOS configuration.
-    inputs.home-manager.nixosModules.home-manager
-    (outputs.nixosModules.home-manager {
-      inherit
-        config
-        inputs
-        outputs
-        ;
-    })
+    inputs.self.modules.nixos.home-manager
   ];
 
   ### NixOS Release Settings===================================================
@@ -61,6 +51,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.11";
   # ===========================================================================
 }

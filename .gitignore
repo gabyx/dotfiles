@@ -1,2 +1,5 @@
 result
+build
 .env
+
+nixos.qcow2
