@@ -1,6 +1,5 @@
 {
   pkgs,
-  config,
   inputs,
   ...
 }:
@@ -19,7 +18,8 @@
         #  - sudo chown root:root host-ed25519
         #  - sudo chmod 600 host-ed25519
         #  - sudo chmod 644 host-ed25519.pub
-        "${config.settings.user.home}/.ssh/host-ed25519"
+        # Must be at a location which is mounted during boot.
+        "/persist/etc/ssh/host-ed25519"
       ];
     };
 

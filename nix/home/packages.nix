@@ -99,7 +99,7 @@ in
     pkgsUnstable.nixd
     pkgsUnstable.marksman
     pkgsUnstable.lua-language-server
-    pkgsUnstable.nodePackages.dockerfile-language-server
+    pkgsUnstable.dockerfile-language-server
     pkgsUnstable.nodePackages.bash-language-server
     pkgsUnstable.nodePackages.vscode-json-languageserver
     pkgsUnstable.nodePackages.yaml-language-server
