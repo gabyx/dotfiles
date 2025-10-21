@@ -266,7 +266,7 @@ in
                 set -eu
                 export PATH="${pkgs.btrfs-progs}/bin:$PATH"
 
-                mkdir -p /mnt/backup-snapshots
+                mkdir -p /mnt/snapshots
 
                 for sub in ${lib.escapeShellArgs bk.btrfsVolumes} ; do
                    name="$sub"
