@@ -87,6 +87,17 @@ in
     ];
   };
 
+  fileSystems."/persist/etc" = {
+    device = "/dev/disk/by-uuid/6fbd4c98-9ca9-4a8a-966f-24491282220b";
+    fsType = "btrfs";
+    options = [
+      "subvol=persist/etc"
+      "compress=zstd"
+      "noatime"
+    ];
+    neededForBoot = true;
+  };
+
   fileSystems."/var/log" = {
     device = "/dev/disk/by-uuid/6fbd4c98-9ca9-4a8a-966f-24491282220b";
     fsType = "btrfs";
