@@ -198,7 +198,7 @@ def main():
 
 # Find the meeting URL for the event.
 def find_url(event: Event) -> str:
-    zoom_re = re.compile(r".*\(?(https://.*\.zoom\.[^\s\)]+)\)?")
+    zoom_re = re.compile(r".*\(?(https://.*\.zoom\.[a-z]+/j/[^\s\)]+)\)?")
     teams_re = re.compile(r".*<?(https://teams\.microsoft\.com.*-join[^\s>]+)>?")
     google_re = re.compile(r".*\(?(https://meet\.google\.[^\s\)]+)\)?")
 
