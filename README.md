@@ -19,7 +19,7 @@ These are my [dotfiles](config) managed with
 other shit OS which desperately tries to convert itself into a \*nix OS) and
 [NixOS](nix) configurations for Desktop and VM.
 
-![Screenshot](./nixos/docs/screenshot.png)
+![Screenshot](./docs/nixos/docs/screenshot.png)
 
 | Program                     | Name                                                                                                                                              |
 | :-------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
