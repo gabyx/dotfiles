@@ -1,7 +1,27 @@
 {
-  "setup": {
+  "iferr": {
     "prefix": ["iferr"],
     "body": ["if err != nil {", "\t$1", "}"],
     "description": "if err != nil"
+  },
+  "optpatt": {
+    "prefix": "optspattern",
+    "description": "Go functional options pattern.",
+    "body": [
+      "type ${1:Option} func(*${2:opts}) error",
+      "",
+      "type ${2:opts} struct {",
+      "\t${3:// TODO: add fields}",
+      "}",
+      "",
+      "func (c *${2:opts}) Apply(options ...${1:ExecOption}) error {",
+      "\tfor _, f := range options {",
+      "\t\tif err := f(c); err != nil {",
+      "\t\t\treturn err",
+      "\t\t}",
+      "\t}",
+      "\treturn nil",
+      "}"
+    ]
   }
 }
