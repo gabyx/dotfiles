@@ -13,6 +13,8 @@ return {
             logging = true,
             log_level = vim.log.levels.INFO,
 
+            tempfile_dir = vim.uv.os_tmpdir(),
+
             filetype = {
                 typescriptreact = { fmts.prettier },
                 javascriptreact = { fmts.prettier },

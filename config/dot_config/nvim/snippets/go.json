@@ -4,11 +4,11 @@
     "body": ["if err != nil {", "\t$1", "}"],
     "description": "if err != nil"
   },
-  "optpatt": {
-    "prefix": "optspattern",
-    "description": "Go functional options pattern.",
+  "optpatternErr": {
+    "prefix": "optpatternErr",
+    "description": "Go functional options pattern with error returns.",
     "body": [
-      "type ${1:Option} func(*${2:opts}) error",
+      "type ${1:ExecOption} func(*${2:opts}) error",
       "",
       "type ${2:opts} struct {",
       "\t${3:// TODO: add fields}",
@@ -21,6 +21,32 @@
       "\t\t}",
       "\t}",
       "\treturn nil",
+      "}",
+      "",
+      "func (c *${2:opts}) With${4:This}(${5:value} ${6:string}) error {",
+      "\t${7:// TODO: add code}",
+      "\treturn nil",
+      "}"
+    ]
+  },
+  "optpatternNoErr": {
+    "prefix": "optpatternNoErr",
+    "description": "Go functional options pattern without error returns.",
+    "body": [
+      "type ${1:ExecOption} func(*${2:opts})",
+      "",
+      "type ${2:opts} struct {",
+      "\t${3:// TODO: add fields}",
+      "}",
+      "",
+      "func (c *${2:opts}) Apply(options ...${1:ExecOption}) {",
+      "\tfor _, f := range options {",
+      "\t\tf(c)",
+      "\t}",
+      "}",
+      "",
+      "func (c *${2:opts}) With${4:This}(${5:value} ${6:string}) {",
+      "\t${7:// TODO: add code}",
       "}"
     ]
   }
