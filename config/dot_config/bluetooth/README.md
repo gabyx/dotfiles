@@ -39,4 +39,5 @@ pair 28:9A:4B:78:80:84
 ## Defy Dygma
 
 Dygma Defy keyboard sends a connection password which needs to be entered on the
-keyboard after the lights appear when the connection has been established.
+keyboard after the lights appear when the connection has been established. You
+need to enter the numbers with your layout!
