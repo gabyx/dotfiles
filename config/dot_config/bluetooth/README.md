@@ -12,7 +12,7 @@ You can connect to them by
 rofi-bluetooth
 ```
 
-or with the `bluetoothctl` utility or with `blueman-manger` (GUI):
+or with the `bluetoothctl` utility or with `blueman-manger` (GUI, recommended):
 
 ```shell
 bluetoothctl
