@@ -84,6 +84,7 @@ in
   fileSystems."/persist/etc" = {
     device = "/dev/disk/by-uuid/7d77bcf2-d5f4-4ff4-992d-de583df23032";
     fsType = "btrfs";
+    depends = [ "/persist" ];
     options = [
       "subvol=persist/etc"
       "compress=zstd"
