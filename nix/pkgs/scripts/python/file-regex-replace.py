@@ -45,7 +45,7 @@ def replace_files(
         )
 
     def get_files(dir):
-        for d, _, fs in os.walk(dir):
+        for d, _, fs in os.walk(dir, followlinks=True):
             for f in fs:
                 yield PurePath(path.join(d, f)).as_posix()
 
