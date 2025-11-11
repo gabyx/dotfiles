@@ -17,6 +17,6 @@ writeShellApplication {
   text =
     # bash
     ''
-      ${python313}/bin/python "${script}"
+      ${python313}/bin/python "${script}" "$@"
     '';
 }
