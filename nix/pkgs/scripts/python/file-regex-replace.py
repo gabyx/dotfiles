@@ -47,6 +47,8 @@ def replace_files(
     def get_files(dir):
         for d, _, fs in os.walk(dir, followlinks=True):
             for f in fs:
+                if path.islink(f):
+                    continue
                 yield PurePath(path.join(d, f)).as_posix()
 
     def get_git_files(dir):
@@ -54,6 +56,8 @@ def replace_files(
             ["git", "-C", dir, "ls-files", "--exclude-standard"], encoding="utf-8"
         )
         for f in fs.splitlines():
+            if path.islink(f):
+                continue
             yield PurePath(dir, f).as_posix()
 
     files = list(
