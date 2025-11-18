@@ -50,6 +50,7 @@ in
     pkgsUnstable.poppler_utils # For image conversions.
     pkgsUnstable.ffmpegthumbnailer # For video thumbnails.
     pkgsUnstable.trash-cli # Trash command line to move stuff to trash.
+    pkgsUnstable.dig # DNS lookup tool.
 
     # Disk
     pkgsUnstable.dua # Disk Usage Analyzer.

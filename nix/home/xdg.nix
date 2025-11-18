@@ -14,10 +14,12 @@ let
     "x-scheme-handler/http" = browser;
     "x-scheme-handler/https" = browser;
     "x-scheme-handler/ftp" = browser;
-
     "x-scheme-handler/chrome" = browser;
     "x-scheme-handler/about" = browser;
     "x-scheme-handler/unknown" = browser;
+    "x-scheme-handler/sgnl" = "signal.desktop";
+    "x-scheme-handler/signalcaptcha" = "signal.desktop";
+    "x-scheme-handler/file" = "thunar.desktop";
 
     "application/x-extension-htm" = browser;
     "application/x-extension-html" = browser;
@@ -51,6 +53,7 @@ let
 
     "application/json" = browser; # ".json"  JSON format
     "application/pdf" = browser;
+
   }
   // (lib.genAttrs
     [
