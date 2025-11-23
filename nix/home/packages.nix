@@ -31,6 +31,9 @@ in
     pkgsUnstable.seahorse
     pkgsUnstable.zenity # For dialogs over githooks and calendar.
 
+    # Qemu
+    pkgsUnstable.quickemu
+
     # Terminal
     pkgsUnstable.kitty
     pkgsUnstable.ghostty
