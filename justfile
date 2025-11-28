@@ -288,6 +288,23 @@ decrypt file:
 decrypt-edit file:
     just cm edit "{{file}}"
 
+# Move all regular files in the repo to the secret folder.
+move-all-to-secrets:
+    #!/usr/bin/env bash
+    set -eu
+    fd ".*.age$" -E "secrets/**" --type f --exec just move-to-secrets "{}"
+
+# Move a file to the secrets folder.
+move-to-secrets file:
+    #!/usr/bin/env bash
+    set -eu
+    file="{{file}}"
+    d="$(dirname "$file")";
+    mkdir -p "secrets/$d";
+    cp "$file" "secrets/$file";
+    rm "$file";
+    ln -s "$(realpath --relative-to="$d" "secrets/$file")" "$file"
+
 # This is a wrapper to `chezmoi` which provided the necessary encryption
 # key temporarily and deletes it afterwards again.
 # This is only used for invocations which need the private key.

@@ -37,6 +37,10 @@
       );
 
   inputs = {
+    self = {
+      submodules = true;
+    };
+
     import-tree = {
       url = "github:vic/import-tree";
     };
