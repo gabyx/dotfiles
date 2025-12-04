@@ -144,7 +144,7 @@ return {
     {
         lazy = true,
         "sindrets/diffview.nvim",
-        cmd = { "DiffviewOpen" },
+        cmd = { "DiffviewOpen", "DiffviewFileHistory" },
         opts = function(_, opts)
             local actions = require("diffview.actions")
             return vim.tbl_deep_extend("force", opts, {
