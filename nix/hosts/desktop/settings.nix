@@ -5,8 +5,10 @@
   settings = {
     backup = {
       enable = true;
-      enablePersist = true;
-      backups.system.enable = true;
+      backups.system = {
+        enable = true;
+        enablePersist = true;
+      };
       backups.data-personal.enable = true;
     };
   };

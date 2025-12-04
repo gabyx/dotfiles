@@ -240,8 +240,6 @@ in
               (rootDir "/var/lib/NetworkManager")
               (rootDir "/var/lib/AccountsService")
 
-              (persistDir "music")
-
               (homeDir "Pictures")
               (homeDir "Documents")
               (homeDir "Downloads")
@@ -262,24 +260,25 @@ in
               # Dconf
               (homeDir ".config/dconf")
             ]
-            ++ (lib.optional bk.enablePersist [
+            ++ (lib.optionals bk.enablePersist [
               # Persistent Repos
-              (rootDir "/persist/repos/chezmoi")
-              (rootDir "/persist/repos/technical-markdown")
-              (rootDir "/persist/repos/technical-presentation")
-              (rootDir "/persist/repos/grsframework")
-              (rootDir "/persist/repos/technical-presentation-sdsc")
-              (rootDir "/persist/repos/technical-presentation-private")
-              (rootDir "/persist/repos/githooks")
-              (rootDir "/persist/repos/githooks-*")
-              (rootDir "/persist/repos/quitsh")
-              (rootDir "/persist/repos/kikist")
-              (rootDir "/persist/repos/executiongraph")
-              (rootDir "/persist/repos/notes")
-              (rootDir "/persist/repos/cpp-playground")
-              (rootDir "/persist/repos/rs-playground")
-              (rootDir "/persist/repos/applications")
-              (rootDir "/persist/repos/dissertation")
+              (persistDir "music")
+              (persistDir "repos/chezmoi")
+              (persistDir "repos/technical-markdown")
+              (persistDir "repos/technical-presentation")
+              (persistDir "repos/grsframework")
+              (persistDir "repos/technical-presentation-sdsc")
+              (persistDir "repos/technical-presentation-private")
+              (persistDir "repos/githooks")
+              (persistDir "repos/githooks-*")
+              (persistDir "repos/quitsh")
+              (persistDir "repos/kikist")
+              (persistDir "repos/executiongraph")
+              (persistDir "repos/notes")
+              (persistDir "repos/cpp-playground")
+              (persistDir "repos/rs-playground")
+              (persistDir "repos/applications")
+              (persistDir "repos/dissertation")
             ]);
 
             inherit exclude;
