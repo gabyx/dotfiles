@@ -35,6 +35,13 @@ let
       hostDesktop
       hostTuxedo
     ];
+
+    # Network Manager Secerets
+    "networkmanager-secrets.env.age".publicKeys = [
+      chezmoi
+      hostDesktop
+      hostTuxedo
+    ];
   };
 in
 rules

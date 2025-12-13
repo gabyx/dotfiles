@@ -37,6 +37,7 @@
     inputs.self.modules.nixos.time
     inputs.self.modules.nixos.environment
     inputs.self.modules.nixos.networking
+    inputs.self.modules.nixos.networking-profiles
     inputs.self.modules.nixos.vpn
     inputs.self.modules.nixos.backup
     inputs.self.modules.nixos.secrets

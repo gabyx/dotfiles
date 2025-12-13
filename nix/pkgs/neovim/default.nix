@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  system,
   pkgs,
   ...
 }:
@@ -12,7 +13,7 @@ let
     }
   );
 
-  nvimNightlyDrv = pkgs.wrapNeovimUnstable inputs.nvim-nightly.packages.${pkgs.system}.neovim (
+  nvimNightlyDrv = pkgs.wrapNeovimUnstable inputs.nvim-nightly.packages.${system}.neovim (
     pkgs.neovimUtils.makeNeovimConfig {
       wrapRc = false;
       withRuby = false;

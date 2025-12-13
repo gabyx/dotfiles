@@ -17,7 +17,7 @@ let
       ];
 
       specialArgs = {
-        inherit inputs outputs;
+        inherit system inputs outputs;
         pkgsUnstable = outputs.lib.importPkgsUnstable system;
       };
     };

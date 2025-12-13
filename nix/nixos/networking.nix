@@ -5,7 +5,13 @@
 {
   networking = {
     ### Networking ==============================================================
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      plugins = [
+        pkgs.networkmanager-openconnect
+        pkgs.networkmanager-openvpn
+      ];
+    };
     # networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
 
     # The global useDHCP flag is deprecated, therefore explicitly set to false here.

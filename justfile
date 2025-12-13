@@ -9,6 +9,9 @@ mod vm "./tools/just/vm.just"
 # The host for which most commands work below.
 default_host := env("NIXOS_HOST", "not-defined")
 
+# If the nix-output-monitor should be used.
+use_nom := env("USE_NOM", "true")
+
 # Default command to list all commands.
 list:
     just --list
@@ -19,75 +22,27 @@ format:
       nix fmt
 
 # Build the NixOS.
-build host="":
+build *args:
     #!/usr/bin/env bash
     set -eu
-    host="${1:-}"
-    if [ -z "$host" ]; then
-        host="{{default_host}}"
-    fi
-
+    host="{{default_host}}"
     cmd=(nix build
         --verbose
         --show-trace
         ".#nixosConfigurations.$host.config.system.build.toplevel"
+        "$@"
     )
 
     echo "----"
     echo "${cmd[@]}"
     echo "----"
 
-    "${cmd[@]}"
-
-# Start the NixOS.
-start host="vm" remote_viewer="false":
-    #!/usr/bin/env bash
-    set -eu
-    host="${1:-}"
-    if [ -z "$host" ]; then
-        host="{{default_host}}"
-    fi
-
-    out_dir="{{build_dir}}/$host"
-    mkdir -p "$out_dir"
-
-    cmd=(nix build \
-        --out-link "$out_dir/vmWithDisko" \
-        --show-trace --verbose --log-format internal-json \
-        "{{root_dir}}#nixosConfigurations.$host.config.system.build.vmWithDisko")
-
-    echo "----"
-    echo "${cmd[@]}"
-    echo "----"
-
-    "${cmd[@]}" |& nom --json
-
-    qemu_args=()
-    if [ "{{remote_viewer}}" = "true" ]; then
-        qemu_args+=(
-            -spice unix=on,addr=$out_dir/spice.sock,disable-ticketing=on
-            -device virtio-serial-pci
-            -chardev spicevmc,id=ch1,name=vdagent
-            -device virtserialport,chardev=ch1,name=com.redhat.spice.0
-        )
-
-        echo "IMPORTANT: ----------------------"
-        echo "IMPORTANT: Connect with 'remote-viewer spice+unix://$out_dir/spice.sock'"
-        echo "IMPORTANT: ----------------------"
+    if [ "{{use_nom}}" = "true" ]; then
+        "${cmd[@]}" --log-format internal-json |& nom --json
     else
-        qemu_args+=(
-            -display gtk,gl=on
-        )
+        "${cmd[@]}"
     fi
 
-    if [ ! -f "$out_dir/vmWithDisko/bin/disko-vm" ]; then
-        echo "Host '$host' not build. Use 'just build'."
-    fi
-
-    echo "Starting with '$out_dir/vmWithDisko/bin/disk-vm"
-
-    # FIXME: Forward qemu opts like this: https://github.com/nix-community/disko/pull/1142
-    QEMU_OPTS="${qemu_args[@]}" "$out_dir/vmWithDisko/bin/disko-vm"
 
 ## Flake maintenance commands =================================================
 # Update the flake lock file. Use arguments to specify single inputs.
@@ -101,22 +56,21 @@ version:
 
 # Build the new configuration and set it the boot default.
 boot *args:
-    just rebuild boot "${1:-}" "${@:2}"
+    just rebuild boot "$@"
 
 # Switch the `host` (`$1`) to the latest configuration.
 switch *args:
-    just rebuild switch "${1:-}" "${@:2}"
+    just rebuild switch "$@"
     just diff 2
 
 # Build with nix-output-monitor.
 switch-visual *args:
     #!/usr/bin/env bash
     set -eu
-    just rebuild switch "${1:-}" \
+    just rebuild switch \
         --show-trace \
         --verbose \
-        --log-format internal-json \
-        "${@:2}" |& nom --json
+        "$@"
 
     just diff 2
 
@@ -125,10 +79,10 @@ switch-visual *args:
 switch-test name="test" *args:
     #!/usr/bin/env bash
     set -eu
-    just rebuild switch "${2:-}" -p "{{name}}"  \
+    just rebuild switch -p "{{name}}"  \
         --show-trace \
         --verbose \
-        "${@:3}"
+        "${@:2}"
 
     just diff 2 "{{name}}"
 
@@ -136,27 +90,25 @@ switch-test name="test" *args:
 boot-test name="test" *args:
     #!/usr/bin/env bash
     set -eu
-    just rebuild boot "${2:-}" -p "{{name}}"  \
+    just rebuild boot -p "{{name}}"  \
         --show-trace \
         --verbose \
-        "${@:3}"
+        "${@:2}"
+
 
     just diff 2 "{{name}}"
 
 # NixOS rebuild command for the `host` (defined in the flake).
 [private]
-rebuild how host *args:
+rebuild how *args:
     #!/usr/bin/env bash
     set -eu
     cd "{{root_dir}}"
 
-    host="${2:-}"
-    if [ -z "$host" ]; then
-        host="{{default_host}}"
-    fi
+    host="{{default_host}}"
     cmd=(nixos-rebuild {{how}}
         --flake ".#$host"
-        --use-remote-sudo "${@:3}"
+        --use-remote-sudo "${@:2}"
     )
 
     echo "----"
@@ -180,7 +132,7 @@ history:
 # Run the trim script to reduce the amount of generations kept on the system.
 # Usage with `--help`.
 trim *args:
-    ./tools/scripts/trim-generations.sh {{args}}
+    ./tools/scripts/trim-generations.sh "$@"
 
 # Diff the profile `current-system` with the last system profile
 # to see the differences.
@@ -253,6 +205,57 @@ gc:
 
     echo "Garbage collect all unused nix store entries"
     sudo nix store gc --debug
+
+# Start the NixOS.
+start host="vm" remote_viewer="false":
+    #!/usr/bin/env bash
+    set -eu
+    host="${1:-}"
+    if [ -z "$host" ]; then
+        host="{{default_host}}"
+    fi
+
+    out_dir="{{build_dir}}/$host"
+    mkdir -p "$out_dir"
+
+    cmd=(nix build \
+        --out-link "$out_dir/vmWithDisko" \
+        --show-trace --verbose --log-format internal-json \
+        "{{root_dir}}#nixosConfigurations.$host.config.system.build.vmWithDisko")
+
+    echo "----"
+    echo "${cmd[@]}"
+    echo "----"
+
+    "${cmd[@]}" |& nom --json
+
+    qemu_args=()
+    if [ "{{remote_viewer}}" = "true" ]; then
+        qemu_args+=(
+            -spice unix=on,addr=$out_dir/spice.sock,disable-ticketing=on
+            -device virtio-serial-pci
+            -chardev spicevmc,id=ch1,name=vdagent
+            -device virtserialport,chardev=ch1,name=com.redhat.spice.0
+        )
+
+        echo "IMPORTANT: ----------------------"
+        echo "IMPORTANT: Connect with 'remote-viewer spice+unix://$out_dir/spice.sock'"
+        echo "IMPORTANT: ----------------------"
+    else
+        qemu_args+=(
+            -display gtk,gl=on
+        )
+    fi
+
+    if [ ! -f "$out_dir/vmWithDisko/bin/disko-vm" ]; then
+        echo "Host '$host' not build. Use 'just build'."
+    fi
+
+    echo "Starting with '$out_dir/vmWithDisko/bin/disk-vm"
+
+    # FIXME: Forward qemu opts like this: https://github.com/nix-community/disko/pull/1142
+    QEMU_OPTS="${qemu_args[@]}" "$out_dir/vmWithDisko/bin/disko-vm"
+
 
 diff-to-main:
     git fetch origin && \

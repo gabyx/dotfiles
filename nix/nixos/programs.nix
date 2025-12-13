@@ -30,9 +30,6 @@
       config.credential.helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
     };
 
-    # Archive Manager
-    file-roller.enable = true;
-
     # File Manager
     thunar = {
       enable = true;

@@ -1,10 +1,10 @@
 { inputs, lib, ... }:
 {
   perSystem =
-    { pkgsUnstable, ... }:
+    { pkgsUnstable, system, ... }:
     let
       nvimBuilds = import ./neovim {
-        inherit inputs lib;
+        inherit system inputs lib;
         pkgs = pkgsUnstable;
       };
 

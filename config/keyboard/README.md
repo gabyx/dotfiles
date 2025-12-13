@@ -54,7 +54,6 @@ back in the day. Their function is sometimes emulated using other keys.
   The Meta key is not found on modern keyboards. Its use is sometimes emulated
   with `AltGr` (on some international layouts) or the right `Alt` key on the
   others. In addition:
-
   - Sun keyboards have a meta key (`◆`) as well.
   - Emacs calls `Esc` the Meta key.
 

@@ -22,12 +22,12 @@
 
     packages = with pkgs; [
       corefonts
-      ubuntu_font_family
+      ubuntu-classic
 
       fira
 
       noto-fonts
-      noto-fonts-emoji
+      noto-fonts-color-emoji
 
       google-fonts
 

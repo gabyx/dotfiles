@@ -2,12 +2,12 @@
   inputs,
   outputs,
   lib,
+  system,
   pkgs,
   pkgsUnstable,
   ...
 }:
 let
-  system = pkgs.system;
   # Define some special packages.
   wezterm-nightly = inputs.wezterm.packages."${system}".default;
   githooks = inputs.githooks.packages."${system}".default;
@@ -50,10 +50,11 @@ in
     pkgsUnstable.exiftool # For image meta preview.
     pkgsUnstable.atool # For archive preview
     pkgsUnstable.bat # For text preview with syntax highlight and Git integration.
-    pkgsUnstable.poppler_utils # For image conversions.
+    pkgsUnstable.poppler-utils # For image conversions.
     pkgsUnstable.ffmpegthumbnailer # For video thumbnails.
     pkgsUnstable.trash-cli # Trash command line to move stuff to trash.
     pkgsUnstable.dig # DNS lookup tool.
+    pkgsUnstable.file-roller # Compression tool.
 
     # Disk
     pkgsUnstable.dua # Disk Usage Analyzer.
@@ -82,12 +83,12 @@ in
     pkgsUnstable.dive # Inspect container images.
 
     # FHS Environment with nix-alien
-    inputs.nix-alien.packages.${pkgs.system}.nix-alien
+    inputs.nix-alien.packages.${system}.nix-alien
 
     # Linters
     pkgsUnstable.markdownlint-cli
     pkgsUnstable.yamllint
-    pkgsUnstable.nodePackages.jsonlint
+    pkgsUnstable.vscode-json-languageserver
     pkgsUnstable.codespell
     pkgsUnstable.typos
     pkgsUnstable.shfmt
@@ -140,13 +141,12 @@ in
     pkgs.khal # CLI Calendar
 
     # MultiMedia
-    pkgsUnstable.bitwarden # Password manager
+    pkgsUnstable.bitwarden-desktop # Password manager
     pkgsUnstable.bitwarden-cli
     pkgsUnstable.bazecor # Dygma Defy Keyboard.
     pkgsUnstable.signal-desktop-bin # Messaging app
     pkgsUnstable.element-desktop # Matrix client.
     pkgsUnstable.slack # Messaging app
-    pkgsUnstable.transmission_3-gtk
     pkgsUnstable.ffmpeg # Movie converter
     pkgsUnstable.vlc # Movie player
     pkgsUnstable.amberol # Music player

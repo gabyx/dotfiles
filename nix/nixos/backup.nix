@@ -1,6 +1,7 @@
 {
   config,
   outputs,
+  system,
   pkgs,
   lib,
   ...
@@ -10,7 +11,7 @@ let
   inherit (lib) types mkOption;
   cfg = config.settings.backup;
 
-  gabyx-shell-source = outputs.packages.${pkgs.system}.gabyx-shell-source;
+  gabyx-shell-source = outputs.packages.${system}.gabyx-shell-source;
 in
 {
   options =

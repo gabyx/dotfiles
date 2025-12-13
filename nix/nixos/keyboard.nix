@@ -59,8 +59,6 @@
 
     # Tablets (Wacom)
     libwacom
-    wacomtablet
-    # xf86_input_wacom #Only on non-wayland.
   ];
 
   # ===========================================================================

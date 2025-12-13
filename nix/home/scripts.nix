@@ -1,7 +1,8 @@
-{ pkgs, outputs, ... }:
-let
-  system = pkgs.system;
-in
+{
+  outputs,
+  system,
+  ...
+}:
 {
   home.packages = [
     outputs.packages.${system}.gabyx-shell-run

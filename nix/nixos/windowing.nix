@@ -113,9 +113,6 @@ in
     services.displayManager = {
       autoLogin.enable = false;
       autoLogin.user = "nixos";
-    };
-
-    services.xserver.displayManager = {
       gdm = {
         enable = true;
         wayland = true;
@@ -193,7 +190,7 @@ in
       font-awesome
       cantarell-fonts
       noto-fonts
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       nerd-fonts.noto
       nerd-fonts.jetbrains-mono
     ];

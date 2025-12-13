@@ -11,6 +11,7 @@
     home-manager = import ./home-manager.nix;
     keyboard = import ./keyboard.nix;
     networking = import ./networking.nix;
+    networking-profiles = import ./networking-profiles;
     nix = import ./nix.nix;
     packages = import ./packages.nix;
     printing = import ./printing.nix;

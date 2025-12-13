@@ -2,6 +2,7 @@
   config,
   inputs,
   outputs,
+  system,
   pkgs,
   pkgsUnstable,
   ...
@@ -19,6 +20,7 @@
       inherit
         inputs
         outputs
+        system
         pkgs
         pkgsUnstable
         ;

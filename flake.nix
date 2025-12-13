@@ -56,7 +56,7 @@
     };
 
     # Nixpkgs (stuff for the system.)
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
 
     # Nixpkgs (unstable stuff for certain packages.)
     # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
@@ -75,7 +75,7 @@
 
     # Home-Manager for NixOS.
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
