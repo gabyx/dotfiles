@@ -18,6 +18,7 @@ in
     };
 
     script = ''
+      set -eu
       mkdir -p /var/lib/AccountsService/{icons,users}
       pic="${icon}"
 

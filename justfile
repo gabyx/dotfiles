@@ -111,6 +111,11 @@ rebuild how *args:
         --use-remote-sudo "${@:2}"
     )
 
+    echo "Fetch all LFS files."
+    git lfs fetch --all
+    echo "Fetch all submodules."
+    git submodule update --recursive --init
+
     echo "----"
     echo "${cmd[@]}"
     echo "----"
