@@ -21,6 +21,25 @@ let
         pkgsUnstable = outputs.lib.importPkgsUnstable system;
       };
     };
+
+  mkIso =
+    system: name:
+    inputs.nixos-generators.nixosGenerate {
+      pkgs = outputs.lib.importPkgs system;
+
+      inherit system;
+      modules = [
+        ./${name}/configuration.nix
+      ];
+
+      specialArgs = {
+        inherit system inputs outputs;
+        pkgsUnstable = outputs.lib.importPkgsUnstable system;
+      };
+
+      format = "install-iso";
+    };
+
 in
 {
   flake.nixosConfigurations = {
@@ -29,4 +48,10 @@ in
     tuxedo = mkSystem "x86_64-linux" "tuxedo-pulse-14";
     vm = mkSystem "x86_64-linux" "vm";
   };
+
+  perSystem =
+    { ... }:
+    {
+      packages.vm-iso = mkIso "x86_64-linux" "vm";
+    };
 }

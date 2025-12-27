@@ -4,7 +4,7 @@
 }:
 {
   age.secrets = {
-    networkmanager-secrets.file = ../../secrets/nix/nixos/secrets/networkmanager-secrets.env.age;
+    networkmanager-secrets.file = builtins.path { path = ../secrets/networkmanager-secrets.env.age; };
   };
 
   # This settings can be get from:

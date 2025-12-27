@@ -58,6 +58,26 @@ build *args:
         "${cmd[@]}"
     fi
 
+build-iso *args:
+    #!/usr/bin/env bash
+    set -eu
+    host="{{default_host}}"
+    cmd=(nix build
+        --verbose
+        --show-trace
+        ".#$host-iso"
+        "$@"
+    )
+
+    echo "----"
+    echo "${cmd[@]}"
+    echo "----"
+
+    if [ "{{use_nom}}" = "true" ]; then
+        "${cmd[@]}" --log-format internal-json |& nom --json
+    else
+        "${cmd[@]}"
+    fi
 
 ## Flake maintenance commands =================================================
 # Update the flake lock file. Use arguments to specify single inputs.
