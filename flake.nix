@@ -68,6 +68,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Building images from NixOS.
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Some Hardware Modules.
     hardware = {
       url = "github:NixOS/nixos-hardware";
