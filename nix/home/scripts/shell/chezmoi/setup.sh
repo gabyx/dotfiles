@@ -35,6 +35,7 @@ if [ ! -d "$dest" ]; then
     git clone --branch "$chezmoiRef" "$chezmoiUrl" "$dest"
 
     # Make the init pass with the prompt in `.chezmoi.yaml.tmpl`.
+    echo "Init chezmoi ..."
     cd "$dest"
     just develop \
         just cm init --promptChoice "Workspace?=$workspace"

@@ -364,10 +364,12 @@ cm *args:
         exit 1
     fi
 
+    mkdir -p ~/.config/chezmoi
     echo "$pkey" | \
         age -d -i - "{{root_dir}}/config/dot_config/chezmoi/key.age" > \
-                    ~/.config/chezmoi/key && \
-    chezmoi -S "." $@" && cleanup || cleanup
+                    ~/.config/chezmoi/key
+
+    chezmoi -S "." "$@"
 
 # Store the private-key for the keyfile 'key.age'
 # into the keyring.
