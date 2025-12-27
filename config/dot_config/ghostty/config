@@ -24,22 +24,21 @@ shell-integration-features = cursor,sudo,title
 
 
 ## Keybindings
-keybind = ctrl+g>q=toggle_quick_terminal
+keybind = clear
 
 keybind = ctrl+g>c=new_tab
-keybind = ctrl+g>x=close_tab
+keybind = ctrl+g>x=close_surface
 
 keybind = ctrl+g>-=new_split:down
 keybind = ctrl+g>\=new_split:right
 
-keybind = ctrl+;=previous_tab
-keybind = ctrl+'=next_tab
+# keybind = ctrl+;=previous_tab
+# keybind = ctrl+'=next_tab
 
-keybind = ctrl+g>g=scroll_to_top
-keybind = ctrl+d=scroll_page_down
-keybind = ctrl+u=scroll_page_up
-
-keybind = ctrl+shift+l=resize_split:left,40
-keybind = ctrl+shift+h=resize_split:right,40
+keybind = ctrl+shift+h=resize_split:left,40
+keybind = ctrl+shift+l=resize_split:right,40
 keybind = ctrl+shift+k=resize_split:up,40
 keybind = ctrl+shift+j=resize_split:down,40
+
+keybind = ctrl+equal=increase_font_size:1
+keybind = ctrl+-=decrease_font_size:1
