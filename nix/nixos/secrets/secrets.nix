@@ -1,6 +1,8 @@
 # This file is not part of the NixOS configuration and
 # is only used for `agenix -e` which encrypts secrets over `age`
 # with these public keys.
+# Also the symlinkgs in this folder are not uses directly as
+# `agenix` can only read full files.
 let
   chezmoi = "age1messaj8qqseag2nuvr5d453qqnkszt3rmwldvpjw8fapd0xfkajs7x6mld";
 
