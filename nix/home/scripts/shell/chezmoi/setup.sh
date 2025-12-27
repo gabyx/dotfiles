@@ -4,12 +4,6 @@
 set -e
 set -u
 
-function get_password_from_keyring() {
-    if command -v secret-tool &>/dev/null; then
-        secret-tool lookup chezmoi keyfile-private-key 2>/dev/null
-    fi
-}
-
 if [ -n "${DRY_RUN:-}" ]; then
     echo "Dry-run: No chezmoi install."
     exit 0
@@ -48,12 +42,8 @@ else
 fi
 
 addArgs=()
-if ! get_password_from_keyring &>/dev/null; then
-    echo "WARNING: Encrypted files are not applied, " >&2
-    echo "because no password entry in keyring with attribute:" >&2
-    echo "'chezmoi' and key: 'keyfile-private-key'." >&2
-    addArgs=("--exclude" "encrypted")
-fi
+echo "WARNING: Encrypted files are not applied, " >&2
+addArgs=("--exclude" "encrypted")
 
 echo "Apply chezmoi config files."
 chezmoi --force \
