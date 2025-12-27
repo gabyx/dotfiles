@@ -31,6 +31,22 @@ develop *args:
         "$flake_dir#$shell" \
         --command "${args[@]}"
 
+# Enter a development shell by faking a missing `secrets` folder.
+develop-nosec *args:
+    #!/usr/bin/env bash
+    set -eu
+    git rm secrets && mkdir -p secrets
+
+    flake_dir="."
+    shell="default";
+    args=("$@") && [ "${#args[@]}" != 0 ] ||
+        args=(env SHELL="$SHELL" "$SHELL")
+
+    nix develop \
+        --accept-flake-config \
+        "$flake_dir#$shell" \
+        --command "${args[@]}"
+
 # Format the whole repository.
 format:
     cd "{{root_dir}}" && \
@@ -287,7 +303,22 @@ apply-configs *args:
 
 # Apply all configs but not encrypted ones.
 apply-configs-exclude-encrypted *args:
+    #!/usr/bin/env bash
+    set -eu
+    function cleanup() {
+        [ ! -d "$tmpDir" ] || rm -rf "$tmpDir" || true
+    }
+    trap cleanup EXIT
+
+    echo "Copy to temp for faking..."
+    tmpDir="$(mktemp -d)"
+    cp -a "." "$tmpDir" && cd "$tmpDir"
+
+    just fake-secrets
+
+    echo "Applying ..."
     chezmoi -S "." apply --exclude encrypted "$@"
+    echo "Applying successful."
 
 # Encrypt a file using the encrypting configured
 # in `.chezmoi.yaml`.
@@ -332,16 +363,19 @@ move-to-secrets file:
 
 # If the `secrets` submodule is not checked out, fake all secrets
 # to make `just cm apply ...` work.
+[private]
 fake-secrets:
     #!/usr/bin/env bash
     set -eu
-    cd config
-    rm -rf .secrets && mkdir .secrets
+    echo "Fake all secrets..."
+    # Symlink all linkt to a fake files.
+    cd config && rm -rf .secrets && mkdir .secrets
     fd ".*.age$" --type l --exec bash -c \
         'p='{}' && l="$(readlink "{}")" && \
          cd "$(dirname "$p")" && \
          mkdir -p "$(dirname "$l")" && \
          echo 'dummy-file' > "$l"'
+    echo "Faking secrets successful."
 
 # This is a wrapper to `chezmoi` which provided the necessary encryption
 # key temporarily and deletes it afterwards again.
@@ -369,7 +403,9 @@ cm *args:
         age -d -i - "{{root_dir}}/config/dot_config/chezmoi/key.age" > \
                     ~/.config/chezmoi/key
 
+    echo "Run chezmoi..."
     chezmoi -S "." "$@"
+    echo "Run chezmoi successful."
 
 # Store the private-key for the keyfile 'key.age'
 # into the keyring.

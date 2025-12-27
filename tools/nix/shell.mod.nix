@@ -17,6 +17,8 @@
             pkgs.findutils
             pkgs.direnv # Auto apply stuff on entering directory `cd`.
             pkgs.just # Command executor like `make` but better.
+
+            pkgs.fd
           ];
         };
       };
