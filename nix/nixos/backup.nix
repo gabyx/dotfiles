@@ -223,9 +223,15 @@ in
       ];
 
       age.secrets = lib.mkIf (cfg.enable) {
-        backup-password.file = ../../secrets/nix/nixos/secrets/backup-password.age;
-        backup-storage-known-hosts.file = ../../secrets/nix/nixos/secrets/backup-storage-known-hosts.age;
-        backup-storage-ssh-key.file = ../../secrets/nix/nixos/secrets/backup-storage-ssh-ed25519.age;
+        backup-password.file = builtins.path {
+          path = ./secrets/backup-password.age;
+        };
+        backup-storage-known-hosts.file = builtins.path {
+          path = ./secrets/backup-storage-known-hosts.age;
+        };
+        backup-storage-ssh-key.file = builtins.path {
+          path = ./secrets/backup-storage-ssh-ed25519.age;
+        };
       };
 
       # Define the backup.
@@ -367,7 +373,9 @@ in
               '';
 
             pruneOpts = [
-              "--keep-monthly 5"
+              "--keep-daily 5"
+              "--keep-weekly 3"
+              "--keep-monthly 2"
             ];
 
             inherit extraBackupArgs;
