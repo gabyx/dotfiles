@@ -7,6 +7,7 @@
   ### Virtualisation ==========================================================
   users.users.${config.settings.user.name}.extraGroups = [
     "libvirtd"
+    "kvm"
   ];
 
   # Libvirtd ===============================

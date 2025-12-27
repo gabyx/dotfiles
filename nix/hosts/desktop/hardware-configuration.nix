@@ -24,7 +24,10 @@ in
     "sd_mod"
   ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [
+    "kvm"
+    "kvm-amd"
+  ];
   boot.extraModulePackages = [ ];
 
   # TODO: Check if display daisy chain works on wakeup.

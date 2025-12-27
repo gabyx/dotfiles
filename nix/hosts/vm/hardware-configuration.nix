@@ -22,6 +22,7 @@
 
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [
+    "kvm"
     "kvm-intel"
     "kvm-arm"
   ];

@@ -41,7 +41,10 @@ in
     # Kernels: 6.6.87 had no problem, 6.12.31 probably started the problems.
   ];
 
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [
+    "kvm"
+    "kvm-amd"
+  ];
   boot.extraModulePackages = [ ];
 
   # TODO: Check if this kernel works without running into
