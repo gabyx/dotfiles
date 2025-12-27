@@ -43,6 +43,8 @@ return {
                 -- Do not conceal anything in files
                 -- (markdown code blocks as example).
                 conceallevel = 0,
+
+                diffopt = "internal,anchor,filler,closeoff,linematch:40,algorithm:histogram,linematch:60",
             },
             g = { -- vim.g.<key>
                 -- configure global vim variables (vim.g)
