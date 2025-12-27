@@ -16,6 +16,21 @@ use_nom := env("USE_NOM", "true")
 list:
     just --list
 
+# Enter a development shell to ensure all tools are here.
+alias dev := develop
+develop *args:
+    #!/usr/bin/env bash
+    set -eu
+    flake_dir="."
+    shell="default";
+    args=("$@") && [ "${#args[@]}" != 0 ] ||
+        args=(env SHELL="$SHELL" "$SHELL")
+
+    nix develop \
+        --accept-flake-config \
+        "$flake_dir#$shell" \
+        --command "${args[@]}"
+
 # Format the whole repository.
 format:
     cd "{{root_dir}}" && \
@@ -267,12 +282,12 @@ diff-to-main:
     git diff origin/main...HEAD
 
 # Apply all configs, also encrypted ones.
-apply-configs:
-    just cm apply
+apply-configs *args:
+    just cm apply "$@"
 
 # Apply all configs but not encrypted ones.
-apply-configs-exclude-encrypted:
-    chezmoi apply --exclude encrypted
+apply-configs-exclude-encrypted *args:
+    chezmoi -S "." apply --exclude encrypted "$@"
 
 # Encrypt a file using the encrypting configured
 # in `.chezmoi.yaml`.
@@ -302,7 +317,9 @@ move-all-to-secrets:
     set -eu
     fd ".*.age$" -E "secrets/**" --type f --exec just move-to-secrets "{}"
 
+
 # Move a file to the secrets folder.
+[private]
 move-to-secrets file:
     #!/usr/bin/env bash
     set -eu
@@ -312,6 +329,19 @@ move-to-secrets file:
     cp "$file" "secrets/$file";
     rm "$file";
     ln -s "$(realpath --relative-to="$d" "secrets/$file")" "$file"
+
+# If the `secrets` submodule is not checked out, fake all secrets
+# to make `just cm apply ...` work.
+fake-secrets:
+    #!/usr/bin/env bash
+    set -eu
+    cd config
+    rm -rf .secrets && mkdir .secrets
+    fd ".*.age$" --type l --exec bash -c \
+        'p='{}' && l="$(readlink "{}")" && \
+         cd "$(dirname "$p")" && \
+         mkdir -p "$(dirname "$l")" && \
+         echo 'dummy-file' > "$l"'
 
 # This is a wrapper to `chezmoi` which provided the necessary encryption
 # key temporarily and deletes it afterwards again.
@@ -337,7 +367,7 @@ cm *args:
     echo "$pkey" | \
         age -d -i - "{{root_dir}}/config/dot_config/chezmoi/key.age" > \
                     ~/.config/chezmoi/key && \
-    chezmoi "$@" && cleanup || cleanup
+    chezmoi -S "." $@" && cleanup || cleanup
 
 # Store the private-key for the keyfile 'key.age'
 # into the keyring.
@@ -347,4 +377,4 @@ store-private-key:
 
 # Delete the script state of chezmoi to rerun scripts.
 delete-chezmoi-script-state:
-    chezmoi state delete-bucket --bucket scriptState
+    chezmoi -S "." state delete-bucket --bucket scriptState

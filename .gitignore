@@ -1,5 +1,7 @@
 result
 build
 .env
+.direnv
+.devenv
 
 nixos.qcow2

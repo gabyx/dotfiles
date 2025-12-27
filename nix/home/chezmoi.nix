@@ -17,10 +17,7 @@ let
       pkgs.git-lfs
       pkgs.gitFull
       pkgs.chezmoi
-      pkgs.libsecret
-      pkgs.systemd
-      pkgs.gnupg
-      pkgs.age
+      pkgs.just
     ];
 
     text =

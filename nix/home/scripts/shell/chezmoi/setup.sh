@@ -35,19 +35,30 @@ if [ ! -d "$dest" ]; then
     git clone --branch "$chezmoiRef" "$chezmoiUrl" "$dest"
 
     # Make the init pass with the prompt in `.chezmoi.yaml.tmpl`.
-    chezmoi init --promptChoice "Workspace?=$workspace"
+    cd "$dest"
+    just develop \
+        just cm init --promptChoice "Workspace?=$workspace"
 else
     echo "Chezmoi already setup. To forcefully rerun use:"
-    echo " \$ $dest/modules/home/scripts/setup-configs.sh --force '$chezmoiUrl' '$chezmoiRef' '$workspace'"
+    echo " \$ $dest/modules/home/scripts/setup.sh --force '$chezmoiUrl' '$chezmoiRef' '$workspace'"
 fi
 
-addArgs=()
 echo "WARNING: Encrypted files are not applied, " >&2
+# Copy to temp folder quickly to fake secrets.
+tmpDir="$(mktemp -d)"
+cp -r "$dest/." "$tmpDir" &&
+    cd "$tmpDir" &&
+    just develop just fake-secrets
+
 addArgs=("--exclude" "encrypted")
 
 echo "Apply chezmoi config files."
-chezmoi --force \
+just develop \
+    chezmoi -S . \
+    --force \
     --no-tty \
     --no-pager \
     --refresh-externals=never \
     apply "${addArgs[@]}"
+
+echo "Chezmoi apply successful."
