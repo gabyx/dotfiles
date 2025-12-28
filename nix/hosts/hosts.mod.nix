@@ -37,7 +37,7 @@ let
         pkgsUnstable = outputs.lib.importPkgsUnstable system;
       };
 
-      format = "install-iso";
+      format = "iso";
     };
 
 in
@@ -52,6 +52,6 @@ in
   perSystem =
     { ... }:
     {
-      packages.vm-iso = mkIso "x86_64-linux" "vm";
+      packages.vm-iso = mkIso "x86_64-linux" "vm-iso";
     };
 }

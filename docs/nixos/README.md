@@ -201,6 +201,8 @@ benefit, that the swap partition will also be encrypted.
      worth backing up, as it’s trivial to reconstruct.
    - `persist`: The subvolume for `/persist`, containing system state which
      should be persistent across reboots and possibly backed up.
+   - `persist/etc`: The subvolume for `/persist/etc`, containing some special
+     stuff.
    - `log`: The subvolume for `/var/log`. I’m not so interested in backing up
      logs but I want them to be preserved across reboots, so I’m dedicating a
      subvolume to logs rather than using the persist subvolume.
@@ -215,6 +217,7 @@ benefit, that the swap partition will also be encrypted.
    sudo btrfs subvolume create $MNTPNT/home
    sudo btrfs subvolume create $MNTPNT/nix
    sudo btrfs subvolume create $MNTPNT/persist
+   sudo btrfs subvolume create $MNTPNT/persist/etc
    sudo btrfs subvolume create $MNTPNT/log
 
    sudo btrfs subvolume create $MNTPNT/swap
@@ -234,19 +237,32 @@ NixOS on them. At this point activating the swap (if you created one) is a good
 idea. The `/boot` partition is mounted in a new folder `/mnt/boot` inside the
 root partition.
 
+> [!TIP]
+>
+> If NixOS is on another drive e.g. `/dev/nvme0n1` do:
+>
+> ```bash
+> export MYDISK="/dev/nvme0n1"
+> sudo cryptsetup luksOpen ${MYDISK}2 enc-physical-vol-new
+> ```
+
 1. Mount all file systems by doing:
 
-   ```shell
-   DISKMAP=/dev/mapper/enc-physical-vol
-   MNTPNT="/mnt"
+   ```bash
+   export DISKMAP=/dev/mapper/enc-physical-vol
+   export MNTPNT="/mnt"
+   ```
 
+   ```bash
+   sudo mkdir -p "$MNTPNT"
    sudo mount -o subvol=root,compress=zstd,noatime $DISKMAP $MNTPNT
 
-   sudo mkdir -p $MNTPNT/{boot,home,nix,persist,var/log,swap}
+   sudo mkdir -p $MNTPNT/{boot,home,nix,persist,persist/etc,var/log,swap}
 
    sudo mount -o subvol=home,compress=zstd,noatime $DISKMAP $MNTPNT/home
    sudo mount -o subvol=nix,compress=zstd,noatime $DISKMAP $MNTPNT/nix
    sudo mount -o subvol=persist,compress=zstd,noatime $DISKMAP $MNTPNT/persist
+   sudo mount -o subvol=persist/etc,compress=zstd,noatime $DISKMAP $MNTPNT/persist/etc
    sudo mount -o subvol=log,compress=zstd,noatime $DISKMAP $MNTPNT/var/log
    sudo mount -o subvol=swap,defaults,noatime $DISKMAP $MNTPNT/swap
 
@@ -319,31 +335,6 @@ root partition.
    ```shell
    cp /mnt/etc/nixos/hardware-configuration.nix /mnt/persist/repos/dotfiles/nixos/hosts/<host>/hardware-configuration.nix
    ```
-
-1. Apply the initial config files into the home directory with:
-
-   **Config Files:**
-
-   ```shell
-   nix-shell -p chezmoi
-   git clone https://github.com/dotfiles $MNTPNT/home/nixos/.local/share/chezmoi
-   git lfs pull
-   HOME=$MNTPNT/home/nixos chezmoi apply --exclude encrypted
-   ```
-
-   **Editor Setup:**
-
-   ```shell
-   git clone https://github.com/gabyx/astronvim.git ~/.config/nvim
-   ```
-
-This is only to make sure once you reboot and login you have `sway` starting
-with the settings wanted already in your home directory.
-
-TODO: Make this automated such that we bake the whole repository into a
-derivation to be used/run when no `~/.config/chezmoi/chezmoi.yaml` is there (no
-apply done) during activation. The activation should run a `nix run` application
-defined in the `flake.nix`.
 
 1. **Finally run the install command** by doing:
 

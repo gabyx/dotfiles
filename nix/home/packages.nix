@@ -141,6 +141,7 @@ in
     pkgs.khal # CLI Calendar
 
     # MultiMedia
+    pkgsUnstable.mediawriter # Like balena etcher.
     pkgsUnstable.bitwarden-desktop # Password manager
     pkgsUnstable.bitwarden-cli
     pkgsUnstable.bazecor # Dygma Defy Keyboard.
