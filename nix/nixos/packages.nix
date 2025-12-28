@@ -16,6 +16,7 @@
     binutils
     moreutils
 
+    efibootmgr # Writing NVRAM boot entries.
     hdparm
     exfatprogs
     zfs
