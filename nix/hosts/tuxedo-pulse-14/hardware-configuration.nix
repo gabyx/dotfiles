@@ -2,54 +2,11 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 {
-  config,
-  lib,
-  pkgs,
   modulesPath,
   ...
 }:
-let
-  # Use script: `scripts/compute-swap-offset.nix`.
-  swapConfig = import ./swap-offset.nix;
-in
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
-
-  boot.initrd.availableKernelModules = [
-    "nvme"
-    "xhci_pci"
-    "usb_storage"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-
-  # Hibernation parameters
-  # TODO: Does not work yet, it hibernated but cannot resume...
-  # boot.resumeDevice = config.fileSystems."/swap".device;
-
-  boot.kernelParams = [
-    # Hibernation parameters
-    # "resume=UUID=${builtins.baseNameOf config.fileSystems."/swap".device}"
-    # "resume_offset=${toString swapConfig.resumeOffset}"
-
-    # GPU Freezes:
-    # https://www.reddit.com/r/tuxedocomputers/comments/1jjzye7/amdgpu_especially_780m_is_not_ready/
-    # See: https://codeberg.org/balint/nixos-configs/src/branch/main/hosts/tuxedo/conf.nix
-    "amdgpu.dpm=0"
-    "amdgpu.dcdebugmask=0x10"
-    # "amdgpu.aspm=0"
-    # Kernels: 6.6.87 had no problem, 6.12.31 probably started the problems.
-  ];
-
-  boot.kernelModules = [
-    "kvm"
-    "kvm-amd"
-  ];
-  boot.extraModulePackages = [ ];
-
-  # TODO: Check if this kernel works without running into
-  # amdgpu freezes.
-  boot.kernelPackages = pkgs.linuxPackages_xanmod;
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/6fbd4c98-9ca9-4a8a-966f-24491282220b";
@@ -133,14 +90,4 @@ in
   };
 
   swapDevices = [ { device = "/swap/swapfile"; } ];
-
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp4s0f3u2c2.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp2s0.useDHCP = lib.mkDefault true;
-
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

@@ -1,14 +1,13 @@
 {
-  config,
   pkgs,
-  inputs,
   ...
 }:
+let
+  # Use script: `scripts/compute-swap-offset.nix`.
+  swapConfig = import ./swap-offset.nix;
+in
 {
   boot = {
-    # Your `hardware-configuration.nix` should configure the LUKS device setup.
-    # It should not be included here.
-
     # Enable all sysrq functions (useful to recover from some issues):
     # Documentation: https://www.kernel.org/doc/html/latest/admin-guide/sysrq.html
     kernel.sysctl."kernel.sysrq" = 1; # NixOS default: 16 (only the sync command)
@@ -35,6 +34,43 @@
       };
     };
     # ===========================================================================
+
+    initrd = {
+      availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "usb_storage"
+        "sd_mod"
+      ];
+      kernelModules = [ ];
+    };
+
+    # Hibernation parameters
+    # TODO: Does not work yet, it hibernated but cannot resume...
+    # boot.resumeDevice = config.fileSystems."/swap".device;
+    kernelParams = [
+      # Hibernation parameters
+      # "resume=UUID=${builtins.baseNameOf config.fileSystems."/swap".device}"
+      # "resume_offset=${toString swapConfig.resumeOffset}"
+
+      # GPU Freezes:
+      # https://www.reddit.com/r/tuxedocomputers/comments/1jjzye7/amdgpu_especially_780m_is_not_ready/
+      # See: https://codeberg.org/balint/nixos-configs/src/branch/main/hosts/tuxedo/conf.nix
+      "amdgpu.dpm=0"
+      "amdgpu.dcdebugmask=0x10"
+      # "amdgpu.aspm=0"
+      # Kernels: 6.6.87 had no problem, 6.12.31 probably started the problems.
+    ];
+
+    kernelModules = [
+      "kvm"
+      "kvm-amd"
+    ];
+    extraModulePackages = [ ];
+
+    # TODO: Check if this kernel works without running into
+    # amdgpu freezes.
+    kernelPackages = pkgs.linuxPackages_xanmod;
 
     supportedFilesystems = [ "zfs" ];
     zfs.allowHibernation = true;

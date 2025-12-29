@@ -5,6 +5,6 @@
 {
   imports = [
     ../desktop/configuration.nix
-    inputs.self.modules.nixos.steam
+    inputs.self.modules.nixos.music
   ];
 }

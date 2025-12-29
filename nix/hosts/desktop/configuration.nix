@@ -15,6 +15,8 @@
     # secrets with this NixOS configuration
     inputs.agenix.nixosModules.default
 
+    inputs.musnix.nixosModules.musnix
+
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
     ./cpu.nix

@@ -121,6 +121,12 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # Music stuff.
+    musnix = {
+      url = "github:musnix/musnix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     # Age Encryption Tool for NixOS.
     agenix = {
       url = "github:ryantm/agenix";

@@ -19,6 +19,7 @@
     security = import ./security.nix;
     services = import ./services.nix;
     sound = import ./sound.nix;
+    music = import ./music.nix;
     time = import ./time.nix;
     user = import ./user.nix;
 

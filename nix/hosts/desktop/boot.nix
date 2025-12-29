@@ -1,16 +1,13 @@
 {
   config,
-  pkgs,
   ...
 }:
+let
+  # Use script: `scripts/compute-swap-offset.nix`.
+  swapConfig = import ./swap-offset.nix;
+in
 {
   boot = {
-    # Your `hardware-configuration.nix` should configure the LUKS device setup.
-    # It should not be included here.
-
-    # Enable all sysrq functions (useful to recover from some issues):
-    # Documentation: https://www.kernel.org/doc/html/latest/admin-guide/sysrq.html
-    kernel.sysctl."kernel.sysrq" = 1; # NixOS default: 16 (only the sync command)
 
     # Bootloader ================================================================
     loader = {
@@ -34,6 +31,36 @@
       };
     };
     # ===========================================================================
+
+    initrd = {
+      availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "ahci"
+        "usb_storage"
+        "usbhid"
+        "sd_mod"
+      ];
+      kernelModules = [ ];
+    };
+
+    # Enable all sysrq functions (useful to recover from some issues):
+    # Documentation: https://www.kernel.org/doc/html/latest/admin-guide/sysrq.html
+    kernel.sysctl."kernel.sysrq" = 1; # NixOS default: 16 (only the sync command)
+
+    kernelModules = [
+      "kvm"
+      "kvm-amd"
+    ];
+    extraModulePackages = [ ];
+
+    kernelParams = [
+      "amdgpu.dpm=0"
+      "amdgpu.dcdebugmask=0x10"
+      # Hibernation parameters
+      "resume=UUID=${builtins.baseNameOf config.fileSystems."/swap".device}"
+      "resume_offset=${toString swapConfig.resumeOffset}"
+    ];
 
     supportedFilesystems = [ "zfs" ];
     zfs.allowHibernation = true;

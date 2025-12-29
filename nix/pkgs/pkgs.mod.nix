@@ -16,10 +16,13 @@
       # batz = pkgs.callPackage ./batz { };
 
       gabyx = import ./scripts { inherit pkgsUnstable; };
+
+      neural-amp-modeler-lv2 = pkgsUnstable.callPackage ./neural-amp-modeler-lv2 { };
     in
     {
       packages = {
         inherit (nvimBuilds) nvim nvim-nightly nvim-treesitter-install;
+        inherit neural-amp-modeler-lv2;
       }
       // gabyx;
     };

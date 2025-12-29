@@ -24,6 +24,8 @@
     ./virtualization.nix
     ./mail.nix
 
+    ./music.nix
+
     outputs.modules.homeManager.chezmoi
   ];
 

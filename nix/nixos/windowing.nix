@@ -101,6 +101,13 @@ in
           "hyprland"
         ];
       };
+
+      isTiling = mkOption {
+        description = "If the window manager is tiling.";
+        internal = true;
+        default =
+          config.settings.windowing.manager == "sway" || config.settings.windowing.manager == "hyprland";
+      };
     };
   };
 

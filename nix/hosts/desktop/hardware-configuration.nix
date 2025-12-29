@@ -2,44 +2,11 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 {
-  config,
-  lib,
-  pkgs,
   modulesPath,
   ...
 }:
-let
-  # Use script: `scripts/compute-swap-offset.nix`.
-  swapConfig = import ./swap-offset.nix;
-in
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
-
-  boot.initrd.availableKernelModules = [
-    "nvme"
-    "xhci_pci"
-    "ahci"
-    "usb_storage"
-    "usbhid"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [
-    "kvm"
-    "kvm-amd"
-  ];
-  boot.extraModulePackages = [ ];
-
-  # TODO: Check if display daisy chain works on wakeup.
-  # boot.kernelPackages = pkgs.linuxPackages_xanmod;
-
-  boot.kernelParams = [
-    "amdgpu.dpm=0"
-    "amdgpu.dcdebugmask=0x10"
-    # Hibernation parameters
-    "resume=UUID=${builtins.baseNameOf config.fileSystems."/swap".device}"
-    "resume_offset=${toString swapConfig.resumeOffset}"
-  ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/7d77bcf2-d5f4-4ff4-992d-de583df23032";
@@ -136,15 +103,4 @@ in
   #   fsType = "exfat";
   #   options = ["defaults" "noatime"];
   # };
-
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp10s0f3u2u1u3.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp4s0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp10s0f3u4.useDHCP = lib.mkDefault true;
-
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

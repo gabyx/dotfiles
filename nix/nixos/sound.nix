@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   ...
@@ -11,6 +12,10 @@
   services.pulseaudio.enable = lib.mkForce false;
 
   environment.systemPackages = with pkgs; [ pavucontrol ];
+
+  users.users.${config.settings.user.name}.extraGroups = [
+    "jackaudio"
+  ];
 
   services.pipewire = {
     enable = true;

@@ -19,7 +19,9 @@ let
     "x-scheme-handler/unknown" = browser;
     "x-scheme-handler/sgnl" = "signal.desktop";
     "x-scheme-handler/signalcaptcha" = "signal.desktop";
+
     "x-scheme-handler/file" = "thunar.desktop";
+    "inode/directory" = "thunar.desktop";
 
     "application/x-extension-htm" = browser;
     "application/x-extension-html" = browser;
