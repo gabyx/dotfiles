@@ -146,8 +146,8 @@ rebuild how *args:
         --use-remote-sudo "${@:2}"
     )
 
-    echo "Fetch all LFS files."
-    git lfs fetch --all
+    echo "Checkout all LFS files."
+    git lfs checkout
     echo "Fetch all submodules."
     git submodule update --recursive --init
 

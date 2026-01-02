@@ -249,7 +249,6 @@ in
 
               (homeDir "Pictures")
               (homeDir "Documents")
-              (homeDir "Downloads")
 
               # Keyrings
               (homeDir ".local/share/keyrings")
