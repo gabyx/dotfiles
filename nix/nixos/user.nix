@@ -30,7 +30,7 @@ in
 
         icon = mkOption {
           description = "The profile picture in PNG to use. (you can set it to a )";
-          default = ../../config/dot_config/profile-icons/nixos.png;
+          default = ../../config/dot_config/profile-icons/nixos-logo.png;
           type = types.path;
         };
 
