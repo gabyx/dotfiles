@@ -350,19 +350,6 @@ move-to-secrets file:
     rm "$file";
     ln -s "$(realpath --relative-to="$d" "secrets/$file")" "$file"
 
-# If the `secrets` submodule is not checked out, fake all secrets
-# to make `just cm apply ...` work.
-fake-secrets:
-    #!/usr/bin/env bash
-    set -eu
-    cd config
-    rm -rf .secrets && mkdir .secrets
-    fd ".*.age$" --type l --exec bash -c \
-        'p='{}' && l="$(readlink "{}")" && \
-         cd "$(dirname "$p")" && \
-         mkdir -p "$(dirname "$l")" && \
-         echo 'dummy-file' > "$l"'
-
 # This is a wrapper to `chezmoi` which provided the necessary encryption
 # key temporarily and deletes it afterwards again.
 # This is only used for invocations which need the private key.

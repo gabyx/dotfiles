@@ -18,6 +18,7 @@ let
       pkgs.gitFull
       pkgs.chezmoi
       pkgs.just
+      pkgs.fd
     ];
 
     text =
