@@ -9,7 +9,11 @@
   programs = {
     # This ensures downloaded binaries not managed with NixOS
     # can be run by forwarding the /lib64/ld-linux-x86-64.so.2 to the NixOS one.
-    nix-ld.enable = true;
+    nix-ld = {
+      enable = true;
+      # Libraries which become available by default to all programs.
+      libraries = [ ];
+    };
 
     # Shell
     zsh = {

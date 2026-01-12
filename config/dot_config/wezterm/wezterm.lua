@@ -21,6 +21,8 @@ config.set_environment_variables = {
     WSLENV = "TERMINFO_DIRS",
 }
 
+config.default_ssh_auth_sock = os.getenv("SSH_AUTH_SOCK")
+
 -- This is where you actually apply your config choices
 config = {
     front_end = "WebGPU",
