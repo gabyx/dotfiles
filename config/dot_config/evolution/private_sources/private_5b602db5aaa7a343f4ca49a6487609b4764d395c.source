@@ -15,7 +15,7 @@ Cc=
 DraftsFolder=folder://8ab84720074a14261b1ca7e3cb06877e74b53852/Drafts
 ReplyStyle=default
 SignImip=true
-TemplatesFolder=folder://local/Templates
+TemplatesFolder=folder://8ab84720074a14261b1ca7e3cb06877e74b53852/Templates
 StartBottom=inconsistent
 TopSignature=inconsistent
 Language=
@@ -39,7 +39,7 @@ PreferInline=false
 LocateKeys=true
 SendPublicKey=true
 SendPreferEncrypt=true
-AskSendPublicKey=true
+AskSendPublicKey=false
 
 [Message Disposition Notifications]
 ResponsePolicy=ask
@@ -58,3 +58,4 @@ IsDefault=false
 GroupId=
 DisplayName=
 Color=
+MaxPeople=100

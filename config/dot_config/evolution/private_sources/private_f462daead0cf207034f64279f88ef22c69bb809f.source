@@ -38,7 +38,7 @@ DisplayName=
 EmailAddress=
 ResourcePath=
 ResourceQuery=
-SslTrust=
+SslTrust=accept|apidata.googleusercontent.com|15af193554718551a2013a93c72e1adf0b249ac4a82a592f4b826481bb7437d8
 Order=4294967295
 Timeout=90
 
