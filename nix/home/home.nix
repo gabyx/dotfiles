@@ -46,6 +46,7 @@
   chezmoi = {
     enable = true;
     url = "https://github.com/gabyx/dotfiles.git";
+    store = "${inputs.self}";
     ref = "main";
     workspace = "private";
   };

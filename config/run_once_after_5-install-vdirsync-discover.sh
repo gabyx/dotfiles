@@ -11,4 +11,8 @@ if ! command -v vdirsyncer &>/dev/null; then
     exit 0
 fi
 
-vdirsyncer discover
+vdirsyncer discover || {
+    echo "'vdirsyncer discover' did fail." >&2
+
+    exit 0
+}

@@ -8,10 +8,10 @@ with lib;
 let
   cfg = config.chezmoi;
 
-  script = ./scripts/shell/chezmoi/setup.sh;
+  script = ./scripts/chezmoi/setup.sh;
 
-  scriptDrv = pkgs.writeShellApplication {
-    name = "setup";
+  chezmoiInitRepo = pkgs.writeShellApplication {
+    name = "hm-chezmoi-init-repo";
 
     runtimeInputs = [
       pkgs.git-lfs
@@ -24,7 +24,7 @@ let
     text =
       # bash
       ''
-        ${script} "${cfg.url}" "${cfg.ref}" "${cfg.workspace}"
+        ${script} "${cfg.url}" "${cfg.ref}" "${cfg.workspace}" "${cfg.store}" "$@"
       '';
   };
 in
@@ -41,7 +41,12 @@ in
 
     url = mkOption {
       type = types.str;
-      description = "The source directory to use for generating dotfiles.";
+      description = "The source directory to clone from.";
+    };
+
+    store = mkOption {
+      type = types.path;
+      description = "The store path to setup the initial Git repo.";
     };
 
     ref = mkOption {
@@ -57,13 +62,22 @@ in
       default = "private";
       description = "Chezmoi `workspace` setting inside `.chezmoi.yaml.tmpl`.";
     };
+
+    initScript = mkOption {
+      type = types.package;
+      internal = true;
+      default = chezmoiInitRepo;
+    };
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [ chezmoi ];
+    home.packages = with pkgs; [
+      chezmoi
+      chezmoiInitRepo
+    ];
 
-    home.activation.install-chezmoi = hm.dag.entryAfter [ "installPackages" ] ''
-      ${scriptDrv}/bin/setup
+    home.activation.setup-chezmoi = hm.dag.entryAfter [ "chezmoi-init-repo" ] ''
+      ${chezmoiInitRepo}/bin/hm-chezmoi-init-repo
     '';
   };
 }

@@ -62,6 +62,8 @@ build-iso *args:
     #!/usr/bin/env bash
     set -eu
     host="{{default_host}}"
+
+    # Build without submodules (no secrets!)
     cmd=(nix build
         --verbose
         --show-trace

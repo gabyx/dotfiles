@@ -4,4 +4,5 @@ build
 .direnv
 .devenv
 
+nixos-vm-efi*
 nixos.qcow2

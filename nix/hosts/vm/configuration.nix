@@ -13,6 +13,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./boot.nix
+    ./settings.nix
 
     # Include all other specifications.
     inputs.self.modules.nixos.windowing
