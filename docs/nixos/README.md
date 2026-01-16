@@ -15,6 +15,14 @@ bare-metal.
 
 ![Screenshot](./docs/screenshot.png)
 
+## Quick Start
+
+To launch the NixOS VM when you are on a system with Nix run
+
+```bash
+just start vm
+```
+
 ## Prerequisites
 
 Some key insights to ease understanding when working through the below NixOS
