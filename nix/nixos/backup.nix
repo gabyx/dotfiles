@@ -405,7 +405,7 @@ in
               icon = if status == "failure" then "💣" else "🌻";
 
               report =
-                pkgs.writeShellScriptBin ''report''
+                pkgs.writeShellScriptBin "report"
                   #bash
                   ''
                     set -eu
