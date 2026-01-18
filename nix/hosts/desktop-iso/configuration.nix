@@ -11,10 +11,12 @@
     inputs.hardware.nixosModules.common-gpu-amd
     inputs.hardware.nixosModules.common-pc-ssd
 
+    inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
 
-    # Include the results of the hardware scan.
-    ./boot.nix
+    # Import your generated (nixos-generate-config) hardware configuration
+    ./disko.nix
+    ./../desktop/boot.nix
     ./settings.nix
 
     # Include all other specifications.
@@ -25,7 +27,6 @@
     inputs.self.modules.nixos.time
     inputs.self.modules.nixos.environment
     inputs.self.modules.nixos.networking
-    # inputs.self.modules.nixos.networking-profiles
     inputs.self.modules.nixos.security
     inputs.self.modules.nixos.backup
     # inputs.self.modules.nixos.secrets
@@ -55,6 +56,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.11";
+  system.stateVersion = "24.11";
   # ===========================================================================
 }

@@ -54,5 +54,6 @@ in
     { ... }:
     {
       packages.vm-iso = mkIso "x86_64-linux" "vm-iso";
+      packages.desktop-iso = mkIso "x86_64-linux" "desktop-iso";
     };
 }

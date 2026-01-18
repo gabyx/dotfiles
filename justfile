@@ -171,6 +171,11 @@ history:
         nix profile history --profile /nix/var/nix/profiles/system-profiles/test
     fi
 
+    if [ -s /nix/var/nix/profiles/system-profiles/music ]; then
+        echo "History in 'music' profile:"
+        nix profile history --profile /nix/var/nix/profiles/system-profiles/music
+    fi
+
 # Run the trim script to reduce the amount of generations kept on the system.
 # Usage with `--help`.
 trim *args:

@@ -217,7 +217,7 @@ in
 
           message = ''
             One or more expected Btrfs subvolumes are missing or not Btrfs!
-            Expected volumes: ${lib.concatStringsSep ", " cfg.btrfsVolumes}
+            Expected volumes: ${lib.concatStringsSep ", " cfg.backups.system.btrfsVolumes}
           '';
         }
       ];

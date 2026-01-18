@@ -14,11 +14,13 @@ in
           partitions = {
 
             ESP = {
+              priority = 1;
+              start = "1M";
               size = "512M";
               type = "EF00";
               content = {
                 type = "filesystem";
-                format = "fat32";
+                format = "vfat";
                 mountpoint = "/boot";
                 mountOptions = [ "umask=0077" ];
               };

@@ -28,7 +28,7 @@ Test my NixOS by creating an `.iso` to boot from USB.
 With
 
 ```bash
-just build-iso vm
+just default_host=desktop build-iso
 ```
 
 you can afterwards copy `./result/iso/nixos-xxx.iso` onto a USB stick with

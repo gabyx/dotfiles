@@ -379,6 +379,22 @@
         "type": "github"
       }
     },
+    "nix-flatpak": {
+      "locked": {
+        "lastModified": 1767983141,
+        "narHash": "sha256-7ZCulYUD9RmJIDULTRkGLSW1faMpDlPKcbWJLYHoXcs=",
+        "owner": "gmodena",
+        "repo": "nix-flatpak",
+        "rev": "440818969ac2cbd77bfe025e884d0aa528991374",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gmodena",
+        "ref": "v0.7.0",
+        "repo": "nix-flatpak",
+        "type": "github"
+      }
+    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -537,6 +553,7 @@
         "import-tree": "import-tree",
         "musnix": "musnix",
         "nix-alien": "nix-alien",
+        "nix-flatpak": "nix-flatpak",
         "nix-index-database": "nix-index-database_2",
         "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs",

@@ -23,6 +23,8 @@
     time = import ./time.nix;
     user = import ./user.nix;
 
+    flatpak = import ./flatpak.nix;
+
     secrets = import ./secrets.nix;
     backup = import ./backup.nix;
 

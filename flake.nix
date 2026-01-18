@@ -128,6 +128,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # Flatpak stuff.
+    nix-flatpak = {
+      url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
+    };
+
     # Age Encryption Tool for NixOS.
     agenix = {
       url = "github:ryantm/agenix";

@@ -1,13 +1,17 @@
 { ... }:
+let
+  memSize = 5000;
+in
 {
-
   services = {
     spice-vdagentd.enable = true;
   };
 
+  disko.memSize = memSize;
+
   virtualisation = {
     cores = 8;
-    memorySize = 5000;
+    memorySize = memSize;
 
     qemu = {
       options = [

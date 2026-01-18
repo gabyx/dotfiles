@@ -30,12 +30,4 @@
 
   # Set the platform where the NixOS configuration will run.
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-
-  # Configure the disks with disko:
-  # https://github.com/nix-community/disko
-  # Examples here: https://github.com/nix-community/disko/tree/master/example
-
-  # Basic Disko config (more is in hardware-disks-ext4)
-  disko.memSize = 5000;
-
 }
