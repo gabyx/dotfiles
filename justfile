@@ -81,6 +81,10 @@ build-iso *args:
         "${cmd[@]}"
     fi
 
+# Show NixOS options for a certain host.
+option opts *args:
+    nixos-option -F ".#{{default_host}}" "{{opts}}" "${@:2}"
+
 ## Flake maintenance commands =================================================
 # Update the flake lock file. Use arguments to specify single inputs.
 update *args:
@@ -249,6 +253,7 @@ gc:
 
     echo "Remove all generations older than 7 days"
     sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 60d
+    sudo nix profile wipe-history --profile /nix/var/nix/profiles/music
 
     echo "Garbage collect all unused nix store entries"
     sudo nix store gc --debug

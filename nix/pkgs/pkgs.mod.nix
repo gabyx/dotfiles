@@ -21,7 +21,12 @@
     in
     {
       packages = {
-        inherit (nvimBuilds) nvim nvim-nightly nvim-treesitter-install;
+        inherit (nvimBuilds)
+          nvim
+          nvim-nightly
+          nvim-treesitter-install
+          nvim-treesitter-parsers
+          ;
         inherit neural-amp-modeler-lv2;
       }
       // gabyx;

@@ -1,20 +1,39 @@
-{ lib, config, ... }:
 {
+  inputs,
+  lib,
+  config,
+  pkgs,
+  pkgsUnstable,
+  ...
+}:
+{
+  imports = [
+    inputs.musnix.nixosModules.musnix
+  ];
+
+  environment.systemPackages = [
+    pkgsUnstable.ardour # Music recording.
+    pkgsUnstable.calf # Calf music plugins.
+  ];
+
   # Check kernel parameters:
   # `zgrep -e "CONFIG_IRQ_FORCED_THREADING=y" -e "CONFIG_PREEMPT_RT=y" /proc/config.gz`
   musnix = {
     enable = true;
 
-    kernel.realtime = true;
+    kernel = {
+      realtime = true;
+      packages = pkgs.linuxPackages-rt_latest;
+    };
     das_watchdog.enable = true;
+
+    # Run this tool to check if the system has bottlenecks when using
+    # Linux and audio.
     rtcqs.enable = true;
 
+    # Realtime interrupt queue.
     rtirq = {
-      # highList = "snd_hrtimer";
-      resetAll = 1;
-      prioLow = 0;
-      enable = false;
-      nameList = "rtc0 snd";
+      enable = true;
     };
   };
 

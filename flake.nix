@@ -119,7 +119,6 @@
     # Neovim Nightly.
     nvim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Music stuff.
