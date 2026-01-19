@@ -153,13 +153,14 @@ writeShellScriptBin name ''
       echo "Lua configs up-to-date."
     fi
 
-    echo -n "${nvim-treesitter-install}" > "$nvimConfigDir/.treesitter-rev"
+    echo -n "${nvim-treesitter-install.rev}" > "$nvimConfigDir/.treesitter-rev"
   }
 
   function sync_back() {
     echo "Syncing config to source directory."
     "${rsync}/bin/rsync" --info=progress2 -av --no-times --delete \
       --exclude ".nix-version" \
+      --exclude ".treesitter-rev" \
       "$nvimConfigDir/" "$nvimConfigDirSrc/"
   }
 

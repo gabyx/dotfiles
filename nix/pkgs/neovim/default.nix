@@ -2,7 +2,14 @@
 {
   lib,
   pkgs,
+
+  # Plugin packages pinned (for nvim-treesitter to match astronvim)
+  pkgsPlugins ? pkgs,
+
+  # The nvim to wrap.
   nvim-unwrapped ? pkgs.neovim-unwrapped,
+
+  # The name of the executable and config folder.
   name ? "nvim",
   ...
 }:
@@ -14,12 +21,12 @@ let
     }
   );
 
+  nvim-treesitter = pkgsPlugins.vimPlugins.nvim-treesitter;
+
   # Build all treesitter parsers.
   nvim-treesitter-parsers =
     let
-      grammars = lib.filterAttrs (
-        n: _: lib.hasPrefix "tree-sitter-" n
-      ) pkgs.vimPlugins.nvim-treesitter.builtGrammars;
+      grammars = lib.filterAttrs (n: _: lib.hasPrefix "tree-sitter-" n) nvim-treesitter.builtGrammars;
     in
     pkgs.runCommand "nvim-treesitter-parsers" { } ''
       mkdir -p $out/lib/nvim-treesitter-grammars
@@ -46,7 +53,7 @@ let
       }
     '').overrideAttrs
       {
-        passthru.rev = pkgs.vimPlugins.nvim-treesitter.src.rev;
+        passthru.rev = nvim-treesitter.src.rev;
       };
 
   # Define Neovim launch scripts.

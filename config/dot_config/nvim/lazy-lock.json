@@ -259,9 +259,9 @@
     "branch": "master",
     "commit": "cc819b0489938d03e4f3532a583354f0287c015b"
   },
-  "rust-tools": {
+  "rustaceanvim": {
     "branch": "master",
-    "commit": "676187908a1ce35ffcd727c654ed68d851299d3e"
+    "commit": "88575b98bb9937fb9983ddec5e532b67e75ce677"
   },
   "smart-splits.nvim": {
     "branch": "master",
