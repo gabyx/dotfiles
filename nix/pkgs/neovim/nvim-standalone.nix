@@ -96,11 +96,16 @@ writeShellScriptBin name ''
     lock_file="$nvimConfigDir/lazy-lock.json"
     treesitter_rev="$nvimConfigDir/treesitter-rev"
 
+    if [ ! -f "$lock_file" ]; then
+      echo "Lock file '$lock_file' is not existing."
+      return 0
+    fi
+
     # Check if treesitter needs updating.
     local rev=$("${jq}/bin/jq" -r '.["nvim-treesitter"].commit' "$lock_file") || true
 
     if [ "$rev" != "${nvim-treesitter-install.rev}" ]; then
-      echo "Updating nvim-treesitter plugin revision, cause not current sith " \
+      echo "Updating nvim-treesitter plugin revision, cause not current with " \
             "'nvim-treesitter-install.rev = ${nvim-treesitter-install.rev}'."
 
       "${jq}/bin/jq" \
@@ -111,7 +116,7 @@ writeShellScriptBin name ''
       # Sync back lock file etc.
       if [ -d "$XDG_DATA_HOME/chezmoi" ]; then
         echo "Syncing back lock files and treesitter revision."
-        cp  "$lock_file" "$XDG_DATA_HOME/chezmoi/config/dot_config/nvim/" || true
+        cp  "$lock_file" "$nvimConfigDirSrc/" || true
       fi
 
       # Update plugins with Lazy package manager

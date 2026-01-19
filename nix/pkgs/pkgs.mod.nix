@@ -22,6 +22,7 @@
     {
       packages = {
         inherit (nvimBuilds)
+          nvim-unwrapped
           nvim
           nvim-nightly
           nvim-treesitter-install

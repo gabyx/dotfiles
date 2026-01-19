@@ -69,6 +69,7 @@ let
 
 in
 {
+  nvim-unwrapped = nvimDrv;
   inherit nvim nvim-nightly;
   inherit nvim-treesitter-install;
   inherit nvim-treesitter-parsers;

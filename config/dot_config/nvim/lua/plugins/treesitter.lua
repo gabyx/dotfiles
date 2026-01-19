@@ -3,6 +3,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         build = "nvim-treesitter-install",
+        branch = "main",
         opts = {
             ensure_installed = {
                 "regex",

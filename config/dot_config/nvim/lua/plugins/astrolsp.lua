@@ -129,7 +129,14 @@ return {
             -- Rust
             rust_analyzer = {
                 settings = {
-                    rust = {
+                    ["rust-analyzer"] = {
+                        files = {
+                            excludeDirs = {
+                                ".direnv",
+                                ".git",
+                                "target",
+                            },
+                        },
                         inlayHints = {
                             bindingModeHints = {
                                 enable = false,
@@ -212,10 +219,8 @@ return {
                 lspconfig[server].setup(opts)
             end,
 
-            -- Rust
-            rust_analyzer = function(_, opts)
-                require("rust-tools").setup({ server = opts })
-            end,
+            -- Rust (disable setup)
+            rust_analyzer = false,
 
             -- Tiltfile
             tilt_ls = function(server, opts)
