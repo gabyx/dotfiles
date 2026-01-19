@@ -21,7 +21,7 @@ writeShellScriptBin name ''
   #!/usr/bin/env bash
   set -efu
 
-  FORCE_SYNC="false"
+  FORCE_SYNC_BACK="false"
   FORCE_PLUGINS_UPDATE="true"
   FORCE_RESET_ONLY="false"
   FORCE_RESET="false"
@@ -38,8 +38,8 @@ writeShellScriptBin name ''
         FORCE_RESET_ONLY="true"
         shift
         ;;
-      --force-sync)
-        FORCE_SYNC="true"
+      --force-sync-back)
+        FORCE_SYNC_BACK="true"
         shift
         ;;
       --force-no-plugin-update)
@@ -49,7 +49,7 @@ writeShellScriptBin name ''
       --help)
         echo "Use '--force-reset' to reset nvim and all cache/state folders." >&2
         echo "Use '--force-reset-only' to only reset and exit." >&2
-        echo "Use '--force-sync' to sync ~/.config/nvim back to the Git repo." >&2
+        echo "Use '--force-sync-back' to sync ~/.config/nvim back to the Git repo." >&2
         echo "Use '--force-no-plugin-update' to do no plugin update." >&2
         exit 0
         ;;
@@ -71,7 +71,7 @@ writeShellScriptBin name ''
 
     # Set up PATH to extras and Neovim.
     export PATH="${nvim-treesitter-install}/bin:$PATH"
-    export NVIM_APPNAME="${nvimAppName}"
+    export NVIM_APPNAME="''${NVIM_APPNAME:-${nvimAppName}}"
 
     # Set up XDG directories if not already defined
     export XDG_CACHE_HOME="''${XDG_CACHE_HOME:-$HOME/.cache}"
@@ -160,6 +160,7 @@ writeShellScriptBin name ''
   mkdir -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME"
   nvimConfigDir="$XDG_CONFIG_HOME/$NVIM_APPNAME"
   nvimConfigDirSrc="$XDG_DATA_HOME/chezmoi/config/dot_config/nvim"
+  echo "nvimConfigDir: '$nvimConfigDir'"
 
   if [ "$FORCE_RESET" = "true" ]; then
     reset
@@ -171,7 +172,7 @@ writeShellScriptBin name ''
     plugin_update
   fi
 
-  if [ "$FORCE_SYNC" = "true" ]; then
+  if [ "$FORCE_SYNC_BACK" = "true" ]; then
     sync_back
   fi
 

@@ -202,6 +202,7 @@ return {
             --
             -- Python
             pyright = function(server, opts)
+                print("enable python")
                 local lspconfig = require("lspconfig")
                 local util = require("lspconfig.util")
 
