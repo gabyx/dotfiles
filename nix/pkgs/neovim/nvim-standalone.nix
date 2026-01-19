@@ -168,9 +168,11 @@ writeShellScriptBin name ''
 
   sync_config
 
-  if [ "$FORCE_PLUGINS_UPDATE" = "true" ]; then
-    plugin_update
-  fi
+  # Due to astronvim v5 incompat.
+  echo "FIXME: NOT updating treesitter to correct state."
+  # if [ "$FORCE_PLUGINS_UPDATE" = "true" ]; then
+  #   plugin_update
+  # fi
 
   if [ "$FORCE_SYNC_BACK" = "true" ]; then
     sync_back

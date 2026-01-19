@@ -193,8 +193,9 @@ return {
         -- Customize how language servers are attached
         handlers = {
             -- a function without a key is simply the default handler, functions take two parameters, the server name and the configured options table for that server
-            function(server, opts)
-                require("lspconfig")[server].setup(opts)
+            function(server, _)
+                -- FIXME: When updating to v6 and nvim-lspconfig-0.11, check if this is ok (?).
+                vim.lsp.enable(server)
             end,
 
             -- the key is the server that is being setup with `lspconfig`
