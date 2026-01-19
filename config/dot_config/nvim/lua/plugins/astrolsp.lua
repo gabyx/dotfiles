@@ -129,14 +129,7 @@ return {
             -- Rust
             rust_analyzer = {
                 settings = {
-                    ["rust-analyzer"] = {
-                        files = {
-                            excludeDirs = {
-                                ".direnv",
-                                ".git",
-                                "target",
-                            },
-                        },
+                    rust = {
                         inlayHints = {
                             bindingModeHints = {
                                 enable = false,
@@ -193,9 +186,8 @@ return {
         -- Customize how language servers are attached
         handlers = {
             -- a function without a key is simply the default handler, functions take two parameters, the server name and the configured options table for that server
-            function(server, _)
-                -- FIXME: When updating to v6 and nvim-lspconfig-0.11, check if this is ok (?).
-                vim.lsp.enable(server)
+            function(server, opts)
+                require("lspconfig")[server].setup(opts)
             end,
 
             -- the key is the server that is being setup with `lspconfig`
@@ -203,7 +195,6 @@ return {
             --
             -- Python
             pyright = function(server, opts)
-                print("enable python")
                 local lspconfig = require("lspconfig")
                 local util = require("lspconfig.util")
 
@@ -221,8 +212,10 @@ return {
                 lspconfig[server].setup(opts)
             end,
 
-            -- Rust (disable setup)
-            rust_analyzer = false,
+            -- Rust
+            rust_analyzer = function(_, opts)
+                require("rust-tools").setup({ server = opts })
+            end,
 
             -- Tiltfile
             tilt_ls = function(server, opts)

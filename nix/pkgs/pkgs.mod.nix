@@ -4,8 +4,22 @@
     { pkgsUnstable, system, ... }:
     let
       nvimBuilds = import ./neovim {
-        inherit system inputs lib;
+        inherit lib;
         pkgs = pkgsUnstable;
+        name = "nvim";
+      };
+
+      nvimBuildsPinned = import ./neovim {
+        inherit lib;
+        pkgs = inputs.nvim-pinned.legacyPackages.${system};
+        name = "nvim-pinned";
+      };
+
+      nvimBuildsNightly = import ./neovim {
+        inherit lib;
+        pkgs = pkgsUnstable;
+        name = "nvim-nightly";
+        nvim-unwrapped = inputs.nvim-nightly.packages.${system}.neovim;
       };
 
       # Package which ads a Filesystem Hierarchy Standard environment
@@ -21,13 +35,13 @@
     in
     {
       packages = {
-        inherit (nvimBuilds)
-          nvim-unwrapped
-          nvim
-          nvim-nightly
-          nvim-treesitter-install
-          nvim-treesitter-parsers
-          ;
+        nvim = nvimBuilds.nvim;
+
+        nvim-pinned = nvimBuildsPinned.nvim;
+        inherit (nvimBuildsPinned) nvim-treesitter-install nvim-treesitter-parsers;
+
+        nvim-nightly = nvimBuildsNightly.nvim;
+
         inherit neural-amp-modeler-lv2;
       }
       // gabyx;

@@ -21,6 +21,7 @@ writeShellScriptBin name ''
   #!/usr/bin/env bash
   set -efu
 
+  DIRECT="false"
   FORCE_SYNC_BACK="false"
   FORCE_PLUGINS_UPDATE="true"
   FORCE_RESET_ONLY="false"
@@ -29,6 +30,10 @@ writeShellScriptBin name ''
 
   while [[ $# -gt 0 ]]; do
     case "$1" in
+      --direct)
+        DIRECT="true"
+        shift
+        ;;
       --force-reset)
         FORCE_RESET="true"
         shift
@@ -47,6 +52,7 @@ writeShellScriptBin name ''
         shift
         ;;
       --help)
+        echo "Use '--direct' to start nvim without doing anything." >&2
         echo "Use '--force-reset' to reset nvim and all cache/state folders." >&2
         echo "Use '--force-reset-only' to only reset and exit." >&2
         echo "Use '--force-sync-back' to sync ~/.config/nvim back to the Git repo." >&2
@@ -146,6 +152,8 @@ writeShellScriptBin name ''
     else
       echo "Lua configs up-to-date."
     fi
+
+    echo -n "${nvim-treesitter-install}" > "$nvimConfigDir/.treesitter-rev"
   }
 
   function sync_back() {
@@ -162,17 +170,20 @@ writeShellScriptBin name ''
   nvimConfigDirSrc="$XDG_DATA_HOME/chezmoi/config/dot_config/nvim"
   echo "nvimConfigDir: '$nvimConfigDir'"
 
+  if [ "$DIRECT" = "true" ]; then
+    echo "Just start nvim '${nvim}'."
+    exec "${nvim}/bin/nvim" "''${NVIM_ARGS[@]}"
+  fi
+
   if [ "$FORCE_RESET" = "true" ]; then
     reset
   fi
 
   sync_config
 
-  # Due to astronvim v5 incompat.
-  echo "FIXME: NOT updating treesitter to correct state."
-  # if [ "$FORCE_PLUGINS_UPDATE" = "true" ]; then
-  #   plugin_update
-  # fi
+  if [ "$FORCE_PLUGINS_UPDATE" = "true" ]; then
+    plugin_update
+  fi
 
   if [ "$FORCE_SYNC_BACK" = "true" ]; then
     sync_back

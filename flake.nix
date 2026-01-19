@@ -116,6 +116,10 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    nvim-pinned = {
+      url = "github:NixOS/nixpkgs?rev=2fbfb1d73d239d2402a8fe03963e37aab15abe8b";
+    };
+
     # Neovim Nightly.
     nvim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";

@@ -12,8 +12,6 @@ let
   wezterm-nightly = inputs.wezterm.packages."${system}".default;
   githooks = inputs.githooks.packages."${system}".default;
 
-  nvim = outputs.packages.${system}.nvim;
-  nvim-nightly = outputs.packages.${system}.nvim-nightly;
 in
 {
   # List packages installed in system profile. To search, run:
@@ -41,8 +39,9 @@ in
 
     # Editors
     pkgsUnstable.vscode
-    nvim
-    nvim-nightly
+    outputs.packages.${system}.nvim
+    outputs.packages.${system}.nvim-pinned
+    outputs.packages.${system}.nvim-nightly
 
     # Tools
     pkgsUnstable.lf # File manager

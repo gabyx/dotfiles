@@ -1,38 +1,18 @@
 # Ref: https://github.com/Mic92/dotfiles/blob/7599d40986bc679075bf87539385254d770d8f12/home-manager/modules/neovim/nvim-standalone.nix#L4
 {
-  inputs,
   lib,
-  system,
   pkgs,
+  nvim-unwrapped ? pkgs.neovim-unwrapped,
+  name ? "nvim",
   ...
 }:
 let
-  nvimDrv = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
+  nvimDrv = pkgs.wrapNeovimUnstable nvim-unwrapped (
     pkgs.neovimUtils.makeNeovimConfig {
       wrapRc = false;
       withRuby = false;
     }
   );
-
-  nvimNightlyDrv = pkgs.wrapNeovimUnstable inputs.nvim-nightly.packages.${system}.neovim (
-    pkgs.neovimUtils.makeNeovimConfig {
-      wrapRc = false;
-      withRuby = false;
-    }
-  );
-
-  # Define Neovim launch scripts.
-  nvim = pkgs.callPackage (import ./nvim-standalone.nix) {
-    name = "nvim";
-    nvim = nvimDrv;
-    inherit nvim-treesitter-install;
-  };
-
-  nvim-nightly = pkgs.callPackage (import ./nvim-standalone.nix) {
-    name = "nvim-nightly";
-    nvim = nvimNightlyDrv;
-    inherit nvim-treesitter-install;
-  };
 
   # Build all treesitter parsers.
   nvim-treesitter-parsers =
@@ -53,24 +33,32 @@ let
   nvim-treesitter-install =
     (pkgs.writeShellScriptBin "nvim-treesitter-install" ''
       set -euo pipefail nullglob
-      mkdir -p parser
-      rm -rf parser/*.so
+      echo "Installing parsers from '${nvim-treesitter-parsers}' into '$(pwd)/parser'"
 
-      # prefer home-manager version if it exists, because it doesn't get stale links.
-      if [ -d $HOME/.nix-profile/lib/nvim-treesitter-parsers ]; then
-        ln -s $HOME/.nix-profile/lib/nvim-treesitter-parsers/lib/nvim-treesitter-grammars/*.so parser
-      else
-        ln -s ${nvim-treesitter-parsers}/lib/nvim-treesitter-grammars/*.so parser
-      fi
+      mkdir -p parser && rm -rf parser/*.so || {
+        echo "Could not remove parser directory."
+        exit 1
+      }
+
+      ln -s ${nvim-treesitter-parsers}/lib/nvim-treesitter-grammars/*.so parser || {
+        echo "Could not symlink parsers."
+        exit 1
+      }
     '').overrideAttrs
       {
         passthru.rev = pkgs.vimPlugins.nvim-treesitter.src.rev;
       };
 
+  # Define Neovim launch scripts.
+  nvim = pkgs.callPackage (import ./nvim-standalone.nix) {
+    inherit name;
+    nvim = nvimDrv;
+    inherit nvim-treesitter-install;
+  };
 in
 {
   nvim-unwrapped = nvimDrv;
-  inherit nvim nvim-nightly;
+  inherit nvim;
   inherit nvim-treesitter-install;
   inherit nvim-treesitter-parsers;
 }
