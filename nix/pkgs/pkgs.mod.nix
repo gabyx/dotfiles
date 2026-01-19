@@ -6,13 +6,13 @@
       nvimBuilds = import ./neovim {
         inherit lib;
         pkgs = pkgsUnstable;
-        name = "nvim";
+        name = "nvim-new";
       };
 
       nvimBuildsPinned = import ./neovim {
         inherit lib;
         pkgs = inputs.nvim-pinned.legacyPackages.${system};
-        name = "nvim-pinned";
+        name = "nvim";
       };
 
       nvimBuildsNightly = import ./neovim {
@@ -35,9 +35,8 @@
     in
     {
       packages = {
-        nvim = nvimBuilds.nvim;
-
-        nvim-pinned = nvimBuildsPinned.nvim;
+        nvim = nvimBuildsPinned.nvim;
+        nvim-new = nvimBuilds.nvim;
         inherit (nvimBuildsPinned) nvim-treesitter-install nvim-treesitter-parsers;
 
         nvim-nightly = nvimBuildsNightly.nvim;

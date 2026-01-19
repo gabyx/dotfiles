@@ -39,8 +39,8 @@ in
 
     # Editors
     pkgsUnstable.vscode
-    outputs.packages.${system}.nvim
-    outputs.packages.${system}.nvim-pinned
+    outputs.packages.${system}.nvim # Pinned version.
+    outputs.packages.${system}.nvim-new
     outputs.packages.${system}.nvim-nightly
 
     # Tools
