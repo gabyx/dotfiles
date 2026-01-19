@@ -74,6 +74,8 @@ config = {
     tiling_desktop_environments = {
         "Wayland",
     },
+
+    check_for_updates = false,
 }
 
 if environment.os == "linux" then
