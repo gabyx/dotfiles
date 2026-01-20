@@ -122,7 +122,7 @@ in
     pkgsUnstable.nix-tree
     pkgsUnstable.nixpkgs-lint
     pkgsUnstable.stdenv.cc # for neovim treesitter.
-    pkgsUnstable.nixfmt-rfc-style
+    pkgsUnstable.nixfmt # official Nix formatter.
     pkgsUnstable.dconf2nix # To generate the `dconf` settings.
     pkgsUnstable.comma # Run , jellyfin to quickly run a nix package.
 
