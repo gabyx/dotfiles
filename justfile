@@ -58,7 +58,8 @@ build *args:
         "${cmd[@]}"
     fi
 
-build-iso *args:
+# Builds
+build-image *args:
     #!/usr/bin/env bash
     set -eu
     host="{{default_host}}"
@@ -67,7 +68,7 @@ build-iso *args:
     cmd=(nix build
         --verbose
         --show-trace
-        ".#$host-iso"
+        ".#$host"
         "$@"
     )
 

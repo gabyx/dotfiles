@@ -22,12 +22,12 @@ let
       };
     };
 
-  mkIso =
-    system: name:
+  mkImage =
+    format: system: name:
     inputs.nixos-generators.nixosGenerate {
       pkgs = outputs.lib.importPkgs system;
 
-      inherit system;
+      inherit format system;
       modules = [
         ./${name}/configuration.nix
       ];
@@ -37,7 +37,6 @@ let
         pkgsUnstable = outputs.lib.importPkgsUnstable system;
       };
 
-      format = "iso";
     };
 
 in
@@ -53,7 +52,8 @@ in
   perSystem =
     { ... }:
     {
-      packages.vm-iso = mkIso "x86_64-linux" "vm-iso";
-      packages.desktop-iso = mkIso "x86_64-linux" "desktop-iso";
+      packages.vm-iso = mkImage "iso" "x86_64-linux" "vm-iso";
+      packages.desktop-iso = mkImage "iso" "x86_64-linux" "desktop-iso";
+      packages.famhome-raw = mkImage "raw-efi" "x86_64-linux" "famhome-raw";
     };
 }
