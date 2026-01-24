@@ -27,4 +27,10 @@ input type:touchpad {
 }
 
 seat * hide_cursor when-typing enable
+
+
+# Ignore Yubikey as keybaord:
+input "4176:1031:Yubico_YubiKey_OTP+FIDO+CCID" {
+    events disabled
+}
 ### ===========================================================================

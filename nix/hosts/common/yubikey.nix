@@ -8,7 +8,7 @@
       "gabyx_ed25519_fido2_yubikey" = 34053549;
     };
 
-    autoScreenLock = true;
-    autoScreenUnlock = true;
+    # autoScreenLock = true;
+    # autoScreenUnlock = true;
   };
 }

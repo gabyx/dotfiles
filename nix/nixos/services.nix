@@ -29,8 +29,9 @@
     locate.enable = true;
 
     # Keyring Service
-    gnome.gnome-keyring = {
-      enable = true;
+    gnome = {
+      gnome-keyring.enable = true;
+      gcr-ssh-agent.enable = false;
     };
 
     # For `udisksctl power-off` etc.

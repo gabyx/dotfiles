@@ -44,8 +44,7 @@ let
   adjustKeyring = ''
     # Adds some more components to the gnome keyring daemon.
     export GNOME_KEYRING_CONTROL="/run/user/$UID/keyring"
-    export SSH_AUTH_SOCK="/run/user/$UID/gcr/ssh"
-    eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg);
+    eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,gpg);
   '';
 
   commonPkgs = with pkgs; [

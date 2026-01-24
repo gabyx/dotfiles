@@ -16,6 +16,9 @@
 let
   homeDir = "${config.settings.user.home}";
   userName = "${config.settings.user.name}";
+
+  windowMgr = config.settings.windowing.manager;
+
 in
 {
   options = {
@@ -47,6 +50,16 @@ in
         default = false;
         type = lib.types.bool;
         description = "Lock screen on yubikey removal";
+      };
+
+      autoScreenLockCmd = lib.mkOption {
+        default =
+          if windowMgr == "sway" then
+            "${lib.getExe pkgs.swaylock} --grace 0 -f"
+          else
+            "${lib.getExe pkgs.hyperlock}";
+        type = lib.types.str;
+        description = "Lock command to lock the screen.";
       };
     };
   };
@@ -93,7 +106,8 @@ in
               ln -sf "${homeDir}/.ssh/$key_name.pub" "${homeDir}/.ssh/id_yubikey.pub"
 
               echo "Changing permissions."
-              chown "${userName}:users" "${homeDir}/.ssh/id_yubikey" "${homeDir}/.ssh/id_yubikey.pub"
+              chown -h "${userName}:users" "${homeDir}/.ssh/id_yubikey" "${homeDir}/.ssh/id_yubikey.pub"
+
               chmod 500 "${homeDir}/.ssh/id_yubikey" "${homeDir}/.ssh/id_yubikey.pub"
             '';
         };
@@ -139,7 +153,7 @@ in
           ''
           + lib.optionalString config.yubikey.autoScreenLock ''
             # Lock the device if you remove the yubikey (use udevadm monitor -p to debug)
-            SUBSYSTEM=="hid", ACTION=="remove", ENV{HID_NAME}=="Yubico Yubi*", RUN+="${pkgs.systemd}/bin/loginctl lock-sessions"
+            SUBSYSTEM=="hid", ACTION=="remove", ENV{HID_NAME}=="Yubico Yubi*", RUN+="${config.yubikey.autoScreenLockCmd}"
           ''
           + lib.optionalString config.yubikey.autoScreenUnlock ''
             SUBSYSTEM=="hid",\

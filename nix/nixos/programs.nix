@@ -23,6 +23,15 @@
 
     mtr.enable = true;
 
+    ssh = {
+      # We use this SSH agent instead of gnome.gcr-ssh-agent due
+      # to poor fido support.
+      startAgent = true;
+      extraConfig = ''
+        AddKeysToAgent = yes
+      '';
+    };
+
     gnupg.agent = {
       enable = true;
       enableSSHSupport = false;

@@ -28,6 +28,7 @@ in
     pkgsUnstable.tig
     pkgsUnstable.seahorse
     pkgsUnstable.zenity # For dialogs over githooks and calendar.
+    pkgsUnstable.witr
 
     # Qemu
     pkgsUnstable.quickemu
