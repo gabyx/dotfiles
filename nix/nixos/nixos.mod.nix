@@ -30,5 +30,6 @@
     vpn = import ./vpn.nix;
     vpn-wgnord = import ./vpn-wgnord.nix; # Pure Module.
     windowing = import ./windowing.nix;
+    yubikey = import ./yubikey.nix;
   };
 }

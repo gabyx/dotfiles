@@ -11,10 +11,12 @@
     ./cpu.nix
     ./boot.nix
     ./hardware.nix
-    ./settings.nix
 
     inputs.self.modules.nixos.secrets
     inputs.self.modules.nixos.bluetooth
+
+    ./settings.nix
+    ../common/yubikey.nix
   ];
 
   specialisation = {

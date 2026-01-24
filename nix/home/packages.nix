@@ -52,7 +52,6 @@ in
     pkgsUnstable.poppler-utils # For image conversions.
     pkgsUnstable.ffmpegthumbnailer # For video thumbnails.
     pkgsUnstable.trash-cli # Trash command line to move stuff to trash.
-    pkgsUnstable.dig # DNS lookup tool.
     pkgsUnstable.file-roller # Compression tool.
 
     # Disk
@@ -175,10 +174,12 @@ in
     # Sound
     pkgsUnstable.headsetcontrol
     pkgsUnstable.noson # Sonos device
-    pkgs.ardour # Music recording
 
     # VPN
     pkgsUnstable.wgnord
+
+    # Networking
+    pkgsUnstable.dig # DNS lookup tool.
 
     # Camera
     pkgsUnstable.guvcview # Camera control

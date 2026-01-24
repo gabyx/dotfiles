@@ -19,7 +19,6 @@
     ./cpu.nix
     ./boot.nix
     ./hardware.nix
-    ./settings.nix
 
     inputs.self.modules.nixos.backup
     inputs.self.modules.nixos.bluetooth
@@ -44,8 +43,12 @@
     inputs.self.modules.nixos.virtualization
     inputs.self.modules.nixos.vpn
     inputs.self.modules.nixos.windowing
+    inputs.self.modules.nixos.yubikey
 
     inputs.self.modules.nixos.home-manager
+
+    ./settings.nix
+    ../common/yubikey.nix
   ];
 
   specialisation = {
