@@ -63,12 +63,13 @@ build-image *args:
     #!/usr/bin/env bash
     set -eu
     host="{{default_host}}"
+    package="$host-image"
 
     # Build without submodules (no secrets!)
     cmd=(nix build
         --verbose
         --show-trace
-        ".#$host"
+        ".#$package"
         "$@"
     )
 

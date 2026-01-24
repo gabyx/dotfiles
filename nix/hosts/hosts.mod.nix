@@ -43,7 +43,6 @@ in
 {
   flake.nixosConfigurations = {
     desktop = mkSystem "x86_64-linux" "desktop";
-    desktop-steam = mkSystem "x86_64-linux" "desktop-steam";
     desktop-music = mkSystem "x86_64-linux" "desktop-music";
     tuxedo = mkSystem "x86_64-linux" "tuxedo-pulse-14";
     vm = mkSystem "x86_64-linux" "vm";
@@ -52,8 +51,8 @@ in
   perSystem =
     { ... }:
     {
-      packages.vm-iso = mkImage "iso" "x86_64-linux" "vm-iso";
-      packages.desktop-iso = mkImage "iso" "x86_64-linux" "desktop-iso";
-      packages.famhome-raw = mkImage "raw-efi" "x86_64-linux" "famhome-raw";
+      packages.vm-image = mkImage "iso" "x86_64-linux" "vm-iso";
+      packages.desktop-image = mkImage "iso" "x86_64-linux" "desktop-iso";
+      packages.famhome-image = mkImage "raw-efi" "x86_64-linux" "famhome";
     };
 }

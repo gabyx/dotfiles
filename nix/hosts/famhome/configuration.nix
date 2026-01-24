@@ -10,43 +10,34 @@
     inputs.hardware.nixosModules.common-cpu-intel
     inputs.hardware.nixosModules.common-gpu-nvidia-nonprime
     inputs.hardware.nixosModules.common-pc-ssd
-
     inputs.disko.nixosModules.disko
 
-    # Import your generated (nixos-generate-config) hardware configuration
-    #./disko.nix
+    # ./disko.nix
     ./boot.nix
     ./hardware.nix
     ./settings.nix
     ./windowing.nix
 
-    # Include all other specifications.
-    inputs.self.modules.nixos.display
-    # inputs.self.modules.nixos.keyboard
-    inputs.self.modules.nixos.fonts
-    inputs.self.modules.nixos.time
-    inputs.self.modules.nixos.environment
-    inputs.self.modules.nixos.networking
-    inputs.self.modules.nixos.security
     # inputs.self.modules.nixos.backup
-    # inputs.self.modules.nixos.secrets
-    inputs.self.modules.nixos.services
-
-    inputs.self.modules.nixos.sound
-    inputs.self.modules.nixos.printing
-
     # inputs.self.modules.nixos.containerization
-    # inputs.self.modules.nixos.virtualization
-
-    inputs.self.modules.nixos.packages
-    inputs.self.modules.nixos.programs
-
-    inputs.self.modules.nixos.user
-
-    inputs.self.modules.nixos.nix
-
-    # Load home-manager as a part of the NixOS configuration.
+    inputs.self.modules.nixos.display
+    inputs.self.modules.nixos.environment
+    inputs.self.modules.nixos.fonts
     inputs.self.modules.nixos.home-manager
+    inputs.self.modules.nixos.kernel
+    # inputs.self.modules.nixos.keyboard
+    inputs.self.modules.nixos.networking
+    inputs.self.modules.nixos.nix
+    inputs.self.modules.nixos.packages
+    inputs.self.modules.nixos.printing
+    inputs.self.modules.nixos.programs
+    # inputs.self.modules.nixos.secrets
+    inputs.self.modules.nixos.security
+    inputs.self.modules.nixos.services
+    inputs.self.modules.nixos.sound
+    inputs.self.modules.nixos.time
+    inputs.self.modules.nixos.user
+    # inputs.self.modules.nixos.virtualization
   ];
 
   ### NixOS Release Settings===================================================
