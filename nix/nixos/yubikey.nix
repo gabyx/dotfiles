@@ -107,8 +107,6 @@ in
 
               echo "Changing permissions."
               chown -h "${userName}:users" "${homeDir}/.ssh/id_yubikey" "${homeDir}/.ssh/id_yubikey.pub"
-
-              chmod 500 "${homeDir}/.ssh/id_yubikey" "${homeDir}/.ssh/id_yubikey.pub"
             '';
         };
 
@@ -158,7 +156,7 @@ in
           + lib.optionalString config.yubikey.autoScreenUnlock ''
             SUBSYSTEM=="hid",\
              ACTION=="add",\
-             ENV{HID_NAME}=="Yubico YubiKey FIDO",\
+             ENV{HID_NAME}=="Yubico Yubi*",\
              RUN+="${pkgs.systemd}/bin/loginctl activate 1"
           '';
 
@@ -176,15 +174,10 @@ in
             cue = true; # Tells user they need to press the button
             authFile = "${homeDir}/.config/yubikey/u2f_keys";
           };
-
-          # If you put here `required`, password will not be allowed.
-          control = "sufficient";
         };
         services = {
-          # login.u2fAuth = true;
-          sudo = {
-            u2fAuth = true;
-          };
+          login.u2fAuth = true;
+          sudo.u2fAuth = true;
         };
       };
     };
