@@ -350,6 +350,7 @@ move-all-to-secrets:
     #!/usr/bin/env bash
     set -eu
     fd ".*.age$" -E "secrets/**" --type f --exec just move-to-secrets "{}"
+    fd ".*.age$" -E "secrets/**" --type l --exec just make-links-align "{}"
 
 
 # Move a file to the secrets folder.
@@ -364,6 +365,18 @@ move-to-secrets file:
     rm "$file";
     ln -s "$(realpath --relative-to="$d" "secrets/$file")" "$file"
 
+# Align file name of link to secrets.
+[private]
+make-links-align link:
+    #!/usr/bin/env bash
+    set -eu
+    link="{{link}}"
+    realfile=$(realpath "{{link}}")
+
+    newfile="$(dirname "$realfile")/$(basename "$link")"
+    if [ "$newfile" != "$realfile" ]; then
+        mv "$realfile" "$newfile"
+    fi
 # This is a wrapper to `chezmoi` which provided the necessary encryption
 # key temporarily and deletes it afterwards again.
 # This is only used for invocations which need the private key.

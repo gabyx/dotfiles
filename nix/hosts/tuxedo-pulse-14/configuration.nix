@@ -49,6 +49,7 @@
 
     ./settings.nix
     ../common/yubikey.nix
+    ../common/notempfs.nix
   ];
 
   specialisation = {
