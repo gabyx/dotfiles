@@ -169,20 +169,23 @@ in
       programs.yubikey-touch-detector.enable = true;
 
       # Yubikey login / sudo.
-      # security.pam = {
-      #   u2f = {
-      #     enable = false;
-      #     settings = {
-      #       cue = true; # Tells user they need to press the button
-      #       authFile = "${homeDirectory}/.config/Yubico/u2f_keys";
-      #     };
-      #   };
-      #   services = {
-      #     login.u2fAuth = true;
-      #     sudo = {
-      #       u2fAuth = true;
-      #     };
-      #   };
-      # };
+      security.pam = {
+        u2f = {
+          enable = true;
+          settings = {
+            cue = true; # Tells user they need to press the button
+            authFile = "${homeDir}/.config/yubikey/u2f_keys";
+          };
+
+          # If you put here `required`, password will not be allowed.
+          control = "sufficient";
+        };
+        services = {
+          # login.u2fAuth = true;
+          sudo = {
+            u2fAuth = true;
+          };
+        };
+      };
     };
 }
