@@ -349,9 +349,15 @@ decrypt-edit file:
 move-all-to-secrets:
     #!/usr/bin/env bash
     set -eu
-    fd ".*.age$" -E "secrets/**" --type f --exec just move-to-secrets "{}"
-    fd ".*.age$" -E "secrets/**" --type l --exec just make-links-align "{}"
 
+    # Remove all links, recreat them from secrets.
+    fd ".*.age$" -E "secrets/**" --type l --exec rm "{}"
+
+    fd ".*.age$" --type f ./secrets \
+        --exec just create-links-from-secrets "{}"
+
+    fd ".*.age$" -E "secrets/**" --type f \
+        --exec just move-to-secrets "{}"
 
 # Move a file to the secrets folder.
 [private]
@@ -367,16 +373,18 @@ move-to-secrets file:
 
 # Align file name of link to secrets.
 [private]
-make-links-align link:
+create-links-from-secrets file:
     #!/usr/bin/env bash
     set -eu
-    link="{{link}}"
-    realfile=$(realpath "{{link}}")
+    file="{{file}}"
+    file_rel="${file#*secrets/}"
 
-    newfile="$(dirname "$realfile")/$(basename "$link")"
-    if [ "$newfile" != "$realfile" ]; then
-        mv "$realfile" "$newfile"
-    fi
+    link="$file_rel"
+    d="$(dirname "$file_rel")"
+    points_to="$(realpath --relative-to="$d" "$file")"
+
+    ln -s "$points_to" "$link"
+
 # This is a wrapper to `chezmoi` which provided the necessary encryption
 # key temporarily and deletes it afterwards again.
 # This is only used for invocations which need the private key.
