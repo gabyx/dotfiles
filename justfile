@@ -383,7 +383,11 @@ create-links-from-secrets file:
     d="$(dirname "$file_rel")"
     points_to="$(realpath --relative-to="$d" "$file")"
 
-    ln -s "$points_to" "$link"
+    # Only add the link if there is no such file existing.
+    # If it exists we re-added it in chezmoi.
+    if [ ! -f "$link" ]; then
+        ln -s "$points_to" "$link"
+    fi
 
 # This is a wrapper to `chezmoi` which provided the necessary encryption
 # key temporarily and deletes it afterwards again.
