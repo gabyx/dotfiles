@@ -23,9 +23,11 @@
       "\treturn nil",
       "}",
       "",
-      "func (c *${2:opts}) With${4:This}(${5:value} ${6:string}) error {",
-      "\t${7:// TODO: add code}",
-      "\treturn nil",
+      "func With${4:This}(${5:value} ${6:string}) ${1:ExecOption} {",
+      "\treturn func(*${2:opts}) error {",
+      "\t\t${7:// TODO: add code}",
+      "\t\treturn nil",
+      "\t}",
       "}"
     ]
   },
@@ -45,8 +47,11 @@
       "\t}",
       "}",
       "",
-      "func (c *${2:opts}) With${4:This}(${5:value} ${6:string}) {",
-      "\t${7:// TODO: add code}",
+      "func With${4:This}(${5:value} ${6:string}) ${1:ExecOption} {",
+      "\treturn func(*${2:opts}) error {",
+      "\t\t${7:// TODO: add code}",
+      "\t\treturn",
+      "\t}",
       "}"
     ]
   }
