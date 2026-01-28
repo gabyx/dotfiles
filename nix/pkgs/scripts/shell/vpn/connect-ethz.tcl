@@ -3,7 +3,7 @@
 # Set timeout in seconds
 set timeout 90
 
-set fh [open "~/.config/vpn/credentials" r]
+set fh [open "~/.config/vpn/eth-zurich-credentials" r]
 set lines [split [read $fh] "\n"]
 close $fh
 
@@ -25,7 +25,7 @@ stty echo
 send_user "\n"
 
 # Start the VPN CLI (replace with your actual command)
-spawn bash -c "gabyx::shell-source; gabyx::vpn_connect eth-zurich;"
+spawn bash -c "eval \"\$(gabyx::shell-source)\"; gabyx::vpn_connect eth-zurich;"
 
 # Handle GROUP selection automatically
 expect {

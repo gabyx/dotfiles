@@ -9,6 +9,7 @@
   gnugrep,
   gnused,
   fd,
+  expect,
 }:
 let
   lib = ./.;
@@ -26,7 +27,10 @@ let
       zfs
       gnugrep
       gnused
+
       fd
+
+      expect
     ];
 
     text =
