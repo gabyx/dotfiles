@@ -1,9 +1,7 @@
 # shellcheck disable=SC1091
 # echo "Sourcing ~/.bash_profile ..."
 
-# Set locale.
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
+[ -f ~/.bashrc ] && source ~/.bashrc
 
 # Direnv integrastion.
 if command direnv &>/dev/null; then

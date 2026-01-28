@@ -18,5 +18,9 @@ if [ "${GABYX_LIB_VPN:-}" != "loaded" ]; then
         nmcli connection up "$name" --ask
     }
 
+    function gabyx::vpn_connect_auto() {
+        gabyx::shell-run expect -f "$GABYX_LIB_DIR/vpn/connect-ethz.tcl"
+    }
+
     GABYX_LIB_VPN="loaded"
 fi
