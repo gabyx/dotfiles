@@ -415,7 +415,12 @@ cm *args:
         age -d -i - "{{root_dir}}/config/dot_config/chezmoi/key.age" > \
                     ~/.config/chezmoi/key
 
+    if echo "$@" | grep -q "re-add"; then
+        echo "WARNING: Run 'just move-all-to-secrets'!!"
+    fi
+
     chezmoi -S "." "$@"
+
 
 # Store the private-key for the keyfile 'key.age'
 # into the keyring.
