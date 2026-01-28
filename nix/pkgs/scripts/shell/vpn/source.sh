@@ -14,7 +14,7 @@ if [ "${GABYX_LIB_VPN:-}" != "loaded" ]; then
 
     # Connect to the named VPN connection.
     function gabyx::vpn_connect() {
-        local name="${1:-"eth-zurich"}"
+        local name="${1:-"eth-zurich-vpn"}"
         nmcli connection up "$name" --ask
     }
 

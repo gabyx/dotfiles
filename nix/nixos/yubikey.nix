@@ -55,7 +55,7 @@ in
       autoScreenLockCmd = lib.mkOption {
         default =
           if windowMgr == "sway" then
-            "${lib.getExe pkgs.swaylock} --grace 0 -f"
+            "${lib.getExe pkgs.swaylock-effects} --grace 0 -f"
           else
             "${lib.getExe pkgs.hyperlock}";
         type = lib.types.str;
