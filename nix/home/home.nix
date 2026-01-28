@@ -4,7 +4,6 @@
   osConfig,
   inputs,
   outputs,
-  system,
   ...
 }:
 {

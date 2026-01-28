@@ -4,13 +4,13 @@
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
   ];
 
-  # xdg.systemDirs.data = [
-  #   "$HOME/.local/share/flatpak/exports/share"
-  # ];
-  #
-  # home.sessionPath = [
-  #   "$HOME/.local/share/flatpak/exports/bin"
-  # ];
+  xdg.systemDirs.data = [
+    "$HOME/.local/share/flatpak/exports/share"
+  ];
+
+  home.sessionPath = [
+    "$HOME/.local/share/flatpak/exports/bin"
+  ];
 
   services.flatpak = {
     enable = false;
@@ -55,18 +55,18 @@
     };
 
     packages = [
-      {
-        appId = "org.mozilla.firefox";
-      }
+      # {
+      #   appId = "org.mozilla.firefox";
+      # }
       {
         appId = "com.brave.Browser";
       }
-      {
-        appId = "com.visualstudio.code";
-      }
-      {
-        appId = "com.slack.Slack";
-      }
+      # {
+      #   appId = "com.visualstudio.code";
+      # }
+      # {
+      #   appId = "com.slack.Slack";
+      # }
     ];
   };
 }

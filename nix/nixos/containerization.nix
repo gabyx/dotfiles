@@ -1,6 +1,6 @@
 {
   config,
-  pkgsUnstable,
+  pkgs,
   ...
 }:
 {
@@ -14,7 +14,7 @@
   # Docker =================================
   virtualisation.docker = {
     enable = true;
-    package = pkgsUnstable.docker;
+    package = pkgs.docker;
     enableOnBoot = true;
 
     rootless = {
@@ -33,7 +33,7 @@
   # Podman ================================
   virtualisation.podman = {
     enable = true;
-    package = pkgsUnstable.podman;
+    package = pkgs.podman;
 
     # Create a `docker` alias for podman, to use it as a drop-in replacement
     # dockerCompat = true;
@@ -86,8 +86,7 @@
 
   # Packages
   environment.systemPackages = [
-    pkgsUnstable.podman-compose
-    pkgsUnstable.docker-buildx
+    pkgs.podman-compose
   ];
   # ===========================================================================
 }

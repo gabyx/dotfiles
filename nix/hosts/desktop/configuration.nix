@@ -8,9 +8,6 @@
     ./configuration-base.nix
 
     ./hardware-configuration.nix
-    ./cpu.nix
-    ./boot.nix
-    ./hardware.nix
 
     inputs.self.modules.nixos.secrets
     inputs.self.modules.nixos.bluetooth

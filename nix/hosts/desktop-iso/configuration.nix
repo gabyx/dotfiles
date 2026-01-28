@@ -5,8 +5,8 @@
   imports = [
     ./../desktop/configuration-base.nix
 
-    ./disko.nix
     ./../desktop/boot.nix
+    ./disko.nix
 
     ./settings.nix
     ../common/yubikey.nix

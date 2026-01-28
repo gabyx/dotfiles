@@ -12,10 +12,8 @@
     inputs.hardware.nixosModules.common-pc-ssd
     inputs.agenix.nixosModules.default
 
-    ./hardware-configuration.nix
     ./cpu.nix
     ./boot.nix
-    ./hardware.nix
 
     inputs.self.modules.nixos.backup
     inputs.self.modules.nixos.containerization
@@ -36,6 +34,7 @@
     inputs.self.modules.nixos.time
     inputs.self.modules.nixos.user
     inputs.self.modules.nixos.virtualization
+    inputs.self.modules.nixos.vpn
     inputs.self.modules.nixos.windowing
     inputs.self.modules.nixos.yubikey
 
