@@ -1,0 +1,57 @@
+# supported options are "docker" and "podman"
+container-engine: podman
+
+# continue with analysis even if there are errors parsing the image archive
+ignore-errors: false
+
+log:
+  enabled: false
+  path: ./dive.log
+  level: info
+
+# Note: you can specify multiple bindings by separating values with a comma.
+# Note: UI hinting is derived from the first binding
+keybinding:
+  # Global bindings
+  quit: q,ctrl+c
+  toggle-view: tab
+  filter-files: F
+  close-filter-files: esc
+  up: up,k
+  down: down,j
+  left: left,h
+  right: right,l
+
+  # Layer view specific bindings
+  compare-all: a
+  compare-layer: i
+
+  # File view specific bindings
+  toggle-collapse-dir: space
+  toggle-collapse-all-dir: space
+  toggle-added-files: a
+  toggle-removed-files: r
+  toggle-modified-files: m
+  toggle-unmodified-files: u
+  toggle-filetree-attributes: b
+  page-up: pgup,u
+  page-down: pgdn,d
+
+# diff:
+#   # You can change the default files shown in the filetree (right pane). All diff types are shown by default.
+#   hide:
+#     - unmodified
+
+filetree:
+  # The default directory-collapse state
+  collapse-dir: true
+
+  # The percentage of screen width the filetree should take on the screen (must be >0 and <1)
+  pane-width: 0.5
+
+  # Show the file attributes next to the filetree
+  show-attributes: true
+
+layer:
+  # Enable showing all changes from this layer and every previous layer
+  show-aggregated-changes: false
