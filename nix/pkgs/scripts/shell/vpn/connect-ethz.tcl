@@ -7,8 +7,9 @@ set fh [open "~/.config/vpn/eth-zurich-credentials" r]
 set lines [split [read $fh] "\n"]
 close $fh
 
-set group [lindex $lines 0]
-set username [lindex $lines 1]
+set network [lindex $lines 0]
+set group [lindex $lines 1]
+set username [lindex $lines 2]
 
 # Prompt for username
 stty -echo
@@ -25,7 +26,7 @@ stty echo
 send_user "\n"
 
 # Start the VPN CLI (replace with your actual command)
-spawn bash -c "eval \"\$(gabyx::shell-source)\"; gabyx::vpn_connect eth-zurich;"
+spawn bash -c "eval \"\$(gabyx::shell-source)\"; gabyx::vpn_connect '$network';"
 
 # Handle GROUP selection automatically
 expect {
