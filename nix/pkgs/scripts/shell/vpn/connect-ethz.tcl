@@ -17,12 +17,12 @@ send_user "Password: "
 expect_user -re "(.*)\n"
 set password $expect_out(1,string)
 send_user "\n"
+stty echo
 
 # Prompt OTP
 send_user "One Time Password: "
 expect_user -re "(.*)\n"
 set otp $expect_out(1,string)
-stty echo
 send_user "\n"
 
 # Start the VPN CLI (replace with your actual command)
