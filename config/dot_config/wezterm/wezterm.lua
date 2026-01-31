@@ -21,10 +21,11 @@ config.set_environment_variables = {
     WSLENV = "TERMINFO_DIRS",
 }
 
-config.default_ssh_auth_sock = os.getenv("SSH_AUTH_SOCK")
-
 -- This is where you actually apply your config choices
 config = {
+    mux_enable_ssh_agent = false,
+    default_ssh_auth_sock = os.getenv("SSH_AUTH_SOCK"),
+
     front_end = "WebGPU",
 
     font_size = 12,
