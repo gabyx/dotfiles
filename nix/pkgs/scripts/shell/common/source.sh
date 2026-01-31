@@ -4,6 +4,7 @@
 if [ "${GABYX_LIB_COMMON:-}" != "loaded" ]; then
     source "$GABYX_LIB_DIR/common/log.sh"
     source "$GABYX_LIB_DIR/common/secrets.sh"
+    source "$GABYX_LIB_DIR/common/browser.sh"
 
     GABYX_LIB_COMMON=loaded
 fi
