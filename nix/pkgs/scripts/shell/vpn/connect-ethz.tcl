@@ -42,7 +42,7 @@ expect {
 # Look for the username prompt
 expect {
     -re "Username:.*" {
-        send "$username@$group.ethz.ch\r"
+        send "$username\r"
     }
     timeout {
         send_user "ERROR: Timeout waiting for username prompt\n"
