@@ -151,7 +151,7 @@ rebuild how *args:
     host="{{default_host}}"
     cmd=(nixos-rebuild {{how}}
         --flake ".#$host"
-        --use-remote-sudo "${@:2}"
+        "${@:2}"
     )
 
     echo "Checkout all LFS files."

@@ -52,9 +52,14 @@ in
             default = true;
           };
 
+          storageHostname = mkOption {
+            type = types.str;
+            default = "u492021@u492021.your-storagebox.de";
+          };
+
           storageURL = mkOption {
             type = types.str;
-            default = "sftp://u492021@u492021.your-storagebox.de:23";
+            default = "sftp://${cfg.storageHostname}:23";
           };
 
           reportDir = mkOption {
@@ -122,6 +127,12 @@ in
       homeDir = dir: mkSysPath "home" "/${config.settings.user.name}/${dir}";
       rootDir = dir: mkSysPath "root" "${dir}";
       persistDir = dir: mkSysPath "persist" "/${dir}";
+
+      ssh-backup = pkgs.writeShellScriptBin "ssh-backup" ''
+        set -eu
+        sudo ssh -p 23 -i "${config.age.secrets.backup-storage-ssh-key.path}"\
+          "${cfg.storageHostname}"
+      '';
 
       excludeMacOS = [
         ".DS_Store"
@@ -459,5 +470,7 @@ in
         in
         lib.concatMapAttrs (name: bk: fetchServiceTimer bk) cfg.backups
       );
+
+      environment.systemPackages = [ ssh-backup ];
     };
 }
