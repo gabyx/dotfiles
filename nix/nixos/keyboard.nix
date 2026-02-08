@@ -25,7 +25,7 @@
 
   services.xserver = {
     xkb = {
-      layout = "programmer-defy";
+      layout = if config.networking.hostName == "nixos-tuxedo" then "programmer" else "programmer-defy";
       variant = "";
       options = "ctrl:nocaps";
 

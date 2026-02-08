@@ -142,14 +142,15 @@ boot-test name="test" *args:
     just diff 2 "{{name}}"
 
 # NixOS rebuild command for the `host` (defined in the flake).
-[private]
 rebuild how *args:
     #!/usr/bin/env bash
     set -eu
     cd "{{root_dir}}"
 
     host="{{default_host}}"
-    cmd=(nixos-rebuild {{how}}
+    cmd=(nixos-rebuild
+        --sudo
+        {{how}}
         --flake ".#$host"
         "${@:2}"
     )
