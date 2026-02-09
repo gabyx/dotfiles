@@ -8,7 +8,7 @@
   };
 
   networking.networkmanager = {
-    dns = "none";
+    dns = lib.mkForce "none";
   };
 
   services.adguardhome = {
