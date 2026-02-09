@@ -1,14 +1,18 @@
 { lib, pkgs, ... }:
 {
   # Host: Make systemd-resolved listen on the container interface
-  # services.resolved = {
-  #   enable = true;
-  #   extraConfig = ''
-  #     DNS=127.0.0.1
-  #     #   # DNSStubListenerExtra=10.30.0.1  # Listen on container network
-  #     #   # Domains=~.
-  #   '';
-  # };
+  services.resolved = {
+    enable = true;
+    extraConfig = ''
+      DNS=127.0.0.1
+      #   # DNSStubListenerExtra=10.30.0.1  # Listen on container network
+      #   # Domains=~.
+    '';
+  };
+
+  networking.networkmanager = {
+    dns = "none";
+  };
 
   services.adguardhome = {
     enable = true;
