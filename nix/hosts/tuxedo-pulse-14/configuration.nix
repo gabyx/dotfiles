@@ -20,6 +20,7 @@
     ./boot.nix
     ./hardware.nix
 
+    inputs.self.modules.nixos.adblock-dns
     inputs.self.modules.nixos.backup
     inputs.self.modules.nixos.bluetooth
     inputs.self.modules.nixos.containerization
