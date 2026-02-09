@@ -5,8 +5,6 @@
     enable = true;
     extraConfig = ''
       DNS=127.0.0.1
-      #   # DNSStubListenerExtra=10.30.0.1  # Listen on container network
-      #   # Domains=~.
     '';
   };
 
