@@ -1,6 +1,5 @@
 { lib, pkgs, ... }:
 {
-  # Host: Make systemd-resolved listen on the container interface
   services.resolved = {
     enable = true;
     extraConfig = ''
