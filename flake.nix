@@ -126,6 +126,11 @@
       url = "github:nix-community/neovim-nightly-overlay";
     };
 
+    # Instant direnv loading.
+    direnv-instant = {
+      url = "github:Mic92/direnv-instant";
+    };
+
     # Music stuff.
     musnix = {
       url = "github:musnix/musnix";
