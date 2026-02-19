@@ -25,6 +25,7 @@
     services = import ./services.nix;
     sound = import ./sound.nix;
     steam = import ./steam.nix;
+    system = import ./system.nix;
     time = import ./time.nix;
     user = import ./user.nix;
     virtualization = import ./virtualization.nix;

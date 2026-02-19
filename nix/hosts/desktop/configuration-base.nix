@@ -31,6 +31,7 @@
     inputs.self.modules.nixos.security
     inputs.self.modules.nixos.services
     inputs.self.modules.nixos.sound
+    inputs.self.modules.nixos.system
     inputs.self.modules.nixos.time
     inputs.self.modules.nixos.user
     inputs.self.modules.nixos.virtualization

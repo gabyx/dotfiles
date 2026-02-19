@@ -34,7 +34,7 @@
   pcre2,
   xorg, # To access xorg.libpthreadstubs and xorg.xproto
   libuuid,
-  libxcb,
+  libxcb-util,
   mesa,
 }:
 let
@@ -100,11 +100,11 @@ stdenv.mkDerivation {
     glib
     pcre
     pcre2
-    xorg.libX11
-    xorg.libxcb
-    xorg.libXrandr
-    xorg.libXrender
-    xorg.xorgproto
+    libx11
+    libxcb-util
+    libxrandr
+    libxrender
+    xorgproto
     libuuid
     libxcb
     mesa
