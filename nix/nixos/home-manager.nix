@@ -1,8 +1,10 @@
 {
   config,
   inputs,
+  inputs',
   outputs,
   system,
+  packages,
   pkgs,
   pkgsUnstable,
   ...
@@ -19,8 +21,10 @@
     home-manager.extraSpecialArgs = {
       inherit
         inputs
+        inputs'
         outputs
         system
+        packages
         pkgs
         pkgsUnstable
         ;

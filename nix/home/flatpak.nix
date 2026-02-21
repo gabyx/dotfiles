@@ -58,15 +58,15 @@
       # {
       #   appId = "org.mozilla.firefox";
       # }
-      {
-        appId = "com.brave.Browser";
-      }
+      # {
+      #   appId = "com.brave.Browser";
+      # }
       # {
       #   appId = "com.visualstudio.code";
       # }
-      # {
-      #   appId = "com.slack.Slack";
-      # }
+      {
+        appId = "com.slack.Slack";
+      }
     ];
   };
 }

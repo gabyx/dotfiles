@@ -1,58 +1,83 @@
 {
   inputs,
+  withSystem,
   self,
   ...
 }:
 let
   outputs = self;
 
-  mkSystem =
-    system: name:
-    inputs.nixpkgs.lib.nixosSystem {
-      inherit system;
-      pkgs = outputs.lib.importPkgs system;
+  # Creates a nixoConfiguration or an image.
+  mk =
+    name:
+    args@{ system, ... }:
+    create:
+    # Wrap flake-parts arguments into...
+    withSystem system (
+      { config, inputs', ... }:
+      create (
+        args
+        // {
+          # Set packages.
+          pkgs = outputs.lib.importPkgs system;
 
-      modules = [
-        ./${name}/configuration.nix
-      ];
+          # Import all modules.
+          modules = [
+            ./${name}/configuration.nix
+          ];
 
-      specialArgs = {
-        inherit system inputs outputs;
-        pkgsUnstable = outputs.lib.importPkgsUnstable system;
-      };
-    };
+          # Set special arguments to the modules.
+          specialArgs = {
+            inherit
+              system
+              inputs
+              outputs
+              ;
 
-  mkImage =
-    format: system: name:
-    inputs.nixos-generators.nixosGenerate {
-      pkgs = outputs.lib.importPkgs system;
+            # Flake parts inputs.
+            inherit inputs';
+            packages = config.packages;
 
-      inherit format system;
-      modules = [
-        ./${name}/configuration.nix
-      ];
+            pkgsUnstable = outputs.lib.importPkgsUnstable system;
+          };
+        }
+      )
+    );
 
-      specialArgs = {
-        inherit system inputs outputs;
-        pkgsUnstable = outputs.lib.importPkgsUnstable system;
-      };
-
-    };
+  mkSystem = name: args: mk name args inputs.nixpkgs.lib.nixosSystem;
+  mkImage = name: args: mk name args inputs.nixos-generators.nixosGenerate;
 
 in
 {
   flake.nixosConfigurations = {
-    desktop = mkSystem "x86_64-linux" "desktop";
-    desktop-music = mkSystem "x86_64-linux" "desktop-music";
-    tuxedo = mkSystem "x86_64-linux" "tuxedo-pulse-14";
-    vm = mkSystem "x86_64-linux" "vm";
+    desktop = mkSystem "desktop" {
+      system = "x86_64-linux";
+    };
+    desktop-music = mkSystem "desktop-music" {
+      system = "x86_64-linux";
+    };
+    tuxedo = mkSystem "tuxedo-pulse-14" {
+      system = "x86_64-linux";
+    };
+    vm = mkSystem "vm" {
+      system = "x86_64-linux";
+    };
   };
 
   perSystem =
-    { ... }:
+    { system, ... }:
     {
-      packages.vm-image = mkImage "iso" "x86_64-linux" "vm-iso";
-      packages.desktop-image = mkImage "iso" "x86_64-linux" "desktop-iso";
-      packages.famhome-image = mkImage "raw-efi" "x86_64-linux" "famhome";
+      packages.vm-image = mkImage "vm-iso" {
+        inherit system;
+        format = "iso";
+      };
+      packages.desktop-image = mkImage "desktop-iso" {
+        inherit system;
+        format = "iso";
+      };
+      packages.famhome-image = mkImage "famhome" {
+        inherit system;
+        format = "raw-efi";
+      };
     };
 }

@@ -45,7 +45,7 @@
   inputs = {
     self = {
       submodules = true;
-      lfs = true;
+      # lfs = true;
     };
 
     import-tree = {
@@ -140,6 +140,13 @@
     # Flatpak stuff.
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
+    };
+
+    jail-nix.url = "sourcehut:~alexdavid/jail.nix";
+
+    nixpak = {
+      url = "github:nixpak/nixpak";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Age Encryption Tool for NixOS.
