@@ -24,7 +24,7 @@
           mkdir $out
           ln -s ${jailed}/bin $out/bin
           mkdir -p $out/share
-          ln -s ${pkg}/share/icon $out/share/icon
+          # ln -s ${pkg}/share/icon $out/share/icon
 
           ln -s ${
             pkgs.writeTextFile {
@@ -43,8 +43,8 @@
         '';
 
       signal-jailed = jailApp {
-        name = "signal-jailed";
-        pkg = pkgsUnstable.signal-desktop;
+        name = "signal-desktop";
+        pkg = pkgsUnstable.signal-desktop-bin;
         args = "-s %U";
         desktop = {
           Terminal = "false";
@@ -60,7 +60,7 @@
             gui
             gpu
             camera
-
+            open-urls-in-browser
             (readwrite "/run/dbus/system_bus_socket")
             (readwrite (noescape "~/.config/Signal"))
             (try-readwrite (noescape "~/Downloads"))

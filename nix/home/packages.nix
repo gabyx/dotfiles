@@ -145,7 +145,8 @@ in
     pkgsUnstable.bitwarden-desktop # Password manager
     pkgsUnstable.bitwarden-cli
     pkgsUnstable.bazecor # Dygma Defy Keyboard.
-    packages.signal-jailed # Messaging app
+    pkgsUnstable.signal-desktop-bin
+    # packages.signal-jailed # Messaging app
     pkgsUnstable.element-desktop # Matrix client.
     pkgsUnstable.slack # Messaging app
     pkgsUnstable.ffmpeg # Movie converter

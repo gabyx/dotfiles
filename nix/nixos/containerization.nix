@@ -86,7 +86,7 @@
 
   # Packages
   environment.systemPackages = [
-    pkgs.podman-compose
+    pkgs.docker-compose
   ];
   # ===========================================================================
 }
