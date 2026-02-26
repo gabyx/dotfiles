@@ -44,7 +44,7 @@
 
   inputs = {
     self = {
-      submodules = true;
+      submodules = false;
       lfs = true;
     };
 
