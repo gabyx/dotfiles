@@ -45,7 +45,7 @@
   inputs = {
     self = {
       submodules = true;
-      # lfs = true;
+      lfs = true;
     };
 
     import-tree = {
