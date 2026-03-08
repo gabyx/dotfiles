@@ -116,7 +116,7 @@ in
       };
     };
 
-  config =
+  config = lib.mkIf (cfg.enable) (
     let
       mkSysPath =
         vol: dir:
@@ -472,5 +472,6 @@ in
       );
 
       environment.systemPackages = [ ssh-backup ];
-    };
+    }
+  );
 }

@@ -19,6 +19,18 @@
         }:
         let
           jailed = jailIt name pkg jail;
+          desktopFile = pkgs.writeTextFile {
+            name = "${name}-desktop";
+            destination = "/applications/${name}.desktop";
+            text = ''
+              [Desktop Entry]
+              Name=${name} (jailed)
+              Exec=${lib.getExe jailed} ${args}
+              Terminal=false
+              Type=Application
+              ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k}=${v}") desktop)}
+            '';
+          };
         in
         pkgs.runCommand name { } ''
           mkdir $out
@@ -26,20 +38,7 @@
           mkdir -p $out/share
           # ln -s ${pkg}/share/icon $out/share/icon
 
-          ln -s ${
-            pkgs.writeTextFile {
-              name = "${name}-desktop";
-              destination = "/applications/${name}.desktop";
-              text = ''
-                [Desktop Entry]
-                Name=${name} (jailed)
-                Exec=${lib.getExe jailed} ${args}
-                Terminal=false
-                Type=Application
-                ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k}=${v}") desktop)}
-              '';
-            }
-          } $out/share/
+          ln -s ${desktopFile} $out/share/
         '';
 
       signal-jailed = jailApp {
