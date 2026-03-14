@@ -1,6 +1,5 @@
 {
   inputs,
-  lib,
   ...
 }:
 {
@@ -11,6 +10,7 @@
 
     inputs.self.modules.nixos.secrets
     inputs.self.modules.nixos.bluetooth
+    inputs.self.modules.nixos.apfs
 
     ./settings.nix
     ../common/yubikey.nix

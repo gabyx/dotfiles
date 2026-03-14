@@ -2,6 +2,7 @@
 {
   flake.modules.nixos = {
     adblock-dns = import ./adblock-dns.nix;
+    apfs = import ./apfs.nix;
     backup = import ./backup.nix;
     bluetooth = import ./bluetooth.nix;
     containerization = import ./containerization.nix;
