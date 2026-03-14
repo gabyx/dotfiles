@@ -89,9 +89,9 @@ map m
 
 map au unarchive
 
-
 # Basic Functions
-map <enter> $$EDITOR_READONLY "$f"
+map <esc> updir
+map O $$EDITOR_READONLY "$f"
 map o mimeopen
 map . set hidden!
 map dd trash
@@ -107,10 +107,11 @@ map md mkdir
 map C clear
 
 # Movement
+map gh cd ~
 map gD cd ~/Documents
 map gd cd ~/Downloads
 map gp cd ~/Pictures
-map gr cd ~/Desktop/Repos
+map gr cd /persist/repos
 map gc cd ~/.config
-map gs cd ~/.local/bin
+map gx cd ~/.local/share/chezmoi
 map gt cd ~/.local/share/Trash/files
