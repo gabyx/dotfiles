@@ -129,6 +129,7 @@ in
         pkgsUnstable.gnupg
         pkgsUnstable.yubikey-manager # cli-based authenticator tool. accessed via `ykman`
         pkgs.pam_u2f # for yubikey with sudo
+        pkgs.libfido2 # For fido2-token.
         pkgsUnstable.yubioath-flutter # gui-based authenticator tool. yubioath-desktop on older nixpkg channels
 
         yubikey-up
