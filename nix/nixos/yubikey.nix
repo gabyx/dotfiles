@@ -173,7 +173,9 @@ in
           enable = true;
           settings = {
             cue = true; # Tells user they need to press the button
-            authFile = "${homeDir}/.config/yubikey/u2f_keys";
+            authfile = "${homeDir}/.config/yubikey/u2f_keys";
+            # To debug add this.
+            # debug = true;
           };
         };
         services = {
