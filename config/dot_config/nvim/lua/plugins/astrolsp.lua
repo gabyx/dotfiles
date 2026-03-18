@@ -100,7 +100,7 @@ return {
                         },
                         buildFlags = {
                             "-tags",
-                            "test,unittest,integration,test_integration,test_endpoints",
+                            "test,test_small,test_large,test_all,unittest,integration,test_integration,test_endpoints",
                         },
                         completeUnimported = true,
                         diagnosticsDelay = "500ms",
