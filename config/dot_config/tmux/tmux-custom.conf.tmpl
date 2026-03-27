@@ -1,0 +1,261 @@
+#############################
+# Bindings
+#############################
+# Use | and - to split a window vertically and horizontally instead of " and % respoectively
+unbind '"'
+unbind %
+bind-key \\ split-window -h -c "#{pane_current_path}"
+bind-key - split-window -v -c "#{pane_current_path}"
+
+# Open ~/.tmux.conf in vim and reload settings on quit
+unbind e
+bind-key e new-window -n '~/.config/tmux/tmux.conf' "sh -c 'nvim ~/.config/tmux/tmux.conf && tmux source ~/.config/tmux/tmux.conf'"
+
+# Resize panes with Ctrl+Alt+hjkl
+bind-key -n 'C-M-h' resize-pane -L 2
+bind-key -n 'C-M-l' resize-pane -R 2
+bind-key -n 'C-M-k' resize-pane -U 2
+bind-key -n 'C-M-j' resize-pane -D 2
+
+
+# Smart pane switching with awareness of Vim splits.
+# See: https://github.com/christoomey/vim-tmux-navigator
+# decide whether we're in a Vim process
+# ======================================================
+is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
+    | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
+
+bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h' 'select-pane -L'
+bind-key -n 'C-j' if-shell "$is_vim" 'send-keys C-j' 'select-pane -D'
+bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k' 'select-pane -U'
+bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l' 'select-pane -R'
+
+tmux_version='$(tmux -V | sed -En "s/^tmux ([0-9]+(.[0-9]+)?).*/\1/p")'
+
+if-shell -b '[ "$(echo "$tmux_version < 3.0" | bc)" = 1 ]' \
+    "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\'  'select-pane -l'"
+if-shell -b '[ "$(echo "$tmux_version >= 3.0" | bc)" = 1 ]' \
+    "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'"
+
+# bind-key -n 'C-Space' if-shell "$is_vim" 'send-keys C-Space' 'select-pane -t:.+'
+bind-key -T copy-mode-vi 'C-h' select-pane -L
+bind-key -T copy-mode-vi 'C-j' select-pane -D
+bind-key -T copy-mode-vi 'C-k' select-pane -U
+bind-key -T copy-mode-vi 'C-l' select-pane -R
+bind-key -T copy-mode-vi 'C-\' select-pane -l
+# Confuses my typing in nvim.
+# bind-key -T copy-mode-vi 'C-Space' select-pane -t:.+
+# =====================================================
+
+# Copy-Pasta in Linux/MacOS
+# Install xclip on linux.
+setw -g mode-keys vi
+bind-key -T copy-mode-vi v send -X begin-selection
+{{- if eq .chezmoi.os "darwin" }}
+bind-key -T copy-mode-vi 'y' send -X copy-pipe-and-cancel 'pbcopy'
+bind-key -T copy-mode-vi Enter send -X copy-pipe-and-cancel 'pbcopy'
+bind -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel 'pbcopy'
+{{- else }}
+bind-key -T copy-mode-vi 'y' send -X copy-pipe-and-cancel 'xclip -se c -i'
+bind-key -T copy-mode-vi Enter send -X copy-pipe-and-cancel 'xclip -se c -i'
+bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel 'xclip -se c -i'
+{{- end }}
+bind-key P paste-buffer
+
+# Use r to quickly reload tmux settings
+unbind r
+bind-key r \
+	source-file ~/.config/tmux/tmux.conf \;\
+	display 'Reloaded tmux config'
+
+#############################
+# Settings
+#############################
+set -g default-terminal "tmux-256color"
+
+# Set support for reporting modifiers in `CSI u` mode
+set -g extended-keys on
+
+# Allow the tmux server to exist without any sessions!
+set exit-empty off
+
+# Escape time. https://superuser.com/a/942704/257360
+set-option -g escape-time 150
+
+# Automatically set window title
+set-window-option -g automatic-rename on
+set-option -g set-titles on
+
+# Focus events requested from terminal are passed through to application
+# Neovim wants this.
+set-option -g focus-event on
+
+# Set mouse on
+set-option -g mouse on
+
+# Refresh status line every 5 seconds - Good for when music is playing / update time etc
+set-option -g status-interval 5
+
+# Start window and pane indices at 1.
+set-option -g base-index 1
+set-option -g pane-base-index 0
+
+# Length of tmux status line
+set-option -g status-left-length 30
+set-option -g status-right-length 150
+
+set-option -g status "on"
+
+# Set 256 colours support for all terminal `$TERM` types.
+set-option -g terminal-features ',*:RGB'
+
+# Default statusbar color
+set-option -g status-style bg=colour237,fg=colour223 # bg=bg1, fg=fg1
+
+# Default window title colors
+set-window-option -g window-status-style bg=colour214,fg=colour237 # bg=yellow, fg=bg1
+
+# Default window with an activity alert
+set-window-option -g window-status-activity-style bg=colour237,fg=colour248 # bg=bg1, fg=fg3
+
+# Active window title colors
+set-window-option -g window-status-current-style bg=red,fg=colour237 # fg=bg1
+
+# Set pane border style
+set-option -g pane-border-lines heavy
+
+# Set active pane border color
+set-option -g pane-active-border-style fg=colour214
+
+# Set inactive pane border color
+set-option -g pane-border-style fg=colour239
+
+# Message info
+set-option -g message-style bg=colour239,fg=colour223 # bg=bg2, fg=fg1
+
+# Writing commands inactive
+set-option -g message-command-style bg=colour239,fg=colour223 # bg=fg3, fg=bg1
+
+# Pane number display
+set-option -g display-panes-active-colour colour1 #fg2
+set-option -g display-panes-colour colour237 #bg1
+
+# Clock
+set-window-option -g clock-mode-colour colour109 #blue
+
+# Bell
+set-window-option -g window-status-bell-style bg=colour167,fg=colour235 # bg=red, fg=bg
+
+# Set the history limit so we get lots of scrollback.
+setw -g history-limit 10000
+
+# Copy-Paste mode into
+# set-option -g default-command "reattach-to-user-namespace -l zsh"
+
+##############################
+# Appearance and Statusbar
+##############################
+
+set-option -g status-left "\
+#[fg=colour7, bg=colour241]#{?client_prefix,#[bg=colour167],} ❐ #S \
+#[fg=colour241, bg=colour237]#{?client_prefix,#[fg=colour167],}#{?window_zoomed_flag, 🔍,}"
+
+set-option -g status-right "\
+#[fg=colour223, bg=colour237] #($TMUX_PLUGIN_MANAGER_PATH/tmux-mem-cpu-load/tmux-mem-cpu-load -a 0 -m 2 -l 237 -r 237 --powerline-right --interval 1) \
+#[fg=colour246, bg=colour237]  %b %d '%y\
+#[fg=colour109]  %H:%M \
+#[fg=colour248, bg=colour239]"
+
+set-window-option -g window-status-current-format "\
+#[fg=colour237, bg=colour214]\
+#[fg=colour239, bg=colour214] #I* \
+#[fg=colour239, bg=colour214, bold] #W \
+#[fg=colour214, bg=colour237]"
+
+set-window-option -g window-status-format "\
+#[fg=colour237,bg=colour239,noitalics]\
+#[fg=colour223,bg=colour239] #I \
+#[fg=colour223, bg=colour239] #W \
+#[fg=colour239, bg=colour237]"
+
+#############################
+# Tmux Vars
+#############################
+
+# $(echo $USER) - shows the current username
+# %a --> Day of week (Mon)
+# %A --> Day of week Expanded (Monday)
+
+# %b --> Month (Jan)
+# %d --> Day (31)
+# %Y --> Year (2017)
+
+# %D --> Month/Day/Year (12/31/2017)
+# %v --> Day-Month-Year (31-Dec-2017)
+
+# %r --> Hour:Min:Sec AM/PM (12:30:27 PM)
+# %T --> 24 Hour:Min:Sec (16:30:27)
+# %X --> Hour:Min:Sec (12:30:27)
+# %R --> 24 Hour:Min (16:30)
+# %H --> 24 Hour (16)
+# %l --> Hour (12)
+# %M --> Mins (30)
+# %S --> Seconds (09)
+# %p --> AM/PM (AM)
+
+# For a more complete list view: https://linux.die.net/man/3/strftime
+
+#colour0 (black)
+#colour1 (red)
+#colour2 (green)
+#colour3 (yellow)
+#colour4 (blue)
+#colour7 (white)
+#colour5 colour6 colour7 colour8 colour9 colour10 colour11 colour12 colour13 colour14 colour15 colour16 colour17
+
+#D ()
+#F ()
+#H (hostname)
+#I (window index)
+#P ()
+#S (session index)
+#T (pane title)
+#W (current task like vim if editing a file in vim or zsh if running zsh)
+
+##############################
+# Nesting Local and Remote
+# Sessions
+##############################
+# Session is considered to be remote when we SSH into host
+if-shell 'test -n "$SSH_CONNECTION"' \
+    'source-file ~/.config/tmux/tmux-remote.conf'
+
+##############################
+# Plugins Settings
+##############################
+{{- if ne .chezmoi.osRelease.id "nixos" }}
+source-file ~/.config/tmux/tmux-plugin-resurrect.conf
+source-file ~/.config/tmux/tmux-plugin-continuum.conf
+{{- end}}
+
+##############################
+# Plugins
+##############################
+{{- if ne .chezmoi.osRelease.id "nixos" }}
+# On NixOS we do not auto install plugins they are managed in
+# the NixOS config and loaded in `/etc/tmux.conf`.
+run ~/.config/tmux/scripts/install-tpm.sh
+
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @plugin 'tmux-plugins/tmux-cpu'
+set -g @plugin 'jimeh/tmuxifier'
+
+# Seamless navigation with `C-h/j/k/l` switching vim windows and tmux panes
+# Needs 'christoomey/vim-tmux-navigator' as Vim plugin.
+set -g @plugin 'christoomey/vim-tmux-navigator'
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.config/tmux/plugins/tpm/tpm'
+{{- end }}

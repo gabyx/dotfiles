@@ -1,0 +1,132 @@
+# Default config for sway
+#
+# Copy this to ~/.config/sway/config and edit it to your liking.
+#
+# Read `man 5 sway` for a complete reference.
+
+# Include default configs.
+include /etc/sway/config.d/*
+
+### Variables =================================================================
+# Variables can not be included in a `include` file since that does not set the
+# parent scopes.
+
+# Main modification key:
+# See `programmer` file.
+# Use Mod1 for Alt.
+# Use Mod2 for Super.
+set $mod Mod1
+
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+
+# Your preferred terminal emulator
+# ==================================================
+# Wezterm
+set $term wezterm start --always-new-process
+
+# # A wrapper script to start the terminal with additional env. variables.
+# # e.g. to jump directly into Tmux session.
+set $term-start-cmd wezterm start --always-new-process
+
+# Kitty
+# set $term kitty --single-instance
+# A wrapper script to start the terminal with additional env. variables.
+# e.g. to jump directly into Tmux session.
+# set $term-start-cmd kitty
+# set $term-start ~/.config/sway/scripts/start-term.sh
+
+# Terminal start.
+set $term-start ~/.config/sway/scripts/start-term.sh
+# ==================================================
+
+# Note: pass the final command to swaymsg so that the resulting window can be opened
+# on the original workspace that the command was run on.
+
+set $file-manager kitty -- zsh "-c" "lf"
+set $display-manager way-displays
+set $launcher-menu ~/.config/rofi/show-launcher-menu.sh
+set $power-menu ~/.config/rofi/show-power-menu.sh
+set $wireless-menu ~/.config/rofi/show-network-menu.sh --wireless
+set $network-menu ~/.config/rofi/show-network-menu.sh --editor
+set $bluetooth-menu rofi-bluetooth
+set $emoji-menu rofimoji --clipboarder wl-copy --action type copy --keybinding-copy Ctrl-y
+set $systemd-menu ROFI_SYSTEMD_TERM="wezterm start" rofi-systemd
+set $procs-menu kitty btop
+set $sound-menu pavucontrol
+set $calculator-menu qalculate-gtk
+set $password-menu swaymsg workspace \\$creds-ws
+set $screenshot-menu ~/.config/rofi/scripts/rofi-screenshot.sh
+set $screenrecord-menu ~/.config/rofi/scripts/rofi-screenrecord.sh
+set $color-picker-menu ~/.config/rofi/scripts/rofi-color-picker.sh
+
+set $brightness-up brightnessctl set "10%+"
+set $brightness-down brightnessctl set "10%-"
+
+set $clipboard 'copyq --start-server'
+set $clipboard-menu copyq toggle
+
+set $notifications "swaync"
+set $notification-menu "swaync-client -t -sw"
+
+set $nightshifter 'gammastep-indicator'
+
+# Special workspaces
+# Icons can be found at:
+# https://www.nerdfonts.com/cheat-sheet
+
+# Tmux workspaces.
+set $ws-1 1:1:  
+set $ws-2 2:2:  
+set $ws-3 3:3:  
+set $ws-4 4:4:  
+
+# Shell workspaces.
+set $ws-5 5:5:  
+set $ws-6 6:6:  
+
+# Applications workspaces.
+set $comm-ws 7:7:  
+set $ws-7 7:7:  
+set $comm signal-desktop
+set $comm-matrix element-desktop
+set $comm-slack slack
+
+set $mail-ws 8:8:  
+set $ws-8 8:8:  
+set $mail evolution
+
+set $web-ws 9:9:  
+set $ws-9 9:9:  
+set $web google-chrome-stable
+set $web-aux firefox
+
+set $creds-ws 10:0:  󱕴
+set $ws-10 10:0:  󱕴
+set $creds bitwarden
+
+# Default output display names.
+# If other setups are used.
+set $primaryDispHome 'Philips Consumer Electronics Company PHL 275E2F UHB2307008083'
+set $secondaryDispHome 'Dell Inc. DELL U2724DE 4TPGCP3'
+
+set $primaryDispWork 'Dell Inc. DELL U3421WE B6V1753'
+set $secondaryDispWork 'Dell Inc. DELL U3421WE B6V1753'
+
+### ===========================================================================
+
+# Only one file will be deployed and picked and included.
+include config-private
+include config-work
+
+include config-visual
+include config-idle
+include config-input
+include config-keybindings
+include config-applications
+include config-bar
+
+include config-startup

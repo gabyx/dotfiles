@@ -1,0 +1,500 @@
+body {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  background-color: #fff;
+  color: #3a3a3a;
+  border: none;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+div {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 1.3em;
+  line-height: 1.22;
+  font-weight: 700;
+  font-style: normal;
+  text-decoration: none;
+  border: none;
+  margin: 0.75em 0 0.25em;
+  padding: 0;
+}
+
+h2 {
+  font-size: 1.2em;
+  line-height: 1.3;
+  font-weight: 700;
+  font-style: normal;
+  text-decoration: none;
+  border: none;
+  margin: 1em 0 0.5em;
+  padding: 0;
+}
+
+h3 {
+  font-size: 1.125em;
+  font-weight: 700;
+  font-style: normal;
+  text-decoration: none;
+  border: none;
+  margin: 1em 0 0.4em;
+  padding: 0;
+}
+
+p {
+  border: none;
+  margin: 0.5em 0 1em;
+  padding: 0;
+}
+
+pre {
+  font-family: "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+  background-color: #efefef;
+  border-top: 2px solid #cfcfcf;
+  border-bottom: 2px solid #cfcfcf;
+  margin: 0.5em 0 1em;
+  padding: 2px;
+}
+
+blockquote {
+  padding-left: 6px;
+  border-left: 4px solid #cfcfcf;
+  margin: 0.5em 0 1em;
+}
+
+a {
+  font-weight: inherit;
+  font-style: inherit;
+  color: #3a3a3a;
+  text-decoration: underline;
+}
+
+code {
+  font-family: "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+  background-color: #efefef;
+}
+
+img {
+  border: none;
+}
+
+ul {
+  margin: 0.5em 0 1em 16px;
+  padding: 0;
+}
+
+ol {
+  margin: 0.5em 0 1em 22px;
+  padding: 0;
+}
+
+dl {
+  margin: 0.5em 0 1em;
+  padding: 0;
+}
+
+table {
+  border: 1px solid #cfcfcf;
+  border-collapse: separate;
+  border-spacing: 1px;
+  margin: 0.5em 0 1em;
+}
+
+th,
+td {
+  vertical-align: middle;
+  border: 1px solid #cfcfcf;
+  font-style: normal;
+  text-decoration: none;
+  padding: 2px 4px;
+}
+
+th {
+  text-align: center;
+  font-weight: 700;
+}
+
+td {
+  text-align: left;
+  font-weight: 400;
+}
+
+form {
+  margin: 0.5em 0 1em;
+}
+
+fieldset {
+  border: 1px solid #cfcfcf;
+  margin: 0.5em 0 1em;
+}
+
+div.listing {
+  margin-bottom: 1em;
+}
+
+div.listing pre {
+  margin-bottom: 0;
+  border-bottom: 1px solid #cfcfcf;
+}
+
+div.listing span.caption {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  background-color: #efefef;
+  border-bottom: 2px solid #cfcfcf;
+  padding: 2px 2px 0;
+}
+
+table.tdcenter td {
+  text-align: center;
+}
+
+span.tt {
+  font-family: "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+}
+
+span.pn {
+  font-style: italic;
+}
+
+div.object-left,
+div.object-right,
+div.object-center {
+  line-height: 1;
+  text-align: center;
+}
+
+div.object-left,
+div.object-right {
+  border: 1px solid #cfcfcf;
+  padding: 2px;
+}
+
+div.object-left {
+  float: left;
+  margin: 0 8px 2px 0;
+}
+
+div.object-right {
+  float: right;
+  margin: 0 0 2px 8px;
+}
+
+div.object-center {
+  border-top: 1px solid #cfcfcf;
+  border-bottom: 1px solid #cfcfcf;
+  border-left: none;
+  border-right: none;
+  margin: 0.5em auto 1em;
+  padding: 0.5em 0 0.25em;
+}
+
+div.object-left span.caption,
+div.object-right span.caption,
+div.object-center span.caption {
+  display: block;
+  font-size: 11px;
+  line-height: 1.4;
+  margin: 0.25em 0 0;
+}
+
+dl.footnotes dd {
+  margin-left: 2em;
+  margin-bottom: 1em;
+}
+
+div#page {
+  width: 896px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+div#header {
+  background: url(iwn7.png) no-repeat 0 0;
+  padding-top: 59px;
+  margin-top: 24px;
+}
+
+div#header ul {
+  margin: 0;
+  padding: 0 8px 1px;
+}
+
+div#header ul li {
+  list-style-type: none;
+  float: left;
+  margin-right: 10px;
+}
+
+div#header ul li.last {
+  float: none;
+}
+
+div#header div.header-bottom {
+  background: url(iwn7.png) no-repeat 0 -103px;
+  height: 6px;
+  line-height: 0;
+}
+
+div#sidebar {
+  float: right;
+  width: 192px;
+  margin-bottom: 24px;
+  margin-top: 24px;
+}
+
+div.sidebar-block {
+  background: url(iwn7.png) repeat-y -1592px 0;
+  margin-bottom: 24px;
+}
+
+div.sidebar-block div.sidebar-block-top {
+  background: url(iwn7.png) no-repeat -704px -208px;
+  height: 6px;
+}
+
+div.sidebar-block div.sidebar-block-header {
+  padding: 1px 8px 2px;
+}
+
+div.sidebar-block div.sidebar-block-header div.sidebar-block-header-bottom {
+  background: url(iwn7.png) no-repeat -712px -214px;
+  height: 3px;
+  clear: both;
+}
+
+div.sidebar-block div.sidebar-block-bottom {
+  background: url(iwn7.png) no-repeat -704px -220px;
+  height: 6px;
+  clear: both;
+  line-height: 0;
+}
+
+div#sidebar div.sidebar-block div.sidebar-block-content ul.flatlist li {
+  list-style-type: none;
+  border-bottom: 1px solid #cfcfcf;
+  padding: 2px 0;
+}
+
+div#sidebar div.sidebar-block div.sidebar-block-content a.profile-link {
+  font-size: 11px;
+  text-decoration: none;
+}
+
+div#main {
+  width: 680px;
+  overflow: hidden;
+  margin-right: 24px;
+}
+
+div.post div.post-top {
+  background: url(iwn7.png) no-repeat 0 -208px;
+  height: 6px;
+  line-height: 0;
+}
+
+div.post div.post-header {
+  padding: 0 8px 3px;
+}
+
+div.post div.post-header span.date {
+  float: right;
+  margin-left: 1em;
+  margin-top: 2px;
+}
+
+div.post div.post-header div.post-header-bottom {
+  background: url(iwn7.png) no-repeat -8px -214px;
+  height: 3px;
+  clear: both;
+  line-height: 0;
+}
+
+div.post div.post-footer {
+  clear: both;
+  padding: 0 8px;
+}
+
+div.post div.post-footer div.post-footer-top {
+  background: url(iwn7.png) no-repeat -8px -214px;
+  height: 3px;
+  line-height: 0;
+}
+
+div.post div.post-footer div.post-footer-content {
+  padding: 6px 1px;
+}
+
+div.post div.post-footer div.post-footer-content div.share-buttons {
+  float: left;
+  height: 16px;
+  margin-right: 8px;
+  margin-bottom: 6px;
+}
+
+div.post div.post-bottom {
+  background: url(iwn7.png) no-repeat 0 -220px;
+  height: 6px;
+  clear: both;
+  line-height: 0;
+}
+
+div#comments {
+  background: url(iwn7.png) repeat-y -900px 0;
+  margin-bottom: 24px;
+}
+
+div#comments div.comments-header {
+  background: url(iwn7.png) no-repeat 0 -232px;
+  margin-bottom: 12px;
+}
+
+div#comments div.comments-header h2 {
+  margin: 0;
+  padding: 16px 16px 0;
+}
+
+div#comments div.comments-header div.comments-header-bottom {
+  background: url(iwn7.png) no-repeat 0 -306px;
+  height: 10px;
+}
+
+div.comment,
+div.comment-form {
+  border-top: 1px solid #cfcfcf;
+  max-width: none;
+  line-height: 1.4;
+  margin: 0 2px 12px !important;
+}
+
+div.comment:first-child {
+  padding: 0 !important;
+}
+
+div.comment div.comment-header,
+div.comment-form div.comment-form-header {
+  background-image: none;
+  background-color: #efefef;
+  margin: 0;
+  padding: 4px 8px;
+}
+
+div.comment div.comment-content,
+div.comment-form div.comment-form-content {
+  padding: 4px 8px;
+}
+
+form#comment-form label {
+  display: block;
+}
+
+form#comment-form div.description {
+  margin-bottom: 8px;
+}
+
+div#comments div.comments-bottom {
+  background: url(iwn7.png) no-repeat 0 -220px;
+  height: 6px;
+}
+
+div#pager div.pager-top {
+  background: url(iwn7.png) no-repeat 0 -208px;
+  height: 6px;
+}
+
+div#pager div.pager-content {
+  text-align: center;
+  padding: 0 8px;
+}
+
+div#pager div.pager-bottom {
+  background: url(iwn7.png) no-repeat 0 -220px;
+  height: 6px;
+  clear: both;
+}
+
+div#footer {
+  background: url(iwn7.png) no-repeat 0 -112px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  clear: both;
+}
+
+div#footer div.footer-content {
+  font-size: 11px;
+  padding: 8px;
+}
+
+div#footer div.footer-content span.links {
+  margin-left: 24px;
+  float: right;
+}
+
+div#footer div.footer-bottom {
+  background: url(iwn7.png) no-repeat 0 -172px;
+  height: 34px;
+}
+
+small,
+input,
+textarea,
+dl.footnotes {
+  font-size: 11px;
+}
+
+div.listing p,
+div.sidebar-block div.sidebar-block-header h2,
+div#sidebar div.sidebar-block div.sidebar-block-content ul.flatlist,
+div.post div.post-header h1,
+div.comment div.comment-header h3,
+div.comment-form div.comment-form-header h3 {
+  margin: 0;
+}
+
+dl.footnotes dt,
+div#pager div.pager-content span#pager-newer-link {
+  float: left;
+}
+
+div#header ul li a,
+div#sidebar div.sidebar-block div.sidebar-block-content ul.flatlist a,
+div#sidebar div.sidebar-block div.sidebar-block-content .profile-data a,
+div.post div.post-header h1 a,
+div.comment div.comment-header h3 a,
+div.comment-form div.comment-form-header h3 a {
+  text-decoration: none;
+}
+
+div#header ul li a:hover,
+div#sidebar div.sidebar-block div.sidebar-block-content ul.flatlist a:hover,
+div#sidebar div.sidebar-block div.sidebar-block-content .profile-data a:hover,
+div#sidebar div.sidebar-block div.sidebar-block-content a.profile-link:hover,
+div.post div.post-header h1 a:hover {
+  text-decoration: underline;
+}
+
+div#sidebar div.sidebar-block div.sidebar-block-content,
+div.post div.post-content {
+  padding: 0 8px;
+}
+
+div.post,
+div#pager {
+  background: url(iwn7.png) repeat-y -900px 0;
+  margin-top: 24px;
+}
+
+div.post div.post-footer div.post-footer-content a.comment-link,
+form#comment-form input#edit-submit,
+div#pager div.pager-content span#pager-older-link {
+  float: right;
+}

@@ -1,0 +1,33 @@
+{
+  lib,
+  pkgs,
+  ...
+}:
+let
+  toml = pkgs.formats.toml { };
+
+  # containers storage settings.
+  # Use fuse-overlayfs instead of kernel overlay2.
+  storage-settings = {
+    storage = {
+      driver = "overlay"; # btrfs is also a thing.
+      # options.overlay = {
+      #   # mount_program = lib.getExe pkgs.fuse-overlayfs;
+      #   # mountopt = "nodev,fsync=0";
+      #   # force_mask = "shared";
+      # };
+    };
+  };
+in
+{
+  xdg.configFile."containers/storage.conf".source = toml.generate "storage.conf" storage-settings;
+
+  # Virt-manager settings.
+  # https://nixos.wiki/wiki/Virt-manager
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = [ "qemu:///system" ];
+      uris = [ "qemu:///system" ];
+    };
+  };
+}

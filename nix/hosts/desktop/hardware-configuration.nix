@@ -1,0 +1,103 @@
+{
+  modulesPath,
+  ...
+}:
+{
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/7d77bcf2-d5f4-4ff4-992d-de583df23032";
+    fsType = "btrfs";
+    options = [
+      "subvol=root"
+      "compress=zstd"
+      "noatime"
+    ];
+  };
+
+  boot.initrd.luks.devices."enc-physical-vol".device =
+    "/dev/disk/by-uuid/9cfdf03f-6872-499d-afd4-78fd74bd2e6b";
+
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/7d77bcf2-d5f4-4ff4-992d-de583df23032";
+    fsType = "btrfs";
+    options = [
+      "subvol=home"
+      "compress=zstd"
+      "noatime"
+    ];
+  };
+
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-uuid/7d77bcf2-d5f4-4ff4-992d-de583df23032";
+    fsType = "btrfs";
+    options = [
+      "subvol=nix"
+      "compress=zstd"
+      "noatime"
+    ];
+  };
+
+  fileSystems."/persist" = {
+    device = "/dev/disk/by-uuid/7d77bcf2-d5f4-4ff4-992d-de583df23032";
+    fsType = "btrfs";
+    options = [
+      "subvol=persist"
+      "compress=zstd"
+      "noatime"
+    ];
+  };
+
+  fileSystems."/persist/etc" = {
+    device = "/dev/disk/by-uuid/7d77bcf2-d5f4-4ff4-992d-de583df23032";
+    fsType = "btrfs";
+    depends = [ "/persist" ];
+    options = [
+      "subvol=persist/etc"
+      "compress=zstd"
+      "noatime"
+    ];
+    neededForBoot = true;
+  };
+
+  fileSystems."/var/log" = {
+    device = "/dev/disk/by-uuid/7d77bcf2-d5f4-4ff4-992d-de583df23032";
+    fsType = "btrfs";
+    options = [
+      "subvol=log"
+      "compress=zstd"
+      "noatime"
+    ];
+    neededForBoot = true;
+  };
+
+  fileSystems."/swap" = {
+    device = "/dev/disk/by-uuid/7d77bcf2-d5f4-4ff4-992d-de583df23032";
+    fsType = "btrfs";
+    options = [
+      "subvol=swap"
+      "defaults"
+      "nodatacow"
+      "noatime"
+    ];
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/EA55-50EF";
+    fsType = "vfat";
+  };
+
+  swapDevices = [ { device = "/swap/swapfile"; } ];
+
+  # Backup volume to handle with rectic.
+  # fileSystems."/mnt/linux-backup" = {
+  #   device = "/dev/disk/by-uuid/6bcddafe-25f6-4b27-ad82-0967b551cf94";
+  #   fsType = "btrfs";
+  #   options = ["defaults" "noatime"];
+  # };
+  # fileSystems."/mnt/linux-data" = {
+  #   device = "/dev/disk/by-uuid/EF9F-E912";
+  #   fsType = "exfat";
+  #   options = ["defaults" "noatime"];
+  # };
+}

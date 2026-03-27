@@ -1,0 +1,5 @@
+partial alphanumeric_keys modifier_keys
+xkb_symbols "programmer-defy" {
+    include "us"
+    name[Group1] = "Prog. Defy (US)";
+};

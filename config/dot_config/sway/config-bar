@@ -1,0 +1,5 @@
+bar {
+    swaybar_command waybar
+    strip_workspace_numbers no
+    strip_workspace_name no
+}

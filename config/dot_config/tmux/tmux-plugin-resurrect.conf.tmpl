@@ -1,0 +1,9 @@
+# Set location of the resurrect files.
+set -g @resurrect-dir '~/.local/share/tmux/resurrect'
+
+set -g @resurrect-capture-pane-contents 'on'
+set -g @resurrect-strategy-nvim 'session'
+
+{{- if eq .chezmoi.osRelease.id "nixos" }}
+set -g @resurrect-hook-post-save-all '~/.config/tmux/scripts/tmux-resurrect-hook.sh'
+{{- end }}

@@ -1,0 +1,36 @@
+# echo "Loading .zshenv ..."
+
+[ -n "$ZDOTDIR" ] || {
+    echo "You must set '$ZDOTDIR' to use this file."
+    return 0
+}
+
+{{- if eq .chezmoi.os "darwin" }}
+if [ -f "/etc/zprofile" ] && grep -q "path_helper" "/etc/zprofile"; then
+    echo "WARNING: 'path_helper' in '/etc/zprofile', please remove it." >&2
+    echo "Path helper 'path_helper' will execute after the one in this '~/.zshenv' file" >&2
+    echo "and potentially reorder paths." >&2
+fi
+
+if [ -x /usr/libexec/path_helper ]; then
+        eval "$(/usr/libexec/path_helper -s)"
+fi
+{{- end }}
+
+# Make path unique.
+typeset -U path PATH
+
+# Set locale.
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+# Set startship prompt location.
+export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
+
+source "$ZDOTDIR/.zshenv-tmux.zsh"
+source "$ZDOTDIR/.zshenv-homebrew.zsh"
+source "$ZDOTDIR/.zshenv-go.zsh"
+source "$ZDOTDIR/.zshenv-node.zsh"
+source "$ZDOTDIR/.zshenv-rust.zsh"
+source "$ZDOTDIR/.zshenv-kube.zsh"
+source "$ZDOTDIR/.zshenv-tools.zsh"

@@ -1,0 +1,36 @@
+# Title
+
+# Body
+
+
+# Footer
+Signed-off-by: Gabriel Nützi <gnuetzi@gmail.com>
+
+#######################
+# End of Commit Message
+#######################
+#
+#
+# Keep each commit line under 50 characters
+# Following conventional commits 1.0.0
+#
+# Use the prefix naming convention:
+# fix: patches a bug in the codebase
+# feat: introduces a new feature to the codebase
+# refactor: only used when refactoring code
+# docs: used when modifying/creating docs
+# build: when preparing for a build
+#
+# Commits should follow the format below:
+#
+# [Title]
+# <type>: In under 50 characters, description of the commit
+#
+# [Body]
+# Explain in detail what was done in this commit and
+# what this is supposed to achieve. Keep this section
+# under 72 characters per line.
+#
+# [Footer]
+# Use this section to add any PR/Ticket numbers that this
+# commit is solving or any co-authors. If none of these apply, # leave it empty.

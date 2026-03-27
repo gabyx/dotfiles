@@ -1,0 +1,13 @@
+### Idle Configuration ========================================================
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+# Also disable grace when going to sleep, because that must happen immediately when
+# sleep button is pressed. On timeout we use the config file in `~/.config/swaylock`.
+exec swayidle -w \
+         timeout 600 'swaylock -f' \
+         timeout 1200 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+         before-sleep 'swaylock --grace 0 --fade-in 0 --grace-no-mouse --grace-no-touch -f' \
+         lock 'swaymsg input "*" xkb_switch_layout 0'
+
+### ===========================================================================

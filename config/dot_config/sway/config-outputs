@@ -1,0 +1,8 @@
+# All outputs which we know and use.
+
+# If running in a VM, use the following.
+output Virtual-1 resolution 1600x900
+
+# Turn off all adaptive sync which might cause flickering.
+# way-display should actually handle this.
+# output * adaptive_sync off

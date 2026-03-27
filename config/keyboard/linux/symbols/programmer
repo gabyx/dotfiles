@@ -1,0 +1,40 @@
+partial alphanumeric_keys modifier_keys
+xkb_symbols "programmer" {
+
+    include "us"
+    name[Group1] = "Prog. Mx (US)";
+
+    // To see the symbold corresponding to the keycode generated check
+    // `xev` and grep inside `/usr/share/X11/xkb/keycodes directory`.
+
+    key <AE01> { [  exclam,      1,          U1F600,  U1F4A9 ]  };     // !  1  😀   💩
+    key <AE02> { [  at,          2,          U1F601,  U1F4AF ]  };     // @  2  😁   💯
+    key <AE03> { [  numbersign,  3,          U1F602          ]  };     // #  3  😂   🎉
+    key <AE04> { [  dollar,      4,          U1F606,  U1F4A3 ]  };     // $  4  😆   💣
+    key <AE05> { [  percent,     5,          U1F605          ]  };     // %  5  😅
+    key <AE06> { [  asciicircum, 6,          U1F607          ]  };     // ^  6  😇
+    key <AE07> { [  ampersand,   7,          U1F61D          ]  };     // &  7  😝
+    key <AE08> { [  asterisk,    8,          U1F914,  U1F680 ]  };     // *  8  🤔   🚀
+    key <AE09> { [  parenleft,   9,          U1F62B          ]  };     // (  9  😫
+    key <AE10> { [  parenright,  0,          U1F616          ]  };     // )  0  😖
+    key <AE11> { [  minus,       underscore, U1F631          ]  };     // -  _  😱
+    key <AE12> { [  equal,       plus,       U1F62D          ]  };     // =  +  😭
+
+    // Switch Tilde and GreateThan (next to L-Shift)
+    key <TLDE>  { [  U1F606,     U1F914  ]  };
+    key <LSGT>  { [  grave,      asciitilde  ]  };
+
+    // Right Ctrl acts as compose key.
+    // key <RCTL> { [ Multi_key ] };
+    // Left Ctrl acts as left Meta key.
+    // key <LCTL> { [ Hyper_L ] };
+    // key <RALT> { [ Meta_L ] };
+
+    // Switch modifiers.
+    // modifier_map Shift { Shift_L, Shift_R };
+    // modifier_map Control { Control_L };
+    // modifier_map Mod1 { Alt_L, Alt_R };
+    // modifier_map Mod4 { Super_L, Super_R, Shift_L };
+    // modifier_map Mod2 { Hyper_L, Hyper_R };
+    // modifier_map Mod2 { Meta_L };
+};

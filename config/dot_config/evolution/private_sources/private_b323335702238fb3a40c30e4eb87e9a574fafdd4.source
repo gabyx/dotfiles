@@ -1,0 +1,7 @@
+[Data Source]
+DisplayName=SDSC
+Enabled=true
+Parent=
+
+[Mail Signature]
+MimeType=text/html

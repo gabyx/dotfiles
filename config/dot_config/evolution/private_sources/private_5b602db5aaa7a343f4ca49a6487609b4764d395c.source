@@ -1,0 +1,61 @@
+[Data Source]
+DisplayName=gabriel.nuetzi@sdsc.ethz.ch
+Enabled=true
+Parent=526f45ba93fb539462a35f016872acd5f808ec98
+
+[Mail Submission]
+SentFolder=folder://8ab84720074a14261b1ca7e3cb06877e74b53852/Sent%20Items
+TransportUid=1f8aea06514a5e5242470d74a885b61cde31fdb4
+RepliesToOriginFolder=false
+UseSentFolder=true
+
+[Mail Composition]
+Bcc=
+Cc=
+DraftsFolder=folder://8ab84720074a14261b1ca7e3cb06877e74b53852/Drafts
+ReplyStyle=default
+SignImip=true
+TemplatesFolder=folder://8ab84720074a14261b1ca7e3cb06877e74b53852/Templates
+StartBottom=inconsistent
+TopSignature=inconsistent
+Language=
+
+[Mail Identity]
+Address=gabriel.nuetzi@sdsc.ethz.ch
+Aliases=
+Name=gabriel.nuetzi@sdsc.ethz.ch
+Organization=
+ReplyTo=
+SignatureUid=none
+
+[Pretty Good Privacy (OpenPGP)]
+AlwaysTrust=false
+EncryptToSelf=true
+KeyId=37A5F59C07097058
+SigningAlgorithm=
+SignByDefault=true
+EncryptByDefault=false
+PreferInline=false
+LocateKeys=true
+SendPublicKey=true
+SendPreferEncrypt=true
+AskSendPublicKey=false
+
+[Message Disposition Notifications]
+ResponsePolicy=ask
+
+[Secure MIME (S/MIME)]
+EncryptionCertificate=
+EncryptByDefault=false
+EncryptToSelf=true
+SigningAlgorithm=
+SigningCertificate=
+SignByDefault=false
+
+[Microsoft365 Folder]
+Id=
+IsDefault=false
+GroupId=
+DisplayName=
+Color=
+MaxPeople=100

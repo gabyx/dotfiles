@@ -1,0 +1,17 @@
+workspace $ws-1 output $primaryDisp
+workspace $ws-2 output $primaryDisp
+workspace $ws-3 output $primaryDisp
+workspace $ws-4 output $primaryDisp
+workspace $ws-5 output $primaryDisp
+workspace $ws-6 output $primaryDisp
+
+# Assign the special workspaces to second monitor.
+workspace $comm-ws  output $secondaryDisp
+workspace $mail-ws  output $secondaryDisp
+workspace $web-ws   output $secondaryDisp
+workspace $creds-ws output $secondaryDisp
+
+# Assign an empty auxillary to any laptop display
+# Fixes to avoid having an empty `1` workspace colliding with
+# our `1`.
+workspace "Empty" output eDP-1

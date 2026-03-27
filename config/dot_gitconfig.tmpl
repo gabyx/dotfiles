@@ -1,0 +1,80 @@
+[core]
+    editor = nvim
+    ignorecase = false
+    autocrlf = false
+    symlinks = true
+    longpaths = true
+    abbrev = 10
+    fsmonitor = false
+    pager = delta
+    excludeFiles = {{ .git.configPath }}/gitignore
+[user]
+    name = {{ .git.userName | quote }}
+    email = {{ .git.userEmail | quote }}
+    signingkey = {{ .gpg.defaultKeyFingerprint }}
+[commit]
+    gpgsign = true
+    template = {{ .git.configPath }}/commit-template.txt
+[tag]
+    gpgsign = true
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+[push]
+    autoSetupRemote = true
+    default = upstream
+    followTags = false
+[include]
+    path = {{ .git.configPath }}/gitconfig-shared
+    path = {{ .git.configPath }}/gitconfig-tools
+    path = {{ .git.configPath }}/gitconfig-delta
+    path = {{ .git.configPath }}/gitconfig-tig
+[delta]
+    features = gabyx
+[alias]
+{{- if .git.githooksPackaged }}
+    hooks = !\"githooks-cli\"
+{{- else }}
+    hooks = !\"{{ .chezmoi.homeDir }}/.githooks/bin/githooks-cli\"
+{{- end }}
+[githooks]
+    installDir = {{ .chezmoi.homeDir }}/.githooks
+    cloneUrl = {{ .git.githooksCloneURL }}
+    cloneBranch = {{ .git.githooksCloneBranch }}
+	installMode = manual
+	pathForUseCoreHooksPath = {{ .chezmoi.homeDir }}/.githooks/templates/hooks
+{{- if .git.githooksPackaged }}
+    runner = githooks-runner
+    dialog = githooks-dialog
+{{- else }}
+    runner = {{ .chezmoi.homeDir }}/.githooks/bin/githooks-runner
+    dialog = {{ .chezmoi.homeDir }}/.githooks/bin/githooks-dialog
+{{- end }}
+    maintainedHooks = !all, applypatch-msg, pre-applypatch, post-applypatch, pre-commit, pre-merge-commit, prepare-commit-msg, commit-msg, post-commit, pre-rebase, post-checkout, post-merge, pre-push, post-rewrite
+	updateCheckEnabled = true
+    containerizedHooksEnabled = true
+    containerManager = "podman,docker"
+[init]
+    defaultBranch = main
+[filter "lfs"]
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+[diff]
+    tool = {{ .git.diffTool }}
+    guitool = {{ .git.diffTool }}
+    colorMoved = default
+[difftool]
+    prompt = false
+[merge]
+    tool = {{ .git.mergeTool }}
+    guitool = {{ .git.mergeTool }}
+    conflictstyle = diff3
+[mergetool]
+    prompt = false
+[pull]
+    ff = only
+[color]
+    ui = true
+[status]
+    showUntrackedFiles = all

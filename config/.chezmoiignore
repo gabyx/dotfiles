@@ -1,0 +1,58 @@
+README.md
+.editorconfig
+.prettierrc
+.gitignore
+.secrets
+
+keyboard
+common
+docs
+
+.config/chezmoi
+.config/element
+
+{{- if ne .chezmoi.os "darwin" }}
+# Ignore if not on darwin
+.config/skhd
+.config/spacebar
+.config/karabiner
+.config/yabai
+{{- end }}
+
+{{- if ne .chezmoi.os "linux" }}
+# Ignore if not on linux
+.face
+.config/Bazecor
+.config/flashfocus
+.config/hypr
+.config/mako
+.config/rofi
+.config/avizo
+.config/sway
+.config/swaylock
+.config/swaync
+.config/wallpapers
+.config/fontconfig
+.config/nextmeeting
+.config/goa-1.0
+.config/evolution
+{{- end }}
+
+{{- if eq .chezmoi.osRelease.id "nixos" }}
+# Ignore only on NixOS
+.config/tmux/tmux.conf
+{{- end }}
+
+# Evolution (ignore after apply)
+.config/evolution/sources
+.config/goa-1.0
+
+# Google Chrome Bookmarks
+.config/google-chrome
+
+# Switch display settings depending on work
+{{- if eq .workspace "private" }}
+.config/sway/config-work
+{{- else }}
+.config/sway/config-private
+{{- end }}

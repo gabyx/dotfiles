@@ -1,0 +1,66 @@
+{
+  pkgs,
+  ...
+}:
+{
+  ### Program Settings ========================================================
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  programs = {
+    # This ensures downloaded binaries not managed with NixOS
+    # can be run by forwarding the /lib64/ld-linux-x86-64.so.2 to the NixOS one.
+    nix-ld = {
+      enable = true;
+      # Libraries which become available by default to all programs.
+      libraries = [ ];
+    };
+
+    # Shell
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+    };
+
+    mtr.enable = true;
+
+    ssh = {
+      # We use this SSH agent instead of gnome.gcr-ssh-agent due
+      # to poor fido support.
+      startAgent = true;
+      extraConfig = ''
+        AddKeysToAgent = yes
+      '';
+    };
+
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = false;
+    };
+
+    git = {
+      enable = true;
+      package = pkgs.gitFull;
+      config.credential.helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
+    };
+
+    # File Manager
+    thunar = {
+      enable = true;
+      plugins = with pkgs; [
+        xfce.thunar-archive-plugin # for archives.
+        xfce.tumbler # for image thumbnails.
+        xfce.thunar-volman
+      ];
+    };
+
+    # Crendential Manager.
+    seahorse.enable = true;
+
+    # Email.
+    evolution = {
+      enable = true;
+      plugins = with pkgs; [ evolution-ews ];
+    };
+  };
+  # ===========================================================================
+}

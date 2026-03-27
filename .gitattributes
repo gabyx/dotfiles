@@ -1,0 +1,104 @@
+
+# Attribute file for assigning key=value pairs to paths.
+# Any edit to this file needs to be reviewed by admins.
+# These attributes define among other things
+# which files are transferred into Git LFS when
+# staging/commiting.
+#
+# Please read the docs first: https://git-scm.com/docs/gitattributes
+#
+# Restrictions:
+#  - No backslashes for paths! (also on Windows)
+#  - For spaces in paths use `[[:space:]]`.
+#
+
+# Overall LF lineendings for the
+# following files.
+# ===============================
+* text=auto eol=lf
+
+# Default attribute patterns for common binary files
+# which should be stored in Git LFS.
+# ==================================================
+# Images
+*.[Ii][Cc][Oo] filter=lfs diff=lfs merge=lfs -text
+*.[Jj][Pp][Gg] filter=lfs diff=lfs merge=lfs -text
+*.[Jj][Pp][Ee][Gg] filter=lfs diff=lfs merge=lfs -text
+*.[Pp][Nn][Gg] filter=lfs diff=lfs merge=lfs -text
+*.[Gg][Ii][Ff] filter=lfs diff=lfs merge=lfs -text
+*.[Tt][Ii][Ff] filter=lfs diff=lfs merge=lfs -text
+*.[Tt][Ii][Ff][Ff] filter=lfs diff=lfs merge=lfs -text
+*.[Pp][Ss][Dd] filter=lfs diff=lfs merge=lfs -text
+*.[Aa][Ii] filter=lfs diff=lfs merge=lfs -text
+
+# Media
+*.[Pp][Dd][Ff] filter=lfs diff=lfs merge=lfs -text
+
+# Video/Audio
+*.[Mm][Oo][Vv] filter=lfs diff=lfs merge=lfs -text
+*.[Mm][Pp]4 filter=lfs diff=lfs merge=lfs -text
+*.[Mm][Pp]2 filter=lfs diff=lfs merge=lfs -text
+*.[Mm]4[Vv] filter=lfs diff=lfs merge=lfs -text
+*.[Ww][Mm][Vv] filter=lfs diff=lfs merge=lfs -text
+*.[Ww][Mm][Vv] filter=lfs diff=lfs merge=lfs -text
+*.[Mm][Pp][Ee] filter=lfs diff=lfs merge=lfs -text
+*.[Mm][Pp][Gg] filter=lfs diff=lfs merge=lfs -text
+*.[Mm][Pp][Ee][Gg] filter=lfs diff=lfs merge=lfs -text
+*.[Aa][Vv][Ii] filter=lfs diff=lfs merge=lfs -text
+*.[Ww][Ee][Bb][Mm] filter=lfs diff=lfs merge=lfs -text
+*.[Oo][Gg][Gg] filter=lfs diff=lfs merge=lfs -text
+*.[Mm][Pp]3 filter=lfs diff=lfs merge=lfs -text
+*.[Ww][Aa][Vv] filter=lfs diff=lfs merge=lfs -text
+
+# MS Office
+*.[Dd][Oo][Cc] filter=lfs diff=lfs merge=lfs -text
+*.[Dd][Oo][Cc][Xx] filter=lfs diff=lfs merge=lfs -text
+*.[Pp][Pp][Tt] filter=lfs diff=lfs merge=lfs -text
+*.[Pp][Pp][Tt][Xx] filter=lfs diff=lfs merge=lfs -text
+*.[Xx][Ll][Ss] filter=lfs diff=lfs merge=lfs -text
+*.[Xx][Ll][Ss][Xx] filter=lfs diff=lfs merge=lfs -text
+*.[Dd][Oo][Tt][Xx] filter=lfs diff=lfs merge=lfs -text
+
+# Fonts
+*.[Tt][Tt][Ff] filter=lfs diff=lfs merge=lfs -text
+*.[Oo][Tt][Ff] filter=lfs diff=lfs merge=lfs -text
+
+# Data Zips
+*.[Zz][Ii][Pp] filter=lfs diff=lfs merge=lfs -text
+*.[Zz] filter=lfs diff=lfs merge=lfs -text
+*.[Gg][Zz] filter=lfs diff=lfs merge=lfs -text
+*.[Tt][Aa][Rr] filter=lfs diff=lfs merge=lfs -text
+*.[Tt][Gg][Zz] filter=lfs diff=lfs merge=lfs -text
+*.[Zz][Ii][Pp] filter=lfs diff=lfs merge=lfs -text
+*.[Bb][Zz]2 filter=lfs diff=lfs merge=lfs -text
+*.[Ll][Zz][Mm][Aa] filter=lfs diff=lfs merge=lfs -text
+*.[Ll][Zz] filter=lfs diff=lfs merge=lfs -text
+*.[Ll][Zz]4 filter=lfs diff=lfs merge=lfs -text
+*.7[Zz] filter=lfs diff=lfs merge=lfs -text
+*.[Ss]7[Zz] filter=lfs diff=lfs merge=lfs -text
+*.[Rr][Aa][Rr] filter=lfs diff=lfs merge=lfs -text
+*.[Bb][Zz][Ii][Pp] filter=lfs diff=lfs merge=lfs -text
+
+# Packages
+*.[Xx][Pp][Ii] filter=lfs diff=lfs merge=lfs -text
+*.[Dd][Mm][Gg] filter=lfs diff=lfs merge=lfs -text
+*.[Ii][Mm][Gg] filter=lfs diff=lfs merge=lfs -text
+*.[Ii][Ss][Oo] filter=lfs diff=lfs merge=lfs -text
+*.[Ww][Ii][Mm] filter=lfs diff=lfs merge=lfs -text
+*.[Ss][Ww][Mm] filter=lfs diff=lfs merge=lfs -text
+*.[Ee][Ss][Dd] filter=lfs diff=lfs merge=lfs -text
+*.[Mm][Ss][Ii] filter=lfs diff=lfs merge=lfs -text
+*.[Pp][Kk][Gg] filter=lfs diff=lfs merge=lfs -text
+*.[Mm][Pp][Kk][Gg] filter=lfs diff=lfs merge=lfs -text
+*.[Dd][Ee][Bb] filter=lfs diff=lfs merge=lfs -text
+*.[Rr][Pp][Mm] filter=lfs diff=lfs merge=lfs -text
+*.[Jj][Aa][Rr] filter=lfs diff=lfs merge=lfs -text
+
+# Libraries
+*.[Pp][Dd][Bb] filter=lfs diff=lfs merge=lfs -text
+*.[Dd][Ll][Ll] filter=lfs diff=lfs merge=lfs -text
+*.[Ll][Ii][Bb] filter=lfs diff=lfs merge=lfs -text
+
+# General binary
+*.[Bb][Ii][Nn] filter=lfs diff=lfs merge=lfs -text
+*.[Ee][Xx][Ee] filter=lfs diff=lfs merge=lfs -text

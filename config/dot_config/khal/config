@@ -1,0 +1,24 @@
+[calendars]
+
+[[default]]
+color = "#DFAB25"
+path = ~/.local/share/khal/calendars/personal/*
+type = discover
+readonly = True
+
+[[work]]
+color = "#5EB7FF"
+path = ~/.local/share/khal/calendars/work/*
+type = discover
+readonly = True
+
+[locale]
+timeformat = %H:%M
+dateformat = %d/%m/%Y
+longdateformat = %d/%m/%Y
+datetimeformat = %d/%m/%Y %H:%M
+longdatetimeformat = %d/%m/%Y %H:%M
+
+[default]
+show_all_days = True
+highlight_event_days = True

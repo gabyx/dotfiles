@@ -1,0 +1,64 @@
+{{- $choices := list "private" "work" -}}
+{{- $workspace:= promptChoiceOnce . "workspace" "Workspace?" $choices "private" -}}
+
+encryption: age
+age:
+  # If you use here the encrypted key-file `key.txt.age`
+  # `age` run by chezmoi will always ask for the passphrase
+  # on every apply for every file. That is cumbersome.
+  # So we use here the unencrypted file which always gets deleted
+  # again after apply.
+  identities:
+    - ~/.config/chezmoi/key
+    # - ~/.config/chezmoi/fido2
+
+  # useIdentitiesForEncryption: true
+  recipient: age1messaj8qqseag2nuvr5d453qqnkszt3rmwldvpjw8fapd0xfkajs7x6mld
+
+diff:
+  pager: delta
+
+data:
+  # Any of `private`, `work`
+  workspace: {{ $workspace }}
+
+  gpg:
+    {{- if contains $workspace "work" }}
+    defaultKeyFingerprint: C2F8DE28F8AB11118966910837A5F59C07097058
+    {{- else }}
+    defaultKeyFingerprint: F24F52A877FC8A640A836E1DF9E3B0FF9D4E7A81
+    {{- end }}
+
+  # Git Setup.
+  git:
+    diffTool: nvim
+    mergeTool: nvim
+
+    configPath: {{ .chezmoi.homeDir }}/.config/git
+    toolsPath: {{ .chezmoi.homeDir }}/.config/git/tools
+
+    githooksPackaged: {{if eq .chezmoi.osRelease.id "nixos" }}true{{else}}false{{end}}
+    githooksCloneURL: https://github.com/gabyx/githooks.git
+    githooksCloneBranch: main
+
+    {{- if contains $workspace "work" }}
+    userEmail: gabriel.nuetzi@sdsc.ethz.ch
+    userName: Gabriel Nützi
+    {{- else }}
+    userEmail: gnuetzi@gmail.com
+    userName: Gabriel Nützi
+    {{- end }}
+
+  mail:
+    work:
+        userEmail: nuetzig@ethz.ch
+        email: gabriel.nuetzi@sdsc.ethz.ch
+    personal:
+        userEmail: gnuetzig@gmail.com
+        email: gnuetzig@gmail.com
+
+  calendar:
+    work:
+      exchange:
+        url: https://outlook.office365.com/EWS/Exchange.asmx
+        path: users/gabriel.nuetzi@sdsc.ethz.ch/calendar

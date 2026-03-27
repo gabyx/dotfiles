@@ -1,0 +1,7 @@
+# Add tmuxifier to the path.
+export TMUXIFIER_LAYOUT_PATH="$HOME/.config/tmux/layouts"
+
+{{- if ne .chezmoi.osRelease.id "nixos" }}
+# On NixOS we have installed tmuxifier over the package manager.
+export PATH="$HOME/.config/tmux/plugins/tmuxifier/bin:$PATH"
+{{- end }}

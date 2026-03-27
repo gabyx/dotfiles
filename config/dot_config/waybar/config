@@ -1,0 +1,336 @@
+// =============================================================================
+//
+// Waybar configuration
+//
+// Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
+//
+// =============================================================================
+
+{
+    // -------------------------------------------------------------------------
+    // Global configuration
+    // -------------------------------------------------------------------------
+
+    "layer": "top",
+    "position": "top",
+
+    // If height property would be not present, it'd be calculated dynamically
+    "height": 30,
+
+    "modules-left": [
+        "custom/launcher",
+        "sway/workspaces",
+        "sway/mode",
+        "sway/window",
+    ],
+    "modules-center": [
+        "custom/agenda",
+        "clock#date",
+        "clock#time",
+    ],
+
+    "modules-right": [
+        "tray",
+        "custom/calculator",
+        "custom/emoji",
+        "custom/password",
+        "custom/screenshot",
+        "custom/backup",
+        "backlight",
+        "memory",
+        "cpu",
+        "temperature",
+        "disk",
+        "custom/ssh",
+        "sway/language",
+        "custom/vpn",
+        "network",
+        "bluetooth",
+        "pulseaudio",
+        "battery",
+        "custom/notification",
+        "custom/powermenu",
+    ],
+
+
+    // -------------------------------------------------------------------------
+    // Modules
+    // -------------------------------------------------------------------------
+
+    "custom/calculator" : {
+        "format": " ",
+        "return-type": "json",
+        "exec": "~/.config/waybar/scripts/tooltip.sh 'Calculator'",
+        "interval": "once",
+        "on-click": "swaymsg exec \\$calculator-menu",
+        "tooltip": true
+    },
+
+    "custom/emoji" : {
+        "format": " ",
+        "return-type": "json",
+        "exec": "~/.config/waybar/scripts/tooltip.sh 'Symbols/Emojis'",
+        "interval": "once",
+        "on-click": "swaymsg exec \\$emoji-menu",
+        "tooltip": true
+    },
+
+    "custom/password" : {
+        "format": "󱕴 ",
+        "return-type": "json",
+        "exec": "~/.config/waybar/scripts/tooltip.sh 'Passwords'",
+        "interval": "once",
+        "on-click": "swaymsg exec \\$password-menu",
+        "tooltip": true
+    },
+
+    "custom/screenshot" : {
+        "format": "󰄀",
+        "return-type": "json",
+        "exec": "~/.config/waybar/scripts/tooltip.sh 'Screenshot'",
+        "interval": "once",
+        "on-click": "swaymsg exec \\$screenshot-menu",
+        "tooltip": true
+    },
+
+    "custom/ssh" : {
+        "format": "{icon}",
+        "return-type": "json",
+        "exec": "~/.config/waybar/scripts/ssh-connections.sh",
+        "interval": 5,
+        "format-icons": {
+           "none": "󰌺",
+           "some": "󰌹"
+        },
+        "tooltip": true,
+    },
+
+    "custom/backup" : {
+        "format": "{icon}",
+        "return-type": "json",
+        "exec": "~/.config/waybar/scripts/backup-watcher.sh",
+        "interval": 5,
+        "format-icons": {
+           "running": "󰦘",
+           "failure": "󰲼",
+           "success": "󰦕",
+        },
+        "tooltip": true,
+    },
+
+    "battery": {
+        "interval": 10,
+        "states": {
+            "warning": 30,
+            "critical": 15,
+            "supercritical": 8
+        },
+        // Connected to AC
+        "format": "  {icon}  {capacity}%", // Icon: bolt
+        // Not connected to AC
+        "format-discharging": "{icon}  {capacity}%",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "tooltip": true
+    },
+
+    "disk": {
+        "format": "  {percentage_used}%",
+        "format-alt": "  {percentage_used}% ",
+        "format-alt-click": "click-right",
+        "return-type": "json",
+        "on-click": "swaymsg exec \\$storage-menu",
+        "interval": 60,
+        "path": "/"
+    },
+
+    "clock#time": {
+        "interval": 1,
+        "format": "󰅐  {:%H:%M}",
+        "tooltip": false
+    },
+
+    "clock#date": {
+      "interval": 10,
+      "format": "  {:%e %b %Y}", // Icon: calendar-alt
+      "tooltip-format": "{:%e %B %Y}",
+      "on-click": "zenity --calendar"
+    },
+
+    "custom/agenda": {
+        "format": "{}",
+        "exec": "~/.config/waybar/scripts/nextmeeting-khal.py --config ~/.config/khal/nextmeeting-conf.json",
+        "on-click-right": "kitty -- /usr/bin/env bash -c ikhal",
+        "on-click": "~/.config/waybar/scripts/nextmeeting-khal.py --config ~/.config/khal/nextmeeting-conf.json --open-url",
+        "interval": 59,
+        "return-type": "json",
+        "tooltip": "true"
+    },
+
+    "cpu": {
+        "interval": 5,
+        "format": " {usage}%",
+        "states": {
+          "warning": 70,
+          "critical": 90
+        },
+        "on-click": "swaymsg exec \\$procs-menu",
+        "on-click-right": "swaymsg exec \\$systemd-menu"
+    },
+
+    "sway/language": {
+        "format": "  {long} {variant}",
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
+
+    },
+
+    "memory": {
+        "interval": 5,
+        "format": " {}%",
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
+    },
+
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": ["󰃞", "󰃟", "󰃠"],
+        "on-scroll-up": "swaymsg exec \\$brightness-up",
+        "on-scroll-down": "swaymsg exec \\$brightness-down"
+    },
+
+    "custom/vpn":{
+        "format": "{icon}",
+        "exec": "~/.config/waybar/scripts/vpn-status.sh",
+        "interval": 5,
+        "format-icons": ["",""],
+        "return-type": "json",
+        "tooltip": true,
+    },
+
+    "network": {
+        "interval": 5,
+        "format-wifi": "   {signalStrength}%", // Icon: wifi
+        "format-ethernet": "󰈀 ", // Icon: ethernet
+        "format-disconnected": "󰖪 ",
+        "tooltip-format": "{ifname}: {ipaddr}",
+        "tooltip-format-wifi": "{essid} | {signalStrength}%: {ipaddr}",
+        "on-click": "swaymsg exec \\$wireless-menu",
+        "on-click-right": "swaymsg exec \\$network-menu",
+    },
+
+    "sway/mode": {
+        "format": "<span style=\"italic\">  {}</span>", // Icon: expand-arrows-alt
+        "tooltip": false
+    },
+
+    "sway/window": {
+        "format": "{title}",
+        "max-length": 20,
+    },
+
+    "sway/workspaces": {
+        "window-rewrite": {},
+        "all-outputs": false,
+        "disable-scroll": false,
+        "smooth-scrolling-threshold": 10,
+        "format": "{icon}  {name}",
+        "format-icons": {
+            "1:www": "龜", // Icon: firefox-browser
+            "2:mail": "", // Icon: mail
+            "3:editor": "", // Icon: code
+            "4:terminals": "", // Icon: terminal
+            "5:portal": "", // Icon: terminal
+            "urgent": "",
+            "focused": "",
+            "default": ""
+        }
+    },
+
+    "pulseaudio": {
+        "scroll-step": 10,
+        "format": "{icon}  {volume}%",
+        "format-bluetooth": "{icon}  {volume}%",
+        "format-muted": "",
+        "format-icons": {
+            "headphones": "",
+            "handsfree": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },
+        "on-click": "swaymsg exec \\$sound-menu"
+    },
+
+    "temperature": {
+      "critical-threshold": 80,
+      "interval": 5,
+      "format": "{icon} {temperatureC}°C",
+      "format-icons": [
+          "", // Icon: temperature-empty
+          "", // Icon: temperature-quarter
+          "", // Icon: temperature-half
+          "", // Icon: temperature-three-quarters
+          ""  // Icon: temperature-full
+      ],
+      "tooltip": true
+    },
+
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+          "notification": "<span foreground='red'><sup></sup></span>",
+          "none": "",
+          "dnd-notification": "<span foreground='red'><sup></sup></span>",
+          "dnd-none": "",
+          "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+          "inhibited-none": "",
+          "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+          "dnd-inhibited-none": ""
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
+
+    "bluetooth": {
+        "format": "{icon}",
+        "format-alt": "bluetooth: {status}",
+        "interval": 30,
+        "format-icons": {
+             "enabled": "",
+             "disabled": "󰂲"
+        },
+        "on-click-right": "swaymsg exec \\$bluetooth-menu",
+        "tooltip-format": "{status}"
+    },
+
+    "custom/powermenu": {
+      "format": " ",
+      "on-click": "swaymsg exec \\$power-menu",
+      "tooltip": false
+    },
+
+    "custom/launcher": {
+      "format": " ",
+      "on-click": "swaymsg exec \\$launcher-menu",
+      "tooltip": false
+    },
+
+    "tray": {
+        "icon-size": 15,
+        "spacing": 7
+    }
+}

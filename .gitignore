@@ -1,0 +1,8 @@
+result
+build
+.env
+.direnv
+.devenv
+
+nixos-vm-efi*
+nixos.qcow2

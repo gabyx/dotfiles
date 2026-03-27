@@ -1,0 +1,133 @@
+# Runs only on interactive ZSH.
+# echo "Sourcing .zshrc ..."
+[ -n "$ZDOTDIR" ] || {
+    echo "You must set '$ZDOTDIR' to use this file."
+    return 0
+}
+
+# Load completion system
+autoload -U compinit; compinit
+
+# Zsh options: http://zsh.sourceforge.net/Doc/Release/Options.html
+HISTFILE="$ZDOTDIR/.zsh_history"
+HISTSIZE=10000000                # How many lines of history to keep in memory
+SAVEHIST=10000000                # Number of history entries to save to disk
+setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
+setopt HIST_BEEP                 # Beep when accessing nonexistent history.
+
+# Directory stack.
+setopt AUTO_PUSHD                # Push the current directory visited on the stack.
+setopt PUSHD_IGNORE_DUPS         # Do not store duplicates in the stack.
+setopt PUSHD_SILENT              # Do not print the directory stack after pushd or popd.
+
+# Set default editors.
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+# Settings for plugins.
+local ZSH_AUTOSUGGEST_USE_ASYNC=true
+local ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=247'
+local ZVM_LAZY_KEYBINDINGS=true
+local ZVM_INIT_MODE=sourcing # Somehow zsh-vi-mode overwrites CTRL+R. https://github.com/jeffreytse/zsh-vi-mode/issues/242
+
+# Installing plugins ===========================================================
+# Setup antidote if not yet setup.
+ANTIDOTE_HOME=$ZDOTDIR/.antidote/.plugins
+zstyle ':antidote:bundle' use-friendly-names 'yes'
+zstyle ':antidote:bundle' file "$ZDOTDIR/.zplugins"
+fpath+=("$ZDOTDIR/.antidote")
+autoload -Uz "$fpath[-1]/antidote"
+
+function install_plugins() {
+    zstyle -s ':antidote:bundle' file zsh_plugins_src
+    local zsh_plugins="$ZDOTDIR/.zsh_plugins.zsh"
+    local force_bundle="false"
+
+    # On the systems where I dont have antidote.
+    if [ ! -d "$ZDOTDIR/.antidote" ]; then
+        git clone --depth=1 --branch v1.10.3 \
+            --single-branch https://github.com/mattmc3/antidote.git \
+            "$ZDOTDIR/.antidote"
+
+        force_bundle="true"
+    fi
+
+    # Destination not existing -> force.
+    if [ ! -f "$zsh_plugins" ]; then
+        echo "Zsh plugin bundle file '$zsh_plugins' not existing."
+        force_bundle="true"
+    fi
+
+    # Ensure you have a plugins.txt file
+    # where you can add plugins.
+    [[ -f "$zsh_plugins_src" ]] || {
+        mkdir -p "$(dirname "$zsh_plugins_src")" &&
+        touch "$zsh_plugins_src"
+    }
+
+    if [ "$force_bundle" = "true" ]; then
+        echo "Generate static plugins file '$zsh_plugins' from '$zsh_plugins_src'..."
+        antidote bundle <"$ZDOTDIR/.zplugins" >"$zsh_plugins"
+    fi
+}
+
+# Install antidote and bundle plugins.
+install_plugins
+# Loading plugins
+source "$ZDOTDIR/.zsh_plugins.zsh"
+# ==============================================================================
+
+# Wezterm shell integration.
+if [ -n "$WEZTERM_EXECUTABLE" ]; then
+    if [ -f "$HOME/.config/wezterm/shell-integration.sh" ]; then
+        source "$HOME/.config/wezterm/shell-integration.sh"
+    fi
+fi
+
+# Promp setup.
+if [ -f "$ZDOTDIR/.p10k.zsh" ]; then
+    # To customize prompt, run 'p10k configure' or edit $ZDOTDIR/.p10k.zsh.
+    source "$ZDOTDIR/.p10k.zsh"
+fi
+
+# Tmux stuff.
+source "$HOME/.config/zsh/.zshrc-tmux.zsh"
+
+# Direnv hook.
+if command -v direnv &>/dev/null; then
+    eval "$(direnv hook zsh)"
+fi
+
+# Zoxide hook.
+if command -v zoxide &>/dev/null; then
+    eval "$(zoxide init zsh)"
+fi
+
+
+# Fuzzy Find integration
+if command -v fzf &>/dev/null; then
+    source "$HOME/.config/fzf/fzf.zsh"
+fi
+
+# Aliases
+source "$HOME/.config/shell/aliases.bash"
+source "$HOME/.config/shell/aliases.zsh"
+source "$HOME/.config/shell/functions.bash"
+
+# Python environment.
+# Do not activate python env by default.
+# source "$HOME/.config/zsh/.zshrc-python.zsh"
+
+# Keybindings
+source "$HOME/.config/zsh/.zshrc-keybindings.zsh"

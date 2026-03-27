@@ -1,0 +1,6 @@
+{{- if eq .chezmoi.osRelease.id "nixos" }}
+    gabyx::nixos_activate_python_environment default || true
+{{ else }}
+    if [ -f "$HOME/python-envs/default/bin/activate" ]; then
+        source "$HOME/python-envs/default/bin/activate"
+{{- end }}

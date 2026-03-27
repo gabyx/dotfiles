@@ -1,0 +1,374 @@
+/* =============================================================================
+ *
+ * Waybar configuration
+ *
+ * Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
+ *
+ * =========================================================================== */
+
+/* -----------------------------------------------------------------------------
+ * Keyframes
+ * -------------------------------------------------------------------------- */
+
+@keyframes blink-normal {
+  70% {
+    color: white;
+  }
+
+  to {
+    color: white;
+    background-color: #6495ed;
+  }
+}
+
+@keyframes blink-warning {
+  70% {
+    color: white;
+  }
+
+  to {
+    color: white;
+    background-color: orange;
+  }
+}
+
+@keyframes blink-critical {
+  70% {
+    color: white;
+  }
+
+  to {
+    color: white;
+    background-color: red;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+ * Base styles
+ * -------------------------------------------------------------------------- */
+
+/* Reset all styles */
+* {
+  border: none;
+  border-radius: 0;
+  min-height: 24pt;
+  margin: 0;
+  padding: 0;
+
+  font-family:
+    NotoSans Nerd Font,
+    Noto Sans,
+    sans-serif;
+  font-weight: bold;
+  font-size: 11pt;
+}
+
+window.eDP-1 * {
+  font-size: 9pt;
+  min-height: 21pt;
+}
+
+/* The whole bar */
+#waybar {
+  background: #323232;
+  color: white;
+}
+
+#workspaces button {
+  padding-right: 8pt;
+  padding-left: 8pt;
+}
+
+/* Each module */
+#custom-launcher,
+#window,
+#mode,
+#custom-agenda,
+#clock,
+#tray,
+#custom-calculator,
+#custom-emoji,
+#custom-password,
+#custom-screenshot,
+#backlight,
+#memory,
+#cpu,
+#battery,
+#temperature,
+#disk,
+#custom-ssh,
+#language,
+#custom-vpn,
+#network,
+#bluetooth,
+#pulseaudio,
+#battery,
+#custom-notification,
+#custom-backup,
+#custom-powermenu {
+  padding-left: 4pt;
+  padding-right: 4pt;
+}
+
+/* For Laptop monitor on 1980px widths */
+#window.eDP-1 custom-launcher {
+  padding-left: 3pt;
+}
+
+#window.eDP-1 custom-powermenu {
+  padding-right: 3pt;
+}
+
+window.eDP-1 #workspaces button {
+  padding-right: 3pt;
+  padding-left: 3pt;
+}
+
+window.eDP-1 #custom-agenda {
+  padding-left: 2pt;
+  padding-right: 4pt;
+}
+
+window.eDP-1 #mode,
+window.eDP-1 #window,
+window.eDP-1 #clock,
+window.eDP-1 #tray,
+window.eDP-1 #custom-calculator,
+window.eDP-1 #custom-emoji,
+window.eDP-1 #custom-password,
+window.eDP-1 #custom-screenshot,
+window.eDP-1 #backlight,
+window.eDP-1 #memory,
+window.eDP-1 #cpu,
+window.eDP-1 #battery,
+window.eDP-1 #temperature,
+window.eDP-1 #disk,
+window.eDP-1 #custom-ssh,
+window.eDP-1 #language,
+window.eDP-1 #custom-vpn,
+window.eDP-1 #network,
+window.eDP-1 #bluetooth,
+window.eDP-1 #pulseaudio,
+window.eDP-1 #battery,
+window.eDP-1 #custom-notification,
+window.eDP-1 #custom-backup,
+window.eDP-1 #custom-powermenu {
+  padding-left: 2pt;
+  padding-right: 2pt;
+}
+
+/* -----------------------------------------------------------------------------
+ * Module styles
+ * -------------------------------------------------------------------------- */
+
+/* General hover style */
+:hover {
+  /* background-color: #4d4d4d; */
+  color: #b9cced;
+}
+
+tooltip {
+  border: 1.5px solid #6495ed;
+  border-radius: 4px;
+}
+
+#custom-vpn {
+  /* padding-left: 6pt; */
+}
+
+#custom-vpn.connected {
+  color: #6495ed;
+}
+
+#custom-agenda.soon {
+  color: #f0e373;
+}
+
+#custom-agenda.togo {
+  color: #6495ed;
+  animation-name: blink-normal;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#custom-agenda.soon-urgent {
+  color: #ff7a33;
+  animation-name: blink-warning;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#custom-agenda.soon-critical {
+  color: #fc0303;
+  animation-name: blink-critical;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#custom-backup.success {
+  color: #f0e373;
+}
+#custom-backup.failure {
+  color: #fc0303;
+}
+#custom-backup.running {
+  color: #6495ed;
+  animation-name: blink-normal;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#battery {
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#battery.warning {
+  color: orange;
+}
+
+#battery.critical {
+  color: red;
+}
+
+#battery.warning.discharging {
+  animation-name: blink-warning;
+  animation-duration: 3s;
+}
+
+#battery.critical.discharging {
+  animation-name: blink-critical;
+  animation-duration: 2s;
+}
+
+#battery.supercritical.discharging {
+  animation-name: blink-critical;
+  animation-duration: 0.5s;
+}
+
+#clock {
+  font-weight: bold;
+}
+
+#cpu {
+  /* No styles */
+}
+
+#cpu.warning {
+  color: orange;
+}
+
+#cpu.critical {
+  color: red;
+}
+
+#memory {
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#memory.warning {
+  color: orange;
+}
+
+#memory.critical {
+  color: red;
+  animation-name: blink-critical;
+  animation-duration: 2s;
+}
+
+#mode {
+  background: #64727d;
+  border-top: 2px solid white;
+  /* To compensate for the top border and still have vertical centering */
+  padding-bottom: 2px;
+}
+
+#network {
+  /* No styles */
+}
+
+#network.disconnected {
+  color: orange;
+}
+
+#pulseaudio {
+  /* No styles */
+}
+
+#pulseaudio.muted {
+  /* No styles */
+}
+
+#custom-spotify {
+  color: rgb(102, 220, 105);
+}
+
+#temperature {
+  /* No styles */
+}
+
+#temperature.critical {
+  color: red;
+}
+
+#custom-launcher {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #6495ed;
+}
+
+#custom-powermenu {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #6495ed;
+}
+
+#bluetooth {
+  /* padding-left: 5px; */
+  /* padding-right: 5px; */
+}
+
+#custom-ssh {
+  /* padding-right: 12px; */
+}
+
+#custom-ssh.warning {
+  color: red;
+}
+
+#tray {
+  /* No styles */
+}
+
+#window {
+  font-weight: bold;
+  color: #6495ed;
+}
+
+#workspaces button {
+  border-top: 2px solid transparent;
+  /* To compensate for the top border and still have vertical centering */
+  color: #888888;
+}
+
+#workspaces button.focused {
+  border-color: #4c7899;
+  color: white;
+  background-color: #285577;
+}
+
+#workspaces button.urgent {
+  border-color: #fc0303;
+  color: #fc0303;
+}

@@ -1,0 +1,3 @@
+// Look at https://github.com/newmanls/rofi-themes-collection/tree/master
+@import "rounded-blue-dark.rasi"
+@import "settings.rasi"

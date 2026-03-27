@@ -1,0 +1,2716 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link
+      href="http://ingomar.wesp.name/favicon.ico"
+      rel="icon"
+      type="image/x-icon"
+    />
+    <link
+      href="https://plus.google.com/101283637653265125298"
+      rel="publisher"
+    />
+
+    <link
+      href="Eigene%20Tastaturbelegungen%20in%20X11%20(X.Org%20_%20XFree86)%20[iwn]_files/iwn7.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <title>Eigene Tastaturbelegungen in X11 (X.Org / XFree86) [iwn]</title>
+    <script src="Eigene%20Tastaturbelegungen%20in%20X11%20(X.Org%20_%20XFree86)%20[iwn]_files/page-script.js"></script>
+    <style type="text/css">
+      .fsd-overlay {
+        background-color: #e6e7ea !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        font-family: Arial, serif !important;
+        align-items: center !important;
+        z-index: 100000000000000000 !important;
+        font-size: 16px !important;
+      }
+      .fsd-overlay,
+      .fsd-wrapper {
+        display: flex !important;
+        justify-content: center !important;
+      }
+      .fsd-texts {
+        width: 350px !important;
+        color: #000 !important;
+      }
+      .fsd-image {
+        margin-right: 1em !important;
+      }
+      .fsd-ignore-fraud {
+        color: #3d8ca1 !important;
+        cursor: pointer !important;
+        margin-top: 1em !important;
+      }
+      .fsd-ignore-fraud:hover {
+        color: #82adb9 !important;
+      }
+    </style>
+    <link
+      id="nordvpn-contentScript-extension-fonts"
+      rel="stylesheet"
+      href="Eigene%20Tastaturbelegungen%20in%20X11%20(X.Org%20_%20XFree86)%20[iwn]_files/css.css"
+    />
+  </head>
+  <body>
+    <div id="page">
+      <div id="header">
+        <div class="header-bottom"></div>
+      </div>
+
+      <div class="section" id="sidebar">
+        <div class="sidebar-block">
+          <div class="sidebar-block-top"></div>
+          <div class="sidebar-block-header">
+            <h2>Author</h2>
+            <div class="sidebar-block-header-bottom"></div>
+          </div>
+          <div class="sidebar-block-content">
+            <div class="object-left">
+              <a href="https://plus.google.com/101283637653265125298">
+                <img
+                  alt="Profile Photo"
+                  height="64"
+                  src="Eigene%20Tastaturbelegungen%20in%20X11%20(X.Org%20_%20XFree86)%20[iwn]_files/ingomar-wesp-64x64.jpg"
+                  width="64"
+                />
+              </a>
+            </div>
+            <dl class="profile-datablock">
+              <dt class="profile-data">
+                <a
+                  class="profile-name-link"
+                  href="https://plus.google.com/101283637653265125298"
+                  rel="author"
+                >
+                  Ingomar Wesp
+                </a>
+              </dt>
+            </dl>
+            <a
+              class="profile-link"
+              href="https://plus.google.com/101283637653265125298"
+              rel="author"
+              >View my complete profile</a
+            >
+            <div class="clear"></div>
+          </div>
+          <div class="sidebar-block-bottom"></div>
+        </div>
+
+        <div class="sidebar-block">
+          <div class="sidebar-block-top"></div>
+          <div class="sidebar-block-header">
+            <h2>Subscribe / Follow</h2>
+            <div class="sidebar-block-header-bottom"></div>
+          </div>
+          <div class="sidebar-block-content">
+            <ul class="flatlist">
+              <li>
+                <a href="https://profiles.google.com/ingomar.wesp/"
+                  ><img
+                    alt="My Google+ profile"
+                    height="14"
+                    src="Eigene%20Tastaturbelegungen%20in%20X11%20(X.Org%20_%20XFree86)%20[iwn]_files/gprofile_button-16.png"
+                    style="margin-right: 4px"
+                    width="14"
+                /></a>
+                <a href="https://profiles.google.com/ingomar.wesp/"
+                  >Add me on Google+</a
+                >
+              </li>
+            </ul>
+            <div class="clear"></div>
+          </div>
+          <div class="sidebar-block-bottom"></div>
+        </div>
+      </div>
+
+      <div class="section" id="main">
+        <div
+          class="post"
+          itemscope="itemscope"
+          itemtype="http://schema.org/Article"
+        >
+          <div class="post-top"></div>
+          <div class="post-header">
+            <span class="date">2007-06-09</span>
+            <h1>
+              <span itemprop="name"
+                >Eigene Tastaturbelegungen in X11 (X.Org / XFree86)</span
+              >
+            </h1>
+            <div class="post-header-bottom"></div>
+          </div>
+
+          <div class="post-content">
+            <div class="object-left">
+              <img
+                src="Eigene%20Tastaturbelegungen%20in%20X11%20(X.Org%20_%20XFree86)%20[iwn]_files/keyboard-angle.png"
+                alt=""
+                title=""
+                width="160"
+                height="120"
+              />
+            </div>
+
+            <p>
+              Nachdem ich schon mal angekündigt hatte, mich ein bisschen mit der
+              Erstellung eigener Tastaturbelegungen unter X11 zu befassen, will
+              ich mir an dieser Stelle mal nichts nachsagen lassen und anhand
+              eines Beispiels demonstrieren, wie man sich sein eigenes Layout
+              basteln kann. Dabei habe ich allerdings vermieden, allzu weit in
+              die Untiefen des für die Tastenzuordnung verantwortlichen
+              XKB-Systems abzusteigen (Interessierte finden
+              <a
+                href="http://www.charvolant.org/~doug/xkb/html/xkb.html"
+                title="Doug Palmer: An Unreliable Guide to XKB Configuration"
+                >hier</a
+              >
+              und
+              <a
+                href="http://pascal.tsu.ru/en/xkb/"
+                title="Ivan Pascal: X Keyboard Extension"
+                >hier</a
+              >
+              sicherlich ausreichend Lesestoff), sondern versucht, einfache Wege
+              zu einer selbstgestrickten Keymap aufzuzeigen.
+            </p>
+            <h2>Der Plan</h2>
+            <p>
+              Weil einem das deutsche QWERTZ-Layout aufgrund der schlechten
+              Erreichbarkeit mancher Sonderzeichen mitunter beim Programmieren
+              in die Quere kommt, beschloss ich, mir eine eigene
+              Tastaturbelegung zurechtzubasteln, die auf dem diesbezüglich
+              eleganteren US-QWERTY-Layout basiert. Zusätzlich zur komfortablen
+              Eingabe deutscher Umlaute sollte die neue Belegung auch einen
+              schnellen Zugriff auf ein paar typographische Besonderheiten wie
+              die horizontale Ellipse (…), deutsche Anführungszeichen („ und ”)
+              oder den langen Gedankenstrich (–) ermöglichen. Gewissermaßen als
+              kleiner Bonus wär’s auch schön, könnte man einige oft benötigte
+              mathematische Symbole und Operatoren aus der Bool’schen Algebra
+              direkt eingegeben.
+            </p>
+            <p>
+              Für alle, die mit der schnörkellosen Kargheit der amerikanischen
+              Tastenanordnung noch nicht konfrontiert wurden oder einer
+              Auffrischung bedürfen sei hier mal der alphanumerische Teil einer
+              US-Tastatur abgebildet:
+            </p>
+
+            <div class="object-center">
+              <a
+                href="http://ingomar.wesp.name/2007/06/eigene-tastaturbelegungen-in-x11-xorg/keyboard-ibm-pc101-us-layout.jpg"
+                ><img
+                  src="Eigene%20Tastaturbelegungen%20in%20X11%20(X.Org%20_%20XFree86)%20[iwn]_files/keyboard-ibm-pc101-us-layout--preview.jpg"
+                  alt="Einfaches US-Layout auf einer PC-Tastatur mit 101 Tasten (pc101)"
+                  title="Einfaches US-Layout auf einer PC-Tastatur mit 101 Tasten (pc101)"
+                  width="640"
+                  height="280"
+              /></a>
+            </div>
+
+            <p>
+              Da ich selbst schon länger mit einem modifizierten
+              US-Layout&nbsp;<a
+                class="footnote_ref"
+                id="footnoteref1_zi5mb80"
+                title="Dieses amerikanische Layout mit deutschen Umlauten nannte sich us_de. Ich hatte es vor geraumer Zeit irgendwo im Web gefunden (ich glaube, das war auf einer privaten Seite, weiß aber leider nicht mehr, auf welcher). Die us_de-Keymap funktionierte im Grunde genauso wie die hier dargestellte us_ext-Symboltabelle, war aber syntaktisch nicht ganz mit aktuellen X-Servern kompatibel."
+                href="#footnote1_zi5mb80"
+                >[1]</a
+              >
+              arbeite, bei dem deutsche Umlaute über die rechte
+              <code>Alt</code>-Taste (auf nicht-US-Tastaturen
+              <code>Alt Gr</code>) kombiniert mit dem jeweiligen Stammvokal
+              eingegeben werden können, schien es mir angebracht, die
+              Grundbelegung des US-Layouts zu übernehmen und die Eingabe
+              zusätzlicher Zeichen über Kombinationen aus einer Taste mit
+              <code>Alt Gr</code> bzw. <code>Shift</code> und
+              <code>Alt Gr</code> zu ermöglichen. Berücksichtigt man den
+              normalen Tastendruck und den Tastendruck in Kombination mit
+              <code>Shift</code>, so existieren dann 4 mögliche Belegungen pro
+              Zeichentaste, die es nach Belieben zu verteilen gilt.
+              Angenehmerweise erlauben es die verschiedenen Mechanismen zur
+              Zeichenzuweisung unter X11, bereits bestehende Layouts zu
+              erweitern – in meinem Fall bleibt es mir also erspart, die gesamte
+              US-Keymap neu zu definieren.
+            </p>
+
+            <p>
+              Bevor man sich aber an’s Werk macht, die schöne Einfalt einer
+              US-Tastatur zu verwüsten, muss man erst mal wissen, welche Symbole
+              man überhaupt braucht. In X11 können Tasten und
+              Tastenkombinationen grundsätzlich mit beliebigen Unicode-Zeichen
+              belegt werden (ob ein Programm dann jedoch eine passende
+              Schriftart parat hat, um das dazugehörige Symbol auch
+              darzustellen, ist freilich eine andere Frage). Generell dürfte
+              gelten: Ein Zeichen, das man nicht kennt, braucht man auch nicht.
+              Bei meiner Auswahl habe ich mich im Wesentlichen&nbsp;<a
+                class="footnote_ref"
+                id="footnoteref2_s3czprn"
+                title="Für die pedantischen unter den Lesern: Wer genau hinschaut, entdeckt zusätzlich vereinzelt ein paar Zeichen aus „Superscripts and Subscripts” (2070-209F), „Letterlike Symbols” (2100-214F),  „Number Forms” (2150-218F) und „Arrows” (2190-21FF)."
+                href="#footnote2_s3czprn"
+                >[2]</a
+              >
+              auf folgende Unicode-Bereiche beschränkt.
+            </p>
+
+            <table>
+              <tbody>
+                <tr>
+                  <td>0000-007F</td>
+                  <td>Controls and Basic Latin</td>
+                  <td>entspricht US-ASCII</td>
+                </tr>
+                <tr>
+                  <td>0080-00FF</td>
+                  <td>Controls and Latin-1 Supplement</td>
+                  <td>entspricht der oberen Hälfte von ISO-8859-1</td>
+                </tr>
+                <tr>
+                  <td>2000-206F</td>
+                  <td>General Punctuation</td>
+                  <td>für die typographischen Feinheiten</td>
+                </tr>
+                <tr>
+                  <td>20A0-20CF</td>
+                  <td>Currency Symbols</td>
+                  <td>für Euro und Cent</td>
+                </tr>
+                <tr>
+                  <td>2200-22FF</td>
+                  <td>Mathematical Operators</td>
+                  <td>für ein bischen Würze mit kryptischen Symbolen</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p>
+              Neben der eigentlichen Belegung fehlt jetzt nur noch ein
+              sprechender Name. Aus Ermangelung einer besseren Idee hab’ ich
+              mich entschieden, mein Layout auf den Namen
+              <code>us_ext</code> (für U.S. Extended) zu taufen, da es im Grunde
+              lediglich eine Erweiterung des US-Layouts darstellt. Die ersehnte
+              Tastenbelegung sieht, wenn man alle erreichbaren Zeichen auf einer
+              PC-Tastatur mit 102 Tasten einzeichnet, in etwa so aus:
+            </p>
+
+            <div class="object-center">
+              <a
+                href="http://ingomar.wesp.name/2007/06/eigene-tastaturbelegungen-in-x11-xorg/keyboard-ibm-pc102-us-ext-layout.jpg"
+                ><img
+                  src="Eigene%20Tastaturbelegungen%20in%20X11%20(X.Org%20_%20XFree86)%20[iwn]_files/keyboard-ibm-pc102-us-ext-layout--preview.jpg"
+                  alt="Darstellung des eigenen Layouts us_ext auf einer Tastatur mit 102 Tasten (pc102)"
+                  title="Darstellung des eigenen Layouts us_ext auf einer Tastatur mit 102 Tasten (pc102)"
+                  width="640"
+                  height="280"
+              /></a>
+            </div>
+
+            <p>
+              Bei genauerer Betrachtung wird ersichtlich, dass die Taste rechts
+              neben der linken Shift Taste zwar belegt ist, die ihr zugeordneten
+              Zeichen aber auch über andere Tasten erreichbar sind. Das liegt
+              daran, dass es diese Taste bei US-Tastaturen gar nicht gibt
+              (pc101- bzw. pc104-Tastaturen haben stattdessen eine breitere
+              Shift-Taste) und die ihr zugewiesenen Zeichen auf solchen
+              Keyboards sonst nicht erreichbar wären.
+            </p>
+            <p>
+              Jetzt fehlt nur noch eine Kleinigkeit zur funktionierenden Keymap:
+              Um die blanken Tasten nämlich auch wirklich zuordnen zu können,
+              müssen wir erst mal wissen, wie sie aus Sicht des X-Servers
+              benannt sind.
+            </p>
+
+            <h2>Fast da – von Scancodes, Keycodes und symbolischen Namen</h2>
+            <p>
+              In X11 unter GNU/Linux durchläuft ein Tastendruck eine Menge
+              unterschiedlicher Abstraktionsschichten, bevor er tatsächlich auf
+              eine Funktion abgebildet werden kann. Die Tastatur-Hardware
+              repräsentiert einen Tastendruck (bzw. das Loslassen einer Taste)
+              mit einem sogenannten Scancode. Das ist eine kurze Byte-Folge, die
+              sich je nach Tastaturtyp unterscheidet (so senden z.B. USB- und
+              PS/2-Tastaturen unterschiedliche Scancodes) und vom Linux-Kernel
+              anhand einer Tabelle in sogenannte Linux-Keycodes umgewandelt
+              wird. Der Tastatur-Treiber des X-Servers wiederum greift den
+              Linux-Keycode auf erzeugt daraus einen X11-Keycode. Nachdem das
+              XKB-System im Regelfall auch weiß, welches Tastaturmodell am
+              Rechner hängt, kann es jeder Taste zusätzlich noch einen
+              symbolischen Namen zuordnen.
+            </p>
+            <p>
+              Um Keycodes und symbolische Namen herauszufinden gibt es
+              grundsätzlich mehrere Möglichkeiten. Entweder man wirft einen
+              Blick auf die Dateien, in denen die Namen definiert werden (die
+              liegen bei mir in <code>/usr/share/X11/xkb/keycodes/</code> – die
+              Dateien <code>xfree86</code> und <code>aliases</code> scheinen mir
+              ganz gute Einstiegspunkte zu sein) und führt sich dann zu Gemüte,
+              welchen Tasten diese symbolischen Namen in einer bekannten Keymap
+              – also z.B. der Amerikanischen – zugewiesen werden (Datei
+              <code>us</code> in <code>/usr/share/X11/xkb/symbols/</code>) oder
+              man verwendet ein Programm wie <code>xev</code>, das ein Fenster
+              zeichnet und alle in diesem Fenster stattfindenden X11-Events
+              (also auch Keyboard-Eingaben) in folgender Form auf die Konsole
+              ausgibt:
+            </p>
+
+            <pre><code>KeyPress event, serial 32, synthetic NO, window 0x2a00001,
+    root 0x75, subw 0x0, time 17904895, (494,59), root:(675,684),
+    state 0x0, keycode 24 (keysym 0x71, q), same_screen YES,
+    XLookupString gives 1 bytes: (71) "q"
+    XmbLookupString gives 1 bytes: (71) "q"
+    XFilterEvent returns: False
+</code></pre>
+
+            <p>
+              Relevant ist dabei in erster Linie der ausgegebene Keycode – in
+              diesem Fall 24 für die Q-Taste rechts neben der Tabulatorortaste.
+            </p>
+            <p>
+              Für alle, die sich jetzt Motivierenderes vorstellen können, als
+              sich durch zahllose Definitionsdateien zu wühlen, hab’ ich mir mal
+              die Mühe gemacht, die bei einer 105-Tasten-IBM-PC-Tastatur
+              generierten X11 Keycodes aufzuzeichnen:
+            </p>
+
+            <div class="object-center">
+              <a
+                href="http://ingomar.wesp.name/2007/06/eigene-tastaturbelegungen-in-x11-xorg/keyboard-ibm-pc105-x11-keycodes.html"
+                ><img
+                  src="Eigene%20Tastaturbelegungen%20in%20X11%20(X.Org%20_%20XFree86)%20[iwn]_files/keyboard-ibm-pc105-x11-keycodes--preview.jpg"
+                  alt="X11-Keycodes für eine PC-Tastatur mit 105-Tasten (pc105)"
+                  title="X11-Keycodes für eine PC-Tastatur mit 105-Tasten (pc105)"
+                  width="640"
+                  height="190"
+              /></a>
+            </div>
+
+            <p>
+              Sobald man weiß, welche Keycodes welchen Tasten zugeordnet sind,
+              kann man die gewünschte Zeichen-Zuordnung tabellarisch notieren.
+              Zur Veranschaulichung hab’ ich hier mal eine Tabelle erstellt, in
+              denen sowohl die X11-Keycodes als auch die symbolischen
+              Tastennamen aus
+              <code>/usr/share/X11/xkb/keycodes/xfree86</code> angeführt sind.
+              Unter „Zeichen” finden sich die 4 Belegungen der einzelnen
+              Zeichentasten als Symbol mit dem dazugehörigen Unicode-Wert:
+            </p>
+
+            <table
+              class="tdcenter"
+              style="margin-left: auto; margin-right: auto"
+            >
+              <tbody>
+                <tr>
+                  <th colspan="2">Taste</th>
+                  <th colspan="8">Zeichen</th>
+                </tr>
+                <tr>
+                  <th>X11-Keycode</th>
+                  <th>Symb. Name</th>
+                  <th colspan="2"><small>normal</small></th>
+                  <th colspan="2"><small>Shift</small></th>
+                  <th colspan="2"><small>Alt Gr</small></th>
+                  <th colspan="2"><small>Shift + Alt Gr</small></th>
+                </tr>
+                <tr>
+                  <td>49</td>
+                  <td>TLDE</td>
+                  <td
+                    title="Gravis (accent grave, Backtick)"
+                    style="border-right: none"
+                  >
+                    `
+                  </td>
+                  <td
+                    title="Gravis (accent grave, Backtick)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x60)</small>
+                  </td>
+                  <td title="Tilde" style="border-right: none">~</td>
+                  <td
+                    title="Tilde"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x7E)</small>
+                  </td>
+                  <td title="Fast gleich" style="border-right: none">≈</td>
+                  <td
+                    title="Fast gleich"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2248)</small>
+                  </td>
+                  <td colspan="2"></td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td>AE01</td>
+                  <td title="Eins" style="border-right: none">1</td>
+                  <td title="Eins" style="text-align: right; border-left: none">
+                    <small>(0x31)</small>
+                  </td>
+                  <td
+                    title="Rufzeichen (Ausrufezeichen)"
+                    style="border-right: none"
+                  >
+                    !
+                  </td>
+                  <td
+                    title="Rufzeichen (Ausrufezeichen)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x21)</small>
+                  </td>
+                  <td title="Hochgestellte Eins" style="border-right: none">
+                    ¹
+                  </td>
+                  <td
+                    title="Hochgestellte Eins"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xB9)</small>
+                  </td>
+                  <td colspan="2"></td>
+                </tr>
+                <tr>
+                  <td>11</td>
+                  <td>AE02</td>
+                  <td title="Zwei" style="border-right: none">2</td>
+                  <td title="Zwei" style="text-align: right; border-left: none">
+                    <small>(0x32)</small>
+                  </td>
+                  <td
+                    title="At-Zeichen (Affenschwanz, Klammeraffe)"
+                    style="border-right: none"
+                  >
+                    @
+                  </td>
+                  <td
+                    title="At-Zeichen (Affenschwanz, Klammeraffe)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x40)</small>
+                  </td>
+                  <td title="Hochgestellte Zwei" style="border-right: none">
+                    ²
+                  </td>
+                  <td
+                    title="Hochgestellte Zwei"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xB2)</small>
+                  </td>
+                  <td title="Ein Halb" style="border-right: none">½</td>
+                  <td
+                    title="Ein Halb"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xBD)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>12</td>
+                  <td>AE03</td>
+                  <td title="Drei" style="border-right: none">3</td>
+                  <td title="Drei" style="text-align: right; border-left: none">
+                    <small>(0x33)</small>
+                  </td>
+                  <td
+                    title="Rautenzeichen (Doppelkreuz, Gartenhag, Gatterzeichen, Hash, Sharp)"
+                    style="border-right: none"
+                  >
+                    #
+                  </td>
+                  <td
+                    title="Rautenzeichen (Doppelkreuz, Gartenhag, Gatterzeichen, Hash, Sharp)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x23)</small>
+                  </td>
+                  <td title="Hochgestellte Drei" style="border-right: none">
+                    ³
+                  </td>
+                  <td
+                    title="Hochgestellte Drei"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xB3)</small>
+                  </td>
+                  <td title="Ein Drittel" style="border-right: none">⅓</td>
+                  <td
+                    title="Ein Drittel"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2153)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>13</td>
+                  <td>AE04</td>
+                  <td title="Vier" style="border-right: none">4</td>
+                  <td title="Vier" style="text-align: right; border-left: none">
+                    <small>(0x34)</small>
+                  </td>
+                  <td title="Dollarzeichen" style="border-right: none">$</td>
+                  <td
+                    title="Dollarzeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x24)</small>
+                  </td>
+                  <td title="Hochgestellte Vier" style="border-right: none">
+                    ⁴
+                  </td>
+                  <td
+                    title="Hochgestellte Vier"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2074)</small>
+                  </td>
+                  <td title="Ein Viertel" style="border-right: none">¼</td>
+                  <td
+                    title="Ein Viertel"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xBC)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>14</td>
+                  <td>AE05</td>
+                  <td title="Fünf" style="border-right: none">5</td>
+                  <td title="Fünf" style="text-align: right; border-left: none">
+                    <small>(0x35)</small>
+                  </td>
+                  <td title="Prozent-Zeichen" style="border-right: none">%</td>
+                  <td
+                    title="Prozent-Zeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x25)</small>
+                  </td>
+                  <td title="Promille-Zeichen" style="border-right: none">‰</td>
+                  <td
+                    title="Promille-Zeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2030)</small>
+                  </td>
+                  <td colspan="2"></td>
+                </tr>
+                <tr>
+                  <td>15</td>
+                  <td>AE06</td>
+                  <td title="Sechs" style="border-right: none">6</td>
+                  <td
+                    title="Sechs"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x36)</small>
+                  </td>
+                  <td title="Zirkumflex (Dach)" style="border-right: none">
+                    ^
+                  </td>
+                  <td
+                    title="Zirkumflex (Dach)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x5E)</small>
+                  </td>
+                  <td
+                    title="XOR-Operator"
+                    class="exotic_unicode"
+                    style="border-right: none"
+                  >
+                    ⊻
+                  </td>
+                  <td
+                    title="XOR-Operator"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x22BB)</small>
+                  </td>
+                  <td colspan="2"></td>
+                </tr>
+                <tr>
+                  <td>16</td>
+                  <td>AE07</td>
+                  <td title="Sieben" style="border-right: none">7</td>
+                  <td
+                    title="Sieben"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x37)</small>
+                  </td>
+                  <td
+                    title="Et-Zeichen (kaufmännisches Und, Ampersand)"
+                    style="border-right: none"
+                  >
+                    &amp;
+                  </td>
+                  <td
+                    title="Et-Zeichen (kaufmännisches Und, Ampersand)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x26)</small>
+                  </td>
+                  <td
+                    title="Logisches UND (AND-Operator)"
+                    class="exotic_unicode"
+                    style="border-right: none"
+                  >
+                    ∧
+                  </td>
+                  <td
+                    title="Logisches UND (AND-Operator)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2227)</small>
+                  </td>
+                  <td
+                    title="NAND-Operator"
+                    class="exotic_unicode"
+                    style="border-right: none"
+                  >
+                    ⊼
+                  </td>
+                  <td
+                    title="NAND-Operator"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x22BC)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>17</td>
+                  <td>AE08</td>
+                  <td title="Acht" style="border-right: none">8</td>
+                  <td title="Acht" style="text-align: right; border-left: none">
+                    <small>(0x38)</small>
+                  </td>
+                  <td title="Sternchen (Asterisk)" style="border-right: none">
+                    *
+                  </td>
+                  <td
+                    title="Sternchen (Asterisk)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2A)</small>
+                  </td>
+                  <td title="Bullet-Operator" style="border-right: none">∙</td>
+                  <td
+                    title="Bullet-Operator"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2219)</small>
+                  </td>
+                  <td title="Malzeichen" style="border-right: none">×</td>
+                  <td
+                    title="Malzeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xD7)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>18</td>
+                  <td>AE09</td>
+                  <td title="Neun" style="border-right: none">9</td>
+                  <td title="Neun" style="text-align: right; border-left: none">
+                    <small>(0x39)</small>
+                  </td>
+                  <td title="Öffnende runde Klammer" style="border-right: none">
+                    (
+                  </td>
+                  <td
+                    title="Öffnende runde Klammer"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x28)</small>
+                  </td>
+                  <td
+                    title="Nach links zeigendes Guillemet (guillemet ouvrant)"
+                    style="border-right: none"
+                  >
+                    «
+                  </td>
+                  <td
+                    title="Nach links zeigendes Guillemet (guillemet ouvrant)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xAB)</small>
+                  </td>
+                  <td
+                    title="Spitzes, nach links zeigendes Anführungszeichen"
+                    style="border-right: none"
+                  >
+                    ‹
+                  </td>
+                  <td
+                    title="Spitzes, nach links zeigendes Anführungszeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2039)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>19</td>
+                  <td>AE10</td>
+                  <td title="Null" style="border-right: none">0</td>
+                  <td title="Null" style="text-align: right; border-left: none">
+                    <small>(0x30)</small>
+                  </td>
+                  <td
+                    title="Schließende runde Klammer"
+                    style="border-right: none"
+                  >
+                    )
+                  </td>
+                  <td
+                    title="Schließende runde Klammer"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x29)</small>
+                  </td>
+                  <td
+                    title="Nach rechts zeigendes Guillemet (guillemet fermant)"
+                    style="border-right: none"
+                  >
+                    »
+                  </td>
+                  <td
+                    title="Nach rechts zeigendes Guillemet (guillemet fermant)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xBB)</small>
+                  </td>
+                  <td
+                    title="Spitzes, nach rechts zeigendes Anführungszeichen"
+                    style="border-right: none"
+                  >
+                    ›
+                  </td>
+                  <td
+                    title="Spitzes, nach rechts zeigendes Anführungszeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x203A)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>20</td>
+                  <td>AE11</td>
+                  <td
+                    title="Bindestrich-Minus (Hyphen-Minus)"
+                    style="border-right: none"
+                  >
+                    -
+                  </td>
+                  <td
+                    title="Bindestrich-Minus (Hyphen-Minus)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2D)</small>
+                  </td>
+                  <td
+                    title="Unterstrich (Underscore)"
+                    style="border-right: none"
+                  >
+                    _
+                  </td>
+                  <td
+                    title="Unterstrich (Underscore)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x5F)</small>
+                  </td>
+                  <td
+                    title="Halbgeviertstrich (n-Dash)"
+                    style="border-right: none"
+                  >
+                    –
+                  </td>
+                  <td
+                    title="Halbgeviertstrich (n-Dash)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2013)</small>
+                  </td>
+                  <td title="Geviertstrich (m-Dash)" style="border-right: none">
+                    —
+                  </td>
+                  <td
+                    title="Geviertstrich (m-Dash)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2014)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>21</td>
+                  <td>AE12</td>
+                  <td title="Gleichheitszeichen" style="border-right: none">
+                    =
+                  </td>
+                  <td
+                    title="Gleichheitszeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x3D)</small>
+                  </td>
+                  <td title="Plus" style="border-right: none">+</td>
+                  <td title="Plus" style="text-align: right; border-left: none">
+                    <small>(0x2B)</small>
+                  </td>
+                  <td title="Ungleichheitszeichen" style="border-right: none">
+                    ≠
+                  </td>
+                  <td
+                    title="Ungleichheitszeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2260)</small>
+                  </td>
+                  <td title="Plus-Minus" style="border-right: none">±</td>
+                  <td
+                    title="Plus-Minus"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xB1)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>24</td>
+                  <td>AD01</td>
+                  <td title="Kleines Q" style="border-right: none">q</td>
+                  <td
+                    title="Kleines Q"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x71)</small>
+                  </td>
+                  <td title="Großes Q" style="border-right: none">Q</td>
+                  <td
+                    title="Großes Q"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x51)</small>
+                  </td>
+                  <td colspan="4"></td>
+                </tr>
+                <tr>
+                  <td>25</td>
+                  <td>AD02</td>
+                  <td title="Kleines W" style="border-right: none">w</td>
+                  <td
+                    title="Kleines W"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x77)</small>
+                  </td>
+                  <td title="Großes W" style="border-right: none">W</td>
+                  <td
+                    title="Großes W"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x57)</small>
+                  </td>
+                  <td colspan="4"></td>
+                </tr>
+                <tr>
+                  <td>26</td>
+                  <td>AD03</td>
+                  <td title="Kleines E" style="border-right: none">e</td>
+                  <td
+                    title="Kleines E"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x65)</small>
+                  </td>
+                  <td title="Großes E" style="border-right: none">E</td>
+                  <td
+                    title="Großes E"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x45)</small>
+                  </td>
+                  <td title="Euro-Zeichen" style="border-right: none">€</td>
+                  <td
+                    title="Euro-Zeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x20AC)</small>
+                  </td>
+                  <td
+                    title="Existenzquantor"
+                    class="exotic_unicode"
+                    style="border-right: none"
+                  >
+                    ∃
+                  </td>
+                  <td
+                    title="Existenzquantor"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2203)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>27</td>
+                  <td>AD04</td>
+                  <td title="Kleines R" style="border-right: none">r</td>
+                  <td
+                    title="Kleines R"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x72)</small>
+                  </td>
+                  <td title="Großes R" style="border-right: none">R</td>
+                  <td
+                    title="Großes R"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x52)</small>
+                  </td>
+                  <td title="Registered Trademark" style="border-right: none">
+                    ®
+                  </td>
+                  <td
+                    title="Registered Trademark"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xAE)</small>
+                  </td>
+                  <td colspan="2"></td>
+                </tr>
+                <tr>
+                  <td>28</td>
+                  <td>AD05</td>
+                  <td title="Kleines T" style="border-right: none">t</td>
+                  <td
+                    title="Kleines T"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x74)</small>
+                  </td>
+                  <td title="Großes T" style="border-right: none">T</td>
+                  <td
+                    title="Großes T"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x54)</small>
+                  </td>
+                  <td title="Trademark" style="border-right: none">™</td>
+                  <td
+                    title="Trademark"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2122)</small>
+                  </td>
+                  <td colspan="2"></td>
+                </tr>
+                <tr>
+                  <td>29</td>
+                  <td>AD06</td>
+                  <td title="Kleines Ypsilon" style="border-right: none">y</td>
+                  <td
+                    title="Kleines Ypsilon"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x79)</small>
+                  </td>
+                  <td title="Großes Ypsilon" style="border-right: none">Y</td>
+                  <td
+                    title="Großes Ypsilon"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x59)</small>
+                  </td>
+                  <td colspan="4"></td>
+                </tr>
+                <tr>
+                  <td>30</td>
+                  <td>AD07</td>
+                  <td title="Kleines U" style="border-right: none">u</td>
+                  <td
+                    title="Kleines U"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x75)</small>
+                  </td>
+                  <td title="Großes U" style="border-right: none">U</td>
+                  <td
+                    title="Großes U"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x55)</small>
+                  </td>
+                  <td
+                    title="Kleines Ü (kleines Umlaut-U)"
+                    style="border-right: none"
+                  >
+                    ü
+                  </td>
+                  <td
+                    title="Kleines Ü (kleines Umlaut-U)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xFC)</small>
+                  </td>
+                  <td
+                    title="Großes Ü (großes Umlaut-U)"
+                    style="border-right: none"
+                  >
+                    Ü
+                  </td>
+                  <td
+                    title="Großes Ü (großes Umlaut-U)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xDC)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>31</td>
+                  <td>AD08</td>
+                  <td title="Kleines I" style="border-right: none">i</td>
+                  <td
+                    title="Kleines I"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x69)</small>
+                  </td>
+                  <td title="Großes I" style="border-right: none">I</td>
+                  <td
+                    title="Großes I"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x49)</small>
+                  </td>
+                  <td
+                    title="Implikation (nach rechts zeigender Doppelpfeil)"
+                    style="border-right: none"
+                    class="exotic_unicode"
+                  >
+                    ⇒
+                  </td>
+                  <td
+                    title="Implikation (nach rechts zeigender Doppelpfeil)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x21D2)</small>
+                  </td>
+                  <td
+                    title="Äquivalenz (in beide Richtungen zeigender Doppelpfeil)"
+                    style="border-right: none"
+                    class="exotic_unicode"
+                  >
+                    ⇔
+                  </td>
+                  <td
+                    title="Äquivalenz (in beide Richtungen zeigender Doppelpfeil)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x21D4)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>32</td>
+                  <td>AD09</td>
+                  <td title="Kleines O" style="border-right: none">o</td>
+                  <td
+                    title="Kleines O"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x6F)</small>
+                  </td>
+                  <td title="Großes O" style="border-right: none">O</td>
+                  <td
+                    title="Großes O"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x4F)</small>
+                  </td>
+                  <td
+                    title="Kleines Ö (kleines Umlaut-O)"
+                    style="border-right: none"
+                  >
+                    ö
+                  </td>
+                  <td
+                    title="Kleines Ö (kleines Umlaut-O)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xF6)</small>
+                  </td>
+                  <td
+                    title="Großes Ö (großes Umlaut-O)"
+                    style="border-right: none"
+                  >
+                    Ö
+                  </td>
+                  <td
+                    title="Großes Ö (großes Umlaut-O)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xD6)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>33</td>
+                  <td>AD10</td>
+                  <td title="Kleines P" style="border-right: none">p</td>
+                  <td
+                    title="Kleines P"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x70)</small>
+                  </td>
+                  <td title="Großes P" style="border-right: none">P</td>
+                  <td
+                    title="Großes P"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x50)</small>
+                  </td>
+                  <td title="Paragraphenzeichen" style="border-right: none">
+                    §
+                  </td>
+                  <td
+                    title="Paragraphenzeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xA7)</small>
+                  </td>
+                  <td title="Absatzzeichen" style="border-right: none">¶</td>
+                  <td
+                    title="Absatzzeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xB6)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>34</td>
+                  <td>AD11</td>
+                  <td
+                    title="Öffnende eckige Klammer"
+                    style="border-right: none"
+                  >
+                    [
+                  </td>
+                  <td
+                    title="Öffnende eckige Klammer"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x5B)</small>
+                  </td>
+                  <td
+                    title="Öffnende geschwungene Klammer"
+                    style="border-right: none"
+                  >
+                    {
+                  </td>
+                  <td
+                    title="Öffnende geschwungene Klammer"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x7B)</small>
+                  </td>
+                  <td
+                    title="Deutsches Anführungszeichen unten"
+                    style="border-right: none"
+                  >
+                    „
+                  </td>
+                  <td
+                    title="Deutsches Anführungszeichen unten"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x201E)</small>
+                  </td>
+                  <td
+                    title="Einfaches deutsches Anführungszeichen unten"
+                    style="border-right: none"
+                  >
+                    ‚
+                  </td>
+                  <td
+                    title="Einfaches deutsches Anführungszeichen unten"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x201A)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>35</td>
+                  <td>AD12</td>
+                  <td
+                    title="Schließende eckige Klammer"
+                    style="border-right: none"
+                  >
+                    ]
+                  </td>
+                  <td
+                    title="Schließende eckige Klammer"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x5D)</small>
+                  </td>
+                  <td
+                    title="Schließende geschwungene Klammer"
+                    style="border-right: none"
+                  >
+                    }
+                  </td>
+                  <td
+                    title="Schließende geschwungene Klammer"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x7D)</small>
+                  </td>
+                  <td
+                    title="Deutsches Anführungszeichen oben"
+                    style="border-right: none"
+                  >
+                    ”
+                  </td>
+                  <td
+                    title="Deutsches Anführungszeichen oben"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x201D)</small>
+                  </td>
+                  <td
+                    title="Einfaches deutsches Anführungszeichen oben (Apostroph)"
+                    style="border-right: none"
+                  >
+                    ’
+                  </td>
+                  <td
+                    title="Einfaches deutsches Anführungszeichen oben (Apostroph)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2019)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>38</td>
+                  <td>AC01</td>
+                  <td title="Kleines A" style="border-right: none">a</td>
+                  <td
+                    title="Kleines A"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x61)</small>
+                  </td>
+                  <td title="Großes A" style="border-right: none">A</td>
+                  <td
+                    title="Großes A"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x41)</small>
+                  </td>
+                  <td
+                    title="Kleines Ä (kleines Umlaut-A)"
+                    style="border-right: none"
+                  >
+                    ä
+                  </td>
+                  <td
+                    title="Kleines Ä (kleines Umlaut-A)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xE4)</small>
+                  </td>
+                  <td
+                    title="Großes Ä (großes Umlaut-A)"
+                    style="border-right: none"
+                  >
+                    Ä
+                  </td>
+                  <td
+                    title="Großes Ä (großes Umlaut-A)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xC4)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>39</td>
+                  <td>AC02</td>
+                  <td title="Kleines S" style="border-right: none">s</td>
+                  <td
+                    title="Kleines S"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x73)</small>
+                  </td>
+                  <td title="Großes S" style="border-right: none">S</td>
+                  <td
+                    title="Großes S"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x53)</small>
+                  </td>
+                  <td title="Scharfes S (Eszett)" style="border-right: none">
+                    ß
+                  </td>
+                  <td
+                    title="Scharfes S (Eszett)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xDF)</small>
+                  </td>
+                  <td colspan="2"></td>
+                </tr>
+                <tr>
+                  <td>40</td>
+                  <td>AC03</td>
+                  <td title="Kleines D" style="border-right: none">d</td>
+                  <td
+                    title="Kleines D"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x64)</small>
+                  </td>
+                  <td title="Großes D" style="border-right: none">D</td>
+                  <td
+                    title="Großes D"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x44)</small>
+                  </td>
+                  <td title="Grad-Zeichen" style="border-right: none">°</td>
+                  <td
+                    title="Grad-Zeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xB0)</small>
+                  </td>
+                  <td colspan="2"></td>
+                </tr>
+                <tr>
+                  <td>41</td>
+                  <td>AC04</td>
+                  <td title="Kleines F" style="border-right: none">f</td>
+                  <td
+                    title="Kleines F"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x66)</small>
+                  </td>
+                  <td title="Großes F" style="border-right: none">F</td>
+                  <td
+                    title="Großes F"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x46)</small>
+                  </td>
+                  <td
+                    title="Allquantor"
+                    class="exotic_unicode"
+                    style="border-right: none"
+                  >
+                    ∀
+                  </td>
+                  <td
+                    title="Allquantor"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2200)</small>
+                  </td>
+                  <td colspan="2"></td>
+                </tr>
+                <tr>
+                  <td>42</td>
+                  <td>AC05</td>
+                  <td title="Kleines G" style="border-right: none">g</td>
+                  <td
+                    title="Kleines G"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x67)</small>
+                  </td>
+                  <td title="Großes G" style="border-right: none">G</td>
+                  <td
+                    title="Großes G"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x47)</small>
+                  </td>
+                  <td colspan="4"></td>
+                </tr>
+                <tr>
+                  <td>43</td>
+                  <td>AC06</td>
+                  <td title="Kleines H" style="border-right: none">h</td>
+                  <td
+                    title="Kleines H"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x68)</small>
+                  </td>
+                  <td title="Großes H" style="border-right: none">H</td>
+                  <td
+                    title="Großes H"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x48)</small>
+                  </td>
+                  <td colspan="4"></td>
+                </tr>
+                <tr>
+                  <td>44</td>
+                  <td>AC07</td>
+                  <td title="Kleines J" style="border-right: none">j</td>
+                  <td
+                    title="Kleines J"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x6A)</small>
+                  </td>
+                  <td title="Großes J" style="border-right: none">J</td>
+                  <td
+                    title="Großes J"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x4A)</small>
+                  </td>
+                  <td colspan="4"></td>
+                </tr>
+                <tr>
+                  <td>45</td>
+                  <td>AC08</td>
+                  <td title="Kleines K" style="border-right: none">k</td>
+                  <td
+                    title="Kleines K"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x6B)</small>
+                  </td>
+                  <td title="Großes K" style="border-right: none">K</td>
+                  <td
+                    title="Großes K"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x4B)</small>
+                  </td>
+                  <td colspan="4"></td>
+                </tr>
+                <tr>
+                  <td>46</td>
+                  <td>AC09</td>
+                  <td title="Kleines L" style="border-right: none">l</td>
+                  <td
+                    title="Kleines L"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x6C)</small>
+                  </td>
+                  <td title="Großes L" style="border-right: none">L</td>
+                  <td
+                    title="Großes L"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x4C)</small>
+                  </td>
+                  <td colspan="4"></td>
+                </tr>
+                <tr>
+                  <td>47</td>
+                  <td>AC10</td>
+                  <td
+                    title="Strichpunkt (Semikolon)"
+                    style="border-right: none"
+                  >
+                    ;
+                  </td>
+                  <td
+                    title="Strichpunkt (Semikolon)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x3B)</small>
+                  </td>
+                  <td title="Doppelpunkt (Kolon)" style="border-right: none">
+                    :
+                  </td>
+                  <td
+                    title="Doppelpunkt (Kolon)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x3A)</small>
+                  </td>
+                  <td colspan="4"></td>
+                </tr>
+                <tr>
+                  <td>48</td>
+                  <td>AC11</td>
+                  <td
+                    title="Einzelnes gerades Anführungszeichen"
+                    style="border-right: none"
+                  >
+                    '
+                  </td>
+                  <td
+                    title="Einzelnes gerades Anführungszeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x27)</small>
+                  </td>
+                  <td
+                    title="Doppeltes gerades Anführungszeichen"
+                    style="border-right: none"
+                  >
+                    "
+                  </td>
+                  <td
+                    title="Doppeltes gerades Anführungszeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x22)</small>
+                  </td>
+                  <td
+                    title="Einfaches deutsches Anführungszeichen oben (Apostroph)"
+                    style="border-right: none"
+                  >
+                    ’
+                  </td>
+                  <td
+                    title="Einfaches deutsches Anführungszeichen oben (Apostroph)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>0x2019</small>
+                  </td>
+                  <td colspan="2"></td>
+                </tr>
+                <tr>
+                  <td>51</td>
+                  <td>BKSL</td>
+                  <td
+                    title="Umgekehrter Schrägstrich (Backslash, linksseitiger Schrägstrich)"
+                    style="border-right: none"
+                  >
+                    \
+                  </td>
+                  <td
+                    title="Umgekehrter Schrägstrich (Backslash, linksseitiger Schrägstrich)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x5C)</small>
+                  </td>
+                  <td
+                    title="Vertikale Linie (Pipe-Zeichen, Bar)"
+                    style="border-right: none"
+                  >
+                    |
+                  </td>
+                  <td
+                    title="Vertikale Linie (Pipe-Zeichen, Bar)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x7C)</small>
+                  </td>
+                  <td
+                    title="Logisches ODER (OR-Operator)"
+                    class="exotic_unicode"
+                    style="border-right: none"
+                  >
+                    ∨
+                  </td>
+                  <td
+                    title="Logisches ODER (OR-Operator)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2228)</small>
+                  </td>
+                  <td
+                    title="NOR-Operator"
+                    class="exotic_unicode"
+                    style="border-right: none"
+                  >
+                    ⊽
+                  </td>
+                  <td
+                    title="NOR-Operator"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x22BD)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>94</td>
+                  <td>LSGT</td>
+                  <td
+                    title="Deutsches Anführungszeichen unten"
+                    style="border-right: none"
+                  >
+                    „
+                  </td>
+                  <td
+                    title="Deutsches Anführungszeichen unten"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x201E)</small>
+                  </td>
+                  <td
+                    title="Deutsches Anführungszeichen oben"
+                    style="border-right: none"
+                  >
+                    ”
+                  </td>
+                  <td
+                    title="Deutsches Anführungszeichen oben"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x201D)</small>
+                  </td>
+                  <td
+                    title="Einfaches deutsches Anführungszeichen unten"
+                    style="border-right: none"
+                  >
+                    ‚
+                  </td>
+                  <td
+                    title="Einfaches deutsches Anführungszeichen unten"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x201A)</small>
+                  </td>
+                  <td
+                    title="Einfaches deutsches Anführungszeichen oben (Apostroph)"
+                    style="border-right: none"
+                  >
+                    ’
+                  </td>
+                  <td
+                    title="Einfaches deutsches Anführungszeichen oben (Apostroph)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2019)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>52</td>
+                  <td>AB01</td>
+                  <td title="Kleines Z" style="border-right: none">z</td>
+                  <td
+                    title="Kleines Z"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x7A)</small>
+                  </td>
+                  <td title="Großes Z" style="border-right: none">Z</td>
+                  <td
+                    title="Großes Z"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x5A)</small>
+                  </td>
+                  <td colspan="4"></td>
+                </tr>
+                <tr>
+                  <td>53</td>
+                  <td>AB02</td>
+                  <td title="Kleines X" style="border-right: none">x</td>
+                  <td
+                    title="Kleines X"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x78)</small>
+                  </td>
+                  <td title="Großes X" style="border-right: none">X</td>
+                  <td
+                    title="Großes X"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x58)</small>
+                  </td>
+                  <td colspan="4"></td>
+                </tr>
+                <tr>
+                  <td>54</td>
+                  <td>AB03</td>
+                  <td title="Kleines C" style="border-right: none">c</td>
+                  <td
+                    title="Kleines C"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x63)</small>
+                  </td>
+                  <td title="Großes C" style="border-right: none">C</td>
+                  <td
+                    title="Großes C"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x43)</small>
+                  </td>
+                  <td title="Copyright-Zeichen" style="border-right: none">
+                    ©
+                  </td>
+                  <td
+                    title="Copyright-Zeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xA9)</small>
+                  </td>
+                  <td title="Cent-Zeichen" style="border-right: none">¢</td>
+                  <td
+                    title="Cent-Zeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xA2)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>55</td>
+                  <td>AB04</td>
+                  <td title="Kleines V" style="border-right: none">v</td>
+                  <td
+                    title="Kleines V"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x76)</small>
+                  </td>
+                  <td title="Großes V" style="border-right: none">V</td>
+                  <td
+                    title="Großes V"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x56)</small>
+                  </td>
+                  <td colspan="4"></td>
+                </tr>
+                <tr>
+                  <td>56</td>
+                  <td>AB05</td>
+                  <td title="Kleines B" style="border-right: none">b</td>
+                  <td
+                    title="Kleines B"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x62)</small>
+                  </td>
+                  <td title="Großes B" style="border-right: none">B</td>
+                  <td
+                    title="Großes B"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x42)</small>
+                  </td>
+                  <td colspan="4"></td>
+                </tr>
+                <tr>
+                  <td>57</td>
+                  <td>AB06</td>
+                  <td title="Kleines N" style="border-right: none">n</td>
+                  <td
+                    title="Kleines N"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x6E)</small>
+                  </td>
+                  <td title="Großes N" style="border-right: none">N</td>
+                  <td
+                    title="Großes N"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x4E)</small>
+                  </td>
+                  <td
+                    title="Logisches NICHT (NOT-Operator)"
+                    style="border-right: none"
+                  >
+                    ¬
+                  </td>
+                  <td
+                    title="Logisches NICHT (NOT-Operator)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xAC)</small>
+                  </td>
+                  <td colspan="2"></td>
+                </tr>
+                <tr>
+                  <td>58</td>
+                  <td>AB07</td>
+                  <td title="Kleines M" style="border-right: none">m</td>
+                  <td
+                    title="Kleines M"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x6D)</small>
+                  </td>
+                  <td title="Großes M" style="border-right: none">M</td>
+                  <td
+                    title="Großes M"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x4D)</small>
+                  </td>
+                  <td title="Griechisches my" style="border-right: none">µ</td>
+                  <td
+                    title="Griechisches my"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xB5)</small>
+                  </td>
+                  <td colspan="2"></td>
+                </tr>
+                <tr>
+                  <td>59</td>
+                  <td>AB08</td>
+                  <td title="Komma" style="border-right: none">,</td>
+                  <td
+                    title="Komma"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2C)</small>
+                  </td>
+                  <td title="Kleiner-Zeichen" style="border-right: none">
+                    &lt;
+                  </td>
+                  <td
+                    title="Kleiner-Zeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x3C)</small>
+                  </td>
+                  <td colspan="2"></td>
+                  <td
+                    title="Kleiner-oder-Gleich-Zeichen"
+                    style="border-right: none"
+                  >
+                    ≤
+                  </td>
+                  <td
+                    title="Kleiner-oder-Gleich-Zeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2264)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>60</td>
+                  <td>AB09</td>
+                  <td title="Punkt" style="border-right: none">.</td>
+                  <td
+                    title="Punkt"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2E)</small>
+                  </td>
+                  <td title="Größer-Zeichen" style="border-right: none">
+                    &gt;
+                  </td>
+                  <td
+                    title="Größer-Zeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x3E)</small>
+                  </td>
+                  <td title="Horizontale Ellipse" style="border-right: none">
+                    …
+                  </td>
+                  <td
+                    title="Horizontale Ellipse"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2026)</small>
+                  </td>
+                  <td
+                    title="Größer-oder-Gleich-Zeichen"
+                    style="border-right: none"
+                  >
+                    ≥
+                  </td>
+                  <td
+                    title="Größer-oder-Gleich-Zeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2265)</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>61</td>
+                  <td>AB10</td>
+                  <td title="Schrägstrich (Slash)" style="border-right: none">
+                    /
+                  </td>
+                  <td
+                    title="Schrägstrich (Slash)"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x2F)</small>
+                  </td>
+                  <td title="Fragezeichen" style="border-right: none">?</td>
+                  <td
+                    title="Fragezeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0x3F)</small>
+                  </td>
+                  <td title="Divisionszeichen" style="border-right: none">÷</td>
+                  <td
+                    title="Divisionszeichen"
+                    style="text-align: right; border-left: none"
+                  >
+                    <small>(0xF7)</small>
+                  </td>
+                  <td colspan="2"></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p>
+              Sollten in dieser Tabelle ein paar Zeichen nicht vernünftig
+              dargestellt werden, so liegt das vermutlich am Browser bzw. der
+              Tatsache, dass er keine Schriftart finden kann, die den benötigten
+              Glyphen enthält. Ich habe die einzelnen Zellen daher mit
+              <code>title</code>-Attributen ausgestattet, die eine textuelle
+              Beschreibung des darzustellenden Zeichens enthalten – die meisten
+              Browsern zeigen diese an, wenn man die Maus über der betreffenden
+              Zelle ruhen lässt.
+            </p>
+
+            <h2>Wie denn nun?</h2>
+
+            <p>
+              Grundsätzlich gibt es (mindestens) zwei verschiedene
+              Möglichkeiten, dem X-Server ein eigenes Keyboard-Layout
+              unterzujubeln:
+            </p>
+            <p>
+              Die erste – und zweifelsfrei elegantere – Lösung besteht darin,
+              eine eigene Symboltabelle zu definieren, die dann eine
+              gleichberechtigte Existenz unter den anderen dem X-Server
+              bekannten Layouts fristet. Das ist auf Desktop-Rechnern sicher
+              kein Problem, dürfte sich aber als schwierig erweisen, wenn man
+              keinen Root-Zugriff auf das System hat, auf dem der X-Server läuft
+              – der will die Symboltabelle nämlich in einem bestimmten
+              Verzeichnis auffinden, das klarerweise nicht für alle Nutzer
+              beschreibbar ist (wäre ja wohl nicht besonders nett, wenn
+              irgendein Spaßvogel mal schnell die Standard-Layouts umdefiniert
+              ;-)
+            </p>
+
+            <p>
+              Die andere Variante ist ein bisschen häßlicher, dürfte im
+              Regelfall aber genauso gut funktionieren. Bei ihr wird zuerst eine
+              installierte Keymap geladen und dann vom angemeldeten Nutzer
+              mittels des Kommandozeilen-Programms
+              <span class="pn">xmodmap</span> umdefiniert (das kann man freilich
+              auch über ein Session-Skript automatiseren). Dieser Ansatz hat den
+              Vorteil, dass man den X-Server selbst in Ruhe lassen und die
+              eigene Keymap quasi automatisch mit dem Home-Verzeichnis auf
+              andere Rechner mitnehmen kann, ist aber prinzipell die
+              „dreckigere” Lösung&nbsp;…
+            </p>
+            <h2>Variante 1: Erstellen einer eigenen XKB-Symboltabelle</h2>
+            <p>
+              Grundsätzlich definiert eine XKB-Symboltabelle eine Abbildung von
+              einer symbolischen Tastenbezeichnung auf ein oder mehrere Zeichen.
+              Weil es abrt allerhand verschiedene Keyboard-Layouts mit
+              unterschiedlichen Eigenheiten gibt, kann sowas schon mal recht
+              kompliziert werden – in so einer Symboltabelle ist es nämlich
+              nicht nur möglich, Mehrfachbelegungen festzulegen, sondern man
+              kann einer Taste auch verschiedene „Zeichengruppen” zuordnen oder
+              auch ihren Typ (Buchstabe, Ziffer,&nbsp;…) modifizieren. Für das
+              vergleichsweise einfache <code>us_ext</code>-Layout sind diese
+              erweiterten Funktionen allesamt nicht von Interesse, da es sich
+              damit zufrieden gibt, schlicht und einfach bis zu vier
+              verschiedene Zeichen auf eine einzelne Taste zu legen.
+            </p>
+            <p>
+              Jede Symboltabelle ist auf eine oder mehrere Text-Dateien
+              verstreut, die – zumindest bei mir – allesamt unter
+              <code>/usr/share/X11/xkb/symbols/</code> liegen. Auf die Syntax
+              möchte ich an dieser Stelle nicht näher eingehen, als es unbedingt
+              nötig ist – wer sich dafür interessiert, dem sei angeraten, einen
+              Blick auf die verschiedenen Standard-Symboltabellen in diesem
+              Verzeichnis zu werfen oder aber ein bisschen in
+              <a
+                href="http://www.charvolant.org/~doug/xkb/html/node5.html"
+                title="An Unreliable Guide to XKB Configuration: XKB Configuration Files"
+                >diesen Text</a
+              >
+              reinzuschnuppern.
+            </p>
+            <p>
+              Für <code>us_ext</code> muss man im Grunde lediglich das bereits
+              bestehende <code>us</code>-Layout in der spartanischen
+              <code>basic</code>-Variante (sowie die Definition von
+              <code>Alt Gr</code> als <code>ISO_Level3_Shift</code> für die
+              dritte und vierte Belegung) importieren und alle Tasten, die mit
+              zusätzlichen Zeichen auszustatten sind, entsprechend umdefinieren.
+              Ich habe einfach eine neue Datei mit dem Namen
+              <code>us_ext</code> in
+              <code>/usr/share/X11/xkb/symbols/</code> erzeugt und mit folgendem
+              Inhalt gefüllt:
+            </p>
+
+            <div class="listing">
+              <pre><code>// us_ext: Custom extended us keymap
+
+default
+partial alphanumeric_keys
+xkb_symbols "basic" {
+
+include "us(basic)"
+include "level3(ralt_switch)"
+
+key &lt;TLDE&gt; {[ grave,        asciitilde,  U2248                           ]};
+key &lt;AE01&gt; {[ 1,            exclam,      onesuperior                     ]};
+key &lt;AE02&gt; {[ 2,            at,          twosuperior,    onehalf         ]};
+key &lt;AE03&gt; {[ 3,            numbersign,  threesuperior,  onethird        ]};
+key &lt;AE04&gt; {[ 4,            dollar,      foursuperior,   onequarter      ]};
+key &lt;AE05&gt; {[ 5,            percent,     U2030                           ]};
+key &lt;AE06&gt; {[ 6,            asciicircum, U22BB                           ]};
+key &lt;AE07&gt; {[ 7,            ampersand,   logicaland,     U22BC           ]};
+key &lt;AE08&gt; {[ 8,            asterisk,    U2219,          multiply        ]};
+key &lt;AE09&gt; {[ 9,            parenleft,   guillemotleft,  U2039           ]};
+key &lt;AE10&gt; {[ 0,            parenright,  guillemotright, U203A           ]};
+key &lt;AE11&gt; {[ minus,        underscore,  endash,         emdash          ]};
+key &lt;AE12&gt; {[ equal,        plus,        notequal,       plusminus       ]};
+
+key &lt;AD03&gt; {[ e,            E,           EuroSign,       U2203           ]};
+key &lt;AD04&gt; {[ r,            R,           registered                      ]};
+key &lt;AD05&gt; {[ t,            T,           trademark                       ]};
+key &lt;AD07&gt; {[ u,            U,           udiaeresis,     Udiaeresis      ]};
+key &lt;AD08&gt; {[ i,            I,           U21D2,          ifonlyif        ]};
+key &lt;AD09&gt; {[ o,            O,           odiaeresis,     Odiaeresis      ]};
+key &lt;AD10&gt; {[ p,            P,           section,        paragraph       ]};
+key &lt;AD11&gt; {[ bracketleft,  braceleft,   U201E,          U201A           ]};
+key &lt;AD12&gt; {[ bracketright, braceright,  U201D,          U2019           ]};
+
+key &lt;AC01&gt; {[ a,            A,           adiaeresis,    Adiaeresis       ]};
+key &lt;AC02&gt; {[ s,            S,           ssharp                          ]};
+key &lt;AC03&gt; {[ d,            D,           degree                          ]};
+key &lt;AC04&gt; {[ f,            F,           U2200                           ]};
+key &lt;AC11&gt; {[ apostrophe,   quotedbl,    U2019                           ]};
+key &lt;BKSL&gt; {[ backslash,    bar,         logicalor,     U22BD            ]};
+
+key &lt;LSGT&gt; {[ U201E,        U201D,       U201A,         U2019            ]};
+key &lt;AB03&gt; {[ c,            C,           copyright,     cent             ]};
+key &lt;AB06&gt; {[ n,            N,           notsign                         ]};
+key &lt;AB07&gt; {[ m,            M,           mu                              ]};
+key &lt;AB08&gt; {[ comma,        less,        lessthanequal, lessthanequal    ]};
+key &lt;AB09&gt; {[ period,       greater,     ellipsis,      greaterthanequal ]};
+key &lt;AB10&gt; {[ slash,        question,    division                        ]};
+
+};
+</code></pre>
+              <p>
+                <span class="caption"
+                  >Listing: /usr/share/X11/xkb/symbols/us_ext</span
+                >
+              </p>
+            </div>
+
+            <p>
+              In dieser Datei wird nur eine Variante der Keymap – nämlich
+              <code>basic</code> – definiert und als Standard-Variante
+              ausgezeichnet. Die Angabe <code>partial</code> teilt XKB mit, dass
+              es sich dabei nicht um eine vollständige Definition handelt –
+              Tastenzuordnungen, die also weder hier, noch in den importierten
+              Symboltabellen auffindbar sind, muss sich das XKB-System anderswo
+              suchen (und das tut es auch). Dank der – etwas mißverständlichen –
+              Auszeichnung <code>alphanumeric_keys</code> weiß XKB, dass sich
+              diese Tabelle lediglich auf den Hauptteil der Tastatur (anstatt
+              auf Modifikatortasten, Keypad oder Funktionstasten) bezieht.
+            </p>
+            <p>
+              Die Zuordnungstabelle selbst (der große, mit geschwungenen
+              Klammern umschlossene Teil) besteht aus Definitionen für einzelne
+              Tasten, die mit ihrem symbolischen Namen angesprochen werden. Jede
+              Zuordnung ist wiederum in geschwungene Klammern eingeschlossen und
+              wird mit einem Strichpunkt beendet. Die eckigen Klammern sind
+              grundsätzlich dazu da, einzelne Zuordnungsgruppen voneinander zu
+              trennen. Das wäre jedoch in dieser Keymap, die für jede Taste nur
+              eine einzige Gruppe definiert, im Grunde nicht notwendig. Zum
+              besseren Verständnis will ich mal eine Zeile herausgreifen:
+            </p>
+
+            <pre><code>key &lt;AD03&gt; {[ e, E, EuroSign, U2203 ]};
+</code></pre>
+
+            <p>
+              Hier werden der Taste mit dem symbolischen Namen
+              <code>AD03</code> der Reihe nach 4 verschiedene Zeichen
+              zugeordnet, die jeweils mit einem sogenannten „Level” einhergehen.
+              In <code>us_ext</code> entspricht Level 1 dem normalen
+              Tastendruck, Level 2 dem Tastendruck mit Shift, Level 3 dem
+              Drücken der Taste mit <code>Alt Gr</code> und Level 4 der
+              Kombination der Taste mit <code>Shift</code> und
+              <code>Alt Gr</code>.
+            </p>
+            <p>
+              Für die auszugebenden Zeichen habe ich dort symbolische Namen (in
+              der X11-Terminologie: <span class="pn">Keysym</span>s) verwendet,
+              wo es mir im Sinne der Lesbarkeit sinnvoll erschien, bei den
+              Tasten hatte ich hingegen keine Wahl: In Symboltabellen ist die
+              Verwendung von symbolischen Tastennamen (wie sie z.B. in
+              <code>/usr/share/X11/xkb/xfree86</code> definiert werden) Pflicht
+              – wohl, um sicherzustellen, dass exotische Tastaturen, die
+              abweichende X11-Keycodes erzeugen, dennoch eine brauchbare
+              Zuordnung erhalten. Zeichen hingegen lassen sich sowohl durch ihre
+              Position im Unicode-Zeichensatz referenzieren, als auch durch den
+              in der Datei <code>/usr/include/X11/keysymdef.h</code> definierten
+              symbolischen Namen&nbsp;<a
+                class="footnote_ref"
+                id="footnoteref3_mssstrs"
+                title="Durch Zufall bin ich auf einen kleinen Bug in keysymdef.h gestossen: Der symbolische Zeichenname implies wird nicht – wie dort angeführt – auf das passende Unicode-Zeichen 0x21D2, sondern vielmehr auf 0x22A2 abgebildet."
+                href="#footnote3_mssstrs"
+                >[3]</a
+              >
+              – dabei muss man jedoch die ersten drei Zeichen (<code>XK_</code>)
+              weglassen. Statt obiger Zeile hätte ich also genausogut Folgendes
+              schreiben können, würde mich dann aber nach einiger Zeit nicht
+              mehr in der Symboltabelle zurechtfinden.
+            </p>
+
+            <pre><code>key &lt;AD03&gt; {[ U0065, U0045, U20AC, U2203 ]};
+</code></pre>
+
+            <p>
+              Nachdem man die eigene Symboltabelle dort abgelegt hat, wo der
+              X-Server sie sucht (also z.B. in
+              <code>/usr/share/X11/xkb/symbols/</code>), muß sie bloß noch
+              geladen werden. Das kann man entweder mit
+              <span class="pn">setxkbmap</span> aus der laufenden X-Session
+              heraus oder aber global mit einer Einstellung in der
+              Konfigurationsdatei des X-Servers (bei mir
+              <code>/etc/X11/xorg.conf</code>) machen. Ein Aufruf von setxkbmap
+              sieht z.B. so aus:
+            </p>
+
+            <pre><code>setxkbmap us_ext
+</code></pre>
+
+            <p>
+              Wahlweise können auch noch Keyboard-Modell und Keycode-Mapping
+              explizit angegeben werden:
+            </p>
+
+            <pre><code>setxkbmap -model pc102 -keycodes xfree86 us_ext
+</code></pre>
+
+            <p>
+              In <code>xorg.conf</code> könnte die entsprechende Passage (in der
+              <code>InputDevice</code>-Sektion für’s Keyboard) etwa so aussehen:
+            </p>
+
+            <pre><code>Identifier      "Generic Keyboard"
+Driver          "kbd"
+Option          "CoreKeyboard"
+Option          "XkbRules"      "xorg"
+Option          "XkbModel"      "pc102"
+Option          "XkbLayout"     "us_ext"
+EndSection
+</code></pre>
+
+            <p>
+              Wenn alles klappt, hat man nun seine eigene Keymap, die man in
+              allen X11-Anwendungen verwenden kann.
+            </p>
+            <p>
+              Für alle, die nicht am XKB-System herumpfuschen wollen, bietet
+              sich mit <span class="pn">xmodmap</span> eine alternative
+              Vorgehensweise&nbsp;…
+            </p>
+
+            <h2>
+              Variante 2: Umdefinieren der Zuordnungen mit
+              <span class="pn">xmodmap</span>
+            </h2>
+
+            <p>
+              Das Kommandozeilenprogramm <span class="pn">xmodmap</span> erlaubt
+              das Anpassen einer bereits geladenen Keymap innerhalb der
+              laufenden X-Session. Für das selbstgestrickte
+              <code>us_ext</code>-Layout würde es sich also anbieten, zuerst mit
+              <span class="pn">setxkbmap</span> eine dem X-Server beiliegende
+              Keymap zu laden – etwa die <code>us</code>-Keymap in ihrer
+              <code>basic</code>-Variante –, um dann einige der dort
+              festgelegten Tastenbelegungen mit
+              <span class="pn">xmodmap</span> zu überschreiben.
+            </p>
+
+            <p>
+              Die Tatsache, dass zum Zeitpunkt der Ausführung von
+              <span class="pn">xmodmap</span> bereits eine Symboltabelle geladen
+              ist, hat den angenehmen Nebeneffekt, dass man Tasten nun nicht nur
+              über ihre X11-Keycodes referenzieren kann, sondern auch über die
+              ihnen bereits zugewiesenen Zeichen. Gewissermaßen im Gegenzug für
+              diesen Komfortgewinn weiß <span class="pn">xmodmap</span> jedoch
+              nichts mit den symbolischen Tastennamen aus den geladenen Dateien
+              in <code>/usr/share/X11/xkb/keycodes/</code>
+              anzufangen.
+            </p>
+
+            <p>
+              Ohne weiter auf Details herumzureiten: Eine mögliche Eingabedatei
+              für
+              <span class="pn">xmodmap</span>, in der die Tastenzuordnungen aus
+              einem geladenen <code>us</code>-Layout umdefiniert werden, sieht
+              z.B. so aus:
+            </p>
+
+            <div class="listing">
+              <pre><code>keycode 113         = Mode_switch
+
+keysym grave        = grave        asciitilde   U2248
+keysym 1            = 1            exclam       onesuperior
+keysym 2            = 2            at           twosuperior    onehalf
+keysym 3            = 3            numbersign   threesuperior  onethird
+keysym 4            = 4            dollar       foursuperior   onequarter
+keysym 5            = 5            percent      U2030
+keysym 6            = 6            asciicircum  U22BB
+keysym 7            = 7            ampersand    logicaland     U22BC
+keysym 8            = 8            asterisk     U2219          multiply
+keysym 9            = 9            parenleft    guillemotleft  U2039
+keysym 0            = 0            parenright   guillemotright U203A
+keysym minus        = minus        underscore   endash         emdash
+keysym equal        = equal        plus         notequal       plusminus
+
+keysym e            = e            E            EuroSign       U2203
+keysym r            = r            R            registered
+keysym t            = t            T            trademark
+keysym u            = u            U            udiaeresis     Udiaeresis
+keysym i            = i            I            U21D2          ifonlyif
+keysym o            = o            O            odiaeresis     Odiaeresis
+keysym p            = p            P            section        paragraph
+keysym bracketleft  = bracketleft  braceleft    U201E          U201A
+keysym bracketright = bracketright braceright   U201D          U2019
+
+keysym a           = a             A            adiaeresis      Adiaeresis
+keysym s           = s             S            ssharp
+keysym d           = d             D            degree
+keysym f           = f             F            U2200
+keysym apostrophe  = apostrophe    quotedbl     U2019
+keysym backslash   = backslash     bar          logicalor       U22BD
+
+keycode 94          = U201E         U201D       U201A           U2019
+keysym c            = c             C           copyright       cent
+keysym n            = n             N           notsign
+keysym m            = m             M           mu
+keysym comma        = comma         less        lessthanequal   lessthanequal
+keysym period       = period        greater     ellipsis        greaterthanequal
+keysym slash        = slash         question    division
+</code></pre>
+              <p><span class="caption">Listing: mm_us_ext</span></p>
+            </div>
+
+            <p>
+              In der ersten Zeile wird die <code>Alt Gr</code>-Taste
+              (X11-Keycode <code>113</code> mit dem
+              <code>Mode_switch</code>-Zeichen belegt, das es erlaubt, auf die
+              dritte und – zusammen mit <code>Shift</code> – auf die vierte
+              Belegung umzuschalten&nbsp;<a
+                class="footnote_ref"
+                id="footnoteref4_yzohamq"
+                title="Leider bin ich mir über die unterschiedliche Numerierung einzelner Tasten-Levels in XKB-Symboltabellen und xmodmap-Eingabedateien bzw. insbesondere über das Verhältnis zwischen den Keysyms Mode_shift und ISO_Level3_Shift bis dato nicht ganz im Klaren (soll heißen: Ich weiß nicht, wovon ich hier schreibe ;-) – zu diesem Thema war auf die Schnelle schlicht und einfach keine Dokumentation aufzutreiben&nbsp;…"
+                href="#footnote4_yzohamq"
+                >[4]</a
+              >.
+            </p>
+
+            <p>
+              In den weiteren Zeilen werden bereits definierte Tasten über die
+              symbolischen Namen der ihnen gegenwärtig zugewiesenen Zeichen
+              umdefiniert. Die einzige Ausnahme bildet die Taste rechts der
+              linken <code>Shift</code>-Taste (X11-Keycode <code>94</code>): Für
+              sie gibt es in der <code>us</code>-Symboltabelle keine Zuweisung,
+              weshalb sie direkt über ihren Keycode referenziert werden muss.
+            </p>
+            <p>
+              Hat man die <span class="pn">xmodmap</span>-Eingabedatei z.B.
+              unter dem Namen <code>mm_us_ext</code> im eigenen Home-Verzeichnis
+              abgelegt, so kann man sie mit folgenden Aufrufen – etwa in einem
+              X-Session-Skript – laden:
+            </p>
+
+            <pre><code>setxkbmap us\(basic\)
+xmodmap ~/mm_us_ext
+</code></pre>
+
+            <h2>Abschließende Worte</h2>
+
+            <p>
+              Wenn mir auch bewusst ist, dass dieser Artikel viele Fragen zur
+              Konfiguration des Keyboard-Layouts unter X11 nicht einmal
+              anschneidet, hoffe ich doch, dass sich für den einen oder anderen
+              Leser als nützlich erweist.
+            </p>
+
+            <p>Über Anregungen, Fragen oder Kritik würde ich mich freuen.</p>
+
+            <h2>Ein paar nützliche Links</h2>
+
+            <ul>
+              <li>
+                <a href="http://www.charvolant.org/~doug/xkb/html/xkb.html"
+                  >Doug Palmer: An Unreliable Guide to XKB Configuration</a
+                >
+              </li>
+              <li>
+                <a href="http://pascal.tsu.ru/en/xkb/"
+                  >Ivan Pascal: X Keyboard Extension</a
+                >
+              </li>
+              <li>
+                <a
+                  href="http://linux.seindal.dk/2005/06/04/logitech-cordless-desktop-lx700/"
+                  >René Seindal spricht (nicht nur) über Scancodes und den
+                  Linux-Keycode-Table</a
+                >
+              </li>
+            </ul>
+
+            <h2>Fußnoten</h2>
+
+            <dl class="footnotes">
+              <dt>
+                <a id="footnote1_zi5mb80" href="#footnoteref1_zi5mb80">[1]</a>
+              </dt>
+              <dd>
+                Dieses amerikanische Layout mit deutschen Umlauten nannte sich
+                <code>us_de</code>. Ich hatte es vor geraumer Zeit irgendwo im
+                Web gefunden (ich glaube, das war auf einer privaten Seite, weiß
+                aber leider nicht mehr, auf welcher). Die
+                <code>us_de</code>-Keymap funktionierte im Grunde genauso wie
+                die hier dargestellte <code>us_ext</code>-Symboltabelle, war
+                aber syntaktisch nicht ganz mit aktuellen X-Servern kompatibel.
+              </dd>
+              <dt>
+                <a id="footnote2_s3czprn" href="#footnoteref2_s3czprn">[2]</a>
+              </dt>
+              <dd>
+                Für die pedantischen unter den Lesern: Wer genau hinschaut,
+                entdeckt zusätzlich vereinzelt ein paar Zeichen aus
+                „Superscripts and Subscripts” (2070-209F), „Letterlike Symbols”
+                (2100-214F), „Number Forms” (2150-218F) und „Arrows”
+                (2190-21FF).
+              </dd>
+              <dt>
+                <a id="footnote3_mssstrs" href="#footnoteref3_mssstrs">[3]</a>
+              </dt>
+              <dd>
+                Durch Zufall bin ich auf einen kleinen Bug in
+                <code>keysymdef.h</code> gestossen: Der symbolische Zeichenname
+                <code>implies</code> wird nicht – wie dort angeführt – auf das
+                passende Unicode-Zeichen <code>0x21D2</code>, sondern vielmehr
+                auf <code>0x22A2</code>
+                abgebildet.
+              </dd>
+              <dt>
+                <a id="footnote4_yzohamq" href="#footnoteref4_yzohamq">[4]</a>
+              </dt>
+              <dd>
+                Leider bin ich mir über die unterschiedliche Numerierung
+                einzelner Tasten-Levels in XKB-Symboltabellen und
+                <span class="pn">xmodmap</span>-Eingabedateien bzw. insbesondere
+                über das Verhältnis zwischen den Keysyms
+                <code>Mode_shift</code> und <code>ISO_Level3_Shift</code> bis
+                dato nicht ganz im Klaren (soll heißen: Ich weiß nicht, wovon
+                ich hier schreibe ;-) – zu diesem Thema war auf die Schnelle
+                schlicht und einfach keine Dokumentation aufzutreiben&nbsp;…
+              </dd>
+            </dl>
+          </div>
+          <div class="post-bottom"></div>
+        </div>
+        <div class="comments" id="comments">
+          <a name="comments"></a>
+          <div class="comments-header">
+            <h2>Comments:</h2>
+            <div class="comments-header-bottom"></div>
+          </div>
+          <div class="comments-content">
+            <div class="comment">
+              <div class="comment-header">
+                <span style="float: right"> 2007/10/05 </span>
+                <h3>Joseph Koenig said...</h3>
+              </div>
+              <div class="comment-content">Sehr schönes Howto. Danke.</div>
+            </div>
+            <div class="comment">
+              <div class="comment-header">
+                <span style="float: right"> 2007/10/24 </span>
+                <h3>Andreas Vida said...</h3>
+              </div>
+              <div class="comment-content">
+                Interessanter Text..<br /><br />Ich verwende ja schon einige
+                Jahr nur noch Dvorak. Die Umlaute schreibe ich mit dead-keys
+                (also alt-gr) Das ist optimal zum Programmieren und schont
+                besonders die kleinen Finger.<br /><br />
+
+                Nachteil ist die Eingewöhnungszeit und man wird oft schief
+                angesehen. Allerdings wer weiss schon, dass das QWERTY Layout
+                urpsrünglich erfunden wurde, um die Leute am zu schnellen Tippen
+                auf Schreibmaschinen zu hindern. Klar – 1872 hatte man noch
+                keine Ahnung welches Layout optimal ist. Seltsam ist, dass so
+                viele Leute der Masse blind folgen!
+              </div>
+            </div>
+            <div class="comment">
+              <div class="comment-header">
+                <span style="float: right"> 2008/01/07 </span>
+                <h3>
+                  <a href="http://www.jpberlin.de/st.pofahl/" rel="nofollow"
+                    >stefan pofahl</a
+                  >
+                  said...
+                </h3>
+              </div>
+              <div class="comment-content">
+                Super Artikel, aber er hilft mir aber leider nicht weiter, unter
+                “xev” wird meine “AltGr” Taste nicht erkannt, auf der Konsole
+                liefert die Taste: 0x64 0xe4<br /><br />Wie bekomme ich X11
+                übertredet, daß “xev” den Tastaturevent “AltGr” richtig
+                auswertet?<br />
+                Grüße<br />
+                Stefan
+              </div>
+            </div>
+            <div class="comment">
+              <div class="comment-header">
+                <span style="float: right"> 2008/01/10 </span>
+                <h3>
+                  <a
+                    href="http://www.blogger.com/profile/11688439504019181255"
+                    rel="nofollow"
+                    >Ingomar Wesp</a
+                  >
+                  said...
+                </h3>
+              </div>
+              <div class="comment-content">
+                Hallo, Stefan.<br /><br />
+
+                Leider habe ich im Moment nicht genug Zeit, um mich näher mit
+                deinem Problem auseinanderzusetzen. Die Tatsache, dass das
+                Drücken der AltGr-Taste bei dir einen korrekten Keycode erzeugt,
+                spricht aber zumindest dafür, dass der Kernel über eine passende
+                Zuordnung für den von der Hardware gelieferten Code verfügt.<br /><br />
+
+                Da X11 nicht Keycodes, sondern Scancodes erwartet, führen neuere
+                Kernel eine Scancode-Emulation durch, die die eingehenden
+                Keycodes (in deinem Fall 0x64 0xE4) auf Standard-Scancodes
+                abbildet, mit denen X11 dann hoffentlich umgehen kann.<br /><br />
+
+                Nachdem ich davon ausgehe, dass xev andere Tastatureingaben
+                korrekt erkennt und das xev-Fenster bei deinen Versuchen immer
+                den Fokus hatte, kann ich ohne weitere Nachforschungen leider
+                nicht sagen, aus welchem Grund die Generierung von X11-Events
+                bei dir scheitert.<br /><br />
+
+                Ich muss aber leider auch zugeben, dass ich mich in diesem
+                Bereich nicht näher in die Materie vertieft habe, als es für
+                meine Zwecke notwendig war.<br /><br />
+
+                Tut mir leid, dir in dieser Angelegenheit nicht weiterhelfen zu
+                können. Falls du allerdings eine Lösung für dein Problem
+                findest, würde ich mich freuen, davon zu hören.
+              </div>
+            </div>
+            <div class="comment">
+              <div class="comment-header">
+                <span style="float: right"> 2008/05/05 </span>
+                <h3>Metzelmaschine said...</h3>
+              </div>
+              <div class="comment-content">
+                Die spinnen, die Amerikaner!<br /><br />
+
+                Statt des zweiten Y wäre ein Z von Vorteil, finde ich ;)
+              </div>
+            </div>
+            <div class="comment">
+              <div class="comment-header">
+                <span style="float: right"> 2008/05/15 </span>
+                <h3>
+                  <a
+                    href="http://www.blogger.com/profile/11688439504019181255"
+                    rel="nofollow"
+                    >Ingomar Wesp</a
+                  >
+                  said...
+                </h3>
+              </div>
+              <div class="comment-content">
+                &gt; Statt des zweiten Y wäre ein Z von Vorteil, finde ich ;)
+                <br /><br />
+
+                Taaaatsächlich ;-)<br />
+                Vielen Dank für den Hinweis – wird ehestmöglich korrigiert.
+              </div>
+            </div>
+            <div class="comment">
+              <div class="comment-header">
+                <span style="float: right"> 2008/05/20 </span>
+                <h3>Sebastian said...</h3>
+              </div>
+              <div class="comment-content">
+                hey!<br /><br />
+
+                danke für die beschreibung! das us_de layout, das du zitierst,
+                war eventuell das hier:
+                <a
+                  href="http://www.messen-und-deuten.de/us-de.html"
+                  rel="nofollow"
+                  >http://www.messen-und-deuten.de/us-de.html</a
+                >
+                .<br /><br />
+
+                grüße,<br />
+                sebastian.
+              </div>
+            </div>
+            <div class="comment">
+              <div class="comment-header">
+                <span style="float: right"> 2008/07/13 </span>
+                <h3>
+                  <a href="http://stefan.waidele.info/" rel="nofollow"
+                    >Stefan Waidele</a
+                  >
+                  said...
+                </h3>
+              </div>
+              <div class="comment-content">
+                Die typographischen Anführungsyeichen sind nicht gany korrekt.
+                Die unteren stimmen – sie sehen wie zwei verkleinerte Neuenen
+                aus „99“. Die Oberen sollten jedoch wie zwei kleine Sechsen
+                aussehen „66“.<br /><br />
+
+                Also sollte die Zeile für die Taste 94 lauten:<br />
+                keycode 94 = U201E U201C U201A U2018<br /><br />
+
+                Ansonsten: Einfach klasse, jetzt weiß ich warum die Kollegen von
+                der FLUG so scharf auf US-Tastaturen sin. Auch wenn ich
+                wahrscheinlich noch Yett und Zpszlon vertauschen werde… :)
+              </div>
+            </div>
+            <div class="comment">
+              <div class="comment-header">
+                <span style="float: right"> 2008/09/30 </span>
+                <h3>Edi said...</h3>
+              </div>
+              <div class="comment-content">
+                Diese Anleitung ist super, schön geschrieben!! Genau das was ich
+                gesucht habe. Vielen Dank.
+              </div>
+            </div>
+            <div class="comment">
+              <div class="comment-header">
+                <span style="float: right"> 2008/12/28 </span>
+                <h3>Tim Baumann said...</h3>
+              </div>
+              <div class="comment-content">
+                Ist es eigentlich möglich, bei einem Tastendruck mehrere Zeichen
+                auszugeben (z.B. "Tim Baumann", wenn ich Shift+F1 drücke)?
+              </div>
+            </div>
+            <div class="comment">
+              <div class="comment-header">
+                <span style="float: right"> 2011/05/06 </span>
+                <h3>Anonymous said...</h3>
+              </div>
+              <div class="comment-content">
+                Ich bin leider nicht so GEEK und verstehe überhqupt nichts...<br />
+                Wie kqnn ich dqs Deutsche Lqyout verändern so dqs Q dq ist wo A
+                ist?
+              </div>
+            </div>
+            <div class="comment">
+              <div class="comment-header">
+                <span style="float: right"> 2011/05/08 </span>
+                <h3>
+                  <a
+                    href="http://www.blogger.com/profile/11688439504019181255"
+                    rel="nofollow"
+                    >Ingomar Wesp</a
+                  >
+                  said...
+                </h3>
+              </div>
+              <div class="comment-content">
+                @Anonymous: Wenn du ohnehin schon ein deutsches Layout
+                verwendest, wäre es wohl am einfachsten, sich an xmodmap zu
+                versuchen. Sofern bloß die beiden Tasten vertauscht werden
+                sollen, reicht – ausgehend davon, dass eine deutsche Keymap
+                geladen ist – folgender Aufruf:<br /><br />
+
+                xmodmap -e 'keysym q = a A a A ae AE ae' -e 'keysym a = q Q q Q
+                at Greek_OMEGA at'
+              </div>
+            </div>
+            <div class="comment">
+              <div class="comment-header">
+                <span style="float: right"> 2012/04/09 </span>
+                <h3>Anonymous said...</h3>
+              </div>
+              <div class="comment-content">
+                Sorry aber wer Zeit hat ein solches Layout zu "erfinden" ist
+                nicht ganz 100.. ;)<br /><br />
+
+                Und es dann auch noch us_ext zu nennen.. klar ein us_ext mit
+                Umlauten, hrhr. Nenn es wenigstens de_us_ext oder so. Wer
+                braucht denn schon zum programmieren ein Doppel-S?<br /><br />
+
+                Einfach damit es nicht mainstream ist was? Ich versteh ja nicht
+                mal wo der Sinn dabei sein soll semikolon und doppelpunkt
+                zusammenzunehmen.. die braucht man ja auch fast nie "ironie".
+              </div>
+            </div>
+            <div class="comment">
+              <div class="comment-header">
+                <span style="float: right"> 2012/06/02 </span>
+                <h3>
+                  <a
+                    href="http://www.blogger.com/profile/01597796047719839208"
+                    rel="nofollow"
+                    >Jacek Ruzyczka</a
+                  >
+                  said...
+                </h3>
+              </div>
+              <div class="comment-content">
+                Musste ich auch schon mal machen, denn ich schreibe auf Deutsch
+                (mit deutscher Tastatur), Englisch und Polnisch (!) mit seinen
+                berühmten Spezialzeichen. Also fabrizierte ich ein eigenes
+                Symbolfile mit einem Zweitter-Layout (DE/PL). Aber: Muss man ein
+                neues Layout nicht in der base.xml eintragen?
+              </div>
+            </div>
+          </div>
+          <div class="comments-bottom"></div>
+        </div>
+      </div>
+
+      <div id="footer">
+        <div class="footer-content">
+          <span class="links"> </span>
+          Copyright © Ingomar Wesp (except citations and fair use). All
+          original content is licensed under a
+          <a href="http://creativecommons.org/licenses/by/3.0/"
+            >Creative Commons 3.0 Unported License</a
+          >.
+        </div>
+        <div class="footer-bottom"></div>
+      </div>
+    </div>
+  </body>
+  <nordvpn-contentscript-extension-mount-3.6.0></nordvpn-contentscript-extension-mount-3.6.0>
+</html>
