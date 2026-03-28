@@ -4,6 +4,10 @@
 # Login into the Bitwarden CLI
 # and make the session variable `BW_SESSION` available.
 function gabyx::bitwarden() {
-    BW_SESSION=$(bw login gnuetzi@gmail.com --raw)
+    if bw login --check; then
+        BW_SESSION=$(bw unlock --raw)
+    else
+        BW_SESSION=$(bw login gnuetzi@gmail.com --raw)
+    fi
     export BW_SESSION
 }
