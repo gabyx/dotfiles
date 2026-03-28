@@ -456,6 +456,7 @@ cm *args:
             chmod 400 "$fidoK"
         fi
 
+        # Now we can decrypt over Yubikey
         age -d -i ~/.config/chezmoi/fido "$fidoK" > "$key"
     else
         echo "No Yubikey present."
