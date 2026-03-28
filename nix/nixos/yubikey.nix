@@ -177,6 +177,7 @@ in
           settings = {
             cue = true; # Tells user they need to press the button
             authfile = "${homeDir}/.config/yubikey/u2f_keys";
+            pinverification = 1;
             # To debug add this.
             # debug = true;
           };

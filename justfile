@@ -394,7 +394,6 @@ create-links-from-secrets file:
 # This is a wrapper to `chezmoi` which provided the necessary encryption
 # key temporarily and deletes it afterwards again.
 # This is only used for invocations which need the private key.
-# This needs `store-kefile-private-key` to be run.
 [no-cd]
 cm *args:
     #!/usr/bin/env bash
@@ -433,7 +432,9 @@ cm *args:
 
     keyFile="{{root_dir}}/secrets/config/dot_config/chezmoi/key.age"
 
-    if [ -n "$(ykman list)" ]; then
+    if [ "${NO_ENCRYPTION_SETUP:-}" = "true" ] || ! echo "$@" | grep -q -E "encrypt|apply|re-add"; then
+        echo "Skip encryption setup."
+    elif [ -n "$(ykman list)" ]; then
         fidoK=~/.config/chezmoi/key-fido.age
         echo "Yubikey seems present."
 
@@ -469,15 +470,13 @@ cm *args:
     echo "Chezmoi done."
 
     if echo "$@" | grep -q "re-add"; then
-        echo "Re-add detected, running 'just move-all-to-secret'"
-        just move-all-to-secret
+        echo "Re-add detected, running 'just move-all-to-secrets'"
+        just move-all-to-secrets
     fi
 
-# Store the private-key for the keyfile 'key.age'
-# into the keyring.
-store-private-key:
-    secret-tool store --label='Chezmoi Key-File Private Key' \
-        chezmoi keyfile-private-key
+# Like `cm` but with no encryption.
+cmn *args:
+    NO_ENCRYPTION_SETUP=true just cm --exclude encrypted "$@"
 
 # Delete the script state of chezmoi to rerun scripts.
 delete-chezmoi-script-state:
