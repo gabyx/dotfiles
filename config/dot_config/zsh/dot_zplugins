@@ -1,3 +1,6 @@
+# These are the plugins, the lock file next to it will be loaded.
+# The snapshot next to it, will be used to pin the plugins.
+
 # Plugins for Antidote
 romkatv/zsh-defer
 

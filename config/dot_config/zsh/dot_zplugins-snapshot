@@ -1,0 +1,14 @@
+# antidote snapshot
+# version: 2.0.9
+# date: 2026-03-28T20:15:30Z
+jeffreytse/zsh-vi-mode kind:clone pin:08bd1c04520418faee2b9d1afbc410ee1a59a8f1
+ohmyzsh/ohmyzsh kind:clone pin:76ffd9e22acc7f11ca501f03d6999adbdb9baa61
+romkatv/powerlevel10k kind:clone pin:604f19a9eaa18e76db2e60b8d446d5f879065f90
+romkatv/zsh-defer kind:clone pin:53a26e287fbbe2dcebb3aa1801546c6de32416fa
+sorin-ionescu/prezto kind:clone pin:73ae7f11280adcc061c15ebb2f494954c2cc8a38
+Tarrasch/zsh-bd kind:clone pin:646f06d9b6a840926a671fdc2da196d4eecfc305
+z-shell/zsh-navigation-tools kind:clone pin:0bab1b99041719d35e44e29d9a0dfd3d3b61cf61
+zsh-users/zsh-autosuggestions kind:clone pin:85919cd1ffa7d2d5412f6d3fe437ebdbeeec4fc5
+zsh-users/zsh-completions kind:clone pin:f0b1a348a15d9ce710c9487725e103ab8239b828
+zsh-users/zsh-history-substring-search kind:clone pin:14c8d2e0ffaee98f2df9850b19944f32546fdea5
+zsh-users/zsh-syntax-highlighting kind:clone pin:1d85c692615a25fe2293bdd44b34c217d5d2bf04

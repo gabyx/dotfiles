@@ -46,6 +46,9 @@ local ZVM_INIT_MODE=sourcing # Somehow zsh-vi-mode overwrites CTRL+R. https://gi
 ANTIDOTE_HOME=$ZDOTDIR/.antidote/.plugins
 zstyle ':antidote:bundle' use-friendly-names 'yes'
 zstyle ':antidote:bundle' file "$ZDOTDIR/.zplugins"
+zstyle ':antidote:snapshot' dir "$ZDOTDIR/.antidote-snapshots"
+zstyle ':antidote:snapshot:automatic' enabled yes
+zstyle ':antidote:snapshot' max 2
 fpath+=("$ZDOTDIR/.antidote")
 autoload -Uz "$fpath[-1]/antidote"
 
@@ -56,7 +59,7 @@ function install_plugins() {
 
     # On the systems where I dont have antidote.
     if [ ! -d "$ZDOTDIR/.antidote" ]; then
-        git clone --depth=1 --branch v1.10.3 \
+        git clone --depth=1 --branch v2.0.9 \
             --single-branch https://github.com/mattmc3/antidote.git \
             "$ZDOTDIR/.antidote"
 
@@ -77,8 +80,11 @@ function install_plugins() {
     }
 
     if [ "$force_bundle" = "true" ]; then
+        echo "Restore plugins from snapshot."
+        antidote snapshot restore "$zsh_plugins_src-snapshot"
+
         echo "Generate static plugins file '$zsh_plugins' from '$zsh_plugins_src'..."
-        antidote bundle <"$ZDOTDIR/.zplugins" >"$zsh_plugins"
+        antidote bundle <"$zsh_plugins_src" >"$zsh_plugins"
     fi
 }
 
