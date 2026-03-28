@@ -403,26 +403,51 @@ cm *args:
     set -o pipefail
 
     trap cleanup EXIT
+
+    key="$HOME/.config/chezmoi/key"
     function cleanup() {
-        rm -rf ~/.config/chezmoi/key 2>/dev/null || true
+        rm -rf "$key" 2>/dev/null || true
     }
     mkdir -p ~/.config/chezmoi
+
+    function get_bitwarden() {
+        if command -v bw &>/dev/null && [ -n "$BW_SESSION" ]; then
+            echo "Bitwarden session present." >&2
+            bw get password "$1"
+            return 0
+        fi
+        return 1
+    }
+
+    function get_pkey_bitwarden() {
+        # The private key for keyFile.
+        get_bitwarden "806fdfd6-c005-4ed6-a585-b1750107ba21"
+    }
+
+    function get_pkey_prompt() {
+        read -s -p "$1" k
+        echo >/dev/tty
+        [ -n "$k" ] || return 1
+        echo "$k" && return 0
+    }
+
+    keyFile="{{root_dir}}/secrets/config/dot_config/chezmoi/key.age"
 
     if [ -n "$(ykman list)" ]; then
         fidoK=~/.config/chezmoi/key-fido.age
         echo "Yubikey seems present."
 
         if [ ! -f "$fidoK" ]; then
-            read -s -p "Enter private-key for key-file 'chezmoi/key.age':" pkey
-            echo
-            read -s -p "Enter private-key FIDO2 for a new chezmoi/key.age:" pkeyfido
-            echo
+            echo "Writing $fidoK for further invocations."
+
+            pkey=$(get_pkey_bitwarden) || \
+                pkey=$(get_pkey_prompt "Enter private-key for key-file 'chezmoi/key.age': ")
+            pkeyfido=$(get_pkey_prompt "Enter FIDO2 age identity for '$fidoK': ")
             echo "$pkeyfido" > ~/.config/chezmoi/fido
             chmod 400 ~/.config/chezmoi/fido
 
-            echo "Writing $fidoK for further invocations."
             echo "$pkey" | \
-                age -d -i - "{{root_dir}}/secrets/config/dot_config/chezmoi/key.age" | \
+                age -d -i - "$keyFile" | \
                 age -e -r age1messaj8qqseag2nuvr5d453qqnkszt3rmwldvpjw8fapd0xfkajs7x6mld \
                     -i <(echo "$pkeyfido") > "$fidoK" || {
                 rm -f "$fidoK" || true;
@@ -430,22 +455,23 @@ cm *args:
             chmod 400 "$fidoK"
         fi
 
-        age -d -i ~/.config/chezmoi/fido "$fidoK" > ~/.config/chezmoi/key
+        age -d -i ~/.config/chezmoi/fido "$fidoK" > "$key"
     else
         echo "No Yubikey present."
-        read -s -p "Enter private-key to decrypt chezmoi/key.age:" pkey
-        echo
-        echo "$pkey" |
-            age -d -i - "{{root_dir}}/secrets/config/dot_config/chezmoi/key.age" > \
-                ~/.config/chezmoi/key
+        pkey=$(get_pkey_bitwarden) || \
+            pkey=$(get_pkey_prompt "Enter private-key for key-file 'chezmoi/key.age': ")
+        echo "$pkey" | age -d -i - "$keyFile" > "$key"
     fi
+
+
+    echo "Running chezmoi ..."
+    chezmoi -S "." "$@"
+    echo "Chezmoi done."
 
     if echo "$@" | grep -q "re-add"; then
-        echo "WARNING: Run 'just move-all-to-secrets'!!"
+        echo "Re-add detected, running 'just move-all-to-secret'"
+        just move-all-to-secret
     fi
-
-    chezmoi -S "." "$@"
-
 
 # Store the private-key for the keyfile 'key.age'
 # into the keyring.
