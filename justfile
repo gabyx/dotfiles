@@ -8,6 +8,7 @@ mod vm "./tools/just/vm.just"
 
 # The host for which most commands work below.
 default_host := env("NIXOS_HOST", "not-defined")
+yubikey_name := env("YUBIKEY_NAME", "normal")
 
 # If the nix-output-monitor should be used.
 use_nom := env("USE_NOM", "true")
@@ -418,52 +419,34 @@ cm *args:
         return 1
     }
 
-    function get_pkey_bitwarden() {
-        # The private key for keyFile.
-        get_bitwarden "806fdfd6-c005-4ed6-a585-b1750107ba21"
+    function get_bitwarden() {
+        # The chezmoi identity.
+        get_bitwarden "3cc1b9eb-2504-4cec-8dda-b17501145099"
     }
 
-    function get_pkey_prompt() {
+    function get_prompt() {
         read -s -p "$1" k
         echo >/dev/tty
         [ -n "$k" ] || return 1
         echo "$k" && return 0
     }
 
-    keyFile="{{root_dir}}/secrets/config/dot_config/chezmoi/key.age"
-
     if [ "${NO_ENCRYPTION_SETUP:-}" = "true" ] || ! echo "$@" | grep -q -E "encrypt|apply|re-add"; then
         echo "Skip encryption setup."
-    elif [ -n "$(ykman list)" ]; then
-        fidoK=~/.config/chezmoi/key-fido.age
-        echo "Yubikey seems present."
-
-        if [ ! -f "$fidoK" ]; then
-            echo "Writing $fidoK for further invocations."
-
-            pkey=$(get_pkey_bitwarden) || \
-                pkey=$(get_pkey_prompt "Enter private-key for key-file 'chezmoi/key.age': ")
-            pkeyfido=$(get_pkey_prompt "Enter FIDO2 age identity for '$fidoK': ")
-            echo "$pkeyfido" > ~/.config/chezmoi/fido
-            chmod 400 ~/.config/chezmoi/fido
-
-            echo "$pkey" | \
-                age -d -i - "$keyFile" | \
-                age -e -i <(echo "$pkeyfido") > "$fidoK" || {
-                rm -f "$fidoK" || true;
-            }
-            chmod 400 "$fidoK"
-        fi
-
-        # Now we can decrypt over Yubikey
-        age -d -i ~/.config/chezmoi/fido "$fidoK" > "$key"
     else
-        echo "No Yubikey present."
-        pkey=$(get_pkey_bitwarden) || \
-            pkey=$(get_pkey_prompt "Enter private-key for key-file 'chezmoi/key.age': ")
-        echo "$pkey" | age -d -i - "$keyFile" > "$key"
-    fi
+        k=$(
+            "{{root_dir}}/nix/pkgs/scripts/shell/common/get-secret.sh" \
+            "3cc1b9eb-2504-4cec-8dda-b17501145099" \
+            "{{yubikey_name}}" \
+            "Chezmoi encryption age identity" \
+            ~/.config/chezmoi/key
+        ) || {
+            echo "Secret fetch failed."
+            exit 1
+        }
 
+        echo "$k" >"$key"
+    fi
 
     echo "Running chezmoi ..."
     chezmoi -S "." "$@"

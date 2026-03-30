@@ -30,11 +30,11 @@ function gabyx::_print() {
 }
 
 function gabyx::print_debug() {
-    gabyx::_print "[38;5;240m" "" "" "$@"
+    gabyx::_print "[38;5;240m" "" "" "$@" >&2
 }
 
 function gabyx::print_info() {
-    gabyx::_print "[0;94m" "" "" "$@"
+    gabyx::_print "[0;94m" "" "" "$@" >&2
 }
 
 function gabyx::print_warning() {

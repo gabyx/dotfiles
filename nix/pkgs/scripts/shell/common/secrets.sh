@@ -11,3 +11,8 @@ function gabyx::bitwarden() {
     fi
     export BW_SESSION
 }
+
+# Get a secret.
+function gabyx::get_secret() {
+    gabyx::shell-run "$GABYX_LIB_DIR/common/get-secret.sh" "$@"
+}
