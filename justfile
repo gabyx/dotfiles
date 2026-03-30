@@ -354,7 +354,7 @@ move-all-to-secrets:
     # Remove all links, recreat them from secrets.
     fd ".*.age$" -E "secrets/**" --type l --exec rm "{}"
 
-    fd ".*.age$" --type f ./secrets \
+    fd ".*.age|identity$" --type f ./secrets \
         --exec just create-links-from-secrets "{}"
 
     fd ".*.age$" -E "secrets/**" --type f \

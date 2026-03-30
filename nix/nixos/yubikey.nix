@@ -134,6 +134,7 @@ in
         pkgsUnstable.yubioath-flutter # gui-based authenticator tool. yubioath-desktop on older nixpkg channels
 
         packages.age-plugin-fido2prf # Generate a age private key (bound to a FIDO2 inside a Yubikey).
+        pkgsUnstable.age-plugin-fido2-hmac # Generate a age private key (bound to a FIDO2 inside a Yubikey).
 
         yubikey-up
         yubikey-down

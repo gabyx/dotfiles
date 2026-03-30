@@ -10,10 +10,12 @@ age:
   # again after apply.
   identities:
     - ~/.config/chezmoi/key
-    # - ~/.config/chezmoi/fido2
 
-  # useIdentitiesForEncryption: true
-  recipient: age1messaj8qqseag2nuvr5d453qqnkszt3rmwldvpjw8fapd0xfkajs7x6mld
+  recipients:
+    - age1messaj8qqseag2nuvr5d453qqnkszt3rmwldvpjw8fapd0xfkajs7x6mld
+    - age1whpvz74mz67p0x86ex6yx88pdz3q7cs4h6mchwqky68axglf354s2atpha # age/gabyx-normal-fido2-hmac.identity
+    - age1xqqwa90dxlyrymk9atn7zjdqsvjzmw34yn3m9xw4vww8n5cf04vq4df9rv # age/gabyx-s1-fido2-hmac.identity
+    - age1unj7ay9ncjlzeqmcrmz8pakawcljtphlppkuhfsafxvxgqaxku4qhmfhej # age/gabyx-s2-fido2-hmac.identity
 
 diff:
   pager: delta
