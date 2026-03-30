@@ -9,7 +9,7 @@
     let
       jailIt = inputs.jail-nix.lib.init pkgsUnstable;
 
-      zsh-jailed = jailIt "jail-shell" pkgs.zsh (cs: [
+      terminal-jailed = jailIt "terminal-jailed" pkgs.zsh (cs: [
         cs.gui
         cs.gpu
         cs.network
@@ -107,7 +107,7 @@
     {
       packages = {
         inherit signal-jailed;
-        inherit zsh-jailed;
+        inherit terminal-jailed;
       };
     };
 }
