@@ -8,6 +8,7 @@ keyboard
 common
 docs
 
+.config/age
 .config/chezmoi
 .config/element
 

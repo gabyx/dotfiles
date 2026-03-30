@@ -449,8 +449,7 @@ cm *args:
 
             echo "$pkey" | \
                 age -d -i - "$keyFile" | \
-                age -e -r age1messaj8qqseag2nuvr5d453qqnkszt3rmwldvpjw8fapd0xfkajs7x6mld \
-                    -i <(echo "$pkeyfido") > "$fidoK" || {
+                age -e -i <(echo "$pkeyfido") > "$fidoK" || {
                 rm -f "$fidoK" || true;
             }
             chmod 400 "$fidoK"
