@@ -438,7 +438,7 @@ cm *args:
             "{{root_dir}}/nix/pkgs/scripts/shell/common/get-secret.sh" \
             "3cc1b9eb-2504-4cec-8dda-b17501145099" \
             "{{yubikey_name}}" \
-            "Chezmoi encryption age identity" \
+            "Chezmoi encryption age identity: " \
             ~/.config/chezmoi/key
         ) || {
             echo "Secret fetch failed."
