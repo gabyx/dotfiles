@@ -3,6 +3,7 @@
   outputs,
   system,
   lib,
+  packages,
   pkgs,
   pkgsUnstable,
   ...
@@ -29,6 +30,8 @@ in
     pkgsUnstable.seahorse
     pkgsUnstable.zenity # For dialogs over githooks and calendar.
     pkgsUnstable.witr
+    pkgsUnstable.gitstatus
+    packages.zsh-jailed
 
     # Qemu
     pkgsUnstable.quickemu

@@ -393,15 +393,16 @@
     },
     "jail-nix": {
       "locked": {
-        "lastModified": 1770418571,
-        "narHash": "sha256-EzQUbe1gwW/xpJoMuMeblWcjAEF+F92cz/enz0Mz/qo=",
+        "lastModified": 1772137954,
+        "narHash": "sha256-h4MGNbOo7L3RHi4uNFmsg5g17/DHXEfnv/xiG6BrNFQ=",
         "owner": "~alexdavid",
         "repo": "jail.nix",
-        "rev": "c141cf8cc68617625b4a28a7d8ce0a35904815d5",
+        "rev": "42b355c38ca63dab4904acc5c0d95f17954a8c9b",
         "type": "sourcehut"
       },
       "original": {
         "owner": "~alexdavid",
+        "ref": "beta",
         "repo": "jail.nix",
         "type": "sourcehut"
       }

@@ -142,7 +142,9 @@
       url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
     };
 
-    jail-nix.url = "sourcehut:~alexdavid/jail.nix";
+    jail-nix = {
+      url = "sourcehut:~alexdavid/jail.nix?ref=beta";
+    };
 
     nixpak = {
       url = "github:nixpak/nixpak";

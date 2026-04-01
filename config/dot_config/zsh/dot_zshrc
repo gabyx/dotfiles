@@ -91,6 +91,7 @@ function install_plugins() {
 # Install antidote and bundle plugins.
 install_plugins
 # Loading plugins
+GITSTATUS_AUTO_INSTALL=0 # Dont't install gitstatusd.
 source "$ZDOTDIR/.zsh_plugins.zsh"
 # ==============================================================================
 
