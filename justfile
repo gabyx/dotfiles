@@ -436,10 +436,10 @@ cm *args:
     else
         k=$(
             "{{root_dir}}/nix/pkgs/scripts/shell/common/get-secret.sh" \
-            "3cc1b9eb-2504-4cec-8dda-b17501145099" \
-            "{{yubikey_name}}" \
-            "Chezmoi encryption age identity: " \
-            ~/.config/chezmoi/key
+            --bw-id "3cc1b9eb-2504-4cec-8dda-b17501145099" \
+            --yubikey "{{yubikey_name}}" \
+            --prompt "Chezmoi encryption age identity: " \
+            --file ~/.config/chezmoi/key
         ) || {
             echo "Secret fetch failed."
             exit 1
