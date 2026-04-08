@@ -9,7 +9,7 @@
 autoload -U compinit; compinit
 
 # Zsh options: http://zsh.sourceforge.net/Doc/Release/Options.html
-HISTFILE="$ZDOTDIR/.zsh_history"
+HISTFILE="${CUSTOM_HISTFILE:-$ZDOTDIR/.zsh_history}"
 HISTSIZE=10000000                # How many lines of history to keep in memory
 SAVEHIST=10000000                # Number of history entries to save to disk
 setopt BANG_HIST                 # Treat the '!' character specially during expansion.
