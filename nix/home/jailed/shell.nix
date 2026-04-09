@@ -130,6 +130,15 @@ let
       (cs.set-env "CUSTOM_HISTFILE" "/tmp/.zsh_history")
       (cs.set-env "LOCALE_ARCHIVE" "${pkgs.glibcLocales}/lib/locale/locale-archive")
 
+      # FIXME:
+      # Nvim smart-split plugin does not detect the terminal.
+      # It sends OSC sequence to the terminal but only if it detects it
+      # Some missing pieces are not forwarding WEZTERM_ env vars.
+      # use cs.add-runtime.
+      # --setenv WEZTERM_PANE "$WEZTERM_PANE"
+      # --setenv TERM_PROGRAM "$TERM_PROGRAM"
+      # --setenv WEZTERM_UNIX_SOCKET "$WEZTERM_UNIX_SOCKET"
+
       # Bind mounts based on arguments.
       (cs.add-runtime ''
         for arg in "$@"; do
