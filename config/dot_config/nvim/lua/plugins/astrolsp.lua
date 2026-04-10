@@ -132,6 +132,7 @@ return {
                     ["rust-analyzer"] = {
                         files = {
                             excludeDirs = {
+                                ".devenv",
                                 ".direnv",
                                 ".git",
                                 "target",
