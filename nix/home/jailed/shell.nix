@@ -51,7 +51,6 @@ let
       "~/.local/share/uv"
       "~/.local/share/wezterm"
 
-      "~/.local/state/lazygit"
       "~/.local/state/nix"
       "~/.local/state/nix-output-monitor"
 
@@ -79,7 +78,7 @@ let
         let
           b = extractSrcDest p;
         in
-        cs.try-rw-bind (cs.noescape b.src) (cs.noescape b.src);
+        cs.try-rw-bind (cs.noescape b.src) (cs.noescape b.dest);
     in
     lib.map makeBind [
       {
@@ -93,6 +92,8 @@ let
       "~/.config/nvim-nightly"
       "~/.local/share/nvim-nightly"
       "~/.local/state/nvim-nightly"
+
+      "~/.local/state/lazygit"
 
       "~/.cache/nix"
       "~/.cache/go"
