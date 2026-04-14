@@ -10,7 +10,7 @@ let
 
   readOnlyPaths =
     cs:
-    lib.map (p: (cs.ro-bind (cs.noescape p) (cs.noescape p))) [
+    lib.map (p: (cs.try-ro-bind (cs.noescape p) (cs.noescape p))) [
       # Configs
       "~/.config/fzf"
       "~/.config/git"
@@ -79,7 +79,7 @@ let
         let
           b = extractSrcDest p;
         in
-        cs.rw-bind (cs.noescape b.src) (cs.noescape b.src);
+        cs.try-rw-bind (cs.noescape b.src) (cs.noescape b.src);
     in
     lib.map makeBind [
       {
@@ -126,7 +126,7 @@ let
       (cs.set-env "JAILED" "true")
       (cs.fwd-env "PATH")
       (cs.fwd-env "EDITOR")
-      (cs.fwd-env "GITSTATUS_DAEMON")
+      (cs.try-fwd-env "GITSTATUS_DAEMON")
       (cs.set-env "CUSTOM_HISTFILE" "/tmp/.zsh_history")
       (cs.set-env "LOCALE_ARCHIVE" "${pkgs.glibcLocales}/lib/locale/locale-archive")
 
