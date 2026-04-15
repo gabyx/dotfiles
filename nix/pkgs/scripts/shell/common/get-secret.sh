@@ -13,6 +13,7 @@ Usage: $(basename "$0") [OPTIONS]
 
 Options:
   -b, --bw-id ID           Bitwarden item ID
+  -B, --bw-field <field>   Bitwarden field name to extract (default: 'password')
   -y, --yubikey NAME       Yubikey name (or use \$YUBIKEY_NAME)
   -p, --prompt TEXT        Prompt fallback text
   -f, --file PREFIX        File prefix for encrypted file
@@ -29,6 +30,7 @@ EOF
 }
 
 bw_id=""
+bw_field="password"
 yubikey_name="${YUBIKEY_NAME:-}"
 prompt=""
 file_prefix=""
@@ -38,6 +40,10 @@ function parse_args() {
         case "$1" in
         -b | --bw-id)
             bw_id="$2"
+            shift 2
+            ;;
+        -B | --bw-field)
+            bw_field="$2"
             shift 2
             ;;
         -y | --yubikey)
@@ -79,10 +85,21 @@ function parse_args() {
 
 function get_bitwarden() {
     [ -n "$1" ] || return 1
-    gabyx::print_info "Getting secret '$1' from Bitwarden."
+    gabyx::print_info "Getting secret '$1.$bw_field' from Bitwarden."
     if command -v bw &>/dev/null && [ -n "${BW_SESSION:-}" ]; then
         gabyx::print_debug "Bitwarden session present."
-        bw get password "$1"
+        item=$(bw get item "$1") || return 0
+        item=$(echo "$item" | jq -er ".${bw_field}") || {
+            gabyx::print_error "Could not extract field '$bw_field'."
+            return 1
+        }
+        [ -n "$item" ] || {
+            gabyx::print_error "Could not extract field '$bw_field'."
+            return 1
+        }
+
+        echo "$item"
+
         return 0
     fi
     return 1
@@ -103,7 +120,14 @@ function main() {
     bw_fido_age["s1"]="14c8d52d-0f1f-4584-b1b4-b41a013ce86a"
     bw_fido_age["s2"]="4d5af98d-1792-47f6-b4c7-b41a013d00b3"
 
-    enc_file="${file_prefix}-${yubikey_name}.age-fido"
+    tmp_file=$(mktemp)
+    trap cleanup EXIT
+    function cleanup() {
+        gabyx::print_info "Cleanup..."
+        [ -f "$tmp_file" ] && rm -rf "$tmp_file" || true
+    }
+
+    enc_file="${file_prefix}.${yubikey_name}.age-fido"
 
     if [ -n "$(ykman list)" ]; then
         gabyx::print_info "Yubikey seems present."
@@ -127,10 +151,11 @@ function main() {
                 gabyx::die "Could not get secret from Bitwarden or prompt."
 
             gabyx::print_info "Writing file '$enc_file'."
-            echo "$k" | age -e -i <(echo "$fido_identity") >"$enc_file" || {
-                rm -f "$enc_file" &>/dev/null || true
+            echo "$k" | age -e -i <(echo "$fido_identity") >"$tmp_file" || {
                 gabyx::die "Could not encrypt to '$enc_file'."
             }
+
+            mv -f "$tmp_file" "$enc_file" || gabyx::die "Could not move file."
             chmod 400 "$enc_file"
         fi
 
