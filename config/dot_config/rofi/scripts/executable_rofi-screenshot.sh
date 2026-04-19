@@ -4,11 +4,11 @@ set -eE
 set -u
 
 function show_error() {
-    if ! command -v notify-send &>/dev/null; then
+    if command -v notify-send &>/dev/null; then
+        notify-send --category warning "$@" || true
+    elif command -v swaynag &>/dev/null; then
         msg="$(echo -e "$@")"
         swaynag -t warning -m "$msg" || true
-    else
-        notify-send --category warning "$@" || true
     fi
 }
 
@@ -31,12 +31,18 @@ trap on_error ERR
 # and adapted to grimshot
 # which works nicely with sway.
 
-assert_exe grimshot
+if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
+    assert_exe grimblast
+    grimshot="grimblast"
+else
+    assert_exe grimshot
+    grimshot="grimshot"
+fi
 assert_exe rofi
 assert_exe copyq
 assert_exe swappy
 
-if ! out=$(grimshot check 2>&1); then
+if ! out=$($grimshot check 2>&1); then
     show_error "Grimshot has not all tools available. Run 'grimshot check':\n$out."
     exit 1
 fi
@@ -84,19 +90,19 @@ mkdir -p -- "$(dirname "$FILENAME")"
 
 case "$CHOICE" in
 "Active Window")
-    grimshot $CURSOR_ARG --notify save active "$FILENAME"
+    $grimshot $CURSOR_ARG --notify save active "$FILENAME"
     ;;
 "Manual Area")
-    grimshot $CURSOR_ARG --notify save area "$FILENAME"
+    $grimshot $CURSOR_ARG --notify save area "$FILENAME"
     ;;
 "Manual Window")
-    grimshot $CURSOR_ARG --notify save window "$FILENAME"
+    $grimshot $CURSOR_ARG --notify save window "$FILENAME"
     ;;
 "Current Screen")
-    grimshot $CURSOR_ARG --notify save output "$FILENAME"
+    $grimshot $CURSOR_ARG --notify save output "$FILENAME"
     ;;
 "All Screens")
-    grimshot $CURSOR_ARG --notify save screen "$FILENAME"
+    $grimshot $CURSOR_ARG --notify save screen "$FILENAME"
     ;;
 '')
     exit 0

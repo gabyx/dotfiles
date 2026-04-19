@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgsUnstable,
   ...
 }:
 let
@@ -40,6 +41,8 @@ let
     export GNOME_KEYRING_CONTROL="/run/user/$UID/keyring"
     eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,gpg);
   '';
+
+  commands = pkgs.callPackage ./windowing/commands.nix { inherit windowMgr; };
 
   commonPkgs =
     with pkgs;
@@ -84,10 +87,15 @@ let
       pkgs.swaynotificationcenter
     ])
     ++ (lib.optionals isHyprland [
-      pkgs.hypridle
-      pkgs.hyprlock
-      pkgs.hyprshot
-    ]);
+      pkgsUnstable.hypridle
+      pkgsUnstable.hyprlock
+      pkgsUnstable.hyprpaper
+      pkgsUnstable.hyprshot
+      pkgsUnstable.swaynotificationcenter
+      pkgsUnstable.grimblast
+    ])
+    ++ commands;
+
 in
 {
   options = {
@@ -137,6 +145,7 @@ in
     # Hyprland Window Manager ===================================================
     programs.hyprland = {
       enable = isHyprland;
+      package = pkgsUnstable.hyprland;
       xwayland.enable = true; # Bridge to Wayland API for X11 apps.
     };
 

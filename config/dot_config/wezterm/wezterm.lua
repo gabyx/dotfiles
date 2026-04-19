@@ -232,7 +232,7 @@ config.mouse_bindings = {
 
 wezterm.on("gui-startup", function(cmd)
     local tab, pane, window = mux.spawn_window(cmd or {})
-    window:gui_window():maximize()
+    -- window:gui_window():maximize()
 
     -- Create a split occupying the right 1/3 of the screen
     -- local right = pane:split({ size = 0.5, direction = "Right" })

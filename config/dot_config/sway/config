@@ -25,54 +25,41 @@ set $right l
 
 # Your preferred terminal emulator
 # ==================================================
-# Wezterm
-set $term wezterm start --always-new-process
-
-# # A wrapper script to start the terminal with additional env. variables.
-# # e.g. to jump directly into Tmux session.
-set $term-start-cmd wezterm start --always-new-process
-
-# Kitty
-# set $term kitty --single-instance
+set $term gabyx::term
 # A wrapper script to start the terminal with additional env. variables.
-# e.g. to jump directly into Tmux session.
-# set $term-start-cmd kitty
-# set $term-start ~/.config/sway/scripts/start-term.sh
-
-# Terminal start.
-set $term-start ~/.config/sway/scripts/start-term.sh
+set $term-start gabyx::term-start
 # ==================================================
 
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 
-set $file-manager kitty -- zsh "-c" "lf"
-set $display-manager way-displays
-set $launcher-menu ~/.config/rofi/show-launcher-menu.sh
-set $power-menu ~/.config/rofi/show-power-menu.sh
-set $wireless-menu ~/.config/rofi/show-network-menu.sh --wireless
-set $network-menu ~/.config/rofi/show-network-menu.sh --editor
-set $bluetooth-menu rofi-bluetooth
-set $emoji-menu rofimoji --clipboarder wl-copy --action type copy --keybinding-copy Ctrl-y
-set $systemd-menu ROFI_SYSTEMD_TERM="wezterm start" rofi-systemd
-set $procs-menu kitty btop
-set $sound-menu pavucontrol
-set $calculator-menu qalculate-gtk
-set $password-menu swaymsg workspace \\$creds-ws
-set $screenshot-menu ~/.config/rofi/scripts/rofi-screenshot.sh
-set $screenrecord-menu ~/.config/rofi/scripts/rofi-screenrecord.sh
-set $color-picker-menu ~/.config/rofi/scripts/rofi-color-picker.sh
+set $file_manager gabyx::file-manager-menu
+set $display-manager gabyx::display-manager
+set $launcher_menu gabyx::launcher-menu
+set $power_menu gabyx::power-menu
+set $wireless_menu gabyx::wireless-menu
+set $network_menu gabyx::network-menu
+set $bluetooth_menu gabyx::bluetooth-menu
+set $emoji_menu gabyx::emoji-menu
+set $systemd_menu gabyx::systemd-menu
+set $procs_menu gabyx::procs-menu
+set $sound_menu gabyx::sound-menu
+set $calculator_menu gabyx::calculator-menu
+set $screenshot_menu gabyx::screenshot-menu
+set $screenrecord_menu gabyx::screenrecord-menu
+set $color_picker_menu gabyx::color-picker-menu
+set $clipboard_menu gabyx::clipboard-menu
 
-set $brightness-up brightnessctl set "10%+"
-set $brightness-down brightnessctl set "10%-"
+set $brightness-up gabyx::brightness-up
+set $brightness-down gabyx::brightness-down
 
-set $clipboard 'copyq --start-server'
-set $clipboard-menu copyq toggle
+set $clipboard gabyx::clipboard
+set $clipboard-menu gabyx::clipboard-menu
 
-set $notifications "swaync"
-set $notification-menu "swaync-client -t -sw"
+set $notifications gabyx::notifications
+set $notification-menu gabyx::notifications-menu
 
-set $nightshifter 'gammastep-indicator'
+set $nightshifter gabyx::nightshifter
 
 # Special workspaces
 # Icons can be found at:
