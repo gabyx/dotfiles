@@ -58,7 +58,7 @@ in
           if windowMgr == "sway" then
             "${lib.getExe pkgs.swaylock-effects} --grace 0 -f"
           else
-            "${lib.getExe pkgs.hyperlock}";
+            "${lib.getExe pkgs.hyprlock}";
         type = lib.types.str;
         description = "Lock command to lock the screen.";
       };

@@ -7,13 +7,13 @@
 let
   inherit (lib) types mkOption;
   windowMgr = config.settings.windowing.manager;
+  isHyprland = windowMgr == "hyprland";
+  isSway = windowMgr == "sway";
 
   sessionType = "wayland";
-  desktopType = if windowMgr == "sway" then "sway" else "Hyprland";
+  desktopType = if isSway then "sway" else "Hyprland";
 
   waylandEnvs = {
-    XDG_SESSION_TYPE = sessionType;
-
     NIXOS_OZONE_WL = 1;
     GDK_BACKEND = "${sessionType},x11";
     CLUTTER_BACKEND = sessionType;
@@ -76,13 +76,13 @@ let
 
       waybar # The top bar.
     ]
-    ++ (lib.options (windowMgr == "sway") [
+    ++ (lib.optionals (isSway) [
       pkgs.sway-contrib.grimshot
       pkgs.swaylock-effects # Swaylock but with more effects.
       pkgs.swayidle
       pkgs.swaynotificationcenter
     ])
-    ++ (lib.options (windowMgr == "hyprland") [
+    ++ (lib.optionals (isHyprland) [
       pkgs.hypridle
       pkgs.hyprlock
       pkgs.hyprshot
@@ -136,19 +136,24 @@ in
 
     # Hyprland Window Manager ===================================================
     programs.hyprland = {
-      enable = (windowMgr == "hyprland");
+      enable = isHyprland;
       xwayland.enable = true; # Bridge to Wayland API for X11 apps.
-
-      extraPackages = commonPkgs;
-
-      extraSessionCommands = (envToShell waylandEnvs) + (envToShell desktopEnvs) + adjustKeyring;
     };
+
+    services.hypridle = {
+      enable = isHyprland;
+    };
+
+    programs.hyprlock = {
+      enable = isHyprland;
+    };
+
     # ===========================================================================
 
     # Sway Window Manager
     # ===========================================================================
     programs.sway = {
-      enable = (windowMgr == "sway");
+      enable = isSway;
       xwayland.enable = true;
       wrapperFeatures.gtk = true; # so that gtk works properly
 
@@ -171,9 +176,7 @@ in
     xdg.portal = {
       enable = true;
       extraPortals = [
-        (
-          if windowMgr == "sway" then pkgs.xdg-desktop-portal-wlr else config.programs.hyprland.portalPackage
-        )
+        (if isSway then pkgs.xdg-desktop-portal-wlr else config.programs.hyprland.portalPackage)
         pkgs.xdg-desktop-portal-gtk
       ];
     };

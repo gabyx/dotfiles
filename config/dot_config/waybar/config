@@ -19,9 +19,9 @@
 
     "modules-left": [
         "custom/launcher",
-        "sway/workspaces",
-        "sway/mode",
-        "sway/window",
+        "hyprland/workspaces",
+        "hyprland/submap",
+        "hyprland/window"
     ],
     "modules-center": [
         "custom/agenda",
