@@ -47,10 +47,10 @@ function start_tmux() {
     echo "-----------"
 
     echo "Start workspaces"
-    swaymsg 'workspace $ws-2; exec $term-start AstroNVim $term-start-cmd'
-    swaymsg 'workspace $ws-3; exec $term-start Main-1 $term-start-cmd'
-    swaymsg 'workspace $ws-4; exec $term-start Main-2 $term-start-cmd'
-    swaymsg 'workspace $ws-1; exec $term-start NixOS $term-start-cmd'
+    swaymsg 'workspace $ws-2; exec gabyx::term-start AstroNVim gabyx::term'
+    swaymsg 'workspace $ws-3; exec gabyx::term-start Main-1 gabyx::term'
+    swaymsg 'workspace $ws-4; exec gabyx::term-start Main-2 gabyx::term'
+    swaymsg 'workspace $ws-1; exec gabyx::term-start NixOS gabyx::term'
 }
 
 function start_davmail() {

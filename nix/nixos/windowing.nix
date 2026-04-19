@@ -2,18 +2,19 @@
   config,
   lib,
   pkgs,
+  pkgsUnstable,
   ...
 }:
 let
   inherit (lib) types mkOption;
   windowMgr = config.settings.windowing.manager;
+  isHyprland = windowMgr == "hyprland";
+  isSway = windowMgr == "sway";
 
   sessionType = "wayland";
-  desktopType = if windowMgr == "sway" then "sway" else "Hyprland";
+  desktopType = if isSway then "sway" else "Hyprland";
 
   waylandEnvs = {
-    XDG_SESSION_TYPE = sessionType;
-
     NIXOS_OZONE_WL = 1;
     GDK_BACKEND = "${sessionType},x11";
     CLUTTER_BACKEND = sessionType;
@@ -40,6 +41,8 @@ let
     export GNOME_KEYRING_CONTROL="/run/user/$UID/keyring"
     eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,gpg);
   '';
+
+  commands = pkgs.callPackage ./windowing/commands.nix { inherit windowMgr; };
 
   commonPkgs =
     with pkgs;
@@ -76,17 +79,22 @@ let
 
       waybar # The top bar.
     ]
-    ++ (lib.options (windowMgr == "sway") [
+    ++ (lib.optionals isSway [
+      pkgs.i3-back
       pkgs.sway-contrib.grimshot
       pkgs.swaylock-effects # Swaylock but with more effects.
       pkgs.swayidle
       pkgs.swaynotificationcenter
     ])
-    ++ (lib.options (windowMgr == "hyprland") [
-      pkgs.hypridle
-      pkgs.hyprlock
-      pkgs.hyprshot
-    ]);
+    ++ (lib.optionals isHyprland [
+      pkgsUnstable.hypridle
+      pkgsUnstable.hyprlock
+      pkgsUnstable.hyprpaper
+      pkgsUnstable.hyprshot
+      pkgsUnstable.swaynotificationcenter
+      pkgsUnstable.grimblast
+    ])
+    ++ commands;
 
 in
 {
@@ -136,26 +144,30 @@ in
 
     # Hyprland Window Manager ===================================================
     programs.hyprland = {
-      enable = (windowMgr == "hyprland");
+      enable = isHyprland;
+      package = pkgsUnstable.hyprland;
       xwayland.enable = true; # Bridge to Wayland API for X11 apps.
-
-      extraPackages = commonPkgs;
-
-      extraSessionCommands = (envToShell waylandEnvs) + (envToShell desktopEnvs) + adjustKeyring;
     };
+
+    services.hypridle = {
+      enable = isHyprland;
+    };
+
+    programs.hyprlock = {
+      enable = isHyprland;
+    };
+
+    environment.corePackages = lib.mkIf isHyprland commonPkgs;
     # ===========================================================================
 
     # Sway Window Manager
     # ===========================================================================
     programs.sway = {
-      enable = (windowMgr == "sway");
+      enable = isSway;
       xwayland.enable = true;
       wrapperFeatures.gtk = true; # so that gtk works properly
 
-      extraPackages = [
-        pkgs.i3-back # last workspace
-      ]
-      ++ commonPkgs;
+      extraPackages = commonPkgs;
 
       extraSessionCommands = (envToShell waylandEnvs) + (envToShell desktopEnvs) + adjustKeyring;
     };
@@ -171,9 +183,7 @@ in
     xdg.portal = {
       enable = true;
       extraPortals = [
-        (
-          if windowMgr == "sway" then pkgs.xdg-desktop-portal-wlr else config.programs.hyprland.portalPackage
-        )
+        (if isSway then pkgs.xdg-desktop-portal-wlr else config.programs.hyprland.portalPackage)
         pkgs.xdg-desktop-portal-gtk
       ];
     };

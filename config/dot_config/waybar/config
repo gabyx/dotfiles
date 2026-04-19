@@ -33,7 +33,6 @@
         "tray",
         "custom/calculator",
         "custom/emoji",
-        "custom/password",
         "custom/screenshot",
         "custom/backup",
         "backlight",
@@ -62,7 +61,7 @@
         "return-type": "json",
         "exec": "~/.config/waybar/scripts/tooltip.sh 'Calculator'",
         "interval": "once",
-        "on-click": "swaymsg exec \\$calculator-menu",
+        "on-click": "gabyx::window-mgr-exec gabyx::calculator-menu",
         "tooltip": true
     },
 
@@ -71,16 +70,7 @@
         "return-type": "json",
         "exec": "~/.config/waybar/scripts/tooltip.sh 'Symbols/Emojis'",
         "interval": "once",
-        "on-click": "swaymsg exec \\$emoji-menu",
-        "tooltip": true
-    },
-
-    "custom/password" : {
-        "format": "󱕴 ",
-        "return-type": "json",
-        "exec": "~/.config/waybar/scripts/tooltip.sh 'Passwords'",
-        "interval": "once",
-        "on-click": "swaymsg exec \\$password-menu",
+        "on-click": "gabyx::window-mgr-exec gabyx::emoji-menu",
         "tooltip": true
     },
 
@@ -89,7 +79,7 @@
         "return-type": "json",
         "exec": "~/.config/waybar/scripts/tooltip.sh 'Screenshot'",
         "interval": "once",
-        "on-click": "swaymsg exec \\$screenshot-menu",
+        "on-click": "gabyx::window-mgr-exec gabyx::screenshot-menu",
         "tooltip": true
     },
 
@@ -144,7 +134,7 @@
         "format-alt": "  {percentage_used}% ",
         "format-alt-click": "click-right",
         "return-type": "json",
-        "on-click": "swaymsg exec \\$storage-menu",
+        "on-click": "gabyx::window-mgr-exec gabyx::storage-menu",
         "interval": 60,
         "path": "/"
     },
@@ -179,14 +169,21 @@
           "warning": 70,
           "critical": 90
         },
-        "on-click": "swaymsg exec \\$procs-menu",
-        "on-click-right": "swaymsg exec \\$systemd-menu"
+        "on-click": "gabyx::window-mgr-exec gabyx::procs-menu",
+        "on-click-right": "gabyx::window-mgr-exec gabyx::systemd-menu"
     },
 
     "sway/language": {
         "format": "  {long} {variant}",
         "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
 
+    },
+
+    "hyprland/language": {
+        "format": "  {}",
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
+        "keyboard-name": "at-translated-set-2-keyboard",
+        "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next",
     },
 
     "memory": {
@@ -201,8 +198,8 @@
     "backlight": {
         "format": "{icon} {percent}%",
         "format-icons": ["󰃞", "󰃟", "󰃠"],
-        "on-scroll-up": "swaymsg exec \\$brightness-up",
-        "on-scroll-down": "swaymsg exec \\$brightness-down"
+        "on-scroll-up": "gabyx::window-mgr-exec gabyx::brightness-up",
+        "on-scroll-down": "gabyx::window-mgr-exec gabyx::brightness-down"
     },
 
     "custom/vpn":{
@@ -221,8 +218,8 @@
         "format-disconnected": "󰖪 ",
         "tooltip-format": "{ifname}: {ipaddr}",
         "tooltip-format-wifi": "{essid} | {signalStrength}%: {ipaddr}",
-        "on-click": "swaymsg exec \\$wireless-menu",
-        "on-click-right": "swaymsg exec \\$network-menu",
+        "on-click": "gabyx::window-mgr-exec gabyx::wireless-menu",
+        "on-click-right": "gabyx::window-mgr-exec gabyx::network-menu",
     },
 
     "sway/mode": {
@@ -267,7 +264,7 @@
             "car": "",
             "default": ["", ""]
         },
-        "on-click": "swaymsg exec \\$sound-menu"
+        "on-click": "gabyx::window-mgr-exec gabyx::sound-menu"
     },
 
     "temperature": {
@@ -313,19 +310,19 @@
              "enabled": "",
              "disabled": "󰂲"
         },
-        "on-click-right": "swaymsg exec \\$bluetooth-menu",
+        "on-click-right": "gabyx::window-mgr-exec gabyx::bluetooth-menu",
         "tooltip-format": "{status}"
     },
 
     "custom/powermenu": {
       "format": " ",
-      "on-click": "swaymsg exec \\$power-menu",
+      "on-click": "gabyx::window-mgr-exec gabyx::power-menu",
       "tooltip": false
     },
 
     "custom/launcher": {
       "format": " ",
-      "on-click": "swaymsg exec \\$launcher-menu",
+      "on-click": "gabyx::window-mgr-exec gabyx::launcher-menu",
       "tooltip": false
     },
 
