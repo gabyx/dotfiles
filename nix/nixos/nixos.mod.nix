@@ -21,6 +21,7 @@
     packages = import ./packages.nix;
     printing = import ./printing.nix;
     programs = import ./programs.nix;
+    rss = import ./rss.nix;
     secrets = import ./secrets.nix;
     security = import ./security.nix;
     services = import ./services.nix;

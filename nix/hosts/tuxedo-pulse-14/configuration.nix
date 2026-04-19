@@ -34,6 +34,7 @@
     inputs.self.modules.nixos.packages
     inputs.self.modules.nixos.printing
     inputs.self.modules.nixos.programs
+    inputs.self.modules.nixos.rss
     inputs.self.modules.nixos.secrets
     inputs.self.modules.nixos.security
     inputs.self.modules.nixos.services

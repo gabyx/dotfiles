@@ -9,11 +9,7 @@ let
   windowMgr = config.settings.windowing.manager;
 
   sessionType = "wayland";
-  desktopType =
-    assert lib.assertMsg (
-      windowMgr == "sway" || windowMgr == "hyprland"
-    ) "Incorrect window manager name.";
-    if windowMgr == "sway" then "sway" else "Hyprland";
+  desktopType = if windowMgr == "sway" then "sway" else "Hyprland";
 
   waylandEnvs = {
     XDG_SESSION_TYPE = sessionType;
@@ -37,9 +33,7 @@ let
 
   envToShell =
     envs:
-    (builtins.concatStringsSep "\n" (
-      lib.mapAttrsToList (k: v: ''export ${k}="${builtins.toString v}";'') envs
-    ));
+    (builtins.concatStringsSep "\n" (lib.mapAttrsToList (k: v: ''export ${k}="${toString v}";'') envs));
 
   adjustKeyring = ''
     # Adds some more components to the gnome keyring daemon.
@@ -47,46 +41,53 @@ let
     eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,gpg);
   '';
 
-  commonPkgs = with pkgs; [
-    power-profiles-daemon
+  commonPkgs =
+    with pkgs;
+    [
+      power-profiles-daemon
 
-    libnotify # Provides notify-send.
+      libnotify # Provides notify-send.
 
-    way-displays # Manage your displays.
+      way-displays # Manage your displays.
 
-    xdg-utils # xdg-open and others utilities.
-    flashfocus # Flash focus animations in sway.
-    copyq # Clipboard manager.
-    qalculate-gtk # Calculator menu.
+      xdg-utils # xdg-open and others utilities.
+      flashfocus # Flash focus animations in sway.
+      copyq # Clipboard manager.
+      qalculate-gtk # Calculator menu.
 
-    wl-clipboard # Wayland clipboard.
-    wf-recorder # Wayland screen recorder.
-    grim # Screenshot tool in Wayland.
-    slurp # Wayland region selector.
+      wl-clipboard # Wayland clipboard.
+      wf-recorder # Wayland screen recorder.
+      grim # Screenshot tool in Wayland.
+      slurp # Wayland region selector.
 
-    (if windowMgr == "sway" then sway-contrib.grimshot else hyprshot) # Main screenshot tool.
+      swappy # Edit tool for screenshots.
+      gcolor3 # Colorwheel picker.
+      hyprpicker # Colorpicker on screen.
 
-    swappy # Edit tool for screenshots.
-    gcolor3 # Colorwheel picker.
-    hyprpicker # Colorpicker on screen.
+      rofi # Menus for various things.
+      rofimoji # Emoji selector.
+      rofi-power-menu # Rofi powermenu.
+      rofi-bluetooth # Rofi bluetooth.
+      rofi-systemd # Rofi systemd.
 
-    rofi # Menus for various things.
-    rofimoji # Emoji selector.
-    rofi-power-menu # Rofi powermenu.
-    rofi-bluetooth # Rofi bluetooth.
-    rofi-systemd # Rofi systemd.
+      avizo # Nice brightnessctl and audio volume visualization for wayland.
+      brightnessctl # Brightness control in waybar.
+      playerctl # Player control in waybar.
 
-    avizo # Nice brightnessctl and audio volume visualization for wayland.
-    brightnessctl # Brightness control in waybar.
-    playerctl # Player control in waybar.
+      waybar # The top bar.
+    ]
+    ++ (lib.options (windowMgr == "sway") [
+      pkgs.sway-contrib.grimshot
+      pkgs.swaylock-effects # Swaylock but with more effects.
+      pkgs.swayidle
+      pkgs.swaynotificationcenter
+    ])
+    ++ (lib.options (windowMgr == "hyprland") [
+      pkgs.hypridle
+      pkgs.hyprlock
+      pkgs.hyprshot
+    ]);
 
-    waybar # The top bar.
-
-    # Lockscreen (works on hyperland too)
-    swaylock-effects # Swaylock but with more effects.
-    swayidle
-    swaynotificationcenter
-  ];
 in
 {
   options = {
@@ -137,7 +138,10 @@ in
     programs.hyprland = {
       enable = (windowMgr == "hyprland");
       xwayland.enable = true; # Bridge to Wayland API for X11 apps.
-      # TODO: Make homemanager config.
+
+      extraPackages = commonPkgs;
+
+      extraSessionCommands = (envToShell waylandEnvs) + (envToShell desktopEnvs) + adjustKeyring;
     };
     # ===========================================================================
 
