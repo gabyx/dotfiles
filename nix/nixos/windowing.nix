@@ -76,18 +76,18 @@ let
 
       waybar # The top bar.
     ]
-    ++ (lib.optionals (isSway) [
+    ++ (lib.optionals isSway [
+      pkgs.i3-back
       pkgs.sway-contrib.grimshot
       pkgs.swaylock-effects # Swaylock but with more effects.
       pkgs.swayidle
       pkgs.swaynotificationcenter
     ])
-    ++ (lib.optionals (isHyprland) [
+    ++ (lib.optionals isHyprland [
       pkgs.hypridle
       pkgs.hyprlock
       pkgs.hyprshot
     ]);
-
 in
 {
   options = {
@@ -148,6 +148,7 @@ in
       enable = isHyprland;
     };
 
+    environment.corePackages = lib.mkIf isHyprland commonPkgs;
     # ===========================================================================
 
     # Sway Window Manager
@@ -157,10 +158,7 @@ in
       xwayland.enable = true;
       wrapperFeatures.gtk = true; # so that gtk works properly
 
-      extraPackages = [
-        pkgs.i3-back # last workspace
-      ]
-      ++ commonPkgs;
+      extraPackages = commonPkgs;
 
       extraSessionCommands = (envToShell waylandEnvs) + (envToShell desktopEnvs) + adjustKeyring;
     };

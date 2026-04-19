@@ -1,5 +1,12 @@
 {{- if eq .workspace "work" }}
-source ~/.config/hypr/workspace-work.conf
+source = ~/.config/hypr/monitors-work.conf
 {{- else }}
-source ~/.config/hypr/workspace-private.conf
+source = ~/.config/hypr/monitors-private.conf
 {{- end }}
+
+
+# Tianma TL140ADXP24 (Tuxedo laptop) — rightmost
+monitor = desc:Tianma Microelectronics Ltd. TL140ADXP24-0, preferred, auto, 1.6
+
+# Catch-all for any unknown monitor
+monitor = , preferred, auto, 1
