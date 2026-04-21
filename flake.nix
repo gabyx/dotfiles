@@ -126,6 +126,11 @@
       url = "github:nix-community/neovim-nightly-overlay";
     };
 
+    # SBB Tui.
+    sbb-tui = {
+      url = "github:tomasriveral/nixpkgs?ref=sbb-tui";
+    };
+
     # Instant direnv loading.
     direnv-instant = {
       url = "github:Mic92/direnv-instant";

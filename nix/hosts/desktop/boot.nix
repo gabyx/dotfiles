@@ -54,7 +54,7 @@ in
       "amdgpu.dpm=0"
       "amdgpu.dcdebugmask=0x10"
       # Hibernation parameters
-      "resume=UUID=${builtins.baseNameOf config.fileSystems."/swap".device}"
+      "resume=UUID=${baseNameOf config.fileSystems."/swap".device}"
       "resume_offset=${toString swapConfig.resumeOffset}"
     ];
 

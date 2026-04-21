@@ -734,6 +734,7 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nvim-astronvim": "nvim-astronvim",
         "nvim-nightly": "nvim-nightly",
+        "sbb-tui": "sbb-tui",
         "systems": "systems_3",
         "treefmt-nix": "treefmt-nix_2",
         "wezterm": "wezterm"
@@ -757,6 +758,22 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "sbb-tui": {
+      "locked": {
+        "lastModified": 1776676236,
+        "narHash": "sha256-/SgYld7foSOIlGITceyZzAeSesZBNx0MqO3vkhouq9E=",
+        "owner": "tomasriveral",
+        "repo": "nixpkgs",
+        "rev": "47a60a8d44c82c9fa4e26a7fffa9b3808e3303a5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tomasriveral",
+        "ref": "sbb-tui",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },

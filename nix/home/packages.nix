@@ -1,5 +1,6 @@
 {
   inputs,
+  inputs',
   outputs,
   system,
   lib,
@@ -10,9 +11,9 @@
 }:
 let
   # Define some special packages.
-  wezterm-nightly = inputs.wezterm.packages."${system}".default;
-  githooks = inputs.githooks.packages."${system}".default;
-
+  wezterm-nightly = inputs'.wezterm.packages.default;
+  githooks = inputs'.githooks.packages.default;
+  sbb-tui = inputs'.sbb-tui.legacyPackages.sbb-tui;
 in
 {
   # List packages installed in system profile. To search, run:
@@ -141,6 +142,9 @@ in
 
     # Calendar/Mail (our version)
     pkgs.khal # CLI Calendar
+
+    # Trains
+    sbb-tui # SBB TUI app.
 
     # MultiMedia
     pkgsUnstable.mediawriter # Like balena etcher.
