@@ -13,7 +13,7 @@ font pango:NotoSans Nerd Font Bold 10
 
 # Border
 hide_edge_borders both
-default_border pixel 1
+default_border pixel 2
 # No border for browsers
 # for_window [app_id="(?i).*(firefox)"] default_border pixel 1
 
