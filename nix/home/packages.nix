@@ -108,9 +108,9 @@ in
     pkgsUnstable.marksman
     pkgsUnstable.lua-language-server
     pkgsUnstable.dockerfile-language-server
-    pkgsUnstable.nodePackages.bash-language-server
-    pkgsUnstable.nodePackages.vscode-json-languageserver
-    pkgsUnstable.nodePackages.yaml-language-server
+    pkgsUnstable.bash-language-server
+    pkgsUnstable.vscode-json-languageserver
+    pkgsUnstable.yaml-language-server
 
     ## Python
     pkgsUnstable.python313
@@ -134,7 +134,7 @@ in
     pkgsUnstable.stylua
 
     # Config Files
-    pkgsUnstable.nodePackages.prettier
+    pkgsUnstable.prettier
 
     # Writing
     # pkgsUnstable.texlive.combined.scheme-full

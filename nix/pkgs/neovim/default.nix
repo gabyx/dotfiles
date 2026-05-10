@@ -14,12 +14,10 @@
   ...
 }:
 let
-  nvimDrv = pkgs.wrapNeovimUnstable nvim-unwrapped (
-    pkgs.neovimUtils.makeNeovimConfig {
-      wrapRc = false;
-      withRuby = false;
-    }
-  );
+  nvimDrv = pkgs.wrapNeovimUnstable nvim-unwrapped {
+    wrapRc = false;
+    withRuby = false;
+  };
 
   nvim-treesitter = pkgsPlugins.vimPlugins.nvim-treesitter;
 

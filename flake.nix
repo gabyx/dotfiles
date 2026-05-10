@@ -113,7 +113,6 @@
     # Githooks.
     githooks = {
       url = "github:gabyx/githooks?dir=nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Pinning treesitter for Astronvim.
