@@ -1,27 +1,27 @@
 window-rule {
     match app-id=r"(?i).*(?:chrome|firefox|brave).*"
-    open-on-workspace "ws-9-web"
+    open-on-workspace "ws-web"
 }
 
 window-rule {
     match app-id=r"(?i).*evolution.*"
-    open-on-workspace "ws-8-mail"
+    open-on-workspace "ws-mail"
 }
 
 window-rule {
     match app-id=r"(?i).*(?:slack|signal).*"
-    open-on-workspace "ws-7-comm"
+    open-on-workspace "ws-comm"
 }
 
 
 window-rule {
     match app-id=r"(?i).*element.*"
-    open-on-workspace "ws-7-comm"
+    open-on-workspace "ws-comm"
 }
 
 window-rule {
     match app-id=r"(?i).*bitwarden.*"
-    open-on-workspace "ws-10-creds"
+    open-on-workspace "ws-creds"
 }
 
 window-rule {

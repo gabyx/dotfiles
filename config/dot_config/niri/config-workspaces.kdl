@@ -1,0 +1,11 @@
+workspace "ws-1"
+workspace "ws-2"
+workspace "ws-3"
+workspace "ws-4"
+workspace "ws-5"
+workspace "ws-6"
+
+workspace "ws-comm"
+workspace "ws-mail"
+workspace "ws-web"
+workspace "ws-creds"

@@ -6,10 +6,10 @@ workspace $ws-5 output $primaryDisp
 workspace $ws-6 output $primaryDisp
 
 # Assign the special workspaces to second monitor.
-workspace $comm-ws  output $secondaryDisp
-workspace $mail-ws  output $secondaryDisp
-workspace $web-ws   output $secondaryDisp
-workspace $creds-ws output $secondaryDisp
+workspace $ws-comm  output $secondaryDisp
+workspace $ws-mail  output $secondaryDisp
+workspace $ws-web   output $secondaryDisp
+workspace $ws-creds output $secondaryDisp
 
 # Assign an empty auxillary to any laptop display
 # Fixes to avoid having an empty `1` workspace colliding with

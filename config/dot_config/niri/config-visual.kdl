@@ -1,11 +1,4 @@
-// config-visual.kdl
-// Visual Theme — translated from sway config-visual
-
 prefer-no-csd true
-
-window-rule {
-    draw-border-with-background false
-}
 
 layout {
     gaps 8

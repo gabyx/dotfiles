@@ -66,10 +66,10 @@ binds {
     Alt+4 { focus-workspace "ws-4"; }
     Alt+5 { focus-workspace "ws-5"; }
     Alt+6 { focus-workspace "ws-6"; }
-    Alt+7 { focus-workspace "ws-7-comm"; }
-    Alt+8 { focus-workspace "ws-8-mail"; }
-    Alt+9 { focus-workspace "ws-9-web"; }
-    Alt+0 { focus-workspace "ws-10-creds"; }
+    Alt+7 { focus-workspace "ws-comm"; }
+    Alt+8 { focus-workspace "ws-mail"; }
+    Alt+9 { focus-workspace "ws-web"; }
+    Alt+0 { focus-workspace "ws-creds"; }
 
     Alt+Shift+1 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-1"; }
     Alt+Shift+2 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-2"; }
@@ -77,10 +77,10 @@ binds {
     Alt+Shift+4 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-4"; }
     Alt+Shift+5 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-5"; }
     Alt+Shift+6 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-6"; }
-    Alt+Shift+7 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-7-comm"; }
-    Alt+Shift+8 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-8-mail";  }
-    Alt+Shift+9 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-9-web"; }
-    Alt+Shift+0 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-10-creds"; }
+    Alt+Shift+7 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-comm"; }
+    Alt+Shift+8 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-mail";  }
+    Alt+Shift+9 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-web"; }
+    Alt+Shift+0 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-creds"; }
 
     // ── Layout ────────────────────────────────────────────────────────────────
 

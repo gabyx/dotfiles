@@ -66,33 +66,33 @@ set $nightshifter gabyx::nightshifter
 # https://www.nerdfonts.com/cheat-sheet
 
 # Tmux workspaces.
-set $ws-1 1:1:  
-set $ws-2 2:2:  
-set $ws-3 3:3:  
-set $ws-4 4:4:  
+set $ws-1 ws-1
+set $ws-2 ws-2
+set $ws-3 ws-3
+set $ws-4 ws-4
 
 # Shell workspaces.
-set $ws-5 5:5:  
-set $ws-6 6:6:  
+set $ws-5 ws-5
+set $ws-6 ws-6
 
 # Applications workspaces.
-set $comm-ws 7:7:  
-set $ws-7 7:7:  
+set $ws-comm ws-comm
+set $ws-7 ws-comm
 set $comm signal-desktop
 set $comm-matrix element-desktop
 set $comm-slack slack
 
-set $mail-ws 8:8:  
-set $ws-8 8:8:  
+set $ws-mail ws-mail
+set $ws-8 ws-mail
 set $mail evolution
 
-set $web-ws 9:9:  
-set $ws-9 9:9:  
+set $ws-web ws-web
+set $ws-9 ws-web
 set $web google-chrome-stable
 set $web-aux firefox
 
-set $creds-ws 10:0:  󱕴
-set $ws-10 10:0:  󱕴
+set $ws-creds ws-creds
+set $ws-10 ws-creds
 set $creds bitwarden
 
 # Default output display names.
