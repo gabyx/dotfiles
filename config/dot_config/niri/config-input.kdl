@@ -8,21 +8,9 @@ input {
 
     touchpad {
         tap
-        drag
+        drag true
+        drag-lock
         dwt
         click-method "clickfinger"
     }
-
-    // Hide cursor when typing.
-    // Mirrors: seat * hide_cursor when-typing enable
-    // niri hides cursor on typing by default; explicitly:
-    // (no direct KDL key needed, but listed for clarity)
-
-    // Disable Yubikey as keyboard.
-    // Mirrors: input "4176:1031:Yubico_YubiKey_OTP+FIDO+CCID" { events disabled }
-    // niri uses libinput device names; match by USB id in udev or use:
-    // disable-power-key-handling  (not applicable here)
-    // The closest niri equivalent is a udev rule:
-    //   /etc/udev/rules.d/99-yubikey-nokbd.rules:
-    //   ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0407", ENV{ID_INPUT_KEY}="0"
 }

@@ -1,4 +1,4 @@
-bindings {
+binds {
     // ── Basics ────────────────────────────────────────────────────────────────
 
     // Start terminal (in focused window's cwd via wrapper script).
@@ -29,9 +29,6 @@ bindings {
 
     // Screen lock.
     Alt+Escape { spawn "swaylock" "--grace" "0" "-f"; }
-
-    // Reload niri config.
-    Alt+Shift+C { reconfigure; }
 
     // Exit niri.
     Alt+Shift+E { quit skip-confirmation=false; }
@@ -74,16 +71,16 @@ bindings {
     Alt+9 { focus-workspace "ws-9-web"; }
     Alt+0 { focus-workspace "ws-10-creds"; }
 
-    Alt+Shift+1 { move-window-to-workspace "ws-1";        focus-workspace "ws-1"; }
-    Alt+Shift+2 { move-window-to-workspace "ws-2";        focus-workspace "ws-2"; }
-    Alt+Shift+3 { move-window-to-workspace "ws-3";        focus-workspace "ws-3"; }
-    Alt+Shift+4 { move-window-to-workspace "ws-4";        focus-workspace "ws-4"; }
-    Alt+Shift+5 { move-window-to-workspace "ws-5";        focus-workspace "ws-5"; }
-    Alt+Shift+6 { move-window-to-workspace "ws-6";        focus-workspace "ws-6"; }
-    Alt+Shift+7 { move-window-to-workspace "ws-7-comm";   focus-workspace "ws-7-comm"; }
-    Alt+Shift+8 { move-window-to-workspace "ws-8-mail";   focus-workspace "ws-8-mail"; }
-    Alt+Shift+9 { move-window-to-workspace "ws-9-web";    focus-workspace "ws-9-web"; }
-    Alt+Shift+0 { move-window-to-workspace "ws-10-creds"; focus-workspace "ws-10-creds"; }
+    Alt+Shift+1 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-1"; }
+    Alt+Shift+2 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-2"; }
+    Alt+Shift+3 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-3"; }
+    Alt+Shift+4 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-4"; }
+    Alt+Shift+5 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-5"; }
+    Alt+Shift+6 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-6"; }
+    Alt+Shift+7 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-7-comm"; }
+    Alt+Shift+8 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-8-mail";  }
+    Alt+Shift+9 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-9-web"; }
+    Alt+Shift+0 { spawn "~/.config/niri/scripts/move-and-switch.sh" "ws-10-creds"; }
 
     // ── Layout ────────────────────────────────────────────────────────────────
 
@@ -95,8 +92,6 @@ bindings {
 
     Alt+F { fullscreen-window; }
     Alt+Space { toggle-window-floating; }
-
-    Alt+Shift+Space { focus-floating toggle; }
 
     // ── Resize mode ───────────────────────────────────────────────────────────
     // Fine-grained resize.
@@ -117,30 +112,4 @@ bindings {
     XF86AudioMicMute      { spawn "volumectl" "-m" "toggle-mute"; }
     XF86MonBrightnessUp   { spawn "lightctl" "up"; }
     XF86MonBrightnessDown { spawn "lightctl" "down"; }
-
-    // Switch keyboard layout (works on lock screen too via --locked in sway).
-    // niri: allow-when-locked is set per binding.
-    // Alt+Space { switch-layout "next"; }
-}
-
-recent-windows {
-    debounce-ms 750
-    open-delay-ms 150
-
-    highlight {
-        active-color "#999999ff"
-        urgent-color "#ff9999ff"
-        padding 30
-        corner-radius 0
-    }
-
-    previews {
-        max-height 480
-        max-scale 0.5
-    }
-
-    binds {
-        Alt+Tab         { next-window; }
-        Alt+Shift+Tab   { previous-window; }
-    }
 }

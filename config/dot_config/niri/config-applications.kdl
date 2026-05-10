@@ -1,17 +1,5 @@
-// config-applications.kdl
-// Window rules — translated from sway config-applications
-//
-// sway `assign [app_id=...] $workspace`  →  niri `window-rule { open-on-workspace "..." }`
-// sway `for_window [...] floating enable` → niri `window-rule { open-floating true }`
-// sway `for_window [...] layout tabbed`  → niri has no tabbed layout; windows are placed
-//                                          in the same column on the target workspace instead.
-// sway `for_window [...] resize set W H` → niri `window-rule { default-floating-size ... }`
-
-// ── Workspace assignments ─────────────────────────────────────────────────────
-
 window-rule {
-    match app-id=r"(?i).*chrome.*"
-    match app-id=r"(?i).*firefox.*"
+    match app-id=r"(?i).*(?:chrome|firefox|brave).*"
     open-on-workspace "ws-9-web"
 }
 
@@ -21,14 +9,10 @@ window-rule {
 }
 
 window-rule {
-    match app-id=r"(?i).*slack.*"
+    match app-id=r"(?i).*(?:slack|signal).*"
     open-on-workspace "ws-7-comm"
 }
 
-window-rule {
-    match app-id=r"(?i).*signal.*"
-    open-on-workspace "ws-7-comm"
-}
 
 window-rule {
     match app-id=r"(?i).*element.*"
@@ -40,57 +24,22 @@ window-rule {
     open-on-workspace "ws-10-creds"
 }
 
-// ── Floating windows ──────────────────────────────────────────────────────────
-
-// Generic dialog / popup types.
-// niri matches on window-type via is-floating; for dialogs use:
 window-rule {
     match at-startup=false
-    match title=r"(?:Open|Save) (?:File|Folder|As)"
+    match title=r"(?:Open|Save).*(?:File|Folder|As)"
     open-floating true
 }
 
-// CopyQ clipboard manager.
 window-rule {
-    match app-id=r"(?i).*copyq.*"
+    match app-id=r"(?i).*(?:copyq|qalculate-gtk|font-manager|zoom).*"
     open-floating true
-    default-floating-size width=800 height=600
+    default-window-height { proportion 0.8; }
+    default-column-width { proportion 0.6; }
 }
 
-// Qalculate.
-window-rule {
-    match app-id=r"(?i).*qalculate-gtk.*"
-    open-floating true
-    default-floating-size width=800 height=600
-}
-
-// Font Manager.
-window-rule {
-    match app-id=r"(?i).*font-manager.*"
-    open-floating true
-    default-floating-size width=800 height=600
-}
-
-// Zoom.
-window-rule {
-    match app-id=r"(?i).*zoom.*"
-    open-floating true
-    default-floating-size width=800 height=600
-}
-
-// ShowMeTheKey — floating, sticky (always on top), small.
 window-rule {
     match app-id=r"(?i).*showmethekey.*"
     open-floating true
-    default-floating-size width=400 height=128
-    // niri has no sticky; use always-on-top as closest equivalent:
-    // (requires niri ≥ 0.1.x with always-on-top support)
+    default-window-height { fixed 128; }
+    default-column-width { fixed 400; }
 }
-
-// ── Notes ─────────────────────────────────────────────────────────────────────
-//
-// sway `for_window [workspace="$web-ws"] layout tabbed` has no niri equivalent.
-// All windows on ws-9-web will open as regular columns.
-//
-// sway `for_window [...] layout tabbed` for comm apps (slack/element/signal) has
-// no niri equivalent. They will open as separate columns on ws-7-comm.

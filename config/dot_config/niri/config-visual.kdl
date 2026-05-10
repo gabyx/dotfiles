@@ -1,13 +1,19 @@
 // config-visual.kdl
 // Visual Theme — translated from sway config-visual
-// Catppuccin Frappé palette (mirrors themes/catppuccin-frappe)
-//
-// Palette reference:
-//   base      = #303446   rosewater = #f2d5cf   lavender  = #babbf1
-//   text      = #c6d0f5   overlay0  = #737994   peach     = #ef9f76
+
+prefer-no-csd true
+
+window-rule {
+    draw-border-with-background false
+}
 
 layout {
     gaps 8
+
+    center-focused-column "never"
+    always-center-single-column
+    empty-workspace-above-first
+    default-column-display "tabbed"
 
     struts {
         left   5
@@ -17,6 +23,7 @@ layout {
     }
 
     focus-ring {
+        on
         width 2
         active-color   "#babbf1"
         inactive-color "#737994"
@@ -36,10 +43,44 @@ layout {
         proportion 0.667
         proportion 1.0
     }
+
+    tab-indicator {
+        on
+        hide-when-single-tab
+        place-within-column
+        gap 5
+        width 4
+        length total-proportion=1.0
+        position "right"
+        gaps-between-tabs 2
+        corner-radius 8
+        active-color "red"
+        inactive-color "gray"
+        urgent-color "#fc0303"
+        // active-gradient from="#80c8ff" to="#bbddff" angle=45
+        // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
+    }
+
 }
 
-window-rule {
-    match all
-    draw-border-with-background false
-    prefer-no-csd
+recent-windows {
+    debounce-ms 750
+    open-delay-ms 150
+
+    highlight {
+        active-color "#babbf1"
+        urgent-color "#fc0303"
+        padding 30
+        corner-radius 0
+    }
+
+    previews {
+        max-height 480
+        max-scale 0.5
+    }
+
+    binds {
+        Alt+Tab         { next-window; }
+        Alt+Shift+Tab   { previous-window; }
+    }
 }

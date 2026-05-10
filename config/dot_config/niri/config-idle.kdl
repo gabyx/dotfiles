@@ -1,5 +1,5 @@
-spawn-at-startup "swayidle" "-w"
-    "timeout" "600"  "swaylock -f"
-    "timeout" "1200" "niri msg action power-off-monitors"
-    "resume"         "niri msg action power-on-monitors"
+spawn-at-startup "swayidle" "-w" \
+    "timeout" "600"  "swaylock -f" \
+    "timeout" "1200" "niri msg action power-off-monitors" \
+    "resume"         "niri msg action power-on-monitors" \
     "before-sleep"   "swaylock --grace 0 --fade-in 0 --grace-no-mouse --grace-no-touch -f"
