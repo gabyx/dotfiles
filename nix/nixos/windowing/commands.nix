@@ -13,7 +13,7 @@ let
     term.cmd = "wezterm start --always-new-process";
     term-start.cmd = "~/.config/sway/scripts/start-term.sh";
 
-    file-manager.cmd = ''kitty -- zsh "-c" "lf"'';
+    file-manager.cmd = "gabyx::term lf";
 
     display-manager.cmd =
       if isSway || isNiri then
@@ -30,7 +30,7 @@ let
     bluetooth-menu.cmd = "rofi-bluetooth";
     emoji-menu.cmd = "rofimoji --clipboarder wl-copy --action type copy --keybinding-copy Ctrl-y";
     systemd-menu.cmd = "rofi-systemd";
-    procs-menu.cmd = "kitty btop";
+    procs-menu.cmd = "gabyx::term btop";
     sound-menu.cmd = "pavucontrol";
     calculator-menu.cmd = "qalculate-gtk";
     screenshot-menu.cmd = "~/.config/rofi/scripts/rofi-screenshot.sh";

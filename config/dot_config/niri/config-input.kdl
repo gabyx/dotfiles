@@ -1,4 +1,8 @@
 input {
+    mod-key "Alt"
+
+    focus-follows-mouse
+
     keyboard {
         xkb {
             layout "programmer-defy,programmer,us,de"

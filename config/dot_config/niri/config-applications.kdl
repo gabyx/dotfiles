@@ -1,6 +1,8 @@
 window-rule {
     match app-id=r"(?i).*(chrome|firefox|brave).*"
     open-on-workspace "9: "
+    // Needs latest
+    // open-consume-into-column "active"
 }
 
 window-rule {

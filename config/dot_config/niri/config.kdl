@@ -1,4 +1,4 @@
-include "config-envs.kdl"
+include "config-env.kdl"
 include "config-visual.kdl"
 include "config-idle.kdl"
 include "config-input.kdl"

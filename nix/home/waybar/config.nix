@@ -296,7 +296,7 @@ in
       "niri/workspaces" = {
         all-outputs = false;
         hide-empty = true;
-        format = "{icon} {name}";
+        format = "{icon} {value}";
         format-icons = {
           urgent = "";
           focused = "";
