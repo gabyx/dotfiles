@@ -1,0 +1,9 @@
+include "config-env.kdl"
+include "config-visual.kdl"
+include "config-idle.kdl"
+include "config-input.kdl"
+include "config-workspaces.kdl"
+include "config-keybindings.kdl"
+include "config-applications.kdl"
+
+include "config-startup.kdl"

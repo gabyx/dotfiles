@@ -1,0 +1,110 @@
+prefer-no-csd true
+
+layout {
+    gaps 4
+
+    center-focused-column "never"
+    always-center-single-column
+    // empty-workspace-above-first
+    default-column-display "tabbed"
+
+    struts {
+        left   6
+        right  6
+        top    2
+        bottom 3
+    }
+
+    focus-ring {
+        on
+        width 2
+        active-color   "#086C8C"
+        inactive-color "#737994"
+    }
+
+    border {
+        width 2
+        active-color   "#086C8C"
+        inactive-color "#737994"
+    }
+
+    default-column-width {
+        proportion 1.0
+    }
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        proportion 1.0
+    }
+
+    preset-window-heights {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        proportion 1.0
+    }
+
+    tab-indicator {
+        on
+        hide-when-single-tab
+        place-within-column
+        gap 5
+        width 4
+        length total-proportion=1.0
+        position "right"
+        gaps-between-tabs 2
+        corner-radius 8
+        active-color "red"
+        inactive-color "gray"
+        urgent-color "#fc0303"
+        // active-gradient from="#80c8ff" to="#bbddff" angle=45
+        // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
+    }
+}
+
+animations {
+    workspace-switch {
+        duration-ms 300
+        curve "ease-out-expo"
+    }
+
+    window-open {
+        duration-ms 150
+        curve "ease-out-expo"
+    }
+
+    window-close {
+        duration-ms 150
+        curve "ease-out-quad"
+    }
+}
+
+recent-windows {
+    debounce-ms 750
+    open-delay-ms 150
+
+    highlight {
+        active-color "#babbf1"
+        urgent-color "#fc0303"
+        padding 10
+        corner-radius 8
+    }
+
+    previews {
+        max-height 480
+        max-scale 0.5
+    }
+
+    binds {
+        Alt+Tab         { next-window; }
+        Alt+Shift+Tab   { previous-window; }
+    }
+}
+
+window-rule {
+    open-floating false
+    geometry-corner-radius 5
+    clip-to-geometry true
+}

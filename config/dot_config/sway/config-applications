@@ -1,16 +1,16 @@
 ### Applications ==============================================================
-assign [app_id="(?i).*chrome.*"] $web-ws
-assign [app_id="(?i).*firefox.*"] $web-ws
+assign [app_id="(?i).*chrome.*"] $ws-web
+assign [app_id="(?i).*firefox.*"] $ws-web
 
-assign [app_id="(?i).*evolution.*"] $mail-ws
+assign [app_id="(?i).*evolution.*"] $ws-mail
 
-assign [app_id="(?i).*slack.*"] $comm-ws
-assign [app_id="(?i).*signal.*"] $comm-ws
-assign [app_id="(?i).*element.*"] $comm-ws
+assign [app_id="(?i).*slack.*"] $ws-comm
+assign [app_id="(?i).*signal.*"] $ws-comm
+assign [app_id="(?i).*element.*"] $ws-comm
 
-assign [app_id="(?i).*bitwarden.*"] $creds-ws
+assign [app_id="(?i).*bitwarden.*"] $ws-creds
 
-# Some special setup for comm-ws:
+# Some special setup for ws-comm:
 for_window [app_id="(?i).*slack.*"] layout tabbed
 for_window [app_id="(?i).*element.*"] layout tabbed
 for_window [app_id="(?i).*signal.*"] layout tabbed
@@ -31,5 +31,5 @@ for_window [app_id="(?i).*font-manager.*"] floating enable; resize set 800 600;
 for_window [class="(?i).*zoom.*"] floating enable; resize set 800 600;
 for_window [app_id="(?i).*showmethekey.*"] floating enable; sticky enable; resize set 400 128;
 
-for_window [workspace="$web-ws"] layout tabbed;
+for_window [workspace="$ws-web"] layout tabbed;
 ### ===========================================================================

@@ -1,0 +1,20 @@
+input {
+    mod-key "Alt"
+
+    focus-follows-mouse
+
+    keyboard {
+        xkb {
+            layout "programmer-defy,programmer,us,de"
+            options "ctrl:nocaps,compose:ralt"
+        }
+    }
+
+    touchpad {
+        tap
+        drag true
+        drag-lock
+        dwt
+        click-method "clickfinger"
+    }
+}

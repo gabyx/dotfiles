@@ -1,0 +1,47 @@
+window-rule {
+    match app-id=r"(?i).*(chrome|firefox|brave).*"
+    open-on-workspace "9: "
+    // Needs latest
+    // open-consume-into-column "active"
+}
+
+window-rule {
+    match app-id=r"(?i).*evolution.*"
+    open-on-workspace "8: "
+}
+
+window-rule {
+    match app-id=r"(?i).*(slack|signal|element).*"
+    open-on-workspace "7: "
+}
+
+window-rule {
+    match app-id=r"(?i).*vlc.*"
+    open-floating true
+    default-window-height { proportion 0.8; }
+    default-column-width { proportion 0.6; }
+}
+
+window-rule {
+    match app-id=r"(?i).*bitwarden.*"
+    open-on-workspace "0: 󱕴"
+}
+
+window-rule {
+    match title=r"(?i)(Open|Save).*(File|Folder|As)"
+    open-floating true
+}
+
+window-rule {
+    match app-id=r"(?i).*(copyq|qalculate-gtk|font-manager|zoom|gcolor3).*"
+    open-floating true
+    default-window-height { proportion 0.8; }
+    default-column-width { proportion 0.6; }
+}
+
+window-rule {
+    match app-id=r"(?i).*showmethekey.*"
+    open-floating true
+    default-window-height { fixed 128; }
+    default-column-width { fixed 400; }
+}

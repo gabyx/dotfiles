@@ -1,0 +1,135 @@
+binds {
+    // ── Basics ────────────────────────────────────────────────────────────────
+    Mod+Return { spawn "sh" "-c" "~/.config/niri/scripts/run-in-focused-cwd.sh gabyx::term"; }
+    Mod+Shift+Return { spawn "sh" "-c" "~/.config/niri/scripts/run-in-focused-cwd.sh gabyx::file-manager"; }
+
+    Mod+Q { close-window; }
+    // sway's deep-parent kill has no equivalent; simple close-window used.
+    Mod+Ctrl+Shift+Q { close-window; }
+
+    // Menus / launchers.
+    Mod+Shift+P { spawn "gabyx::power-menu"; }
+    Mod+Shift+W { spawn "gabyx::wireless-menu"; }
+    Mod+Shift+I { spawn "gabyx::network-menu"; }
+    Mod+Shift+B { spawn "gabyx::bluetooth-menu"; }
+    Mod+Shift+N { spawn "gabyx::notifications-menu"; }
+    Mod+Shift+A { spawn "gabyx::sound-menu"; }
+    Mod+Shift+D { spawn "gabyx::systemd-menu"; }
+    Mod+Shift+T { spawn "gabyx::procs-menu"; }
+    Mod+Shift+M { spawn "gabyx::emoji-menu"; }
+    Mod+Shift+S { spawn "gabyx::screenshot-menu"; }
+    Mod+Shift+R { spawn "gabyx::screenrecord-menu"; }
+    Mod+Shift+Y { spawn "gabyx::color-picker-menu"; }
+    Mod+C       { spawn "gabyx::clipboard-menu"; }
+    Mod+D       { spawn "gabyx::launcher-menu"; }
+
+    // Screen lock.
+    Mod+Escape { spawn "swaylock" "--grace" "0" "-f"; }
+
+    // Exit niri.
+    Mod+Shift+E { quit skip-confirmation=false; }
+
+    // ── Focus movement ────────────────────────────────────────────────────────
+
+    // Home-row (vim-style).
+    Mod+H { focus-column-left; }
+    Mod+J { focus-window-down; }
+    Mod+K { focus-window-up; }
+    Mod+L { focus-column-right; }
+
+    // Arrow keys.
+    Mod+Left  { focus-column-left; }
+    Mod+Down  { focus-window-down; }
+    Mod+Up    { focus-window-up; }
+    Mod+Right { focus-column-right; }
+
+    // ── Move windows ──────────────────────────────────────────────────────────
+
+    Mod+Shift+H { move-column-left; }
+    Mod+Shift+J { move-window-down; }
+    Mod+Shift+K { move-window-up; }
+    Mod+Shift+L { move-column-right; }
+
+    Mod+Shift+Left  { move-column-left; }
+    Mod+Shift+Down  { move-window-down; }
+    Mod+Shift+Up    { move-window-up; }
+    Mod+Shift+Right { move-column-right; }
+
+    // ── Workspaces ────────────────────────────────────────────────────────────
+    Mod+1 { focus-workspace "1: "; }
+    Mod+2 { focus-workspace "2: "; }
+    Mod+3 { focus-workspace "3: "; }
+    Mod+4 { focus-workspace "4: "; }
+    Mod+5 { focus-workspace "5: "; }
+    Mod+6 { focus-workspace "6: "; }
+    Mod+7 { focus-workspace "7: "; }
+    Mod+8 { focus-workspace "8: "; }
+    Mod+9 { focus-workspace "9: "; }
+    Mod+0 { focus-workspace "0: 󱕴"; }
+
+    Mod+Shift+1 { spawn "~/.config/niri/scripts/move-and-switch.sh" "1: " ; }
+    Mod+Shift+2 { spawn "~/.config/niri/scripts/move-and-switch.sh" "2: " ; }
+    Mod+Shift+3 { spawn "~/.config/niri/scripts/move-and-switch.sh" "3: " ; }
+    Mod+Shift+4 { spawn "~/.config/niri/scripts/move-and-switch.sh" "4: " ; }
+    Mod+Shift+5 { spawn "~/.config/niri/scripts/move-and-switch.sh" "5: " ; }
+    Mod+Shift+6 { spawn "~/.config/niri/scripts/move-and-switch.sh" "6: " ; }
+    Mod+Shift+7 { spawn "~/.config/niri/scripts/move-and-switch.sh" "7: " ; }
+    Mod+Shift+8 { spawn "~/.config/niri/scripts/move-and-switch.sh" "8: " ; }
+    Mod+Shift+9 { spawn "~/.config/niri/scripts/move-and-switch.sh" "9: " ; }
+    Mod+Shift+0 { spawn "~/.config/niri/scripts/move-and-switch.sh" "0: 󱕴" ; }
+
+    // same for other keyboard:
+    Mod+exclam { focus-workspace "1: "; }
+    Mod+at { focus-workspace "2: "; }
+    Mod+numbersign { focus-workspace "3: "; }
+    Mod+dollar { focus-workspace "4: "; }
+    Mod+percent { focus-workspace "5: "; }
+    Mod+asciicircum { focus-workspace "6: "; }
+    Mod+ampersand { focus-workspace "7: "; }
+    Mod+asterisk { focus-workspace "8: "; }
+    Mod+parenleft { focus-workspace "9: "; }
+    Mod+parenright { focus-workspace "0: 󱕴"; }
+
+    Mod+Shift+exclam { spawn "~/.config/niri/scripts/move-and-switch.sh" "1: "; }
+    Mod+Shift+at { spawn "~/.config/niri/scripts/move-and-switch.sh" "2: "; }
+    Mod+Shift+numbersign { spawn "~/.config/niri/scripts/move-and-switch.sh" "3: "; }
+    Mod+Shift+dollar { spawn "~/.config/niri/scripts/move-and-switch.sh" "4: "; }
+    Mod+Shift+percent { spawn "~/.config/niri/scripts/move-and-switch.sh" "5: "; }
+    Mod+Shift+asciicircum { spawn "~/.config/niri/scripts/move-and-switch.sh" "6: "; }
+    Mod+Shift+ampersand { spawn "~/.config/niri/scripts/move-and-switch.sh" "7: "; }
+    Mod+Shift+asterisk { spawn "~/.config/niri/scripts/move-and-switch.sh" "8: "; }
+    Mod+Shift+parenleft { spawn "~/.config/niri/scripts/move-and-switch.sh" "9: "; }
+    Mod+Shift+parenright { spawn "~/.config/niri/scripts/move-and-switch.sh" "0: 󱕴"; }
+
+    // ── Layout ────────────────────────────────────────────────────────────────
+    Mod+backslash { switch-preset-column-width; }
+    Mod+minus     { switch-preset-window-height; }
+    Mod+o { toggle-overview; }
+
+    Mod+I { focus-window-previous; }
+    Mod+F { fullscreen-window; }
+    Mod+Space { toggle-window-floating; }
+    Mod+W { toggle-column-tabbed-display; }
+    // Mod+BracketLeft  { consume-window-into-column; }
+    Mod+BracketLeft { consume-or-expel-window-left; }
+
+    // ── Resize mode ───────────────────────────────────────────────────────────
+    // Fine-grained resize.
+    Mod+Ctrl+H { set-column-width "-50"; }
+    Mod+Ctrl+L { set-column-width "+50"; }
+    Mod+Ctrl+K { set-window-height "-50"; }
+    Mod+Ctrl+J { set-window-height "+50"; }
+
+    Mod+Ctrl+Left  { set-column-width "-50"; }
+    Mod+Ctrl+Right { set-column-width "+50"; }
+    Mod+Ctrl+Up    { set-window-height "-50"; }
+    Mod+Ctrl+Down  { set-window-height "+50"; }
+
+    // ── Media / brightness keys ───────────────────────────────────────────────
+    XF86AudioRaiseVolume  { spawn "volumectl" "-u" "up"; }
+    XF86AudioLowerVolume  { spawn "volumectl" "-u" "down"; }
+    XF86AudioMute         { spawn "volumectl" "toggle-mute"; }
+    XF86AudioMicMute      { spawn "volumectl" "-m" "toggle-mute"; }
+    XF86MonBrightnessUp   { spawn "lightctl" "up"; }
+    XF86MonBrightnessDown { spawn "lightctl" "down"; }
+}

@@ -18,7 +18,10 @@
     ./tmux.nix
     ./programs.nix
     ./services.nix
+
+    ./waybar/config.nix
     ./display.nix
+
     ./xdg.nix
     ./virtualization.nix
     ./mail.nix

@@ -7,19 +7,20 @@
 let
   isHyprland = windowMgr == "hyprland";
   isSway = windowMgr == "sway";
+  isNiri = windowMgr == "niri";
 
   cmds = {
     term.cmd = "wezterm start --always-new-process";
     term-start.cmd = "~/.config/sway/scripts/start-term.sh";
 
-    file-manager.cmd = ''kitty -- zsh "-c" "lf"'';
+    file-manager.cmd = "gabyx::term lf";
 
     display-manager.cmd =
-      if isSway then
+      if isSway || isNiri then
         "way-displays"
       else
         ''
-          die "No display manager defined."
+          gabyx::die "No display manager defined."
         '';
 
     launcher-menu.cmd = "~/.config/rofi/show-launcher-menu.sh";
@@ -29,7 +30,7 @@ let
     bluetooth-menu.cmd = "rofi-bluetooth";
     emoji-menu.cmd = "rofimoji --clipboarder wl-copy --action type copy --keybinding-copy Ctrl-y";
     systemd-menu.cmd = "rofi-systemd";
-    procs-menu.cmd = "kitty btop";
+    procs-menu.cmd = "gabyx::term btop";
     sound-menu.cmd = "pavucontrol";
     calculator-menu.cmd = "qalculate-gtk";
     screenshot-menu.cmd = "~/.config/rofi/scripts/rofi-screenshot.sh";
@@ -82,6 +83,10 @@ let
       if isSway then
         ''
           exec swaymsg exec "$@"
+        ''
+      else if isNiri then
+        ''
+          exec niri msg action spawn -- "$@"
         ''
       else if isHyprland then
         ''
