@@ -7,6 +7,7 @@
 let
   isHyprland = windowMgr == "hyprland";
   isSway = windowMgr == "sway";
+  isNir = windowMgr == "niri";
 
   cmds = {
     term.cmd = "wezterm start --always-new-process";
@@ -15,11 +16,11 @@ let
     file-manager.cmd = ''kitty -- zsh "-c" "lf"'';
 
     display-manager.cmd =
-      if isSway then
+      if isSway || isNiri then
         "way-displays"
       else
         ''
-          die "No display manager defined."
+          gabyx::die "No display manager defined."
         '';
 
     launcher-menu.cmd = "~/.config/rofi/show-launcher-menu.sh";
@@ -82,6 +83,10 @@ let
       if isSway then
         ''
           exec swaymsg exec "$@"
+        ''
+      else if isNiri then
+        ''
+          exec niri msg action spawn -- "$@"
         ''
       else if isHyprland then
         ''
