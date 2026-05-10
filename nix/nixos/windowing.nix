@@ -90,6 +90,7 @@ let
       waybar # The top bar.
     ]
     ++ (lib.optionals isSway [
+      plgs.swaybg
       pkgs.i3-back
       pkgs.sway-contrib.grimshot
       pkgs.swaylock-effects # Swaylock but with more effects.
@@ -97,6 +98,7 @@ let
       pkgs.swaynotificationcenter
     ])
     ++ (lib.optionals isNiri) [
+      plgs.swaybg
       pkgs.sway-contrib.grimshot
       pkgs.swaylock-effects # Swaylock but with more effects.
       pkgs.swayidle

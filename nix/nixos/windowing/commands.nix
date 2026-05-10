@@ -7,7 +7,7 @@
 let
   isHyprland = windowMgr == "hyprland";
   isSway = windowMgr == "sway";
-  isNir = windowMgr == "niri";
+  isNiri = windowMgr == "niri";
 
   cmds = {
     term.cmd = "wezterm start --always-new-process";
