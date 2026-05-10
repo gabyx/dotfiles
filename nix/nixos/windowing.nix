@@ -87,10 +87,10 @@ let
       brightnessctl # Brightness control in waybar.
       playerctl # Player control in waybar.
 
-      waybar # The top bar.
+      waybar # Top bar.
     ]
     ++ (lib.optionals isSway [
-      plks.swaybg
+      pkgs.swaybg
       pkgs.i3-back
       pkgs.sway-contrib.grimshot
       pkgs.swaylock-effects # Swaylock but with more effects.

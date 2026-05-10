@@ -1,9 +1,9 @@
 spawn-at-startup "avizo-service"
-spawn-at-startup "swaybg" "-i" "~/.config/wallpapers/background-sand.jpg" "-m" "fill"
+spawn-sh-at-startup "swaybg -i ~/.config/wallpapers/background-sand.jpg -m fill"
 spawn-at-startup "waybar"
 spawn-at-startup "gabyx::clipboard"
 
-spawn-at-startup "sh" "-c" "gabyx::display-manager 2>&1 > ~/.way-displays.log"
+spawn-sh-at-startup "gabyx::display-manager 2>&1 > ~/.way-displays.log"
 
 spawn-at-startup "gabyx::notifications"
 
@@ -14,4 +14,4 @@ spawn-at-startup "element-desktop"
 spawn-at-startup "slack"
 spawn-at-startup "bitwarden"
 
-spawn-at-startup "sh" "~/.config/niri/scripts/start-up.sh"
+spawn-sh-at-startup "~/.config/niri/scripts/start-up.sh"

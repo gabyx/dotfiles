@@ -16,6 +16,13 @@ window-rule {
 }
 
 window-rule {
+    match app-id=r"(?i).*vlc.*"
+    open-floating true
+    default-window-height { proportion 0.8; }
+    default-column-width { proportion 0.6; }
+}
+
+window-rule {
     match app-id=r"(?i).*bitwarden.*"
     open-on-workspace "0: 󱕴"
 }
