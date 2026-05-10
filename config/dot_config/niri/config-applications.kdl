@@ -1,37 +1,30 @@
 window-rule {
-    match app-id=r"(?i).*(?:chrome|firefox|brave).*"
-    open-on-workspace "ws-web"
+    match app-id=r"(?i).*(chrome|firefox|brave).*"
+    open-on-workspace "9: "
 }
 
 window-rule {
     match app-id=r"(?i).*evolution.*"
-    open-on-workspace "ws-mail"
+    open-on-workspace "8: "
 }
 
 window-rule {
-    match app-id=r"(?i).*(?:slack|signal).*"
-    open-on-workspace "ws-comm"
-}
-
-
-window-rule {
-    match app-id=r"(?i).*element.*"
-    open-on-workspace "ws-comm"
+    match app-id=r"(?i).*(slack|signal|element).*"
+    open-on-workspace "7: "
 }
 
 window-rule {
     match app-id=r"(?i).*bitwarden.*"
-    open-on-workspace "ws-creds"
+    open-on-workspace "0: 󱕴"
 }
 
 window-rule {
-    match at-startup=false
-    match title=r"(?:Open|Save).*(?:File|Folder|As)"
+    match title=r"(?i)(Open|Save).*(File|Folder|As)"
     open-floating true
 }
 
 window-rule {
-    match app-id=r"(?i).*(?:copyq|qalculate-gtk|font-manager|zoom).*"
+    match app-id=r"(?i).*(copyq|qalculate-gtk|font-manager|zoom|gcolor3).*"
     open-floating true
     default-window-height { proportion 0.8; }
     default-column-width { proportion 0.6; }

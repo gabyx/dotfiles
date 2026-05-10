@@ -90,6 +90,7 @@ binds {
     // sway bindcode 20 (minus) → splitv; niri: cycle window heights.
     Alt+minus     { switch-preset-window-height; }
 
+    Alt+i { focus-window-previous; }
     Alt+F { fullscreen-window; }
     Alt+Space { toggle-window-floating; }
 

@@ -1,39 +1,48 @@
 prefer-no-csd true
 
 layout {
-    gaps 8
+    gaps 4
 
     center-focused-column "never"
     always-center-single-column
-    empty-workspace-above-first
+    // empty-workspace-above-first
     default-column-display "tabbed"
 
     struts {
-        left   5
-        right  5
-        top    5
-        bottom 5
+        left   6
+        right  6
+        top    0
+        bottom 0
     }
 
     focus-ring {
         on
         width 2
-        active-color   "#babbf1"
+        active-color   "#086C8C"
         inactive-color "#737994"
     }
 
     border {
         width 2
-        active-color   "#babbf1"
+        active-color   "#086C8C"
         inactive-color "#737994"
     }
 
-    default-column-width { proportion 0.5; }
+    default-column-width {
+        proportion 1.0
+    }
 
     preset-column-widths {
-        proportion 0.333
+        proportion 0.33333
         proportion 0.5
-        proportion 0.667
+        proportion 0.66667
+        proportion 1.0
+    }
+
+    preset-window-heights {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
         proportion 1.0
     }
 
@@ -53,7 +62,23 @@ layout {
         // active-gradient from="#80c8ff" to="#bbddff" angle=45
         // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
     }
+}
 
+animations {
+    workspace-switch {
+        duration-ms 300
+        curve "ease-out-expo"
+    }
+
+    window-open {
+        duration-ms 150
+        curve "ease-out-expo"
+    }
+
+    window-close {
+        duration-ms 150
+        curve "ease-out-quad"
+    }
 }
 
 recent-windows {
@@ -63,8 +88,8 @@ recent-windows {
     highlight {
         active-color "#babbf1"
         urgent-color "#fc0303"
-        padding 30
-        corner-radius 0
+        padding 10
+        corner-radius 8
     }
 
     previews {
@@ -76,4 +101,12 @@ recent-windows {
         Alt+Tab         { next-window; }
         Alt+Shift+Tab   { previous-window; }
     }
+}
+
+window-rule {
+    open-floating false
+    geometry-corner-radius 5
+    clip-to-geometry true
+    // open-maximized true
+    // open-maximized-to-edges true
 }

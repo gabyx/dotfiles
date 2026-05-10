@@ -6,7 +6,7 @@
     user.chezmoi.workspace = "work";
 
     windowing = {
-      manager = "sway";
+      manager = "niri";
     };
 
     backup = {
