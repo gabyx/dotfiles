@@ -285,7 +285,7 @@ in
         all-outputs = false;
         disable-scroll = false;
         smooth-scrolling-threshold = 10;
-        format = "{icon}  {name}";
+        format = "{icon} {name}";
         format-icons = {
           urgent = "";
           focused = "";
