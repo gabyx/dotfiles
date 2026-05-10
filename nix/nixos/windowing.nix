@@ -8,11 +8,21 @@
 let
   inherit (lib) types mkOption;
   windowMgr = config.settings.windowing.manager;
+
+  isNiri = windowMgr == "niri";
   isHyprland = windowMgr == "hyprland";
   isSway = windowMgr == "sway";
 
   sessionType = "wayland";
-  desktopType = if isSway then "sway" else "Hyprland";
+  desktopType =
+    if isSway then
+      "sway"
+    else if isHyprland then
+      "Hyprland"
+    else if isNiri then
+      "niri"
+    else
+      "sway";
 
   waylandEnvs = {
     NIXOS_OZONE_WL = 1;
@@ -86,6 +96,12 @@ let
       pkgs.swayidle
       pkgs.swaynotificationcenter
     ])
+    ++ (lib.optionals isNiri) [
+      pkgs.sway-contrib.grimshot
+      pkgs.swaylock-effects # Swaylock but with more effects.
+      pkgs.swayidle
+      pkgs.swaynotificationcenter
+    ]
     ++ (lib.optionals isHyprland [
       pkgsUnstable.hypridle
       pkgsUnstable.hyprlock
@@ -99,7 +115,6 @@ let
 in
 {
   options = {
-    # My settings.
     settings.windowing = {
       manager = mkOption {
         description = "Window manager to use.";
@@ -107,14 +122,14 @@ in
         type = types.enum [
           "sway"
           "hyprland"
+          "niri"
         ];
       };
 
       isTiling = mkOption {
         description = "If the window manager is tiling.";
         internal = true;
-        default =
-          config.settings.windowing.manager == "sway" || config.settings.windowing.manager == "hyprland";
+        default = isHyprland || isNiri || isSway;
       };
     };
   };
@@ -156,8 +171,13 @@ in
     programs.hyprlock = {
       enable = isHyprland;
     };
+    # ===========================================================================
 
-    environment.corePackages = lib.mkIf isHyprland commonPkgs;
+    # Niri Window Manager ===================================================
+    programs.niri = {
+      enable = isNiri;
+      package = pkgsUnstable.niri;
+    };
     # ===========================================================================
 
     # Sway Window Manager
@@ -172,6 +192,8 @@ in
       extraSessionCommands = (envToShell waylandEnvs) + (envToShell desktopEnvs) + adjustKeyring;
     };
     # ===========================================================================
+
+    environment.systemPackages = lib.mkIf (isHyprland || isNiri) commonPkgs;
 
     environment.variables = {
       XDG_SESSION_TYPE = sessionType;

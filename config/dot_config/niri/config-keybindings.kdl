@@ -1,0 +1,146 @@
+bindings {
+    // ── Basics ────────────────────────────────────────────────────────────────
+
+    // Start terminal (in focused window's cwd via wrapper script).
+    Alt+Return { spawn "sh" "-c" "~/.config/niri/scripts/run-in-focused-cwd.sh gabyx::term"; }
+    // Start file manager.
+    Alt+Shift+Return { spawn "sh" "-c" "~/.config/niri/scripts/run-in-focused-cwd.sh gabyx::file-manager-menu"; }
+
+    // Kill focused window.
+    Alt+Q { close-window; }
+    // sway's deep-parent kill has no equivalent; simple close-window used.
+    Alt+Ctrl+Shift+Q { close-window; }
+
+    // Menus / launchers.
+    Alt+Shift+P { spawn "gabyx::power-menu"; }
+    Alt+Shift+W { spawn "gabyx::wireless-menu"; }
+    Alt+Shift+I { spawn "gabyx::network-menu"; }
+    Alt+Shift+B { spawn "gabyx::bluetooth-menu"; }
+    Alt+Shift+N { spawn "gabyx::notifications-menu"; }
+    Alt+Shift+A { spawn "gabyx::sound-menu"; }
+    Alt+Shift+D { spawn "gabyx::systemd-menu"; }
+    Alt+Shift+T { spawn "gabyx::procs-menu"; }
+    Alt+Shift+M { spawn "gabyx::emoji-menu"; }
+    Alt+Shift+S { spawn "gabyx::screenshot-menu"; }
+    Alt+Shift+R { spawn "gabyx::screenrecord-menu"; }
+    Alt+Shift+Y { spawn "gabyx::color-picker-menu"; }
+    Alt+C       { spawn "gabyx::clipboard-menu"; }
+    Alt+D       { spawn "gabyx::launcher-menu"; }
+
+    // Screen lock.
+    Alt+Escape { spawn "swaylock" "--grace" "0" "-f"; }
+
+    // Reload niri config.
+    Alt+Shift+C { reconfigure; }
+
+    // Exit niri.
+    Alt+Shift+E { quit skip-confirmation=false; }
+
+    // ── Focus movement ────────────────────────────────────────────────────────
+
+    // Home-row (vim-style).
+    Alt+H { focus-column-left; }
+    Alt+J { focus-window-down; }
+    Alt+K { focus-window-up; }
+    Alt+L { focus-column-right; }
+
+    // Arrow keys.
+    Alt+Left  { focus-column-left; }
+    Alt+Down  { focus-window-down; }
+    Alt+Up    { focus-window-up; }
+    Alt+Right { focus-column-right; }
+
+    // ── Move windows ──────────────────────────────────────────────────────────
+
+    Alt+Shift+H { move-column-left; }
+    Alt+Shift+J { move-window-down; }
+    Alt+Shift+K { move-window-up; }
+    Alt+Shift+L { move-column-right; }
+
+    Alt+Shift+Left  { move-column-left; }
+    Alt+Shift+Down  { move-window-down; }
+    Alt+Shift+Up    { move-window-up; }
+    Alt+Shift+Right { move-column-right; }
+
+    // ── Workspaces ────────────────────────────────────────────────────────────
+    Alt+1 { focus-workspace "ws-1"; }
+    Alt+2 { focus-workspace "ws-2"; }
+    Alt+3 { focus-workspace "ws-3"; }
+    Alt+4 { focus-workspace "ws-4"; }
+    Alt+5 { focus-workspace "ws-5"; }
+    Alt+6 { focus-workspace "ws-6"; }
+    Alt+7 { focus-workspace "ws-7-comm"; }
+    Alt+8 { focus-workspace "ws-8-mail"; }
+    Alt+9 { focus-workspace "ws-9-web"; }
+    Alt+0 { focus-workspace "ws-10-creds"; }
+
+    Alt+Shift+1 { move-window-to-workspace "ws-1";        focus-workspace "ws-1"; }
+    Alt+Shift+2 { move-window-to-workspace "ws-2";        focus-workspace "ws-2"; }
+    Alt+Shift+3 { move-window-to-workspace "ws-3";        focus-workspace "ws-3"; }
+    Alt+Shift+4 { move-window-to-workspace "ws-4";        focus-workspace "ws-4"; }
+    Alt+Shift+5 { move-window-to-workspace "ws-5";        focus-workspace "ws-5"; }
+    Alt+Shift+6 { move-window-to-workspace "ws-6";        focus-workspace "ws-6"; }
+    Alt+Shift+7 { move-window-to-workspace "ws-7-comm";   focus-workspace "ws-7-comm"; }
+    Alt+Shift+8 { move-window-to-workspace "ws-8-mail";   focus-workspace "ws-8-mail"; }
+    Alt+Shift+9 { move-window-to-workspace "ws-9-web";    focus-workspace "ws-9-web"; }
+    Alt+Shift+0 { move-window-to-workspace "ws-10-creds"; focus-workspace "ws-10-creds"; }
+
+    // ── Layout ────────────────────────────────────────────────────────────────
+
+    // Horizontal / vertical splits → niri column/window size cycling.
+    // sway bindcode 51 (backslash) → switch to horizontal (splith).
+    Alt+backslash { switch-preset-column-width; }
+    // sway bindcode 20 (minus) → splitv; niri: cycle window heights.
+    Alt+minus     { switch-preset-window-height; }
+
+    Alt+F { fullscreen-window; }
+    Alt+Space { toggle-window-floating; }
+
+    Alt+Shift+Space { focus-floating toggle; }
+
+    // ── Resize mode ───────────────────────────────────────────────────────────
+    // Fine-grained resize.
+    Alt+Ctrl+H { set-column-width "-50"; }
+    Alt+Ctrl+L { set-column-width "+50"; }
+    Alt+Ctrl+K { set-window-height "-50"; }
+    Alt+Ctrl+J { set-window-height "+50"; }
+
+    Alt+Ctrl+Left  { set-column-width "-50"; }
+    Alt+Ctrl+Right { set-column-width "+50"; }
+    Alt+Ctrl+Up    { set-window-height "-50"; }
+    Alt+Ctrl+Down  { set-window-height "+50"; }
+
+    // ── Media / brightness keys ───────────────────────────────────────────────
+    XF86AudioRaiseVolume  { spawn "volumectl" "-u" "up"; }
+    XF86AudioLowerVolume  { spawn "volumectl" "-u" "down"; }
+    XF86AudioMute         { spawn "volumectl" "toggle-mute"; }
+    XF86AudioMicMute      { spawn "volumectl" "-m" "toggle-mute"; }
+    XF86MonBrightnessUp   { spawn "lightctl" "up"; }
+    XF86MonBrightnessDown { spawn "lightctl" "down"; }
+
+    // Switch keyboard layout (works on lock screen too via --locked in sway).
+    // niri: allow-when-locked is set per binding.
+    // Alt+Space { switch-layout "next"; }
+}
+
+recent-windows {
+    debounce-ms 750
+    open-delay-ms 150
+
+    highlight {
+        active-color "#999999ff"
+        urgent-color "#ff9999ff"
+        padding 30
+        corner-radius 0
+    }
+
+    previews {
+        max-height 480
+        max-scale 0.5
+    }
+
+    binds {
+        Alt+Tab         { next-window; }
+        Alt+Shift+Tab   { previous-window; }
+    }
+}

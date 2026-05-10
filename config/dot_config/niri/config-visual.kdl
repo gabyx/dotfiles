@@ -1,0 +1,45 @@
+// config-visual.kdl
+// Visual Theme — translated from sway config-visual
+// Catppuccin Frappé palette (mirrors themes/catppuccin-frappe)
+//
+// Palette reference:
+//   base      = #303446   rosewater = #f2d5cf   lavender  = #babbf1
+//   text      = #c6d0f5   overlay0  = #737994   peach     = #ef9f76
+
+layout {
+    gaps 8
+
+    struts {
+        left   5
+        right  5
+        top    5
+        bottom 5
+    }
+
+    focus-ring {
+        width 2
+        active-color   "#babbf1"
+        inactive-color "#737994"
+    }
+
+    border {
+        width 2
+        active-color   "#babbf1"
+        inactive-color "#737994"
+    }
+
+    default-column-width { proportion 0.5; }
+
+    preset-column-widths {
+        proportion 0.333
+        proportion 0.5
+        proportion 0.667
+        proportion 1.0
+    }
+}
+
+window-rule {
+    match all
+    draw-border-with-background false
+    prefer-no-csd
+}
