@@ -1,30 +1,11 @@
 { lib, osConfig, ... }:
 let
   windowMgr = lib.strings.toLower osConfig.settings.windowing.manager;
-
-  format-icons = {
-    ws-1 = "1: ";
-    ws-2 = "2: ";
-    ws-3 = "3: ";
-    ws-4 = "4: ";
-
-    ws-5 = "5: ";
-    ws-6 = "6: ";
-
-    ws-comm = "7: ";
-    ws-mail = "8: ";
-    ws-web = "9: ";
-    ws-creds = "0: 󱕴";
-
-    urgent = "";
-    focused = "";
-    default = "";
-  };
 in
 {
   xdg.configFile."waybar/config" = {
     force = true;
-    text = lib.generators.toJSON {
+    text = lib.generators.toJSON { } {
       # -------------------------------------------------------------------------
       # Global configuration
       # -------------------------------------------------------------------------
@@ -305,19 +286,42 @@ in
         disable-scroll = false;
         smooth-scrolling-threshold = 10;
         format = "{icon}  {name}";
-        inherit format-icons;
+        format-icons = {
+          urgent = "";
+          focused = "";
+          default = "";
+        };
       };
 
       "niri/workspaces" = {
         all-outputs = false;
         hide-empty = true;
-        format = "{icon}  {name}";
-        inherit format-icons;
+        format = "{icon}";
+        format-icons = {
+          "ws-1" = "1: ";
+          "ws-2" = "2: ";
+          "ws-3" = "3: ";
+          "ws-4" = "4: ";
+          "ws-5" = "5: ";
+          "ws-6" = "6: ";
+          "ws-comm" = "7: ";
+          "ws-mail" = "8: ";
+          "ws-web" = "9: ";
+          "ws-creds" = "0: 󱕴";
+          urgent = "";
+          focused = "";
+          default = "";
+        };
       };
 
       "hyprland/workspaces" = {
         all-outputs = false;
-        inherit format-icons;
+        format = "{icon} {name}";
+        format-icons = {
+          urgent = "";
+          focused = "";
+          default = "";
+        };
       };
 
       pulseaudio = {
