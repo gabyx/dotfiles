@@ -11,8 +11,8 @@ layout {
     struts {
         left   6
         right  6
-        top    0
-        bottom 0
+        top    2
+        bottom 3
     }
 
     focus-ring {
@@ -107,6 +107,4 @@ window-rule {
     open-floating false
     geometry-corner-radius 5
     clip-to-geometry true
-    // open-maximized true
-    // open-maximized-to-edges true
 }
