@@ -19,9 +19,8 @@
 
     "modules-left": [
         "custom/launcher",
-        "sway/workspaces",
-        "sway/mode",
-        "sway/window",
+        "niri/workspaces",
+        "niri/window",
     ],
     "modules-center": [
         "custom/agenda",
@@ -41,7 +40,7 @@
         "temperature",
         "disk",
         "custom/ssh",
-        "sway/language",
+        "niri/language",
         "custom/vpn",
         "network",
         "bluetooth",
