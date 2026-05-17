@@ -1,6 +1,6 @@
 {
   inputs,
-  system,
+  inputs',
   pkgs,
   ...
 }:
@@ -19,7 +19,7 @@ let
     }).neovim;
 
   nvim = createNeovim pkgs.neovim-unwrapped;
-  nvim-nightly = createNeovim inputs.nvim-nightly.packages.${system}.neovim-unwrapped;
+  nvim-nightly = createNeovim inputs'.nvim-nightly.packages.neovim-unwrapped;
 
   # Wrap to other name.
   nvim-gabyx = (pkgs.writeShellScriptBin "nvim-gabyx" "exec -a $0 ${nvim}/bin/nvim \"$@\"");
