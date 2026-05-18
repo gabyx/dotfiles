@@ -117,7 +117,7 @@
 
     # Pinning treesitter for Astronvim.
     nvim-astronvim = {
-      url = "github:NixOS/nixpkgs?rev=2fbfb1d73d239d2402a8fe03963e37aab15abe8b";
+      url = "github:NixOS/nixpkgs?rev=b3da656039dc7a6240f27b2ef8cc6a3ef3bccae7";
     };
 
     nvim-nvf = {
