@@ -9,7 +9,9 @@ in
 
     context = {
       enable = true;
-      multilineThreshold = 10;
+      setupOpts = {
+        multiline_threshold = 10;
+      };
     };
 
     fold = false;
@@ -23,6 +25,10 @@ in
     indent.enable = true;
     textobjects.enable = true;
   };
+
+  vim.extraPackages = [
+    pkgs.tree-sitter
+  ];
 
   vim.extraPlugins =
     let

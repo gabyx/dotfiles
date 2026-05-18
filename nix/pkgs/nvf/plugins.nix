@@ -1,6 +1,19 @@
 { pkgs, ... }:
 {
+
+  # TODO:
+  # Plugins of AstroNvim https://github.com/AstroNvim/AstroNvim/tree/main/lua/astronvim/plugins
+
   vim.extraPlugins = {
+
+    # TODO: not the way, but whats the workaround, probably impossible...
+    "lazy" = {
+      package = pkgs.vimPlugins.lazy-nvim;
+      setup = ''
+        require("lazy").setup({})
+      '';
+    };
+
     "astrotheme" = {
       package = pkgs.vimPlugins.astrotheme;
       setup = # lua
@@ -52,6 +65,113 @@
             })
 
           vim.cmd.colorscheme("astrotheme")
+        '';
+    };
+
+    "astrocore" = {
+      package = pkgs.vimPlugins.astrocore;
+      after = [
+        "lazy"
+        "astrotheme"
+        "astroui"
+      ];
+      setup =
+        # lua
+        ''
+          print("setup astrocore")
+          opts = {
+            -- Configure core features of AstroNvim
+            features = {
+                large_buf = { size = 1024 * 500, lines = 100000 }, -- set global limits for large files for disabling features like treesitter
+                autopairs = true, -- enable autopairs at start
+                cmp = true, -- enable completion at start
+                diagnostics = { virtual_text = true, virtual_lines = false }, -- diagnostic settings on startup
+                highlighturl = true, -- highlight URLs at start
+                notifications = true, -- enable notifications at start
+            },
+            -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
+            diagnostics = {
+                virtual_text = true,
+                underline = true,
+            },
+            -- vim options can be configured here
+            options = {
+                opt = { -- vim.opt.<key>
+                    relativenumber = true, -- sets vim.opt.relativenumber
+                    number = true, -- sets vim.opt.number
+                    spell = false, -- sets vim.opt.spell
+                    signcolumn = "auto", -- sets vim.opt.signcolumn to auto
+                    wrap = false, -- sets vim.opt.wrap
+
+                    -- Treesitter folding
+                    foldmethod = "expr",
+                    foldexpr = "nvim_treesitter#foldexpr()",
+                    -- Whitespace Characters
+                    listchars = "tab:▷ ,trail:·,extends:◣,precedes:◢,nbsp:○",
+                    list = true,
+                    -- Auto-reload files when modified externally
+                    -- https://unix.stackexchange.com/a/383044
+                    autoread = true,
+                    -- Do not conceal anything in files
+                    -- (markdown code blocks as example).
+                    conceallevel = 0,
+
+                    diffopt = "internal,anchor,filler,closeoff,linematch:40,algorithm:histogram,linematch:60",
+                },
+                g = { -- vim.g.<key>
+                    -- configure global vim variables (vim.g)
+                    -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
+                    -- This can be found in the `lua/lazy_setup.lua` file
+                },
+            },
+          }
+
+          require("astrocore").setup(opts)
+        '';
+    };
+
+    "astroui" = {
+      package = pkgs.vimPlugins.astroui;
+      setup =
+        # lua
+        ''
+          print("setup astroui")
+          opts = {
+            -- change colorscheme
+            colorscheme = "astrodark",
+            -- AstroUI allows you to easily modify highlight groups easily for any and all colorschemes
+            highlights = {
+                init = {},
+                astrotheme = {},
+            },
+
+            status = {
+                providers = {
+                    lsp_client_names = {
+                        mappings = {
+                            typos_lsp = "typos",
+                            lua_lsp = "lua",
+                        },
+                    },
+                },
+            },
+            -- Icons can be configured throughout the interface
+            icons = {
+                -- configure the loading of the lsp in the status line
+                LSPLoading1 = "⠋",
+                LSPLoading2 = "⠙",
+                LSPLoading3 = "⠹",
+                LSPLoading4 = "⠸",
+                LSPLoading5 = "⠼",
+                LSPLoading6 = "⠴",
+                LSPLoading7 = "⠦",
+                LSPLoading8 = "⠧",
+                LSPLoading9 = "⠇",
+                LSPLoading10 = "⠏",
+            },
+          }
+
+          require("astroui").setup(opts)
         '';
     };
   };
