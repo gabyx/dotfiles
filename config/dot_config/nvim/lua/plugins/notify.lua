@@ -1,8 +1,8 @@
 return {
-    {
-        "rcarriga/nvim-notify",
-        opts = {
-            top_down = false,
-        },
+  {
+    "rcarriga/nvim-notify",
+    opts = {
+      top_down = false,
     },
+  },
 }
