@@ -1,7 +1,20 @@
+---@type LazySpec
 return {
   "mhartington/formatter.nvim",
   cmd = { "Format", "FormatWrite" },
   lazy = false,
+
+  keys = {
+    { "<Leader>bf", ":FormatWriteLock<cr>", desc = "Format current buffer." },
+    {
+      "<Leader>u.",
+      function()
+        require("user.util.format-on-save").toggle_format_on_save()
+      end,
+      desc = "Toggle Format On Save",
+    },
+  },
+
   config = function(_, opts)
     local fmt = require("formatter")
     local fmts = require("formatter.defaults")

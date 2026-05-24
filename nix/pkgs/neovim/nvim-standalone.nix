@@ -1,7 +1,6 @@
 {
   writeShellScriptBin,
   rsync,
-  jq,
   nvim,
   nvim-treesitter-install,
   name ? "nvim",

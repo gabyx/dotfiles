@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
   -- Treesitter setup.
   {
@@ -33,6 +34,31 @@ return {
         },
       },
     },
+
+    keys = {
+      { "<Leader>uT", ":TSContext toggle<cr>", desc = "Treesitter context toggle." },
+    },
   },
-  { "mfussenegger/nvim-treehopper", dependencies = { "smoka7/hop.nvim" } },
+
+  -- Hop around in Treesitter tree.
+  {
+    "mfussenegger/nvim-treehopper",
+    dependencies = { "smoka7/hop.nvim" },
+    keys = {
+      {
+        "<Leader>ja",
+        function()
+          require("tsht").nodes()
+        end,
+        desc = "Select in AST.",
+      },
+      {
+        "<Leader>jA",
+        function()
+          require("tsht").move()
+        end,
+        desc = "Move in AST.",
+      },
+    },
+  },
 }

@@ -6,6 +6,11 @@ return {
       local dap = require("dap")
       dap.set_log_level("TRACE")
     end,
+
+    keys = {
+      -- Debug Adapter commands.
+      { "<Leader>dl", ":vsplit ~/.cache/nvim/dap.log", desc = "DAP log." },
+    },
   },
   -- Use mason-nvim-dap to configure debug adapters.
   {
