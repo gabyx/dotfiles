@@ -44,13 +44,18 @@ let
         position = "left";
 
         mappings = {
-          "toggle_node" = "<CR>";
+          "<CR>" = "child_or_open";
           "[b" = "prev_source";
           "]b" = "next_source";
 
           Y = "copy_selector";
           h = "parent_or_close";
           l = "child_or_open";
+        };
+
+        fuzzy_finder_mappings = {
+          "<C-J>" = "move_cursor_down";
+          "<C-K>" = "move_cursor_up";
         };
       };
     };
