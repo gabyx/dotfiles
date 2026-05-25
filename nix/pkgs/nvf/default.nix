@@ -6,43 +6,50 @@
 }:
 let
   createNeovim =
-    nvimDrv:
-    (inputs.nvim-nvf.lib.neovimConfiguration {
-      inherit pkgs;
-      modules = [
-        {
-          vim.package = nvimDrv;
-        }
-        ./filetree.nix
-        ./git.nix
-        ./icons.nix
-        ./mappings.nix
-        ./plugins.nix
-        ./treesitter.nix
-        ./ui.nix
-      ];
-    }).neovim;
+    {
+      name,
+      nvim,
+    }:
+    let
+      nvimNvf =
+        (inputs.nvim-nvf.lib.neovimConfiguration {
+          inherit pkgs;
+          modules = [
+            {
+              vim.package = nvim;
+            }
+            ./modules/filetree.nix
+            ./modules/git.nix
+            ./modules/icons.nix
+            ./modules/mappings.nix
+            ./modules/plugins.nix
+            ./modules/treesitter.nix
+            ./modules/ui.nix
+          ];
+        }).neovim;
 
-  nvim = createNeovim pkgs.neovim-unwrapped;
-  nvim-nightly = createNeovim inputs'.nvim-nightly.packages.neovim-unwrapped;
+      wrapper = pkgs.callPackage ./launch.nix {
+        nvim = nvimNvf;
+        inherit name;
+      };
+    in
+    {
+      # The actual nvim executable.
+      "${name}" = wrapper;
 
-  # Wrap to other name.
-  nvim-gabyx = (pkgs.writeShellScriptBin "nvim-gabyx" "exec -a $0 ${nvim}/bin/nvim \"$@\"");
-  nvim-gabyx-config = (
-    pkgs.writeShellScriptBin "nvim-gabyx-config" "exec -a $0 ${nvim}/bin/nvf-print-config"
-  );
+      # The derivation for printing the config.
+      "${name}-config" =
+        pkgs.writeShellScriptBin "nvim-gabyx-config" "exec -a $0 ${nvimNvf}/bin/nvf-print-config";
+    };
 
-  nvim-gabyx-nightly = (
-    pkgs.writeShellScriptBin "nvim-gabyx-nightly" "exec -a $0 ${nvim-nightly}/bin/nvim \"$@\""
-  );
+  nvim = createNeovim {
+    name = "nvim-gabyx";
+    nvim = pkgs.neovim-unwrapped;
+  };
+
+  nvim-nightly = createNeovim {
+    name = "nvim-gabyx-nightly";
+    nvim = inputs'.nvim-nightly.packages.neovim-unwrapped;
+  };
 in
-{
-  inherit
-    nvim
-    nvim-nightly
-
-    nvim-gabyx
-    nvim-gabyx-config
-    nvim-gabyx-nightly
-    ;
-}
+nvim // nvim-nightly

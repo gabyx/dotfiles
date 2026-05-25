@@ -41,8 +41,9 @@ in
             # Lua
             ''
               function(bufnr)
-                return gabyx.buffer.is_valid(bufnr)
-                  and not gabyx.buffer.is_large(bufnr)
+                buffer = require("gabyx.buffer")
+                return buffer.is_valid(bufnr)
+                  and not buffer.is_large(bufnr)
                   and vim.g.snacks_indent ~= false
                   and vim.b[bufnr].snacks_indent ~= false
               end
@@ -57,8 +58,9 @@ in
             # Lua
             ''
               function(bufnr)
-                return gabyx.buffer.is_valid(bufnr)
-                  and not gabyx.buffer.is_large(bufnr)
+                buffer = require("gabyx.buffer")
+                return buffer.is_valid(bufnr)
+                  and not buffer.is_large(bufnr)
                   and vim.g.snacks_scope ~= false
                   and vim.b[bufnr].snacks_scope ~= false
               end
@@ -73,8 +75,9 @@ in
             # Lua
             ''
               function(bufnr)
-                return gabyx.buffer.is_valid(bufnr)
-                  and not gabyx.buffer.is_large(bufnr)
+                buffer = require("gabyx.buffer")
+                return buffer.is_valid(bufnr)
+                  and not buffer.is_large(bufnr)
                   and vim.g.snacks_words ~= false
                   and vim.b[bufnr].snacks_words ~= false
               end

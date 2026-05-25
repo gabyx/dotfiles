@@ -109,6 +109,62 @@ in
       desc = "New file.";
     }
 
+    # Buffer Commands.
+    {
+      mode = "n";
+      key = "<Leader>c";
+      action = /* Lua */ ''
+        function() require("gabyx.buffer").close() end
+      '';
+      lua = true;
+      desc = "Close buffer.";
+    }
+    {
+      mode = "n";
+      key = "<Leader>C";
+      action = /* Lua */ ''
+        function() require("gabyx.buffer").close(0, true) end
+      '';
+      lua = true;
+      desc = "Close buffer forced.";
+    }
+    {
+      mode = "n";
+      key = "]b";
+      action = /* Lua */ ''
+        function() require("gabyx.buffer").nav(vim.v.count1) end
+      '';
+      lua = true;
+      desc = "Next buffer.";
+    }
+    {
+      mode = "n";
+      key = "[b";
+      action = /* Lua */ ''
+        function() require("gabyx.buffer").nav(-vim.v.count1) end
+      '';
+      lua = true;
+      desc = "Previous buffer.";
+    }
+    {
+      mode = "n";
+      key = ">b";
+      action = /* Lua */ ''
+        function() require("gabyx.buffer").move(vim.v.count1) end
+      '';
+      lua = true;
+      desc = "Move buffer tab right.";
+    }
+    {
+      mode = "n";
+      key = "<b";
+      action = /* Lua */ ''
+        function() require("gabyx.buffer").move(-vim.v.count1) end
+      '';
+      lua = true;
+      desc = "Move buffer tab left.";
+    }
+
     # TODO: Translate this.
     # return {
     #
@@ -118,38 +174,6 @@ in
     #
     #     -- Normal --
     #     -- Standard Operations DONE
-    #
-    #     -- Neovim Default LSP Mappings
-    #     if vim.fn.has "nvim-0.11" ~= 1 then
-    #       maps.n["gra"] = { function() vim.lsp.buf.code_action() end, desc = "vim.lsp.buf.code_action()" }
-    #       maps.x["gra"] = { function() vim.lsp.buf.code_action() end, desc = "vim.lsp.buf.code_action()" }
-    #       maps.n["grn"] = { function() vim.lsp.buf.rename() end, desc = "vim.lsp.buf.rename()" }
-    #       maps.n["grr"] = { function() vim.lsp.buf.references() end, desc = "vim.lsp.buf.references()" }
-    #       maps.n["gri"] = { function() vim.lsp.buf.implementation() end, desc = "vim.lsp.buf.implementation()" }
-    #       maps.n["gO"] = { function() vim.lsp.buf.document_symbol() end, desc = "vim.lsp.buf.document_symbol()" }
-    #       maps.i["<C-S>"] = { function() vim.lsp.buf.signature_help() end, desc = "vim.lsp.buf.signature_help()" }
-    #       maps.s["<C-S>"] = { function() vim.lsp.buf.signature_help() end, desc = "vim.lsp.buf.signature_help()" }
-    #     end
-    #
-    #     -- Manage Buffers
-    #     maps.n["<Leader>c"] = { function() require("astrocore.buffer").close() end, desc = "Close buffer" }
-    #     maps.n["<Leader>C"] = { function() require("astrocore.buffer").close(0, true) end, desc = "Force close buffer" }
-    #     maps.n["]b"] = {
-    #       function() require("astrocore.buffer").nav(vim.v.count1) end,
-    #       desc = "Next buffer",
-    #     }
-    #     maps.n["[b"] = {
-    #       function() require("astrocore.buffer").nav(-vim.v.count1) end,
-    #       desc = "Previous buffer",
-    #     }
-    #     maps.n[">b"] = {
-    #       function() require("astrocore.buffer").move(vim.v.count1) end,
-    #       desc = "Move buffer tab right",
-    #     }
-    #     maps.n["<b"] = {
-    #       function() require("astrocore.buffer").move(-vim.v.count1) end,
-    #       desc = "Move buffer tab left",
-    #     }
     #
     #     maps.n["<Leader>b"] = vim.tbl_get(sections, "b")
     #     maps.n["<Leader>bc"] =

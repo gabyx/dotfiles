@@ -1,10 +1,8 @@
 {
   writeShellScriptBin,
-  rsync,
   nvim,
   name ? "nvim",
   nvimConfigName ? "",
-  luaConfig ? ../../../config/dot_config/nvim,
 }:
 let
   nvimAppName = if nvimConfigName == "" then name else nvimConfigName;
@@ -14,7 +12,6 @@ in
 #
 # - If `--force-reset/--force-reset-only` is passed as first argument,
 #   it will reset the whole installation.
-# - If `--force-sync` is set, the config folder is synced back to the source directory.
 writeShellScriptBin name ''
   #!/usr/bin/env bash
   set -efu
@@ -40,15 +37,10 @@ writeShellScriptBin name ''
         FORCE_RESET_ONLY="true"
         shift
         ;;
-      --force-sync-back)
-        FORCE_SYNC_BACK="true"
-        shift
-        ;;
       --help)
         echo "Use '--direct' to start nvim without doing anything." >&2
         echo "Use '--force-reset' to reset nvim and all cache/state folders." >&2
         echo "Use '--force-reset-only' to only reset and exit." >&2
-        echo "Use '--force-sync-back' to sync ~/.config/nvim back to the Git repo." >&2
         exit 0
         ;;
       --)
@@ -79,6 +71,20 @@ writeShellScriptBin name ''
 
   function reset() {
     echo "Force resetting NVIM config dirs."
+
+    echo "Would remove: "
+    echo " - '$XDG_CACHE_HOME/$NVIM_APPNAME'"
+    echo " - '$XDG_DATA_HOME/$NVIM_APPNAME'"
+    echo " - '$XDG_STATE_HOME/$NVIM_APPNAME'"
+    echo " - '$nvimConfigDir'"
+
+    printf "Should I do it? [yN]: "
+    read answer
+    if [ "$answer" != "y" ]; then
+      return 0
+    fi
+
+    echo "Removing..."
     rm -rf "$XDG_CACHE_HOME/$NVIM_APPNAME" || true
     rm -rf "$XDG_DATA_HOME/$NVIM_APPNAME" || true
     rm -rf "$XDG_STATE_HOME/$NVIM_APPNAME" || true
@@ -89,31 +95,10 @@ writeShellScriptBin name ''
     fi
   }
 
-  function sync_config() {
-    if [ "$(cat "$nvimConfigDir/.nix-version" 2>/dev/null)" != "${luaConfig}" ]; then
-      echo "Copying lua config '${luaConfig}' to '$nvimConfigDir'"
-      mkdir -p "$nvimConfigDir"
-      "${rsync}/bin/rsync" --info=progress2 -av --delete "${luaConfig}/" "$nvimConfigDir/"
-      chmod -R u+w "$nvimConfigDir"
-
-      echo -n "${luaConfig}" > "$nvimConfigDir/.nix-version"
-    else
-      echo "Lua configs up-to-date."
-    fi
-  }
-
-  function sync_back() {
-    echo "Syncing config to source directory."
-    "${rsync}/bin/rsync" --info=progress2 -av --no-times --delete \
-      --exclude ".nix-version" \
-      "$nvimConfigDir/" "$nvimConfigDirSrc/"
-  }
-
   set_env
 
   mkdir -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME"
   nvimConfigDir="$XDG_CONFIG_HOME/$NVIM_APPNAME"
-  nvimConfigDirSrc="$XDG_DATA_HOME/chezmoi/config/dot_config/nvim"
   echo "nvimConfigDir: '$nvimConfigDir'"
 
   if [ "$DIRECT" = "true" ]; then
@@ -123,12 +108,6 @@ writeShellScriptBin name ''
 
   if [ "$FORCE_RESET" = "true" ]; then
     reset
-  fi
-
-  sync_config
-
-  if [ "$FORCE_SYNC_BACK" = "true" ]; then
-    sync_back
   fi
 
   echo
