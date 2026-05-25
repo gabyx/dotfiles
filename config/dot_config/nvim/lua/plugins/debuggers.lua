@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
   {
     "mfussenegger/nvim-dap",
@@ -15,13 +16,14 @@ return {
   -- Use mason-nvim-dap to configure debug adapters.
   {
     "jay-babu/mason-nvim-dap.nvim",
+    enabled = false,
     -- overrides `require("mason-nvim-dap").setup(...)`
     opts = {
       ensure_installed = {},
       automatic_setup = true,
     },
   },
-
+  --
   -- Debugger setup project wise.
   { "ldelossa/nvim-dap-projects" },
 

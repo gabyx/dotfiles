@@ -2,7 +2,6 @@
   writeShellScriptBin,
   rsync,
   nvim,
-  nvim-treesitter-install,
   name ? "nvim",
   nvimConfigName ? "",
   lua-config ? ../../../config/dot_config/nvim,
@@ -10,8 +9,8 @@
 let
   nvimAppName = if nvimConfigName == "" then name else nvimConfigName;
 in
-# Create a nvim startup script which checks for treesitter
-# updates and uses a dedicated folder for nvim config `NVIM_APPNAME`.
+# Create a nvim startup script which updates the
+# dedicated folder for nvim config `NVIM_APPNAME`.
 #
 # - If `--force-reset/--force-reset-only` is passed as first argument,
 #   it will reset the whole installation.
@@ -69,7 +68,6 @@ writeShellScriptBin name ''
     unset VIMINIT
 
     # Set up PATH to extras and Neovim.
-    export PATH="${nvim-treesitter-install}/bin:$PATH"
     export NVIM_APPNAME="''${NVIM_APPNAME:-${nvimAppName}}"
 
     # Set up XDG directories if not already defined
@@ -108,7 +106,6 @@ writeShellScriptBin name ''
     echo "Syncing config to source directory."
     "${rsync}/bin/rsync" --info=progress2 -av --no-times --delete \
       --exclude ".nix-version" \
-      --exclude ".treesitter-rev" \
       "$nvimConfigDir/" "$nvimConfigDirSrc/"
   }
 

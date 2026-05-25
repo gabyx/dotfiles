@@ -15,6 +15,7 @@ let
     wrapRc = false;
     withRuby = false;
     plugins = [
+      pkgs.vimPlugins.blink-cmp
       pkgs.vimPlugins.nvim-treesitter.withAllGrammars
     ];
   };

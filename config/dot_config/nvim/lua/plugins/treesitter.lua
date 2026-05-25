@@ -1,6 +1,7 @@
 ---@type LazySpec
 return {
   -- Treesitter setup.
+  { "nvim-treesitter/nvim-treesitter", enabled = false },
   {
     "AstroNvim/astrocore",
     ---@type AstroCoreOpts
@@ -10,33 +11,61 @@ return {
         indent = true, -- enable/disable treesitter based indentation
         auto_install = false, -- enable/disable automatic installation of detected languages
         ensure_installed = {
-          "regex",
-          "lua",
-          "rust",
-          "toml",
-          "python",
-          "c",
-          "html",
-          "css",
-          "javascript",
-          "json",
-          "go",
-          "gomod",
-          "gosum",
-          "gowork",
-          "cmake",
-          "cpp",
-          "dockerfile",
-          "bash",
-          "starlark",
-          "markdown",
-          "markdown_inline",
+          -- "regex",
+          -- "lua",
+          -- "rust",
+          -- "toml",
+          -- "python",
+          -- "c",
+          -- "html",
+          -- "css",
+          -- "javascript",
+          -- "json",
+          -- "go",
+          -- "gomod",
+          -- "gosum",
+          -- "gowork",
+          -- "cmake",
+          -- "cpp",
+          -- "dockerfile",
+          -- "bash",
+          -- "starlark",
+          -- "markdown",
+          -- "markdown_inline",
         },
       },
     },
 
     keys = {
       { "<Leader>uT", ":TSContext toggle<cr>", desc = "Treesitter context toggle." },
+    },
+  },
+
+  -- Treesitter selection.
+  {
+    "shushtain/incselect.nvim",
+    keys = {
+      {
+        "<CR>",
+        function()
+          require("incselect").init()
+        end,
+        mode = "n",
+      },
+      {
+        "<CR>",
+        function()
+          require("incselect").parent()
+        end,
+        mode = "x",
+      },
+      {
+        "<BS>",
+        function()
+          require("incselect").child()
+        end,
+        mode = "x",
+      },
     },
   },
 

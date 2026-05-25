@@ -36,7 +36,6 @@
       packages = {
         # Pinned neovims.
         nvim = nvimPinned.nvim;
-        inherit (nvimPinned) nvim-treesitter-install nvim-treesitter-parsers;
         nvim-nightly = nvimPinnedNightly.nvim;
 
         # Neovim with latest treesitter.

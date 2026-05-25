@@ -14,6 +14,9 @@ let
           vim.package = nvimDrv;
         }
         ./plugins.nix
+        ./git.nix
+        ./ui.nix
+        ./filetree.nix
         ./treesitter.nix
       ];
     }).neovim;
