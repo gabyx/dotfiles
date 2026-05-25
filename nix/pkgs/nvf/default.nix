@@ -13,11 +13,13 @@ let
         {
           vim.package = nvimDrv;
         }
-        ./plugins.nix
-        ./git.nix
-        ./ui.nix
         ./filetree.nix
+        ./git.nix
+        ./icons.nix
+        ./mappings.nix
+        ./plugins.nix
         ./treesitter.nix
+        ./ui.nix
       ];
     }).neovim;
 

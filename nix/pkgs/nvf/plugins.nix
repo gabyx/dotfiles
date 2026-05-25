@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   vim.extraPlugins = {
     "astrotheme" = {
@@ -6,208 +11,151 @@
       setup = # lua
         ''
             require("astrotheme").setup({
-            	palette = "astrodark", -- String of the default palette to use when calling `:colorscheme astrotheme`
-            	background = { -- :h background, palettes to use when using the core vim background colors
-            		light = "astrolight",
-            		dark = "astrodark",
-            	},
+              palette = "astrodark", -- String of the default palette to use when calling `:colorscheme astrotheme`
+              background = { -- :h background, palettes to use when using the core vim background colors
+              	light = "astrolight",
+              	dark = "astrodark",
+              },
 
-            	style = {
-            		transparent = false, -- Bool value, toggles transparency.
-            		inactive = false, -- Bool value, toggles inactive window color.
-            		float = true, -- Bool value, toggles floating windows background colors.
-            		neotree = true, -- Bool value, toggles neo-trees background color.
-            		border = true, -- Bool value, toggles borders.
-            		title_invert = false, -- Bool value, swaps text and background colors.
-            		italic_comments = true, -- Bool value, toggles italic comments.
-            		simple_syntax_colors = true, -- Bool value, simplifies the amounts of colors used for syntax highlighting.
-            	},
+              style = {
+              	transparent = false, -- Bool value, toggles transparency.
+              	inactive = false, -- Bool value, toggles inactive window color.
+              	float = true, -- Bool value, toggles floating windows background colors.
+              	neotree = true, -- Bool value, toggles neo-trees background color.
+              	border = true, -- Bool value, toggles borders.
+              	title_invert = false, -- Bool value, swaps text and background colors.
+              	italic_comments = true, -- Bool value, toggles italic comments.
+              	simple_syntax_colors = true, -- Bool value, simplifies the amounts of colors used for syntax highlighting.
+              },
 
-            	termguicolors = true, -- Bool value, toggles if termguicolors are set by AstroTheme.
-            	terminal_color = false, -- Bool value, toggles if terminal_colors are set by AstroTheme.
+              termguicolors = true, -- Bool value, toggles if termguicolors are set by AstroTheme.
+              terminal_color = false, -- Bool value, toggles if terminal_colors are set by AstroTheme.
 
-            	plugin_default = true, -- Sets how all plugins will be loaded
-            	-- "auto": Uses lazy / packer enabled plugins to load highlights.
-            	-- true: Enables all plugins highlights.
-            	-- false: Disables all plugins.
+              plugin_default = true, -- Sets how all plugins will be loaded
+              -- "auto": Uses lazy / packer enabled plugins to load highlights.
+              -- true: Enables all plugins highlights.
+              -- false: Disables all plugins.
 
-            	palettes = {
-            		global = { -- Globally accessible palettes, theme palettes take priority.
-            			keyword_color = "#1166ab",
-            		},
-            	},
+              palettes = {
+              	global = { -- Globally accessible palettes, theme palettes take priority.
+              		keyword_color = "#1166ab",
+              	},
+              },
 
-            	highlights = {
-            		astrodark = {
-            			-- first parameter is the highlight table and the second parameter is the color palette table
-            			modify_hl_groups = function(hl, c) -- modify_hl_groups function allows you to modify hl groups,
-            				hl.Keyword.fg = c.keyword_color
-            				hl.Keyword.bold = true
+              highlights = {
+              	astrodark = {
+              		-- first parameter is the highlight table and the second parameter is the color palette table
+              		modify_hl_groups = function(hl, c) -- modify_hl_groups function allows you to modify hl groups,
+              			hl.Keyword.fg = c.keyword_color
+              			hl.Keyword.bold = true
 
-            				-- Do not highlight the scope indentation.
-            				hl.IblScope = { fg = c.ui.none_text }
-            			end,
-            		},
-            	},
+              			-- Do not highlight the scope indentation.
+              			hl.IblScope = { fg = c.ui.none_text }
+              		end,
+              	},
+              },
             })
 
           vim.cmd.colorscheme("astrotheme")
         '';
     };
 
-    "astroui" = {
-      package = pkgs.vimPlugins.astroui;
-      setup =
-        # lua
-        ''
-          print("setup astroui")
-          opts = {
-            -- change colorscheme
-            colorscheme = "astrodark",
-            -- AstroUI allows you to easily modify highlight groups easily for any and all colorschemes
-
-            highlights = {
-                init = {},
-                astrotheme = {},
-            },
-
-            status = {
-                providers = {
-                    lsp_client_names = {
-                        mappings = {
-                            typos_lsp = "typos",
-                            lua_lsp = "lua",
-                        },
-                    },
-                },
-            },
-                      -- Icons can be configured throughout the interface
-            icons = {
-                ActiveLSP = "",
-                ActiveTS = "",
-                ArrowLeft = "",
-                ArrowRight = "",
-                Bookmarks = "",
-                BufferClose = "󰅖",
-                DapBreakpoint = "",
-                DapBreakpointCondition = "",
-                DapBreakpointRejected = "",
-                DapLogPoint = "󰛿",
-                DapStopped = "󰁕",
-                Debugger = "",
-                DefaultFile = "󰈙",
-                Diagnostic = "󰒡",
-                DiagnosticError = "",
-                DiagnosticHint = "󰌵",
-                DiagnosticInfo = "󰋼",
-                DiagnosticWarn = "",
-                Ellipsis = "…",
-                Environment = "",
-                FileNew = "",
-                FileModified = "",
-                FileReadOnly = "",
-                FoldClosed = "",
-                FoldOpened = "",
-                FoldSeparator = " ",
-                FolderClosed = "",
-                FolderEmpty = "",
-                FolderOpen = "",
-                Git = "󰊢",
-                GitAdd = "",
-                GitBranch = "",
-                GitChange = "",
-                GitConflict = "",
-                GitDelete = "",
-                GitIgnored = "◌",
-                GitRenamed = "➜",
-                GitSign = "▎",
-                GitStaged = "✓",
-                GitUnstaged = "✗",
-                GitUntracked = "★",
-                List = "",
-                LSPLoading1 = "",
-                LSPLoading2 = "󰀚",
-                LSPLoading3 = "",
-                MacroRecording = "",
-                Package = "󰏖",
-                Paste = "󰅌",
-                Refresh = "",
-                Search = "",
-                Selected = "❯",
-                Session = "󱂬",
-                Sort = "󰒺",
-                Spellcheck = "󰓆",
-                Tab = "󰓩",
-                TabClose = "󰅙",
-                Terminal = "",
-                Window = "",
-                WordFile = "󰈭",
-              },
-
-              text_icons = {
-                ActiveLSP = "LSP:",
-                ArrowLeft = "<",
-                ArrowRight = ">",
-                BufferClose = "x",
-                DapBreakpoint = "B",
-                DapBreakpointCondition = "C",
-                DapBreakpointRejected = "R",
-                DapLogPoint = "L",
-                DapStopped = ">",
-                DefaultFile = "[F]",
-                DiagnosticError = "X",
-                DiagnosticHint = "?",
-                DiagnosticInfo = "i",
-                DiagnosticWarn = "!",
-                Ellipsis = "...",
-                Environment = "Env:",
-                FileModified = "*",
-                FileReadOnly = "[lock]",
-                FoldClosed = "+",
-                FoldOpened = "-",
-                FoldSeparator = " ",
-                FolderClosed = "[D]",
-                FolderEmpty = "[E]",
-                FolderOpen = "[O]",
-                GitAdd = "[+]",
-                GitChange = "[/]",
-                GitConflict = "[!]",
-                GitDelete = "[-]",
-                GitIgnored = "[I]",
-                GitRenamed = "[R]",
-                GitSign = "|",
-                GitStaged = "[S]",
-                GitUnstaged = "[U]",
-                GitUntracked = "[?]",
-                MacroRecording = "Recording:",
-                Paste = "[PASTE]",
-                Search = "?",
-                Selected = "*",
-                Spellcheck = "[SPELL]",
-                TabClose = "X",
-              },
-
-              lazygit = {
-                theme = {
-                  [241] = { fg = "Special" },
-                  activeBorderColor = { fg = "MatchParen", bold = true },
-                  cherryPickedCommitBgColor = { bg = "Substitute" },
-                  cherryPickedCommitFgColor = { fg = "Substitute" },
-                  defaultFgColor = { fg = "Normal" },
-                  inactiveBorderColor = { fg = "FloatBorder" },
-                  markedBaseCommitBgColor = { bg = "CurSearch" },
-                  markedBaseCommitFgColor = { fg = "CurSearch" },
-                  optionsTextColor = { fg = "Function" },
-                  searchingActiveBorderColor = { fg = "MatchParen", bold = true },
-                  selectedLineBgColor = { bg = "Visual" }, -- set to `default` to have no background colour
-                  unstagedChangesColor = { fg = "DiagnosticError" },
-                },
-              }
-            }
-
-          require("astroui").setup(opts)
-        '';
-    };
+    # "astroui" = {
+    #   package = pkgs.vimPlugins.astroui;
+    #   setup =
+    #     # lua
+    #     ''
+    #       opts = {
+    #         -- change colorscheme
+    #         colorscheme = "astrodark",
+    #
+    #         folding = {
+    #            enabled = function(bufnr) return gabyx.buffer.is_valid(bufnr) end,
+    #            methods = { "lsp", "treesitter", "indent" },
+    #         },
+    #
+    #         highlights = {
+    #             init = {},
+    #             astrotheme = {},
+    #         },
+    #
+    #         status = {
+    #             providers = {
+    #                 lsp_client_names = {
+    #                     mappings = {
+    #                         typos_lsp = "typos",
+    #                         lua_lsp = "lua",
+    #                     },
+    #                 },
+    #             },
+    #         },
+    #
+    #         icons = ${lib.generators.toLua { } config.gabyx.icons},
+    #
+    #         text_icons = {
+    #           ActiveLSP = "LSP:",
+    #           ArrowLeft = "<",
+    #           ArrowRight = ">",
+    #           BufferClose = "x",
+    #           DapBreakpoint = "B",
+    #           DapBreakpointCondition = "C",
+    #           DapBreakpointRejected = "R",
+    #           DapLogPoint = "L",
+    #           DapStopped = ">",
+    #           DefaultFile = "[F]",
+    #           DiagnosticError = "X",
+    #           DiagnosticHint = "?",
+    #           DiagnosticInfo = "i",
+    #           DiagnosticWarn = "!",
+    #           Ellipsis = "...",
+    #           Environment = "Env:",
+    #           FileModified = "*",
+    #           FileReadOnly = "[lock]",
+    #           FoldClosed = "+",
+    #           FoldOpened = "-",
+    #           FoldSeparator = " ",
+    #           FolderClosed = "[D]",
+    #           FolderEmpty = "[E]",
+    #           FolderOpen = "[O]",
+    #           GitAdd = "[+]",
+    #           GitChange = "[/]",
+    #           GitConflict = "[!]",
+    #           GitDelete = "[-]",
+    #           GitIgnored = "[I]",
+    #           GitRenamed = "[R]",
+    #           GitSign = "|",
+    #           GitStaged = "[S]",
+    #           GitUnstaged = "[U]",
+    #           GitUntracked = "[?]",
+    #           MacroRecording = "Recording:",
+    #           Paste = "[PASTE]",
+    #           Search = "?",
+    #           Selected = "*",
+    #           Spellcheck = "[SPELL]",
+    #           TabClose = "X",
+    #         },
+    #
+    #         lazygit = {
+    #           theme = {
+    #             [241] = { fg = "Special" },
+    #             activeBorderColor = { fg = "MatchParen", bold = true },
+    #             cherryPickedCommitBgColor = { bg = "Substitute" },
+    #             cherryPickedCommitFgColor = { fg = "Substitute" },
+    #             defaultFgColor = { fg = "Normal" },
+    #             inactiveBorderColor = { fg = "FloatBorder" },
+    #             markedBaseCommitBgColor = { bg = "CurSearch" },
+    #             markedBaseCommitFgColor = { fg = "CurSearch" },
+    #             optionsTextColor = { fg = "Function" },
+    #             searchingActiveBorderColor = { fg = "MatchParen", bold = true },
+    #             selectedLineBgColor = { bg = "Visual" }, -- set to `default` to have no background colour
+    #             unstagedChangesColor = { fg = "DiagnosticError" },
+    #           },
+    #         }
+    #       }
+    #
+    #       require("astroui").setup(opts)
+    #     '';
+    # };
   };
 
   vim = {

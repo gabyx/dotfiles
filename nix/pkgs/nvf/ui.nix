@@ -1,4 +1,7 @@
-{ lib, ... }:
+{ config, lib, ... }:
+let
+  icons = config.gabyx.icons;
+in
 {
   vim.ui = {
     noice = {
@@ -134,22 +137,44 @@
       dashboard = {
         enable = true;
         preset = {
-          keys =
-            lib.mkLuaInline
-              # Lua
-              ''
-                (function()
-                  local get_icon = require("astroui").get_icon;
-                  return {
-                    { key = "n", action = "<Leader>n", icon =  get_icon("FileNew", 0, true), desc = "New File  " },
-                    { key = "f", action = "<Leader>ff", icon = get_icon("Search", 0, true), desc = "Find File  " },
-                    { key = "o", action = "<Leader>fo", icon = get_icon("DefaultFile", 0, true), desc = "Recents  " },
-                    { key = "w", action = "<Leader>fw", icon = get_icon("WordFile", 0, true), desc = "Find Word  " },
-                    { key = "'", action = "<Leader>f'", icon = get_icon("Bookmarks", 0, true), desc = "Bookmarks  " },
-                    { key = "s", action = "<Leader>Sl", icon = get_icon("Refresh", 0, true), desc = "Last Session  " },
-                  }
-                end)()
-              '';
+          keys = [
+            {
+              key = "n";
+              action = "<Leader>n";
+              icon = icons.FileNew;
+              desc = "New File.";
+            }
+            {
+              key = "f";
+              action = "<Leader>ff";
+              icon = icons.Search;
+              desc = "Find File.";
+            }
+            {
+              key = "o";
+              action = "<Leader>fo";
+              icon = icons.DefaultFile;
+              desc = "Recents.";
+            }
+            {
+              key = "w";
+              action = "<Leader>fw";
+              icon = icons.WordFile;
+              desc = "Find Word.";
+            }
+            {
+              key = "'";
+              action = "<Leader>f'";
+              icon = icons.Bookmarks;
+              desc = "Bookmarks.";
+            }
+            {
+              key = "s";
+              action = "<Leader>Sl";
+              icon = icons.Refresh;
+              desc = "Last Session.";
+            }
+          ];
 
           header = ''
             Gabyx's Nvim Config

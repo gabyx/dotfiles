@@ -1,60 +1,123 @@
-{ ... }:
+{ lib, config, ... }:
+let
+  icons = config.gabyx.icons;
+in
 {
+  vim.mini.icons.enable = true; # which-key wants these.
   vim.binds.whichKey = {
     enable = true;
-    preset = "modern";
-    notify = true;
+
+    setupOpts = {
+      preset = "modern";
+      notify = true;
+      icons = {
+        group = " ";
+      };
+    };
   };
 
-  vim.keyMaps = [
+  vim.pluginRC.whichkey-extra =
+    lib.nvim.dag.entryAfter [ "whichkey" ]
+      # Lua
+      ''
+        local wk = require("which-key")
+        wk.add({
+          { "<leader>f",  icon = "${icons.Search}", desc = "Find ${icons.Ellipsis}" },
+          { "<leader>l",  icon = "${icons.ActiveLSP}", desc = "Language Tools ${icons.Ellipsis}" },
+          { "<leader>u",  icon = "${icons.Window}", desc = "UI/UX ${icons.Ellipsis}" },
+          { "<leader>b",  icon = "${icons.Tab}", desc = "Buffers ${icons.Ellipsis}" },
+          { "<leader>bs", icon = "${icons.Sort}", desc = "Sort Buffers ${icons.Ellipsis}" },
+          { "<leader>d",  icon = "${icons.Debugger}", desc = "Debugger ${icons.Ellipsis}" },
+          { "<leader>g",  icon = "${icons.Git}",  desc = "Git ${icons.Ellipsis}" },
+          { "<leader>S",  icon = "${icons.Session}", desc = "Session ${icons.Ellipsis}" },
+          { "<leader>t",  icon = "${icons.Terminal}", desc = "Terminal ${icons.Ellipsis}" },
+          { "<leader>x",  icon = "${icons.List}", desc = "Quickfix/Lists ${icons.Ellipsis}" },
+          { "<leader>j",  icon = "${icons.Navigation}", desc = "Navigation ${icons.Ellipsis}" },
+        })
+      '';
+
+  vim.keymaps = [
+    # Exiting.
+    {
+      mode = "n";
+      key = "<C-Q>";
+      action = "<Cmd>q!<CR>";
+      desc = "Force quit.";
+    }
+    {
+      mode = "n";
+      key = "<Leader>q";
+      action = "<Cmd>confirm q<CR>";
+      desc = "Quit window.";
+    }
+    {
+      mode = "n";
+      key = "<Leader>Q";
+      action = "<Cmd>confirm qall<CR>";
+      desc = "Exit.";
+    }
+
+    # Saving.
+    {
+      mode = "n";
+      key = "<Leader>w";
+      action = "<Cmd>w<CR>";
+      desc = "Save file.";
+    }
+    {
+      mode = "n";
+      key = "<C-S>";
+      action = "<Cmd>silent! update! | redraw<CR>";
+      desc = "Force write.";
+    }
+
+    # Split.
+    {
+      mode = "n";
+      key = "|";
+      action = "<Cmd>vsplit<CR>";
+      desc = "Vertical split.";
+    }
+    {
+      mode = "n";
+      key = "\\";
+      action = "<Cmd>split<CR>";
+      desc = "Horizontal split.";
+    }
+
+    # Comment.
+    {
+      mode = "n";
+      key = "<Leader>/";
+      action = "gcc";
+      noremap = false;
+      desc = "Toggle comment line.";
+    }
+    {
+      mode = "x";
+      key = "<Leader>/";
+      action = "gc";
+      noremap = false;
+      desc = "Toggle comment.";
+    }
+
+    # New File.
+    {
+      mode = "n";
+      key = "<Leader>n";
+      action = "<Cmd>enew<CR>";
+      desc = "New file.";
+    }
+
     # TODO: Translate this.
     # return {
-    #   "AstroNvim/astrocore",
-    #   ---@param opts AstroCoreOpts
-    #   opts = function(_, opts)
-    #     local astro = require "astrocore"
-    #     local get_icon = require("astroui").get_icon
-    #     -- initialize internally use mapping section titles
-    #     opts._map_sections = {
-    #       f = { desc = get_icon("Search", 1, true) .. "Find" },
-    #       p = { desc = get_icon("Package", 1, true) .. "Packages" },
-    #       l = { desc = get_icon("ActiveLSP", 1, true) .. "Language Tools" },
-    #       u = { desc = get_icon("Window", 1, true) .. "UI/UX" },
-    #       b = { desc = get_icon("Tab", 1, true) .. "Buffers" },
-    #       bs = { desc = get_icon("Sort", 1, true) .. "Sort Buffers" },
-    #       d = { desc = get_icon("Debugger", 1, true) .. "Debugger" },
-    #       g = { desc = get_icon("Git", 1, true) .. "Git" },
-    #       S = { desc = get_icon("Session", 1, true) .. "Session" },
-    #       t = { desc = get_icon("Terminal", 1, true) .. "Terminal" },
-    #       x = { desc = get_icon("List", 1, true) .. "Quickfix/Lists" },
-    #     }
     #
     #     -- initialize mappings table
     #     local maps = astro.empty_map_table()
     #     local sections = assert(opts._map_sections)
     #
     #     -- Normal --
-    #     -- Standard Operations
-    #     maps.n["j"] = { "v:count == 0 ? 'gj' : 'j'", expr = true, silent = true, desc = "Move cursor down" }
-    #     maps.x["j"] = maps.n["j"]
-    #     maps.n["k"] = { "v:count == 0 ? 'gk' : 'k'", expr = true, silent = true, desc = "Move cursor up" }
-    #     maps.x["k"] = maps.n["k"]
-    #     maps.n["<Leader>w"] = { "<Cmd>w<CR>", desc = "Save" }
-    #     maps.n["<Leader>q"] = { "<Cmd>confirm q<CR>", desc = "Quit Window" }
-    #     maps.n["<Leader>Q"] = { "<Cmd>confirm qall<CR>", desc = "Exit AstroNvim" }
-    #     maps.n["<Leader>n"] = { "<Cmd>enew<CR>", desc = "New File" }
-    #     maps.n["<C-S>"] = { "<Cmd>silent! update! | redraw<CR>", desc = "Force write" }
-    #     maps.x["<C-S>"] = maps.i["<C-s>"]
-    #     maps.n["<C-Q>"] = { "<Cmd>q!<CR>", desc = "Force quit" }
-    #     maps.n["|"] = { "<Cmd>vsplit<CR>", desc = "Vertical Split" }
-    #     maps.n["\\"] = { "<Cmd>split<CR>", desc = "Horizontal Split" }
-    #     maps.n["<Leader>/"] = { "gcc", remap = true, desc = "Toggle comment line" }
-    #     maps.x["<Leader>/"] = { "gc", remap = true, desc = "Toggle comment" }
-    #
-    #     maps.n["gco"] = { "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", desc = "Add Comment Below" }
-    #     maps.n["gcO"] = { "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", desc = "Add Comment Above" }
-    #
-    #     maps.n["<Leader>R"] = { function() require("astrocore").rename_file() end, desc = "Rename file" }
+    #     -- Standard Operations DONE
     #
     #     -- Neovim Default LSP Mappings
     #     if vim.fn.has "nvim-0.11" ~= 1 then
@@ -67,15 +130,6 @@
     #       maps.i["<C-S>"] = { function() vim.lsp.buf.signature_help() end, desc = "vim.lsp.buf.signature_help()" }
     #       maps.s["<C-S>"] = { function() vim.lsp.buf.signature_help() end, desc = "vim.lsp.buf.signature_help()" }
     #     end
-    #
-    #     -- Plugin Manager
-    #     maps.n["<Leader>p"] = vim.tbl_get(sections, "p")
-    #     maps.n["<Leader>pi"] = { function() require("lazy").install() end, desc = "Plugins Install" }
-    #     maps.n["<Leader>ps"] = { function() require("lazy").home() end, desc = "Plugins Status" }
-    #     maps.n["<Leader>pS"] = { function() require("lazy").sync() end, desc = "Plugins Sync" }
-    #     maps.n["<Leader>pu"] = { function() require("lazy").check() end, desc = "Plugins Check Updates" }
-    #     maps.n["<Leader>pU"] = { function() require("lazy").update() end, desc = "Plugins Update" }
-    #     maps.n["<Leader>pa"] = { function() require("astrocore").update_packages() end, desc = "Update Lazy and Mason" }
     #
     #     -- Manage Buffers
     #     maps.n["<Leader>c"] = { function() require("astrocore.buffer").close() end, desc = "Close buffer" }

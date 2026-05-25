@@ -27,7 +27,7 @@
     in
     {
       packages = {
-        inherit (nvim-nvf) nvim-gabyx;
+        inherit (nvim-nvf) nvim-gabyx nvim-gabyx-config;
         inherit neural-amp-modeler-lv2;
         inherit age-plugin-fido2prf;
         inherit age-plugin-fido2-hmac;

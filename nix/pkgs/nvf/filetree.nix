@@ -155,7 +155,7 @@ in
       mode = [ "n" ];
       action = "<Cmd>Neotree toggle<CR>";
       silent = true;
-      desc = "Toggle Explorer";
+      desc = "Toggle Explorer.";
     }
   ];
 }
