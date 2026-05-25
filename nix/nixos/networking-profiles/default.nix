@@ -16,6 +16,56 @@
         config.age.secrets.networkmanager-secrets.path
       ];
       profiles = {
+        sisterlan = {
+          connection = {
+            id = "sisterlan";
+            interface-name = "wlp2s0";
+            type = "wifi";
+            uuid = "c529aea1-ffc9-45b4-98ef-0427c9773cf7";
+          };
+          ipv4 = {
+            method = "auto";
+          };
+          ipv6 = {
+            addr-gen-mode = "default";
+            method = "auto";
+          };
+          proxy = { };
+          wifi = {
+            mode = "infrastructure";
+            ssid = "WN-4B9270-5G";
+          };
+          wifi-security = {
+            auth-alg = "open";
+            key-mgmt = "wpa-psk";
+            psk = "$SISTERLAN_PASSWORD";
+          };
+        };
+        sisterlan-down = {
+          connection = {
+            id = "sisterlan-down";
+            interface-name = "wlp2s0";
+            type = "wifi";
+            uuid = "c31b8e88-0c58-45ee-be90-510485c8fe5d";
+          };
+          ipv4 = {
+            method = "auto";
+          };
+          ipv6 = {
+            addr-gen-mode = "default";
+            method = "auto";
+          };
+          proxy = { };
+          wifi = {
+            mode = "infrastructure";
+            ssid = "WN-53DD50";
+          };
+          wifi-security = {
+            auth-alg = "open";
+            key-mgmt = "wpa-psk";
+            psk = "$SISTERLAN_DOWN_PASSWORD";
+          };
+        };
         oidaleck = {
           connection = {
             id = "OidaLeck";
