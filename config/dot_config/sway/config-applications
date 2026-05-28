@@ -1,6 +1,7 @@
 ### Applications ==============================================================
 assign [app_id="(?i).*chrome.*"] $ws-web
 assign [app_id="(?i).*firefox.*"] $ws-web
+assign [app_id="(?i).*zen.*"] $ws-web
 
 assign [app_id="(?i).*evolution.*"] $ws-mail
 

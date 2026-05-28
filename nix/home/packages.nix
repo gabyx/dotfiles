@@ -173,7 +173,7 @@ in
     pkgsUnstable.ymuse # Sound player
     pkgsUnstable.zoom-us # Video calls
     pkgsUnstable.deluge # Bittorrent client
-    pkgsUnstable.firefox
+    inputs'.zen-browser.packages.zen-browser
     pkgsUnstable.google-chrome
     pkgsUnstable.libreoffice
 

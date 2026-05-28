@@ -120,6 +120,11 @@
       url = "github:NixOS/nixpkgs?rev=2fbfb1d73d239d2402a8fe03963e37aab15abe8b";
     };
 
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     nvim-nvf = {
       url = "github:NotAShelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs-unstable";

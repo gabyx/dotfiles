@@ -104,13 +104,19 @@ boot *args:
 
 # Switch the `host` (`$1`) to the latest configuration.
 switch *args:
-    just rebuild switch "$@"
+    just rebuild switch "$@" \
+        --show-trace \
+        --verbose \
+        "$@"
     just diff 2
 
 # Build with nix-output-monitor.
 switch-visual *args:
     #!/usr/bin/env bash
     set -eu
+    just use_nom=true build
+
+    echo "============= SWITCHING ============="
     just rebuild switch \
         --show-trace \
         --verbose \
