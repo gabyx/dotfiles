@@ -88,7 +88,7 @@ set $mail evolution
 
 set $ws-web 9:9: 
 set $ws-9 9:9: 
-set $web google-chrome-stable
+set $web zen
 set $web-aux firefox
 
 set $ws-creds 10:0: 󱕴
