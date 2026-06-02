@@ -12,6 +12,7 @@
     inputs.nix-index-database.homeModules.nix-index
     inputs.agenix.homeManagerModules.default
 
+    ./settings.nix
     ./environment.nix
     ./packages.nix
     ./scripts.nix
