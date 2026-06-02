@@ -10,14 +10,15 @@ let
   signal = [ "signal-desktop.desktop" ];
   archiver = [ "org.gnome.FileRoller.desktop" ];
   pdf = [ "org.pwmt.zathura.desktop" ];
-  images = [
-    "swappy.desktop"
-    "sxiv.desktop"
-    "org.nomacs.ImageLounge.desktop"
-    "org.kde.krita.desktop"
-  ]
-  ++ pdf
-  ++ browser;
+  images =
+    browser
+    ++ [
+      "swappy.desktop"
+      "org.nomacs.ImageLounge.desktop"
+      "sxiv.desktop"
+      "org.kde.krita.desktop"
+    ]
+    ++ pdf;
   audio = [ "vlc.desktop" ];
   video = [ "vlc.desktop" ];
 
@@ -105,6 +106,7 @@ let
   };
 
   mkAssoc = appList: mimes: lib.genAttrs mimes (_: appList);
+  takeDefault = associations: lib.mapAttrs (k: apps: [ (lib.elemAt apps 0) ]) associations;
 
   associations =
     mkAssoc browser mimeGroups.browser
@@ -117,6 +119,9 @@ let
     // mkAssoc pdf mimeGroups.pdf
     // mkAssoc calendar mimeGroups.calendar;
 
+  associationsDefault = takeDefault associations;
+
+  # Check all mime apps in `mimeapps.list` INI file.
   checkMimeApps = pkgsUnstable.writeTextFile {
     name = "check-mime-apps";
     destination = "/bin/check-mime-apps";
@@ -125,44 +130,52 @@ let
       # Nu
       ''
         #!${pkgsUnstable.nushell}/bin/nu
+        $env.PATH ++= [ "${pkgsUnstable.fd}/bin" ]
 
-        let mimeapps = ($env.HOME + "/.config/mimeapps.list")
+        plugin use "${lib.getExe pkgsUnstable.nushellPlugins.formats}"
+
+        let mimeapps = [$env.XDG_CONFIG_HOME "mimeapps.list"] | path join
         let search_paths = [
-          "/run/current-system/sw/share/applications"
-          ($env.HOME + "/.local/share/applications")
-          "/nix/store"
+            "/run/current-system/sw/share/applications"
+            ($env.HOME + "/.local/share/applications")
+            "/nix/store"
         ]
 
         let parsed = (open $mimeapps | from ini)
         let sections = ["Default Applications" "Added Associations"]
 
-        $sections
-        | where { |s| $parsed | columns | any { |c| $c == $s } }
-        | each { |section|
-            $parsed
-            | get $section
-            | transpose mime apps
-            | each { |row|
-                let apps = ($row.apps | split row ";" | where { |a| $a != "" })
-                $apps | each { |app|
-                  print $"Checking apps '($apps)'"
-                  let found = ($search_paths | any { |p|
-                    ([$p $app] | path join | path exists)
-                  })
-                  if not $found {
-                    print $"WARNING: ($section) — ($row.mime) references missing desktop file: ($app)"
-                  }
+        let desktop_files = (
+            ^fd --extension desktop ...($search_paths | each { |p| ["--search-path" $p] } | flatten)
+            | lines
+            | where { |l| $l != "" }
+            | path basename
+            | each { |f| {$f: true} }
+            | into record
+        )
+
+        $sections | each { |section|
+                $parsed | get $section
+                | transpose mime apps
+                | each { |row|
+                    let apps = ($row.apps | split row ";" | where { |a| $a != "" })
+
+                    $apps | each { |app|
+                        print $"Checking app '($app)'"
+
+                        if not ($app in $desktop_files) {
+                            print $"WARNING: ($section) — '($row.mime)' references missing desktop file: ($app)"
+                        }
+                    }
                 }
-              }
-          }
+            } | ignore
       '';
   };
 in
 {
   home.packages = [ checkMimeApps ];
-  home.activation.checkMimeApps = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ${checkMimeApps}/bin/check-mime-apps
-  '';
+  # home.activation.checkMimeApps = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  #   ${checkMimeApps}/bin/check-mime-apps
+  # '';
 
   # Enable all XDG directories.
   xdg.enable = true;
@@ -170,5 +183,5 @@ in
   # Set some file associations.
   xdg.mimeApps.enable = true;
   xdg.mimeApps.associations.added = associations;
-  xdg.mimeApps.defaultApplications = associations;
+  xdg.mimeApps.defaultApplications = associationsDefault;
 }

@@ -20,6 +20,7 @@ return {
                 javascriptreact = { fmts.prettier },
                 javascript = { fmts.prettier },
                 typescript = { fmts.prettier },
+                nushell = { fmts.nushell },
                 json = { fmts.prettier },
                 jsonc = { fmts.prettier },
                 html = { fmts.prettier },

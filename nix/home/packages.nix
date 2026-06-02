@@ -1,7 +1,6 @@
 {
   inputs,
   inputs',
-  outputs,
   system,
   packages,
   pkgs,
@@ -30,6 +29,8 @@ in
     pkgsUnstable.zenity # For dialogs over githooks and calendar.
     pkgsUnstable.witr
     pkgsUnstable.gitstatus
+
+    # Shells
     packages.zsh-jailed
 
     # Qemu
@@ -79,6 +80,7 @@ in
     pkgsUnstable.codespell
     pkgsUnstable.typos
     pkgsUnstable.shfmt
+    pkgsUnstable.nufmt
     pkgsUnstable.shellcheck
 
     ## Lsp
