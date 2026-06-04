@@ -1,0 +1,4 @@
+{
+  "keyMappings": "# Insert your preferred key mappings here.\nmap J nextTab\nmap K previousTab\n\nmap I visitPreviousTab",
+  "settingsVersion": "2.4.2"
+}
