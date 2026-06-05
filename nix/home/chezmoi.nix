@@ -71,8 +71,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      chezmoi
+    home.packages = [
+      pkgs.chezmoi
       chezmoiInitRepo
     ];
 

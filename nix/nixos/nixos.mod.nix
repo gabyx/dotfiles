@@ -1,6 +1,7 @@
 { ... }:
 {
   flake.modules.nixos = {
+    settings = import ./settings.nix;
     adblock-dns = import ./adblock-dns.nix;
     apfs = import ./apfs.nix;
     backup = import ./backup.nix;

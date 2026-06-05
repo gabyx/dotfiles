@@ -1,9 +1,7 @@
 {
   inputs,
   inputs',
-  outputs,
   system,
-  lib,
   packages,
   pkgs,
   pkgsUnstable,
@@ -11,7 +9,6 @@
 }:
 let
   # Define some special packages.
-  wezterm-nightly = inputs'.wezterm.packages.default;
   githooks = inputs'.githooks.packages.default;
   sbb-tui = inputs'.sbb-tui.legacyPackages.sbb-tui;
 in
@@ -32,21 +29,12 @@ in
     pkgsUnstable.zenity # For dialogs over githooks and calendar.
     pkgsUnstable.witr
     pkgsUnstable.gitstatus
+
+    # Shells
     packages.zsh-jailed
 
     # Qemu
     pkgsUnstable.quickemu
-
-    # Terminal
-    pkgsUnstable.kitty
-    pkgsUnstable.ghostty
-    wezterm-nightly
-
-    # Editors
-    pkgsUnstable.vscode
-    outputs.packages.${system}.nvim # Pinned version.
-    outputs.packages.${system}.nvim-new
-    outputs.packages.${system}.nvim-nightly
 
     # Tools
     pkgsUnstable.lf # File manager
@@ -57,7 +45,6 @@ in
     pkgsUnstable.poppler-utils # For image conversions.
     pkgsUnstable.ffmpegthumbnailer # For video thumbnails.
     pkgsUnstable.trash-cli # Trash command line to move stuff to trash.
-    pkgsUnstable.file-roller # Compression tool.
 
     # Disk
     pkgsUnstable.dua # Disk Usage Analyzer.
@@ -69,7 +56,6 @@ in
     # Programming
     pkgs.shellclear
     pkgsUnstable.parallel
-    (lib.hiPrio pkgsUnstable.chezmoi)
     pkgsUnstable.lazygit
     pkgsUnstable.delta
     pkgsUnstable.difftastic
@@ -80,7 +66,6 @@ in
     pkgsUnstable.kdiff3
     pkgsUnstable.jq
     pkgsUnstable.yq-go
-    pkgsUnstable.yarn
     pkgsUnstable.remarshal
     pkgsUnstable.just
     pkgsUnstable.dive # Inspect container images.
@@ -95,6 +80,7 @@ in
     pkgsUnstable.codespell
     pkgsUnstable.typos
     pkgsUnstable.shfmt
+    pkgsUnstable.nufmt
     pkgsUnstable.shellcheck
 
     ## Lsp
@@ -151,8 +137,6 @@ in
     pkgsUnstable.bitwarden-desktop # Password manager
     pkgsUnstable.bitwarden-cli
     pkgsUnstable.bazecor # Dygma Defy Keyboard.
-    pkgsUnstable.signal-desktop
-    # packages.signal-jailed # Messaging app
     pkgsUnstable.element-desktop # Matrix client.
     pkgsUnstable.slack # Messaging app
     pkgsUnstable.ffmpeg # Movie converter
@@ -160,9 +144,6 @@ in
     pkgsUnstable.amberol # Music player
     pkgsUnstable.showmethekey # Screencast the key-presses.
 
-    pkgsUnstable.inkscape # Vector graphics
-    pkgsUnstable.krita # Painting
-    pkgsUnstable.nomacs # Image viewer
     pkgsUnstable.viu # Terminal image viewer
     pkgsUnstable.sxiv # Terminal image viewer
     pkgsUnstable.zathura # Simple document viewer
@@ -173,8 +154,6 @@ in
     pkgsUnstable.ymuse # Sound player
     pkgsUnstable.zoom-us # Video calls
     pkgsUnstable.deluge # Bittorrent client
-    pkgsUnstable.firefox
-    pkgsUnstable.google-chrome
     pkgsUnstable.libreoffice
 
     # News

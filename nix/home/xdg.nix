@@ -1,87 +1,187 @@
 {
   lib,
-  pkgs,
-  pkgsStab,
-  inputs,
+  pkgsUnstable,
   ...
 }:
 let
-  browser = [ "google-chrome.desktop" ];
-  archiver = [ "file-roller.desktop" ];
+  explorer = [ "thunar.desktop" ];
+  browser = [ "zen.desktop" ];
+  calendar = [ "org.gnome.Evolution.desktop" ];
+  signal = [ "signal-desktop.desktop" ];
+  archiver = [ "org.gnome.FileRoller.desktop" ];
+  pdf = [ "org.pwmt.zathura.desktop" ];
+  images =
+    browser
+    ++ [
+      "swappy.desktop"
+      "org.nomacs.ImageLounge.desktop"
+      "sxiv.desktop"
+      "org.kde.krita.desktop"
+    ]
+    ++ pdf;
+  audio = [ "vlc.desktop" ];
+  video = [ "vlc.desktop" ];
 
-  associations = {
-    "text/html" = browser;
-    "x-scheme-handler/http" = browser;
-    "x-scheme-handler/https" = browser;
-    "x-scheme-handler/ftp" = browser;
-    "x-scheme-handler/chrome" = browser;
-    "x-scheme-handler/about" = browser;
-    "x-scheme-handler/unknown" = browser;
-    "x-scheme-handler/sgnl" = "signal.desktop";
-    "x-scheme-handler/signalcaptcha" = "signal.desktop";
+  mimeGroups = {
+    files = [
+      "inode/directory"
+    ];
 
-    "x-scheme-handler/file" = "thunar.desktop";
-    "inode/directory" = "thunar.desktop";
+    browser = [
+      "text/html"
+      "application/xhtml+xml"
+      "application/json"
+      "application/x-extension-htm"
+      "application/x-extension-html"
+      "application/x-extension-shtml"
+      "application/x-extension-xhtml"
+      "application/x-extension-xht"
+      "x-scheme-handler/http"
+      "x-scheme-handler/https"
+      "x-scheme-handler/ftp"
+      "x-scheme-handler/chrome"
+      "x-scheme-handler/about"
+      "x-scheme-handler/unknown"
+    ];
 
-    "application/x-extension-htm" = browser;
-    "application/x-extension-html" = browser;
-    "application/x-extension-shtml" = browser;
-    "application/xhtml+xml" = browser;
-    "application/x-extension-xhtml" = browser;
-    "application/x-extension-xht" = browser;
+    archiver = [
+      "application/zip"
+      "application/x-tar"
+      "application/gzip"
+      "application/x-bzip2"
+      "application/x-7z-compressed"
+      "application/vnd.rar"
+      "application/x-iso9660-image"
+      "application/x-lzh-compressed"
+      "application/x-xz"
+      "application/vnd.ms-cab-compressed"
+      "application/x-arj"
+      "application/x-lzip"
+      "application/x-compress"
+      "application/x-cpio"
+      "application/x-ace-compressed"
+      "application/x-lzma"
+    ];
 
-    "audio/*" = [ "vlc.desktop" ];
-    "video/*" = [ "vlc.desktop" ];
-
-    # Archives
-    "application/zip" = archiver;
-    "application/x-tar" = archiver;
-    "application/gzip" = archiver;
-    "application/x-bzip2" = archiver;
-    "application/x-7z-compressed" = archiver;
-    "application/vnd.rar" = archiver;
-    "application/x-iso9660-image" = archiver;
-    "application/x-lzh-compressed" = archiver;
-    "application/x-xz" = archiver;
-    "application/vnd.ms-cab-compressed" = archiver;
-    "application/x-arj" = archiver;
-    "application/x-lzip" = archiver;
-    "application/x-compress" = archiver;
-    "application/x-cpio" = archiver;
-    "application/x-ace-compressed" = archiver;
-    "application/x-lzma" = archiver;
-
-    "text/calendar" = [ "evolution.desktop" ]; # ".ics"  iCalendar format
-
-    "application/json" = browser; # ".json"  JSON format
-    "application/pdf" = browser;
-
-  }
-  // (lib.genAttrs
-    [
-      "image/*"
+    images = [
       "image/png"
       "image/jpeg"
       "image/tiff"
-    ]
-    (
-      n:
-      [
-        "swappy.desktop"
-        "sxiv.desktop"
-        "nomacs.desktop"
-        "krita.desktop"
-      ]
-      ++ browser
-    )
-  );
+      "image/gif"
+      "image/webp"
+      "image/svg+xml"
+      "image/bmp"
+    ];
+
+    audio = [
+      "audio/mpeg"
+      "audio/ogg"
+      "audio/flac"
+      "audio/wav"
+      "audio/aac"
+      "audio/x-m4a"
+    ];
+
+    video = [
+      "video/mp4"
+      "video/x-matroska"
+      "video/webm"
+      "video/x-msvideo"
+      "video/quicktime"
+    ];
+
+    pdf = [
+      "application/pdf"
+    ];
+
+    calendar = [
+      "text/calendar"
+    ];
+
+    signal = [
+      "x-scheme-handler/file"
+      "x-scheme-handler/sgnl"
+      "x-scheme-handler/signalcaptcha"
+    ];
+  };
+
+  mkAssoc = appList: mimes: lib.genAttrs mimes (_: appList);
+  takeDefault = associations: lib.mapAttrs (k: apps: [ (lib.elemAt apps 0) ]) associations;
+
+  associations =
+    mkAssoc browser mimeGroups.browser
+    // mkAssoc explorer mimeGroups.files
+    // mkAssoc archiver mimeGroups.archiver
+    // mkAssoc images mimeGroups.images
+    // mkAssoc audio mimeGroups.audio
+    // mkAssoc video mimeGroups.video
+    // mkAssoc signal mimeGroups.signal
+    // mkAssoc pdf mimeGroups.pdf
+    // mkAssoc calendar mimeGroups.calendar;
+
+  associationsDefault = takeDefault associations;
+
+  # Check all mime apps in `mimeapps.list` INI file.
+  checkMimeApps = pkgsUnstable.writeTextFile {
+    name = "check-mime-apps";
+    destination = "/bin/check-mime-apps";
+    executable = true;
+    text =
+      # Nu
+      ''
+        #!${pkgsUnstable.nushell}/bin/nu
+        $env.PATH ++= [ "${pkgsUnstable.fd}/bin" ]
+
+        plugin use "${lib.getExe pkgsUnstable.nushellPlugins.formats}"
+
+        let mimeapps = [$env.XDG_CONFIG_HOME "mimeapps.list"] | path join
+        let search_paths = [
+            "/run/current-system/sw/share/applications"
+            ($env.HOME + "/.local/share/applications")
+            "/nix/store"
+        ]
+
+        let parsed = (open $mimeapps | from ini)
+        let sections = ["Default Applications" "Added Associations"]
+
+        let desktop_files = (
+            ^fd --extension desktop ...($search_paths | each { |p| ["--search-path" $p] } | flatten)
+            | lines
+            | where { |l| $l != "" }
+            | path basename
+            | each { |f| {$f: true} }
+            | into record
+        )
+
+        $sections | each { |section|
+                $parsed | get $section
+                | transpose mime apps
+                | each { |row|
+                    let apps = ($row.apps | split row ";" | where { |a| $a != "" })
+
+                    $apps | each { |app|
+                        print $"Checking app '($app)'"
+
+                        if not ($app in $desktop_files) {
+                            print $"WARNING: ($section) — '($row.mime)' references missing desktop file: ($app)"
+                        }
+                    }
+                }
+            } | ignore
+      '';
+  };
 in
 {
+  home.packages = [ checkMimeApps ];
+  # home.activation.checkMimeApps = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  #   ${checkMimeApps}/bin/check-mime-apps
+  # '';
+
   # Enable all XDG directories.
   xdg.enable = true;
 
   # Set some file associations.
   xdg.mimeApps.enable = true;
   xdg.mimeApps.associations.added = associations;
-  xdg.mimeApps.defaultApplications = associations;
+  xdg.mimeApps.defaultApplications = associationsDefault;
 }

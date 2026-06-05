@@ -10,6 +10,7 @@
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
 
+    inputs.self.modules.nixos.settings
     inputs.self.modules.nixos.backup
     inputs.self.modules.nixos.containerization
     inputs.self.modules.nixos.display
