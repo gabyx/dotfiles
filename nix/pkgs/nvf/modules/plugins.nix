@@ -6,7 +6,7 @@
 {
   vim = {
     additionalRuntimePaths = [
-      ./config
+      ../config
     ];
 
     luaConfigRC.gabyx =

@@ -17,14 +17,8 @@ let
           modules = [
             {
               vim.package = nvim;
+              imports = [ (inputs.import-tree [ ./modules ]) ];
             }
-            ./modules/filetree.nix
-            ./modules/git.nix
-            ./modules/icons.nix
-            ./modules/mappings.nix
-            ./modules/plugins.nix
-            ./modules/treesitter.nix
-            ./modules/ui.nix
           ];
         }).neovim;
 
