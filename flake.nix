@@ -123,11 +123,16 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # Pinned Nixpkgs for nvim.
+    # TODO: Make own flake for Nvim.
+    nvim-nixpkgs = {
+      # Ref to : nixpkgs/nixos-unstable from `nixpkgs-unstable`
+      url = "github:nixos/nixpkgs?ref=549bd84d6279f9852cae6225e372cc67fb91a4c1";
+    };
     nvim-nvf = {
       url = "github:NotAShelf/nvf";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nvim-nixpkgs";
     };
-
     # Neovim Nightly.
     nvim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";

@@ -2,6 +2,7 @@
   inputs,
   inputs',
   pkgs,
+  pkgsUnstable,
   ...
 }:
 let
@@ -14,6 +15,11 @@ let
       nvimNvf =
         (inputs.nvim-nvf.lib.neovimConfiguration {
           inherit pkgs;
+
+          extraSpecialArgs = {
+            inherit pkgsUnstable;
+          };
+
           modules = [
             {
               vim.package = nvim;

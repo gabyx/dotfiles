@@ -2,6 +2,7 @@
 {
   perSystem =
     {
+      inputs',
       pkgsUnstable,
       ...
     }:
@@ -22,7 +23,11 @@
       nvim-nvf = import ./nvf {
         inherit inputs;
         inherit inputs';
-        pkgs = pkgsUnstable;
+
+        # The pinned packages.
+        pkgs = inputs'.nvim-nixpkgs.legacyPackages;
+        # The unstable packages.
+        inherit pkgsUnstable;
       };
     in
     {

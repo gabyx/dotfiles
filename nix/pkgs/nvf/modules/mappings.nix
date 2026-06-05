@@ -1,8 +1,33 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   icons = config.gabyx.icons;
 in
 {
+  # Better Escaping for certain key combinations.
+  # Not really needed now.
+  vim.extraPlugins = lib.mkIf false {
+    "better-escape" = {
+      package = pkgs.vimPlugins.better-escape-nvim;
+      setup = # lua
+        ''
+          require("better-escape").setup({
+          {
+              timeout = 300,
+              default_mappings = false,
+              mappings = {
+                i = { j = { k = "<Esc>", j = "<Esc>" } },
+              },
+            }
+          })
+        '';
+    };
+  };
+
   vim.mini.icons.enable = true; # which-key wants these.
   vim.binds.whichKey = {
     enable = true;
@@ -22,17 +47,17 @@ in
       ''
         local wk = require("which-key")
         wk.add({
-          { "<leader>f",  icon = "${icons.Search}", desc = "Find ${icons.Ellipsis}" },
-          { "<leader>l",  icon = "${icons.ActiveLSP}", desc = "Language Tools ${icons.Ellipsis}" },
-          { "<leader>u",  icon = "${icons.Window}", desc = "UI/UX ${icons.Ellipsis}" },
-          { "<leader>b",  icon = "${icons.Tab}", desc = "Buffers ${icons.Ellipsis}" },
-          { "<leader>bs", icon = "${icons.Sort}", desc = "Sort Buffers ${icons.Ellipsis}" },
-          { "<leader>d",  icon = "${icons.Debugger}", desc = "Debugger ${icons.Ellipsis}" },
-          { "<leader>g",  icon = "${icons.Git}",  desc = "Git ${icons.Ellipsis}" },
-          { "<leader>S",  icon = "${icons.Session}", desc = "Session ${icons.Ellipsis}" },
-          { "<leader>t",  icon = "${icons.Terminal}", desc = "Terminal ${icons.Ellipsis}" },
-          { "<leader>x",  icon = "${icons.List}", desc = "Quickfix/Lists ${icons.Ellipsis}" },
-          { "<leader>j",  icon = "${icons.Navigation}", desc = "Navigation ${icons.Ellipsis}" },
+          { "<leader>f", icon = "${icons.Search}", desc = "Find ${icons.Ellipsis}" },
+          { "<leader>l", icon = "${icons.ActiveLSP}", desc = "Language Tools ${icons.Ellipsis}" },
+          { "<leader>u", icon = "${icons.Window}", desc = "UI/UX ${icons.Ellipsis}" },
+          { "<leader>b", icon = "${icons.Tab}", desc = "Buffers ${icons.Ellipsis}" },
+          { "<leader>bs",icon = "${icons.Sort}", desc = "Sort Buffers ${icons.Ellipsis}" },
+          { "<leader>d", icon = "${icons.Debugger}", desc = "Debugger ${icons.Ellipsis}" },
+          { "<leader>g", icon = "${icons.Git}",  desc = "Git ${icons.Ellipsis}" },
+          { "<leader>S", icon = "${icons.Session}", desc = "Session ${icons.Ellipsis}" },
+          { "<leader>t", icon = "${icons.Terminal}", desc = "Terminal ${icons.Ellipsis}" },
+          { "<leader>x", icon = "${icons.List}", desc = "Quickfix/Lists ${icons.Ellipsis}" },
+          { "<leader>j", icon = "${icons.Navigation}", desc = "Navigation ${icons.Ellipsis}" },
         })
       '';
 
