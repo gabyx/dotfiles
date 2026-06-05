@@ -13,6 +13,7 @@ end
 --- The setup function.
 function M.setup(opts)
     M.config = vim.tbl_deep_extend("force", M.config, opts)
+    M.toggles = require("gabyxui.toggles")
 end
 
 return M

@@ -1,5 +1,6 @@
 ---@class gabyx.buffer
 local M = {}
+local large_buf_cache, buf_size_cache = {}, {} -- cache large buffer detection results and buffer sizes
 
 local gabyx = require("gabyx")
 
@@ -13,7 +14,6 @@ function M.is_valid(bufnr)
     return vim.api.nvim_buf_is_valid(bufnr) and vim.bo[bufnr].buflisted
 end
 
-local large_buf_cache, buf_size_cache = {}, {} -- cache large buffer detection results and buffer sizes
 --- Check if a buffer is a large buffer (always returns false if large buffer detection is disabled)
 ---@param bufnr? integer the buffer to check the size of, default to current buffer
 ---@param large_buf_opts? LargeBugCfg large buffer parameters, default to AstroCore configuration

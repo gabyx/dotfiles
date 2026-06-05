@@ -399,8 +399,6 @@ local M = {
             end,
         },
     },
-
-    -- TODO: _astrocore_options more stuff
 }
 
 return M

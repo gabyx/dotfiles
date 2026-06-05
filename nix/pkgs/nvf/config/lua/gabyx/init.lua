@@ -1,14 +1,12 @@
 local M = {}
 
-M.config = require("gabyx.config")
-
---- Serve a notification with a title of AstroNvim
+--- Serve a notification with a title.
 ---@param msg string The notification body
 ---@param type integer|nil The type of the notification (:help vim.log.levels)
 ---@param opts? table The nvim-notify options to use (:help notify-options)
 function M.notify(msg, type, opts)
     vim.schedule(function()
-        vim.notify(msg, type, M.extend_tbl({ title = "GabyxNvim" }, opts))
+        vim.notify(msg, type, M.extend_tbl({ title = "Gabyx-Nvim" }, opts))
     end)
 end
 
@@ -67,11 +65,11 @@ end
 
 --- The setup function.
 function M.setup(opts)
+    M.config = require("gabyx.config")
     M.config = vim.tbl_deep_extend("force", M.config, opts)
 
     -- Set missing libraries.
-    local buffer = require("gabyx.buffer")
-    M.config = M.extend_tbl(M, { buffer = buffer })
+    M.buffer = require("gabyx.buffer")
 
     --- Apply all options.
     if vim.tbl_get(M.config, "options", "opt", "clipboard") then

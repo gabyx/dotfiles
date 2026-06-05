@@ -6,6 +6,18 @@
 local M = {
     --- Will be set from Nix.
     icons = {},
+
+    features = {
+        autopairs = true,
+
+        -- Global completion.
+        cmp = true,
+        -- Buffer completion.
+        completion = true,
+
+        -- URL highlight.
+        highlighturl = true,
+    },
 }
 
 return M

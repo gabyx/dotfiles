@@ -1,5 +1,7 @@
 { ... }:
 {
+  vim.utility.undotree.enable = true;
+
   vim.keymaps = [
     # Window movements.
     {
@@ -63,6 +65,15 @@
       expr = true;
       silent = true;
       desc = "Move cursor up.";
+    }
+
+    # Undotree
+    {
+      mode = "n";
+      key = "<Leader>bu";
+      action = /* Lua */ "function() vim.cmd.UndotreeToggle() end";
+      lua = true;
+      desc = "Show Undo Tree.";
     }
   ];
 }
