@@ -23,13 +23,9 @@
     inputs:
     let
       lib = inputs.nixpkgs.lib;
-    in
-    inputs.flake-parts.lib.mkFlake
-      {
-        inherit inputs;
-      }
-      (
-        lib.pipe inputs.import-tree [
+
+      tree =
+        inputs.import-tree # -
           (i: i.map (x: lib.info "Importing: '${x}'" x))
           (i: i.filter (lib.hasInfix ".mod."))
           (
@@ -38,9 +34,11 @@
               ./nix
               ./tools/nix
             ]
-          )
-        ]
-      );
+          );
+    in
+    inputs.flake-parts.lib.mkFlake {
+      inherit inputs;
+    } tree;
 
   inputs = {
     self = {
