@@ -185,7 +185,6 @@ function M.buffer_syntax(bufnr, silent)
     ui_notify(silent, ("syntax %s"):format(vim.bo[bufnr].syntax))
 end
 
--- http://asdf/asdf/asdf.com
 --- Toggle URL/URI syntax highlighting rules
 ---@param silent? boolean if true then don't sent a notification
 function M.url_match(silent)
@@ -292,6 +291,26 @@ function M.set_url_match(win)
     if require("gabyxui").config.features.highlighturl then
         vim.fn.matchadd("HighlightURL", M.url_matcher, 15, -1, { window = win })
         vim.w[win].highlighturl_enabled = true
+    end
+end
+
+--- Toggle buffer LSP inlay hints
+---@param bufnr? integer the buffer to toggle the clients on
+---@param silent? boolean if true then don't sent a notification
+function M.buffer_inlay_hints(bufnr, silent)
+    if vim.lsp.inlay_hint then
+        local filter = { bufnr = bufnr or 0 }
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(filter), filter)
+        ui_notify(silent, ("Buffer inlay hints %s"):format(bool2str(vim.lsp.inlay_hint.is_enabled(filter))))
+    end
+end
+
+--- Toggle global LSP inlay hints
+---@param silent? boolean if true then don't sent a notification
+function M.inlay_hints(silent)
+    if vim.lsp.inlay_hint then
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+        ui_notify(silent, ("Global inlay hints %s"):format(bool2str(vim.lsp.inlay_hint.is_enabled())))
     end
 end
 

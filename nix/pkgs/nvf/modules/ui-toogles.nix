@@ -3,6 +3,15 @@
   vim.keymaps = [
     {
       mode = "n";
+      key = "<Leader>ua";
+      lua = true;
+      action = /* lua */ ''
+        function() require("gabyxui.toggles").background() end
+      '';
+      desc = "Toggle autopairs.";
+    }
+    {
+      mode = "n";
       key = "<Leader>ub";
       lua = true;
       action = /* lua */ ''

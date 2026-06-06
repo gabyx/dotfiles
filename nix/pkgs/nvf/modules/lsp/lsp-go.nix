@@ -75,7 +75,7 @@ in
     };
   };
 
-  vim.lsp.servers.golangci-lint-langserver = {
+  vim.lsp.servers.golangci-lint-ls = {
     enable = true;
     cmd = [ "golangci-lint-langserver" ];
 

@@ -68,25 +68,24 @@ in
         '';
         desc = "LSP hover.";
       }
-
-      # Toggles
-      #  maps.n["<Leader>uh"] = {
-      #   function() require("astrolsp.toggles").buffer_inlay_hints() end,
-      #   desc = "Toggle LSP inlay hints (buffer)",
-      #   cond = vim.lsp.inlay_hint and "textDocument/inlayHint" or false,
-      # }
-      # maps.n["<Leader>uH"] = {
-      #   function() require("astrolsp.toggles").inlay_hints() end,
-      #   desc = "Toggle LSP inlay hints (global)",
-      #   cond = vim.lsp.inlay_hint and "textDocument/inlayHint" or false,
-      # }
-      # {
-      #   mode = "n";
-      #   action = /*Lua*/ ''
-      #
-      #   '';
-      #   desc =
-      # }
+      {
+        mode = "n";
+        key = "<Leader>uh";
+        lua = true;
+        action = /* Lua */ ''
+          function() require("gabyxui.toggles").buffer_inlay_hints() end
+        '';
+        desc = "Toggle LSP inlay hints (buffer).";
+      }
+      {
+        mode = "n";
+        key = "<Leader>uH";
+        lua = true;
+        action = /* Lua */ ''
+          function() require("gabyxui.toggles").inlay_hints() end
+        '';
+        desc = "Toggle LSP inlay hints.";
+      }
 
     ];
 
