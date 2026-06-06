@@ -192,7 +192,7 @@ in
     {
       key = "<Leader>uD";
       mode = [ "n" ];
-      action = /* Lua */ "function() require('snacks.notifier').hide() end";
+      action = /* lua */ "function() require('snacks.notifier').hide() end";
       silent = true;
       desc = "Dismiss notifications.";
     }
@@ -201,7 +201,7 @@ in
     {
       key = "<Leader>u|";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').toggle.indent():toggle() end
       '';
       lua = true;
@@ -213,7 +213,7 @@ in
     {
       key = "<Leader>ur";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').toggle.words():toggle() end
       '';
       lua = true;
@@ -223,7 +223,7 @@ in
     {
       key = "]r";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').words.jump(vim.v.count1) end
       '';
       lua = true;
@@ -233,7 +233,7 @@ in
     {
       key = "[r";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').words.jump(-vim.v.count1) end
       '';
       lua = true;
@@ -244,7 +244,7 @@ in
     {
       key = "<Leader>uZ";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').toggle.zen():toggle() end
       '';
       lua = true;
@@ -256,7 +256,7 @@ in
     {
       key = "<Leader>f<CR>";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.resume() end
       '';
       lua = true;
@@ -266,7 +266,7 @@ in
     {
       key = "<Leader>f'";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.marks() end
       '';
       lua = true;
@@ -276,7 +276,7 @@ in
     {
       key = "<Leader>fb";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.buffers() end
       '';
       lua = true;
@@ -286,7 +286,7 @@ in
     {
       key = "<Leader>fc";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.grep_word() end
       '';
       lua = true;
@@ -296,7 +296,7 @@ in
     {
       key = "<Leader>fC";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.commands() end
       '';
       lua = true;
@@ -306,7 +306,7 @@ in
     {
       key = "<Leader>ff";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function()
           require('snacks').picker.files {
             hidden = vim.uv.fs_stat(".git") ~= nil,
@@ -320,7 +320,7 @@ in
     {
       key = "<Leader>fF";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function()
           require('snacks').picker.files { hidden = true, ignored = true }
         end
@@ -332,7 +332,7 @@ in
     {
       key = "<Leader>fh";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.help() end
       '';
       lua = true;
@@ -342,7 +342,7 @@ in
     {
       key = "<Leader>fk";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.keymaps() end
       '';
       lua = true;
@@ -352,7 +352,7 @@ in
     {
       key = "<Leader>fm";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.man() end
       '';
       lua = true;
@@ -362,7 +362,7 @@ in
     {
       key = "<Leader>fn";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.notifications() end
       '';
       lua = true;
@@ -372,7 +372,7 @@ in
     {
       key = "<Leader>fo";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.recent() end
       '';
       lua = true;
@@ -382,7 +382,7 @@ in
     {
       key = "<Leader>fO";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.recent { filter = { cwd = true } } end
       '';
       lua = true;
@@ -392,7 +392,7 @@ in
     {
       key = "<Leader>fp";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.projects() end
       '';
       lua = true;
@@ -402,7 +402,7 @@ in
     {
       key = "<Leader>fr";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.registers() end
       '';
       lua = true;
@@ -412,7 +412,7 @@ in
     {
       key = "<Leader>fs";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.smart() end
       '';
       lua = true;
@@ -422,7 +422,7 @@ in
     {
       key = "<Leader>ft";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.colorschemes() end
       '';
       lua = true;
@@ -432,7 +432,7 @@ in
     {
       key = "<Leader>fw";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.grep() end
       '';
       lua = true;
@@ -442,7 +442,7 @@ in
     {
       key = "<Leader>fW";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.grep { hidden = true, ignored = true } end
       '';
       lua = true;
@@ -452,7 +452,7 @@ in
     {
       key = "<Leader>fu";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.undo() end
       '';
       lua = true;
@@ -462,7 +462,7 @@ in
     {
       key = "<Leader>fl";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.lines() end
       '';
       lua = true;
@@ -472,7 +472,7 @@ in
     {
       key = "<Leader>lD";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.diagnostics() end
       '';
       lua = true;
@@ -482,7 +482,7 @@ in
     {
       key = "<Leader>ls";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.lsp_symbols() end
       '';
       lua = true;
@@ -494,7 +494,7 @@ in
     {
       key = "<Leader>gb";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.git_branches() end
       '';
       lua = true;
@@ -504,7 +504,7 @@ in
     {
       key = "<Leader>gc";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.git_log() end
       '';
       lua = true;
@@ -514,7 +514,7 @@ in
     {
       key = "<Leader>gC";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.git_log { current_file = true, follow = true } end
       '';
       lua = true;
@@ -524,7 +524,7 @@ in
     {
       key = "<Leader>gt";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.git_status() end
       '';
       lua = true;
@@ -534,7 +534,7 @@ in
     {
       key = "<Leader>gT";
       mode = [ "n" ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').picker.git_stash() end
       '';
       lua = true;
@@ -547,7 +547,7 @@ in
         "n"
         "x"
       ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require('snacks').gitbrowse() end
       '';
       lua = true;

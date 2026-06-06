@@ -70,7 +70,7 @@
     {
       mode = "n";
       key = "]t";
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() vim.cmd.tabnext() end
       '';
       lua = true;
@@ -79,7 +79,7 @@
     {
       mode = "n";
       key = "[t";
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() vim.cmd.tabprevious() end
       '';
       desc = "Go to previous tab.";
@@ -90,7 +90,7 @@
     {
       mode = "n";
       key = "<Leader>bu";
-      action = /* Lua */ "function() vim.cmd.UndotreeToggle() end";
+      action = /* lua */ "function() vim.cmd.UndotreeToggle() end";
       lua = true;
       desc = "Show Undo Tree.";
     }

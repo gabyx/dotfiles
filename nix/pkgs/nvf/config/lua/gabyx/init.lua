@@ -71,6 +71,7 @@ function M.setup(opts)
     -- Set missing libraries.
     M.buffer = require("gabyx.buffer")
     M.diagnostics = require("gabyx.diagnostics")
+    M.format = require("gabyx.format")
 
     --- Apply all options.
     if vim.tbl_get(M.config, "options", "opt", "clipboard") then

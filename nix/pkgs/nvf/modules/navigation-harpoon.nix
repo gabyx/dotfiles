@@ -12,7 +12,7 @@
         "v"
       ];
       lua = true;
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require("harpoon.ui").toggle_quick_menu() end
       '';
       desc = "Harpoon list.";
@@ -24,7 +24,7 @@
         "v"
       ];
       lua = true;
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require("harpoon.mark").add_file() end
       '';
       desc = "Add to harpoon list.";
@@ -36,7 +36,7 @@
         "v"
       ];
       lua = true;
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require("harpoon.ui").nav_next() end
       '';
       desc = "Next harpoon file.";
@@ -48,7 +48,7 @@
         "v"
       ];
       lua = true;
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require("harpoon.ui").nav_prev() end
       '';
       desc = "Previous harpoon file.";

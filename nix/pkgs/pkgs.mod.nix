@@ -1,4 +1,8 @@
-{ inputs, inputs', ... }:
+{
+  lib,
+  inputs,
+  ...
+}:
 {
   perSystem =
     {
@@ -21,6 +25,7 @@
       age-plugin-fido2-hmac = pkgsUnstable.callPackage ./age-plugin-fido2-hmac { };
 
       nvim-nvf = import ./nvf {
+        inherit lib;
         inherit inputs;
         inherit inputs';
 

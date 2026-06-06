@@ -1,6 +1,6 @@
 { lib, pkgs, ... }:
 let
-  act = fn: arg: lib.mkLuaInline /* Lua */ ''require("diffview.actions").${fn}("${arg}")'';
+  act = fn: arg: lib.mkLuaInline /* lua */ ''require("diffview.actions").${fn}("${arg}")'';
 
   vkey = key: fn: arg: desc: [
     "n"

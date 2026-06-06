@@ -52,7 +52,7 @@
     {
       key = "<Leader>lS";
       mode = [ "n" ];
-      action = /* Lua */ ''function() require("aerial").toggle() end'';
+      action = /* lua */ ''function() require("aerial").toggle() end'';
       lua = true;
       desc = "Symbols outline.";
     }

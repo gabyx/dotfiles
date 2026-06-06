@@ -10,7 +10,7 @@
         {
           mode = "n";
           key = "<Leader>sw";
-          action = /* Lua */ ''
+          action = /* lua */ ''
             function() require('spectre').open_visual({ select_word = true }) end
           '';
           lua = true;
@@ -20,7 +20,7 @@
           key = "<Leader>sS";
           mode = [ "v" ];
 
-          action = /* Lua */ ''
+          action = /* lua */ ''
             function() require('spectre').open_visual() end
           '';
           lua = true;
@@ -29,7 +29,7 @@
         {
           mode = "n";
           key = "<Leader>sp";
-          action = /* Lua */ ''
+          action = /* lua */ ''
             function() require('spectre').open_file_search({ select_word = true }) end
           '';
           lua = true;
@@ -38,7 +38,7 @@
         {
           mode = "n";
           key = "<Leader>sS";
-          action = /* Lua */ ''
+          action = /* lua */ ''
             function() require('spectre').toggle() end
           '';
           lua = true;

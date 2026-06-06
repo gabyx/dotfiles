@@ -6,7 +6,7 @@ in
   vim.extraPlugins.marks = {
     package = pkgs.vimPlugins.marks-nvim;
 
-    setup = /* Lua */ ''
+    setup = /* lua */ ''
       opts = {
         -- whether to map keybinds or not. default true
         default_mappings = true,
@@ -46,14 +46,14 @@ in
     {
       mode = "n";
       key = "<Leader>mD";
-      action = /* Lua */ "function() require('marks').delete_buf() end";
+      action = /* lua */ "function() require('marks').delete_buf() end";
       lua = true;
       desc = "Delete all marks in buffer.";
     }
     {
       mode = "n";
       key = "<Leader>mB";
-      action = /* Lua */ "function() require('marks').delete_bookmark() end";
+      action = /* lua */ "function() require('marks').delete_bookmark() end";
       lua = true;
       desc = "Delete all bookmarks in buffer.";
     }

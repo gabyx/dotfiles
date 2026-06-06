@@ -1,4 +1,5 @@
 {
+  lib,
   inputs,
   inputs',
   pkgs,
@@ -23,7 +24,11 @@ let
           modules = [
             {
               vim.package = nvim;
-              imports = [ (inputs.import-tree [ ./modules ]) ];
+              imports = [
+                (inputs.import-tree (i: i.map (x: lib.info "Importing: '${x}'" x)) (
+                  i: i.filter (x: !lib.hasInfix ".lib." x)
+                ) [ ./modules ])
+              ];
             }
           ];
         }).neovim;

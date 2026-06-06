@@ -1,8 +1,53 @@
-{ lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
+  inherit (config.gabyx) icons;
+  inherit (lib.generators) mkLuaInline;
   inherit (lib.nvim.binds) mkKeymap;
 in
 {
+  vim.diagnostics = {
+    enable = true;
+
+    config =
+      let
+        severityIcons = /* lua */ ''
+          {
+            [vim.diagnostic.severity.ERROR] = "${icons.DiagnosticError}",
+            [vim.diagnostic.severity.WARN]  = "${icons.DiagnosticWarn}",
+            [vim.diagnostic.severity.INFO]  = "${icons.DiagnosticInfo}",
+            [vim.diagnostic.severity.HINT]  = "${icons.DiagnosticHint}",
+          }
+        '';
+      in
+      {
+        virtual_text = {
+          prefix =
+            mkLuaInline
+              # Lua
+              ''
+                function(diagnostic)
+                  local severity_icons = ${severityIcons}
+                  return severity_icons[diagnostic.severity] or "●"
+                end
+              '';
+          spacing = 2;
+          source = "if_many";
+        };
+
+        signs = true;
+        underline = true;
+        update_in_insert = false;
+        severity_sort = true;
+
+        sign.text = mkLuaInline severityIcons;
+      };
+  };
+
   vim = {
     lazy.plugins."trouble.nvim" = {
       lazy = false;
@@ -34,7 +79,7 @@ in
       mode = "n";
       key = "[e";
       lua = true;
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require("gabyx.diagnostics").jump(false, "ERROR") end
       '';
       desc = "Previous error.";
@@ -43,7 +88,7 @@ in
       mode = "n";
       key = "]e";
       lua = true;
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require("gabyx.diagnostics").jump(true, "ERROR") end
       '';
       desc = "Next error.";
@@ -52,7 +97,7 @@ in
       mode = "n";
       key = "[w";
       lua = true;
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require("gabyx.diagnostics").jump(false, "WARN") end
       '';
       desc = "Previous warning.";
@@ -61,7 +106,7 @@ in
       mode = "n";
       key = "]w";
       lua = true;
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require("gabyx.diagnostics").jump(true, "WARN") end
       '';
       desc = "Next warning.";

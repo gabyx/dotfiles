@@ -11,6 +11,9 @@ let
 
 in
 {
+
+  vim.vendoredKeymaps.enable = false;
+
   # Better Escaping for certain key combinations.
   # Not really needed now.
   vim.extraPlugins = lib.mkIf false {
@@ -344,62 +347,6 @@ in
       desc = "New file.";
     }
 
-    # Buffer Commands.
-    {
-      mode = "n";
-      key = "<Leader>c";
-      action = /* Lua */ ''
-        function() require("gabyx.buffer").close() end
-      '';
-      lua = true;
-      desc = "Close buffer.";
-    }
-    {
-      mode = "n";
-      key = "<Leader>C";
-      action = /* Lua */ ''
-        function() require("gabyx.buffer").close(0, true) end
-      '';
-      lua = true;
-      desc = "Close buffer forced.";
-    }
-    {
-      mode = "n";
-      key = "]b";
-      action = /* Lua */ ''
-        function() require("gabyx.buffer").nav(vim.v.count1) end
-      '';
-      lua = true;
-      desc = "Next buffer.";
-    }
-    {
-      mode = "n";
-      key = "[b";
-      action = /* Lua */ ''
-        function() require("gabyx.buffer").nav(-vim.v.count1) end
-      '';
-      lua = true;
-      desc = "Previous buffer.";
-    }
-    {
-      mode = "n";
-      key = ">b";
-      action = /* Lua */ ''
-        function() require("gabyx.buffer").move(vim.v.count1) end
-      '';
-      lua = true;
-      desc = "Move buffer tab right.";
-    }
-    {
-      mode = "n";
-      key = "<b";
-      action = /* Lua */ ''
-        function() require("gabyx.buffer").move(-vim.v.count1) end
-      '';
-      lua = true;
-      desc = "Move buffer tab left.";
-    }
-
     # TODO: Translate this.
     # return {
     #
@@ -411,20 +358,6 @@ in
     #     -- Standard Operations DONE
     #
     #     maps.n["<Leader>b"] = vim.tbl_get(sections, "b")
-    #     maps.n["<Leader>bc"] =
-    #       { function() require("astrocore.buffer").close_all(true) end, desc = "Close all buffers except current" }
-    #     maps.n["<Leader>bC"] = { function() require("astrocore.buffer").close_all() end, desc = "Close all buffers" }
-    #     maps.n["<Leader>bl"] =
-    #       { function() require("astrocore.buffer").close_left() end, desc = "Close all buffers to the left" }
-    #     maps.n["<Leader>bp"] = { function() require("astrocore.buffer").prev() end, desc = "Previous buffer" }
-    #     maps.n["<Leader>br"] =
-    #       { function() require("astrocore.buffer").close_right() end, desc = "Close all buffers to the right" }
-    #     maps.n["<Leader>bs"] = vim.tbl_get(sections, "bs")
-    #     maps.n["<Leader>bse"] = { function() require("astrocore.buffer").sort "extension" end, desc = "By extension" }
-    #     maps.n["<Leader>bsr"] = { function() require("astrocore.buffer").sort "unique_path" end, desc = "By relative path" }
-    #     maps.n["<Leader>bsp"] = { function() require("astrocore.buffer").sort "full_path" end, desc = "By full path" }
-    #     maps.n["<Leader>bsi"] = { function() require("astrocore.buffer").sort "bufnr" end, desc = "By buffer number" }
-    #     maps.n["<Leader>bsm"] = { function() require("astrocore.buffer").sort "modified" end, desc = "By modification" }
     #
     #
     #     -- Split navigation

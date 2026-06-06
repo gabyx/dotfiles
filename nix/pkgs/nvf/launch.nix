@@ -1,4 +1,5 @@
 {
+  lib,
   writeShellScriptBin,
   nvim,
   name ? "nvim",
@@ -12,7 +13,7 @@ in
 #
 # - If `--force-reset/--force-reset-only` is passed as first argument,
 #   it will reset the whole installation.
-writeShellScriptBin name ''
+(writeShellScriptBin name ''
   #!/usr/bin/env bash
   set -efu
 
@@ -67,6 +68,8 @@ writeShellScriptBin name ''
     export XDG_CONFIG_HOME="''${XDG_CONFIG_HOME:-$HOME/.config}"
     export XDG_DATA_HOME="''${XDG_DATA_HOME:-$HOME/.local/share}"
     export XDG_STATE_HOME="''${XDG_STATE_HOME:-$HOME/.local/state}"
+
+    echo "NVIM_APPNAME: '$NVIM_APPNAME'"
   }
 
   function reset() {
@@ -103,7 +106,7 @@ writeShellScriptBin name ''
 
   if [ "$DIRECT" = "true" ]; then
     echo "Just start nvim '${nvim}'."
-    exec "${nvim}/bin/nvim" "''${NVIM_ARGS[@]}"
+    exec "${lib.getExe nvim}" "''${NVIM_ARGS[@]}"
   fi
 
   if [ "$FORCE_RESET" = "true" ]; then
@@ -112,5 +115,6 @@ writeShellScriptBin name ''
 
   echo
   echo "Starting '${nvim}'" "''${NVIM_ARGS[@]}"
-  exec "${nvim}/bin/nvim" "''${NVIM_ARGS[@]}"
-''
+  exec "${lib.getExe nvim}" "''${NVIM_ARGS[@]}"
+'').overrideAttrs
+  { passthru = { inherit (nvim.passthru) neovimConfig; }; }

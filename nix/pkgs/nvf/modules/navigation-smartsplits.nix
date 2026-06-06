@@ -38,7 +38,7 @@ in
     {
       mode = "n";
       key = "<Leader>bmh";
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require("smart-splits").swap_buf_left() end
       '';
       desc = "Swap buffer left.";
@@ -46,7 +46,7 @@ in
     {
       mode = "n";
       key = "<Leader>bml";
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require("smart-splits").swap_buf_right() end
       '';
       desc = "Swap buffer right.";
@@ -54,7 +54,7 @@ in
     {
       mode = "n";
       key = "<Leader>bmk";
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require("smart-splits").swap_buf_up() end
       '';
       desc = "Swap buffer up.";
@@ -62,7 +62,7 @@ in
     {
       mode = "n";
       key = "<Leader>bmj";
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require("smart-splits").swap_buf_down() end
       '';
       desc = "Swap buffer down.";

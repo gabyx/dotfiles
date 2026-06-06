@@ -29,7 +29,7 @@
         "n"
         "v"
       ];
-      action = /* Lua */ ''
+      action = /* lua */ ''
         function() require("visual-whitespace").toggle() end
       '';
       lua = true;
