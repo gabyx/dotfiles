@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   vim.extraPlugins = {
-    "gomove" = {
+    gomove = {
       package = pkgs.vimPlugins.nvim-gomove;
       setup =
         # lua

@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   vim.extraPlugins = {
-    "aerial" = {
+    aerial = {
       package = pkgs.vimPlugins.aerial-nvim;
       setup =
         # Lua

@@ -1,5 +1,12 @@
-{ ... }:
+{ pkgs, ... }:
 {
-  vim.utility.surround.enable = true;
+  vim.extraPlugins.nvim-surround = {
+    package = pkgs.vimPlugins.nvim-surround;
 
+    setup =
+      # Lua
+      ''
+        require("nvim-surround").setup({})
+      '';
+  };
 }

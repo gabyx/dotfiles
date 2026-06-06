@@ -2,7 +2,7 @@
 {
 
   vim.extraPlugins = {
-    "astrotheme" = {
+    astrotheme = {
       package = pkgs.vimPlugins.astrotheme;
       setup = # lua
         ''
@@ -47,6 +47,9 @@
 
               			-- Do not highlight the scope indentation.
               			hl.IblScope = { fg = c.ui.none_text }
+
+                    -- visual-whitespace plugin
+              			hl.VisualNonText = { fg =  c.ui.none_text }
               		end,
               	},
               },

@@ -6,6 +6,9 @@
 }:
 let
   icons = config.gabyx.icons;
+
+  mkIconRules = patterns: conf: lib.map (p: conf // { pattern = p; }) patterns;
+
 in
 {
   # Better Escaping for certain key combinations.
@@ -31,12 +34,216 @@ in
   vim.mini.icons.enable = true; # which-key wants these.
   vim.binds.whichKey = {
     enable = true;
+    register = lib.mkForce { };
 
     setupOpts = {
       preset = "modern";
       notify = true;
       icons = {
-        group = " ";
+        group = "";
+        rules =
+          (mkIconRules
+            [
+              "%f[%a]git"
+              "diffview"
+              "lazygit"
+            ]
+            {
+              cat = "filetype";
+              name = "git";
+            }
+          )
+          ++ [
+            {
+              icon = "󱡁";
+              pattern = "harpoon";
+            }
+            {
+              icon = icons.Navigation;
+              pattern = "hop";
+            }
+            {
+              icon = icons.DiagnosticError;
+              pattern = "error";
+            }
+            {
+              icon = icons.DiagnosticWarn;
+              pattern = "warning";
+            }
+            {
+              icon = icons.DiagnosticInfo;
+              pattern = "info";
+            }
+            {
+              icon = icons.Macro;
+              pattern = "macro";
+            }
+            {
+              pattern = "sort";
+              icon = icons.Sort;
+            }
+            {
+              pattern = "toggle";
+              icon = icons.Toggle;
+              color = "yellow";
+            }
+            {
+              icon = icons.LineNumber;
+              pattern = "line number";
+            }
+            {
+              icon = icons.Indent;
+              pattern = "indent";
+            }
+            {
+              icon = icons.Bookmarks;
+              pattern = "bookmark";
+            }
+            {
+              icon = icons.Mark;
+              pattern = "mark";
+            }
+            {
+              icon = icons.Undo;
+              pattern = "undo";
+            }
+            {
+              icon = icons.Browse;
+              pattern = "browse";
+              color = "yellow";
+            }
+            {
+              icon = icons.Status;
+              pattern = "status";
+            }
+            {
+              icon = icons.GitBranch;
+              pattern = "branch";
+            }
+            {
+              icon = icons.GitChange;
+              pattern = "commit";
+            }
+            {
+              icon = icons.GitBlame;
+              pattern = "blame";
+            }
+            {
+              icon = icons.GitDiff;
+              pattern = "diff";
+            }
+            {
+              icon = icons.Reset;
+              pattern = "reset";
+              color = "red";
+            }
+            {
+              pattern = "stage.*unstage";
+              icon = icons.GitStaged + icons.GitUnstaged;
+            }
+            {
+              icon = icons.GitHunk;
+              pattern = "hunk";
+            }
+            {
+              pattern = "stage";
+              icon = icons.GitStaged;
+            }
+            {
+              pattern = "stash";
+              icon = icons.GitStash;
+            }
+            {
+              pattern = "[Uu][Ii].*";
+              icon = "󰙵 ";
+            }
+
+            {
+              pattern = "terminal";
+              icon = " ";
+            }
+            {
+              pattern = "find";
+              icon = " ";
+            }
+            {
+              pattern = "search";
+              icon = " ";
+            }
+            {
+              pattern = "file";
+              icon = "󰈔 ";
+            }
+            {
+              pattern = "window";
+              icon = " ";
+            }
+            {
+              pattern = "diagnostic";
+              icon = "󱖫 ";
+            }
+            {
+              pattern = "format";
+              icon = " ";
+            }
+            {
+              pattern = "debug";
+              icon = "󰃤 ";
+            }
+            {
+              pattern = "code";
+              icon = " ";
+            }
+            {
+              pattern = "notif";
+              icon = "󰵅 ";
+            }
+            {
+              pattern = "session";
+              icon = "";
+            }
+            {
+              pattern = "close";
+              icon = icons.BufferClose;
+            }
+            {
+              pattern = "exit";
+              icon = "󰈆 ";
+            }
+            {
+              pattern = "quit";
+              icon = "󰈆 ";
+            }
+            {
+              pattern = "buffer";
+              icon = icons.DefaultFile;
+            }
+            {
+              pattern = "tab";
+              icon = "󰓩 ";
+            }
+            {
+              pattern = "%f[%a]ai";
+              icon = " ";
+            }
+          ]
+          ++ (mkIconRules [ "list" "log" ] { icon = icons.List; })
+          ++ [
+            {
+              plugin = "neo-tree.nvim";
+              cat = "filetype";
+              name = "neo-tree";
+            }
+            {
+              plugin = "nvim-spectre";
+              icon = "󰛔 ";
+            }
+            # Fallback to set no icon.
+            {
+              pattern = ".*";
+              icon = "";
+            }
+          ];
       };
     };
   };
@@ -47,17 +254,20 @@ in
       ''
         local wk = require("which-key")
         wk.add({
-          { "<leader>f", icon = "${icons.Search}", desc = "Find ${icons.Ellipsis}" },
-          { "<leader>l", icon = "${icons.ActiveLSP}", desc = "Language Tools ${icons.Ellipsis}" },
-          { "<leader>u", icon = "${icons.Window}", desc = "UI/UX ${icons.Ellipsis}" },
-          { "<leader>b", icon = "${icons.Tab}", desc = "Buffers ${icons.Ellipsis}" },
-          { "<leader>bs",icon = "${icons.Sort}", desc = "Sort Buffers ${icons.Ellipsis}" },
-          { "<leader>d", icon = "${icons.Debugger}", desc = "Debugger ${icons.Ellipsis}" },
-          { "<leader>g", icon = "${icons.Git}",  desc = "Git ${icons.Ellipsis}" },
-          { "<leader>S", icon = "${icons.Session}", desc = "Session ${icons.Ellipsis}" },
-          { "<leader>t", icon = "${icons.Terminal}", desc = "Terminal ${icons.Ellipsis}" },
-          { "<leader>x", icon = "${icons.List}", desc = "Quickfix/Lists ${icons.Ellipsis}" },
-          { "<leader>j", icon = "${icons.Navigation}", desc = "Navigation ${icons.Ellipsis}" },
+          { "<Leader>f", icon = "${icons.Search}", desc = "Find ${icons.Ellipsis}" },
+          { "<Leader>l", icon = "${icons.ActiveLSP}", desc = "Language Tools ${icons.Ellipsis}" },
+          { "<Leader>u", icon = "${icons.Window}", desc = "UI/UX ${icons.Ellipsis}" },
+          { "<Leader>b", icon = "${icons.Tab}", desc = "Buffers ${icons.Ellipsis}" },
+          { "<Leader>bs",icon = "${icons.Sort}", desc = "Sort Buffers ${icons.Ellipsis}" },
+          { "<Leader>bm",icon = "${icons.Move}", desc = "Move Buffers ${icons.Ellipsis}" },
+          { "<Leader>d", icon = "${icons.Debugger}", desc = "Debugger ${icons.Ellipsis}" },
+          { "<Leader>g", icon = "${icons.Git}",  desc = "Git ${icons.Ellipsis}" },
+          { "<Leader>s", icon = "${icons.Search}", desc = "Search ${icons.Ellipsis}" },
+          { "<Leader>S", icon = "${icons.Session}", desc = "Session ${icons.Ellipsis}" },
+          { "<Leader>t", icon = "${icons.Terminal}", desc = "Terminal ${icons.Ellipsis}" },
+          { "<Leader>m", icon = "${icons.Mark}", desc = "Marks ${icons.Ellipsis}" },
+          { "<Leader>x", icon = "${icons.List}", desc = "Trouble ${icons.Ellipsis}" },
+          { "<Leader>j", icon = "${icons.Navigation}", desc = "Navigation ${icons.Ellipsis}" },
         })
       '';
 
@@ -216,26 +426,6 @@ in
     #     maps.n["<Leader>bsi"] = { function() require("astrocore.buffer").sort "bufnr" end, desc = "By buffer number" }
     #     maps.n["<Leader>bsm"] = { function() require("astrocore.buffer").sort "modified" end, desc = "By modification" }
     #
-    #     maps.n["<Leader>l"] = vim.tbl_get(sections, "l")
-    #     maps.n["<Leader>li"] = { function() vim.cmd.checkhealth "vim.lsp" end, desc = "Lsp Information" }
-    #     maps.n["<Leader>ld"] = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" }
-    #     local function diagnostic_jump(dir, severity)
-    #       local jump_opts = {}
-    #       if type(severity) == "string" then jump_opts.severity = vim.diagnostic.severity[severity] end
-    #       return function()
-    #         jump_opts.count = dir and vim.v.count1 or -vim.v.count1
-    #         vim.diagnostic.jump(jump_opts)
-    #       end
-    #     end
-    #     maps.n["[e"] = { diagnostic_jump(false, "ERROR"), desc = "Previous error" }
-    #     maps.n["]e"] = { diagnostic_jump(true, "ERROR"), desc = "Next error" }
-    #     maps.n["[w"] = { diagnostic_jump(false, "WARN"), desc = "Previous warning" }
-    #     maps.n["]w"] = { diagnostic_jump(true, "WARN"), desc = "Next warning" }
-    #     maps.n["gl"] = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" }
-    #
-    #     -- Navigate tabs
-    #     maps.n["]t"] = { function() vim.cmd.tabnext() end, desc = "Next tab" }
-    #     maps.n["[t"] = { function() vim.cmd.tabprevious() end, desc = "Previous tab" }
     #
     #     -- Split navigation
     #     maps.n["<C-H>"] = { "<C-w>h", desc = "Move to left split" }
@@ -262,52 +452,5 @@ in
     #       maps.n["]L"] = { vim.cmd.llast, desc = "End loclist" }
     #       maps.n["[L"] = { vim.cmd.lfirst, desc = "Beginning loclist" }
     #     end
-    #
-    #     -- Stay in indent mode
-    #     maps.v["<S-Tab>"] = { "<gv", desc = "Unindent line" }
-    #     maps.v["<Tab>"] = { ">gv", desc = "Indent line" }
-    #
-    #     -- Improved Terminal Navigation
-    #     local function term_nav(dir)
-    #       return function()
-    #         if vim.api.nvim_win_get_config(0).zindex then
-    #           vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-" .. dir .. ">", true, false, true), "n", false)
-    #         else
-    #           vim.cmd.wincmd(dir)
-    #         end
-    #       end
-    #     end
-    #     maps.t["<C-H>"] = { term_nav "h", desc = "Terminal left window navigation" }
-    #     maps.t["<C-J>"] = { term_nav "j", desc = "Terminal down window navigation" }
-    #     maps.t["<C-K>"] = { term_nav "k", desc = "Terminal up window navigation" }
-    #     maps.t["<C-L>"] = { term_nav "l", desc = "Terminal right window navigation" }
-    #
-    #     maps.n["<Leader>u"] = vim.tbl_get(sections, "u")
-    #     -- Custom menu for modification of the user experience
-    #     maps.n["<Leader>uA"] = { function() require("astrocore.toggles").autochdir() end, desc = "Toggle rooter autochdir" }
-    #     maps.n["<Leader>ub"] = { function() require("astrocore.toggles").background() end, desc = "Toggle background" }
-    #     maps.n["<Leader>ud"] = { function() require("astrocore.toggles").diagnostics() end, desc = "Toggle diagnostics" }
-    #     maps.n["<Leader>ug"] = { function() require("astrocore.toggles").signcolumn() end, desc = "Toggle signcolumn" }
-    #     maps.n["<Leader>u>"] = { function() require("astrocore.toggles").foldcolumn() end, desc = "Toggle foldcolumn" }
-    #     maps.n["<Leader>ui"] = { function() require("astrocore.toggles").indent() end, desc = "Change indent setting" }
-    #     maps.n["<Leader>ul"] = { function() require("astrocore.toggles").statusline() end, desc = "Toggle statusline" }
-    #     maps.n["<Leader>un"] = { function() require("astrocore.toggles").number() end, desc = "Change line numbering" }
-    #     maps.n["<Leader>uN"] =
-    #       { function() require("astrocore.toggles").notifications() end, desc = "Toggle Notifications" }
-    #     maps.n["<Leader>up"] = { function() require("astrocore.toggles").paste() end, desc = "Toggle paste mode" }
-    #     maps.n["<Leader>us"] = { function() require("astrocore.toggles").spell() end, desc = "Toggle spellcheck" }
-    #     maps.n["<Leader>uS"] = { function() require("astrocore.toggles").conceal() end, desc = "Toggle conceal" }
-    #     maps.n["<Leader>ut"] = { function() require("astrocore.toggles").tabline() end, desc = "Toggle tabline" }
-    #     maps.n["<Leader>uu"] = { function() require("astrocore.toggles").url_match() end, desc = "Toggle URL highlight" }
-    #     maps.n["<Leader>uv"] = { function() require("astrocore.toggles").virtual_text() end, desc = "Toggle virtual text" }
-    #     maps.n["<Leader>uV"] =
-    #       { function() require("astrocore.toggles").virtual_lines() end, desc = "Toggle virtual lines" }
-    #     maps.n["<Leader>uw"] = { function() require("astrocore.toggles").wrap() end, desc = "Toggle wrap" }
-    #     maps.n["<Leader>uy"] =
-    #       { function() require("astrocore.toggles").buffer_syntax() end, desc = "Toggle syntax highlight (buffer)" }
-    #
-    #     opts.mappings = maps
-    #   end,
-    # }
   ];
 }

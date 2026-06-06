@@ -43,7 +43,7 @@ in
       };
     in
     {
-      "incselect" = {
+      incselect = {
         package = incselect;
       };
     };

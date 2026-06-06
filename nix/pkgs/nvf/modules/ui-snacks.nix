@@ -499,7 +499,7 @@ in
       '';
       lua = true;
       silent = true;
-      desc = "Git branches.";
+      desc = "Branches.";
     }
     {
       key = "<Leader>gc";
@@ -509,7 +509,7 @@ in
       '';
       lua = true;
       silent = true;
-      desc = "Git commits (repository).";
+      desc = "Commits (repository).";
     }
     {
       key = "<Leader>gC";
@@ -519,7 +519,7 @@ in
       '';
       lua = true;
       silent = true;
-      desc = "Git commits (current file).";
+      desc = "Commits (current file).";
     }
     {
       key = "<Leader>gt";
@@ -529,7 +529,7 @@ in
       '';
       lua = true;
       silent = true;
-      desc = "Git status.";
+      desc = "Status.";
     }
     {
       key = "<Leader>gT";
@@ -539,7 +539,7 @@ in
       '';
       lua = true;
       silent = true;
-      desc = "Git stash.";
+      desc = "Stash.";
     }
     {
       key = "<Leader>go";
@@ -552,7 +552,7 @@ in
       '';
       lua = true;
       silent = true;
-      desc = "Git browse (open).";
+      desc = "Browse remotes.";
     }
   ];
 

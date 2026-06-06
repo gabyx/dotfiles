@@ -30,7 +30,10 @@ in
 
     heirline = {
       package = pkgs.vimPlugins.heirline-nvim;
-      after = [ "heirline-components" ];
+      after = [
+        "heirline-components"
+        "gitsigns"
+      ];
       setup =
         # lua
         ''
@@ -56,6 +59,7 @@ in
               lib.component.fill { hl = { bg = "tabline_bg" } },
               lib.component.tabline_tabpages(),
             },
+
             winbar = { -- UI breadcrumbs bar
               init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
               fallthrough = false,
@@ -81,18 +85,20 @@ in
                 lib.component.aerial(),
               },
             },
+
             statuscolumn = { -- UI left column
               init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
               lib.component.foldcolumn(),
               lib.component.numbercolumn(),
               lib.component.signcolumn(),
             },
+
             statusline = { -- UI statusbar
               hl = { fg = "fg", bg = "bg" },
               lib.component.mode(),
               lib.component.git_branch(),
-              lib.component.file_info(),
               lib.component.git_diff(),
+              lib.component.file_info(),
               lib.component.diagnostics(),
               lib.component.fill(),
               lib.component.cmd_info(),
@@ -101,6 +107,7 @@ in
               lib.component.compiler_state(),
               lib.component.virtual_env(),
               lib.component.nav(),
+              lib.component.file_encoding(),
               lib.component.mode { surround = { separator = "right" } },
             },
           }

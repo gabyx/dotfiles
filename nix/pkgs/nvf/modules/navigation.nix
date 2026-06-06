@@ -67,6 +67,25 @@
       desc = "Move cursor up.";
     }
 
+    {
+      mode = "n";
+      key = "]t";
+      action = /* Lua */ ''
+        function() vim.cmd.tabnext() end
+      '';
+      lua = true;
+      desc = "Go to next tab.";
+    }
+    {
+      mode = "n";
+      key = "[t";
+      action = /* Lua */ ''
+        function() vim.cmd.tabprevious() end
+      '';
+      desc = "Go to previous tab.";
+      lua = true;
+    }
+
     # Undotree
     {
       mode = "n";
