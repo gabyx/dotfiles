@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
   # Used to find the project root
   projectRootFile = ".git/config";
