@@ -128,6 +128,7 @@ in
 
     # Calendar/Mail (our version)
     pkgs.khal # CLI Calendar
+    pkgs.protonmail-bridge-gui
 
     # Trains
     sbb-tui # SBB TUI app.

@@ -1,6 +1,12 @@
-{ lib, ... }:
+{ lib, pkgsUnstable, ... }:
 with lib.hm.gvariant;
 {
+  services.protonmail-bridge = {
+    enable = true;
+    package = pkgsUnstable.protonmail-bridge;
+    logLevel = "info";
+  };
+
   dconf.settings = {
     "org/gnome/calendar" = {
       active-view = "week";
