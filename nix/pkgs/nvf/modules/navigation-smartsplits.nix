@@ -7,10 +7,10 @@ in
     enable = true;
 
     keymaps = {
-      move_cursor_up = "<C-K>";
-      move_cursor_down = "<C-J>";
-      move_cursor_left = "<C-H>";
-      move_cursor_right = "<C-L>";
+      move_cursor_up = "<C-k>";
+      move_cursor_down = "<C-j>";
+      move_cursor_left = "<C-h>";
+      move_cursor_right = "<C-l>";
 
       resize_up = "<C-Up>";
       resize_down = "<C-Down>";

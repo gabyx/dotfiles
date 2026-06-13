@@ -92,15 +92,24 @@
 
       fuzzy.implementation = "prefer_rust";
 
-      sourcePlugins.emoji.enable = true;
-      sourcePlugins.ripgrep.enable = true;
-      sourcePlugins.spell.enable = true;
+      sources = {
+        default = [
+          "lsp"
+          "snippets"
+          "buffer"
+          "path"
+        ];
+      };
+
+      # sourcePlugins.emoji.enable = true;
+      # sourcePlugins.ripgrep.enable = true;
+      # sourcePlugins.spell.enable = true;
 
       completion = {
-        list.select_next = {
-          preselect = true;
-          auto_insert = true;
-        };
+        # list.select_next = {
+        #   # preselect = true;
+        #   # auto_insert = true;
+        # };
 
         menu = {
           auto_show = true;
@@ -109,7 +118,7 @@
           #   ''
           #     function(ctx) return ctx.mode ~= "cmdline" end
           #   '';
-          # winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None";
+          winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None";
           draw = {
             treesitter = [ "lsp" ];
             # components = {
@@ -122,22 +131,22 @@
         };
 
         accept.auto_brackets.enabled = true;
-        # documentation = {
-        #   auto_show = true;
-        #   auto_show_delay_ms = 0;
-        #   window.winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None";
-        # };
+        documentation = {
+          auto_show = true;
+          auto_show_delay_ms = 0;
+          window.winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None";
+        };
       };
 
-      # cmdline = {
-      #   keymap."<End>" = [
-      #     "hide"
-      #     "fallback"
-      #   ];
-      #   completion.ghost_text.enabled = false;
-      # };
+      cmdline = {
+        keymap."<End>" = [
+          "hide"
+          "fallback"
+        ];
+        completion.ghost_text.enabled = true;
+      };
 
-      # signature.window.winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder";
+      signature.window.winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder";
     };
   };
 }
