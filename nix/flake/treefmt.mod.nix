@@ -1,9 +1,13 @@
 { inputs, ... }:
 {
   perSystem =
-    { pkgsUnstable, ... }:
+    { inputs', pkgsUnstable, ... }:
     let
-      treefmtEval = inputs.treefmt-nix.lib.evalModule pkgsUnstable ./treefmt.nix;
+      pkgs = pkgsUnstable // {
+        nixfmt = inputs'.nixfmt-rs.packages.default;
+      };
+
+      treefmtEval = inputs.treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
       treefmt = treefmtEval.config.build.wrapper;
     in
     {

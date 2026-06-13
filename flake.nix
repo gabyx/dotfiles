@@ -163,9 +163,8 @@
       url = "sourcehut:~alexdavid/jail.nix?ref=beta";
     };
 
-    nixpak = {
-      url = "github:nixpak/nixpak";
-      inputs.nixpkgs.follows = "nixpkgs";
+    nixfmt-rs = {
+      url = "github:Mic92/nixfmt-rs";
     };
 
     # Age Encryption Tool for NixOS.
