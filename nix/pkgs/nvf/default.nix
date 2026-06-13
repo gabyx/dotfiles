@@ -23,7 +23,10 @@ let
 
           modules = [
             {
-              vim.package = nvim;
+              vim = {
+                package = nvim;
+                appName = name; # FIXME: Remove when going to upstream.
+              };
               imports = [
                 (inputs.import-tree (i: i.map (x: lib.info "Importing: '${x}'" x)) (
                   i: i.filter (x: !lib.hasInfix ".lib." x)

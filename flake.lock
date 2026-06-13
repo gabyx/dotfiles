@@ -415,11 +415,11 @@
     },
     "mnw": {
       "locked": {
-        "lastModified": 1778541201,
-        "narHash": "sha256-n0twkzWexzjsoDycOTvvQNuGEdg62UiNHYcFCduYpKI=",
+        "lastModified": 1780772958,
+        "narHash": "sha256-VKKe8r4pwCGWZ3Yr9CPN129R4S3CKLSrlYqdYz3vKpM=",
         "owner": "Gerg-L",
         "repo": "mnw",
-        "rev": "1a3573fc9d2486738fe0b2cacc5cd10dd5f3a445",
+        "rev": "0871dbf63a53610c95db04439ed8ea4d6ec9c160",
         "type": "github"
       },
       "original": {
@@ -811,15 +811,16 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1780650009,
-        "narHash": "sha256-zUN3BFopCC9J7g8cQO69s93EKCKApSwRlLWMC2bI+GY=",
-        "owner": "NotAShelf",
+        "lastModified": 1781349255,
+        "narHash": "sha256-V7bNKVndUnPWBhlMczRWzc60DoLw4aRXiJCjfJUM2r0=",
+        "owner": "gabyx",
         "repo": "nvf",
-        "rev": "0b92b1783de48499303fc6e61478da34ee124482",
+        "rev": "2b3b0d0c4630f3483b247b67fddfaca8138ded87",
         "type": "github"
       },
       "original": {
-        "owner": "NotAShelf",
+        "owner": "gabyx",
+        "ref": "feat/add-app-name",
         "repo": "nvf",
         "type": "github"
       }
