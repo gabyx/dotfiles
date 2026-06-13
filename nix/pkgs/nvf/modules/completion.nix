@@ -5,6 +5,10 @@
   vim.autocomplete.blink-cmp = {
     enable = true;
 
+    sourcePlugins.emoji.enable = true;
+    sourcePlugins.ripgrep.enable = true;
+    sourcePlugins.spell.enable = true;
+
     setupOpts = {
       keymap = {
         preset = "none";
@@ -97,13 +101,12 @@
           "lsp"
           "snippets"
           "buffer"
+          "emoji"
           "path"
+          "ripgrep"
+          "spell"
         ];
       };
-
-      # sourcePlugins.emoji.enable = true;
-      # sourcePlugins.ripgrep.enable = true;
-      # sourcePlugins.spell.enable = true;
 
       completion = {
         # list.select_next = {
