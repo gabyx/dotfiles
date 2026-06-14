@@ -1,13 +1,7 @@
 {
   "iferr": {
-    "prefix": [
-      "iferr"
-    ],
-    "body": [
-      "if err != nil {",
-      "\t$1",
-      "}"
-    ],
+    "prefix": ["iferr"],
+    "body": ["if err != nil {", "\t$1", "}"],
     "description": "if err != nil"
   },
   "optpatternErr": {

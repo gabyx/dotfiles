@@ -10,29 +10,29 @@ local f = ls.function_node
 local d = ls.dynamic_node
 
 local function get_clibboard_buffer()
-  local cp = vim.fn.getreg()
-  if cp ~= nil then
-    local lines = {}
-    for s in cp:gmatch("[^\r\n]+") do
-      table.insert(lines, s)
+    local cp = vim.fn.getreg()
+    if cp ~= nil then
+        local lines = {}
+        for s in cp:gmatch("[^\r\n]+") do
+            table.insert(lines, s)
+        end
+        return lines
+    else
+        return ""
     end
-    return lines
-  else
-    return ""
-  end
 end
 
 -- Compute the second column size depending on the first.
 local function compute_cols_size(args)
-  -- args = {{ "input-1" }}
-  local width = args[1][1]
-  local number = tonumber(width)
+    -- args = {{ "input-1" }}
+    local width = args[1][1]
+    local number = tonumber(width)
 
-  if number == nil then
-    width = 50
-  end
+    if number == nil then
+        width = 50
+    end
 
-  return tostring(100 - width)
+    return tostring(100 - width)
 end
 
 -- stylua: ignore

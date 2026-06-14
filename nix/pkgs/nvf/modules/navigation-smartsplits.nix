@@ -25,12 +25,15 @@ in
 
     setupOpts = {
       ignored_filetypes = [
+        "neo-tree"
+        "undotree"
+      ];
+      ignored_buftypes = [
         "nofile"
         "quickfix"
-        "qf"
         "prompt"
       ];
-      ignored_buftypes = [ "nofile" ];
+      log_level = "info";
     };
   };
 
