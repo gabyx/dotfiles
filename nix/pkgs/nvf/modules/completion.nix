@@ -2,14 +2,74 @@
 {
   vim.autopairs.nvim-autopairs.enable = true;
 
+  # Recipes: https://main.cmp.saghen.dev/recipes.html
   vim.autocomplete.blink-cmp = {
     enable = true;
 
     sourcePlugins.emoji.enable = true;
     sourcePlugins.ripgrep.enable = true;
     sourcePlugins.spell.enable = true;
+    friendly-snippets.enable = false;
 
     setupOpts = {
+      fuzzy.implementation = "prefer_rust";
+
+      snippets = {
+        preset = "luasnip";
+      };
+
+      sources = {
+        default = [
+          "lsp"
+          "snippets"
+          "path"
+          "buffer"
+          "emoji"
+          "ripgrep"
+          "spell"
+        ];
+      };
+
+      completion = {
+        list = {
+          preselect = true;
+        };
+
+        menu = {
+          min_height = 40;
+
+          auto_show = true;
+          winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None";
+          draw = {
+            treesitter = [ "lsp" ];
+            # components = {
+            #   kind_icon = {
+            #     # text = function(ctx) return get_kind_icon(ctx).text end,
+            #     # highlight = function(ctx) return get_kind_icon(ctx).highlight end,
+            #   };
+            # };
+          };
+        };
+
+        accept.auto_brackets.enabled = true;
+
+        documentation = {
+          auto_show = true;
+          auto_show_delay_ms = 0;
+          window.winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None";
+        };
+      };
+
+      cmdline = {
+        keymap."<End>" = [
+          "hide"
+          "fallback"
+        ];
+        completion.ghost_text.enabled = true;
+      };
+
+      signature.window.winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder";
+
       keymap = {
         preset = "none";
         "<C-Space>" = [
@@ -25,27 +85,27 @@
           "select_next"
           "fallback"
         ];
-        "<C-N>" = [
+        "<C-n>" = [
           "select_next"
           "show"
         ];
-        "<C-P>" = [
+        "<C-p>" = [
           "select_prev"
           "show"
         ];
-        "<C-J>" = [
+        "<C-j>" = [
           "select_next"
           "fallback"
         ];
-        "<C-K>" = [
+        "<C-k>" = [
           "select_prev"
           "fallback"
         ];
-        "<C-U>" = [
+        "<C-u>" = [
           "scroll_documentation_up"
           "fallback"
         ];
-        "<C-D>" = [
+        "<C-d>" = [
           "scroll_documentation_down"
           "fallback"
         ];
@@ -93,63 +153,6 @@
           "fallback"
         ];
       };
-
-      fuzzy.implementation = "prefer_rust";
-
-      sources = {
-        default = [
-          "lsp"
-          "snippets"
-          "buffer"
-          "emoji"
-          "path"
-          "ripgrep"
-          "spell"
-        ];
-      };
-
-      completion = {
-        # list.select_next = {
-        #   # preselect = true;
-        #   # auto_insert = true;
-        # };
-
-        menu = {
-          auto_show = true;
-          # lib.generators.mkLuaInline
-          #   #Lua
-          #   ''
-          #     function(ctx) return ctx.mode ~= "cmdline" end
-          #   '';
-          winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None";
-          draw = {
-            treesitter = [ "lsp" ];
-            # components = {
-            #   kind_icon = {
-            #     # text = function(ctx) return get_kind_icon(ctx).text end,
-            #     # highlight = function(ctx) return get_kind_icon(ctx).highlight end,
-            #   };
-            # };
-          };
-        };
-
-        accept.auto_brackets.enabled = true;
-        documentation = {
-          auto_show = true;
-          auto_show_delay_ms = 0;
-          window.winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None";
-        };
-      };
-
-      cmdline = {
-        keymap."<End>" = [
-          "hide"
-          "fallback"
-        ];
-        completion.ghost_text.enabled = true;
-      };
-
-      signature.window.winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder";
     };
   };
 }
