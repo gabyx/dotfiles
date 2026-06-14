@@ -144,6 +144,7 @@ function main() {
         fi
 
         if [ ! -f "$enc_file" ]; then
+            gabyx::print_info "Encryption file '$enc_file' is not existing yet."
             gabyx::print_info "Writing '$enc_file' for Yubikey '$yubikey_name' further invocations."
 
             mkdir -p "$(dirname "$enc_file")"

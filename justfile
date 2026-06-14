@@ -415,28 +415,7 @@ cm *args:
     }
     mkdir -p ~/.config/chezmoi
 
-    function get_bitwarden() {
-        if command -v bw &>/dev/null && [ -n "$BW_SESSION" ]; then
-            echo "Bitwarden session present." >&2
-            bw get password "$1"
-            return 0
-        fi
-        return 1
-    }
-
-    function get_bitwarden() {
-        # The chezmoi identity.
-        get_bitwarden "3cc1b9eb-2504-4cec-8dda-b17501145099"
-    }
-
-    function get_prompt() {
-        read -s -p "$1" k
-        echo >/dev/tty
-        [ -n "$k" ] || return 1
-        echo "$k" && return 0
-    }
-
-    if [ "${NO_ENCRYPTION_SETUP:-}" = "true" ] || ! echo "$@" | grep -q -E "encrypt|apply|re-add"; then
+    if [ "${NO_ENCRYPTION_SETUP:-}" = "true" ]; then
         echo "Skip encryption setup."
     else
         k=$(
