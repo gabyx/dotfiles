@@ -57,7 +57,7 @@ let
 
   nvim-nightly = createNeovim {
     name = "nvim-gabyx-nightly";
-    nvim = inputs'.nvim-nightly.packages.neovim-unwrapped;
+    nvim = inputs'.nvim-nightly.packages.neovim;
   };
 in
 nvim // nvim-nightly

@@ -178,8 +178,6 @@ local M = {
         },
     }),
 
-    icons = {}, -- Set in Nix.
-
     large_buf_opts = {
         enabled = true,
         size = 1000 * 1024 * 1024,

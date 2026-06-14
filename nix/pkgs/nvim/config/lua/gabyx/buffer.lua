@@ -102,9 +102,10 @@ end
 --- Move the current buffer tab n places in the bufferline
 ---@param n integer The number of tabs to move the current buffer over by (positive = right, negative = left)
 function M.move(n)
+    -- if n = 0 then no shifts are needed
     if n == 0 then
         return
-    end -- if n = 0 then no shifts are needed
+    end
 
     local bufs = vim.t.bufs -- make temp variable
     for i, bufnr in ipairs(bufs) do -- loop to find current buffer
