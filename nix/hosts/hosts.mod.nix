@@ -14,7 +14,11 @@ let
     create:
     # Wrap flake-parts arguments into using `withSystem`...
     withSystem system (
-      { config, inputs', ... }:
+      {
+        config,
+        inputs',
+        ...
+      }:
       create (
         args
         // {

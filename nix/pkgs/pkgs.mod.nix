@@ -24,7 +24,7 @@
       age-plugin-fido2prf = pkgsUnstable.callPackage ./age-plugin-fido2prf { };
       age-plugin-fido2-hmac = pkgsUnstable.callPackage ./age-plugin-fido2-hmac { };
 
-      nvim = import ./nvim {
+      nvim = import ./nvim-nvf {
         inherit lib;
         inherit inputs;
         inherit inputs';
