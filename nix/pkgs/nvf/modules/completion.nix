@@ -32,12 +32,12 @@
 
       completion = {
         list = {
-          preselect = true;
+          selection = {
+            preselect = true;
+          };
         };
 
         menu = {
-          min_height = 40;
-
           auto_show = true;
           winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None";
           draw = {

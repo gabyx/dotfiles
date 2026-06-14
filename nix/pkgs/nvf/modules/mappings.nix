@@ -275,23 +275,22 @@ in
       '';
 
   vim.keymaps = [
-    # Exiting.
-    {
-      mode = "n";
-      key = "<C-Q>";
-      action = "<Cmd>q!<CR>";
-      desc = "Force quit.";
-    }
     {
       mode = "n";
       key = "<Leader>q";
-      action = "<Cmd>confirm q<CR>";
+      lua = true;
+      action = /* lua */ ''
+        function() require("gabyx.buffer").close() end
+      '';
       desc = "Quit window.";
     }
     {
       mode = "n";
       key = "<Leader>Q";
-      action = "<Cmd>confirm qall<CR>";
+      lua = true;
+      action = /* lua */ ''
+        function() require("gabyx.quit").quit() end
+      '';
       desc = "Exit.";
     }
 
