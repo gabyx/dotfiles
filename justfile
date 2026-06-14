@@ -416,7 +416,7 @@ cm *args:
     }
     mkdir -p ~/.config/chezmoi
 
-    if [ "${NO_ENCRYPTION_SETUP:-}" = "true" ] || ! echo "$@" | grep -q -E "encrypt|apply|re-add"; then
+    if [ "${NO_ENCRYPTION_SETUP:-}" = "true" ]; then
         echo "Skip encryption setup."
     else
         k=$(
