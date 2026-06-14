@@ -1,7 +1,12 @@
-{ inputs, inputs', ... }:
+{
+  lib,
+  inputs,
+  ...
+}:
 {
   perSystem =
     {
+      inputs',
       pkgsUnstable,
       ...
     }:
@@ -19,15 +24,26 @@
       age-plugin-fido2prf = pkgsUnstable.callPackage ./age-plugin-fido2prf { };
       age-plugin-fido2-hmac = pkgsUnstable.callPackage ./age-plugin-fido2-hmac { };
 
-      nvim-nvf = import ./nvf {
+      nvim = import ./nvim {
+        inherit lib;
         inherit inputs;
         inherit inputs';
-        pkgs = pkgsUnstable;
+
+        # The pinned nvim packages.
+        pkgs = inputs'.nvim-nixpkgs.legacyPackages;
+
+        # The unstable packages.
+        inherit pkgsUnstable;
       };
     in
     {
       packages = {
-        inherit (nvim-nvf) nvim-gabyx;
+        inherit (nvim)
+          nvim-gabyx
+          nvim-gabyx-config
+          nvim-gabyx-nightly
+          nvim-gabyx-nightly-config
+          ;
         inherit neural-amp-modeler-lv2;
         inherit age-plugin-fido2prf;
         inherit age-plugin-fido2-hmac;

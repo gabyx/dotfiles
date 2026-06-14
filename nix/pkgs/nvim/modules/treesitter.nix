@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 let
 in
 {
@@ -43,7 +43,7 @@ in
       };
     in
     {
-      "incselect" = {
+      incselect = {
         package = incselect;
       };
     };

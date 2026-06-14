@@ -33,9 +33,8 @@ develop *args:
         --command "${args[@]}"
 
 # Format the whole repository.
-format:
-    cd "{{root_dir}}" && \
-      nix fmt
+format *args:
+    cd "{{root_dir}}" && nix fmt -- "$@"
 
 # Build the NixOS.
 build *args:
