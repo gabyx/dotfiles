@@ -19,9 +19,32 @@ function M.autopairs(silent)
             autopairs.disable()
         end
         require("gabyxui").config.features.autopairs = autopairs.state.disabled
-        ui_notify(silent, ("autopairs %s"):format(bool2str(not autopairs.state.disabled)))
+        ui_notify(silent, ("autopairs: %s"):format(bool2str(not autopairs.state.disabled)))
     else
         ui_notify(silent, "autopairs not available")
+    end
+end
+
+--- Toggle format-on-save.
+---@param silent? boolean if true then don't sent a notification
+---@param bufnr? integer if given the buffer local variable is set.
+function M.format_on_save(silent, bufnr)
+    local config = assert(require("gabyxui.config"))
+
+    config.features.format_on_save = not config.features.format_on_save
+    ui_notify(silent, ("format on save: %s"):format(bool2str(config.features.format_on_save)))
+end
+
+--- Toggle format-on-save for buffer.
+---@param silent? boolean if true then don't sent a notification
+function M.format_on_save_buffer(silent)
+    local config = assert(require("gabyxui.config"))
+    local buffer = assert(require("gabyx.buffer"))
+    local buf = vim.api.nvim_get_current_buf()
+
+    if buffer.is_valid(buf) then
+        vim.b[buf].format_on_save = vim.b[buf].format_on_save ~= nil and not vim.b[buf].format_on_save or false
+        ui_notify(silent, ("format on save (buffer): %s"):format(bool2str(vim.b[buf].format_on_save)))
     end
 end
 
@@ -29,7 +52,7 @@ end
 ---@param silent? boolean if true then don't sent a notification
 function M.background(silent)
     vim.go.background = vim.go.background == "light" and "dark" or "light"
-    ui_notify(silent, ("background=%s"):format(vim.go.background))
+    ui_notify(silent, ("background: %s"):format(vim.go.background))
 end
 
 --- Toggle cmp entrirely
@@ -38,7 +61,7 @@ function M.cmp(silent)
     local features = assert(require("gabyxui").config.features)
     features.cmp = not features.cmp
     local ok, _ = pcall(require, "cmp")
-    ui_notify(silent, ok and ("Global completion %s"):format(bool2str(features.cmp)) or "completion not available")
+    ui_notify(silent, ok and ("Global completion: %s"):format(bool2str(features.cmp)) or "completion not available")
 end
 
 --- Toggle buffer local cmp
@@ -53,7 +76,7 @@ function M.buffer_cmp(bufnr, silent)
     local ok, _ = pcall(require, "cmp")
     ui_notify(
         silent,
-        ok and ("Buffer completion %s"):format(bool2str(vim.b[bufnr].completion)) or "completion not available"
+        ok and ("Buffer completion: %s"):format(bool2str(vim.b[bufnr].completion)) or "completion not available"
     )
 end
 
@@ -61,14 +84,14 @@ end
 ---@param silent? boolean if true then don't sent a notification
 function M.tabline(silent)
     vim.opt.showtabline = vim.opt.showtabline:get() == 0 and 2 or 0
-    ui_notify(silent, ("tabline %s"):format(bool2str(vim.opt.showtabline:get() == 2)))
+    ui_notify(silent, ("tabline: %s"):format(bool2str(vim.opt.showtabline:get() == 2)))
 end
 
 --- Toggle conceal=2|0
 ---@param silent? boolean if true then don't sent a notification
 function M.conceal(silent)
     vim.opt.conceallevel = vim.opt.conceallevel:get() == 0 and 2 or 0
-    ui_notify(silent, ("conceal %s"):format(bool2str(vim.opt.conceallevel:get() == 2)))
+    ui_notify(silent, ("conceal: %s"):format(bool2str(vim.opt.conceallevel:get() == 2)))
 end
 
 --- Toggle laststatus=3|2|0
@@ -86,7 +109,7 @@ function M.statusline(silent)
         vim.opt.laststatus = 0
         status = "off"
     end
-    ui_notify(silent, ("statusline %s"):format(status))
+    ui_notify(silent, ("statusline: %s"):format(status))
 end
 
 --- Toggle signcolumn="auto"|"no"
@@ -99,7 +122,7 @@ function M.signcolumn(silent)
     else
         vim.wo.signcolumn = "no"
     end
-    ui_notify(silent, ("signcolumn=%s"):format(vim.wo.signcolumn))
+    ui_notify(silent, ("signcolumn: %s"):format(vim.wo.signcolumn))
 end
 
 --- Set the indent and tab related numbers
@@ -141,7 +164,7 @@ end
 ---@param silent? boolean if true then don't sent a notification
 function M.spell(silent)
     vim.wo.spell = not vim.wo.spell -- local to window
-    ui_notify(silent, ("spell %s"):format(bool2str(vim.wo.spell)))
+    ui_notify(silent, ("spell: %s"):format(bool2str(vim.wo.spell)))
 end
 
 --- Toggle paste
@@ -149,7 +172,7 @@ end
 function M.paste(silent)
     local paste = not assert(vim.opt.paste):get()
     vim.opt.paste = paste -- local to window
-    ui_notify(silent, ("paste %s"):format(bool2str(paste)))
+    ui_notify(silent, ("paste: %s"):format(bool2str(paste)))
 end
 
 --- Toggle wrap
@@ -191,7 +214,7 @@ function M.url_match(silent)
     local features = assert(require("gabyxui").config.features)
     features.highlighturl = not features.highlighturl
     vim.tbl_map(M.set_url_match, vim.api.nvim_list_wins())
-    ui_notify(silent, ("URL highlighting %s"):format(bool2str(features.highlighturl)))
+    ui_notify(silent, ("URL highlighting: %s"):format(bool2str(features.highlighturl)))
 end
 
 local last_active_foldcolumn
@@ -210,7 +233,7 @@ end
 ---@param silent? boolean if true then don't sent a notification
 function M.diagnostics(silent)
     vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-    ui_notify(silent, ("Diagnostics %s"):format(bool2str(vim.diagnostic.is_enabled())))
+    ui_notify(silent, ("Diagnostics: %s"):format(bool2str(vim.diagnostic.is_enabled())))
 end
 
 local previous_virtual_text
@@ -225,7 +248,7 @@ function M.virtual_text(silent)
         new_virtual_text = previous_virtual_text or true
     end
     vim.diagnostic.config({ virtual_text = new_virtual_text })
-    ui_notify(silent, ("Virtual text %s"):format(bool2str(new_virtual_text)))
+    ui_notify(silent, ("Virtual text: %s"):format(bool2str(new_virtual_text)))
 end
 
 local previous_virtual_lines
@@ -240,7 +263,7 @@ function M.virtual_lines(silent)
         new_virtual_lines = previous_virtual_lines or true
     end
     vim.diagnostic.config({ virtual_lines = new_virtual_lines })
-    ui_notify(silent, ("Virtual lines %s"):format(bool2str(new_virtual_lines)))
+    ui_notify(silent, ("Virtual lines: %s"):format(bool2str(new_virtual_lines)))
 end
 
 --- Toggle buffer semantic token highlighting for all language servers that support it
@@ -253,7 +276,7 @@ function M.buffer_semantic_tokens(bufnr, silent)
         vim.lsp.semantic_tokens.force_refresh(bufnr)
         ui_notify(
             silent,
-            ("Buffer lsp semantic highlighting %s"):format(
+            ("Buffer lsp semantic highlighting: %s"):format(
                 bool2str(vim.lsp.semantic_tokens.is_enabled({ bufnr = bufnr }))
             )
         )
@@ -301,7 +324,7 @@ function M.buffer_inlay_hints(bufnr, silent)
     if vim.lsp.inlay_hint then
         local filter = { bufnr = bufnr or 0 }
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(filter), filter)
-        ui_notify(silent, ("Buffer inlay hints %s"):format(bool2str(vim.lsp.inlay_hint.is_enabled(filter))))
+        ui_notify(silent, ("Buffer inlay hints: %s"):format(bool2str(vim.lsp.inlay_hint.is_enabled(filter))))
     end
 end
 
@@ -310,7 +333,7 @@ end
 function M.inlay_hints(silent)
     if vim.lsp.inlay_hint then
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-        ui_notify(silent, ("Global inlay hints %s"):format(bool2str(vim.lsp.inlay_hint.is_enabled())))
+        ui_notify(silent, ("Global inlay hints: %s"):format(bool2str(vim.lsp.inlay_hint.is_enabled())))
     end
 end
 

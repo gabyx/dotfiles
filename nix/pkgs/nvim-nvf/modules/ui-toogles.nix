@@ -57,6 +57,24 @@
     }
     {
       mode = "n";
+      key = "<Leader>uF";
+      lua = true;
+      action = /* lua */ ''
+        function() require("gabyxui.toggles").format_on_save() end
+      '';
+      desc = "Toggle format on save.";
+    }
+    {
+      mode = "n";
+      key = "<Leader>uf";
+      lua = true;
+      action = /* lua */ ''
+        function() require("gabyxui.toggles").format_on_save_buffer() end
+      '';
+      desc = "Toggle format on save (buffer).";
+    }
+    {
+      mode = "n";
       key = "<Leader>ul";
       lua = true;
       action = /* lua */ ''

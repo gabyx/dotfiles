@@ -17,16 +17,31 @@ in
         lsp_format = "fallback";
       };
 
+      notify_on_error = true;
+      notify_no_formatters = true;
+
       format_after_save = null;
 
       format_on_save =
         mkLuaInline
           # Lua
           ''
-            function()
-              if not require("gabyx.format").on_save_enabled() then
+            function(bufnr)
+              if (vim.b[bufnr].format_on_save ~= nil and 
+                not vim.b[bufnr].format_on_save) or 
+                not require("gabyxui").config.features.format_on_save then
                 return
               end
+
+              fmt = require("conform").list_formatters_to_run(bufnr)
+              local names = ""
+              for _, item in ipairs(fmt) do
+                  names = names .. "\n- '" .. item.name .. "'"
+              end
+
+              vim.notify("Formatting file with:" .. names)
+
+              return { timeout_ms = 300 }
             end
           '';
 

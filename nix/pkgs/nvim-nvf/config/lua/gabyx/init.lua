@@ -72,7 +72,6 @@ function M.setup(opts)
     M.buffer = require("gabyx.buffer")
     M.completion = require("gabyx.completion")
     M.diagnostics = require("gabyx.diagnostics")
-    M.format = require("gabyx.format")
     M.quit = require("gabyx.quit")
 
     --- Apply all options.

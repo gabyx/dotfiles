@@ -10,7 +10,7 @@ local mid_mapping = false
 ---@field lines integer|false? the number of lines in a file or false to disable check
 ---@field line_length integer|false? the average line length in a file or false to disable check buffer settings.
 
----@class Settings
+---@class gabyx.Settings
 ---
 ---table for defining the size of the max file for all features, above these limits we disable features like treesitter.
 ---value can also be `false` to disable large buffer detection.
@@ -148,7 +148,7 @@ local function get_default_vim_options()
     return { opt = opt, g = g, t = { bufs = vim.t.bufs } }
 end
 
----@type Settings
+---@type gabyx.Settings
 local M = {
     options = vim.tbl_deep_extend("force", get_default_vim_options(), {
         opt = { -- vim.opt.<key>
@@ -174,7 +174,6 @@ local M = {
             diffopt = "internal,anchor,filler,closeoff,linematch:40,algorithm:histogram,linematch:60",
         },
         g = { -- vim.g.<key>
-            -- configure global vim variables (vim.g)
         },
     }),
 

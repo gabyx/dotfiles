@@ -1,8 +1,8 @@
----@class Settings
+---@class gabyxui.Settings
 --- List of icons map.
 --- @field icons table<string,string>
 
----@type Settings
+---@type gabyxui.Settings
 local M = {
     --- Will be set from Nix.
     icons = {},
@@ -17,6 +17,9 @@ local M = {
 
         -- URL highlight.
         highlighturl = true,
+
+        -- Format on save.
+        format_on_save = true,
     },
 }
 
