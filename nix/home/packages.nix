@@ -105,9 +105,6 @@ in
     pkgsUnstable.python313Packages.black
     pkgsUnstable.pyright
 
-    ## Node (markdown-preview)
-    pkgsUnstable.nodejs
-
     ## Nix
     pkgsUnstable.nix-tree
     pkgsUnstable.nixpkgs-lint
