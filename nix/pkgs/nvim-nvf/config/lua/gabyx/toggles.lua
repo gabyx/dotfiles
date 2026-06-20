@@ -1,16 +1,19 @@
----@class gabyxui.toggles
+---@class gabyx.toggles
 local M = {}
+
+local gabyx = require("gabyx")
 
 local function bool2str(bool)
     return bool and "on" or "off"
 end
 local function ui_notify(silent, ...)
-    return not silent and require("gabyx").notify(...)
+    return not silent and gabyx.notify(...)
 end
 
 --- Toggle autopairs
 ---@param silent? boolean if true then don't sent a notification
 function M.autopairs(silent)
+    local toggles = assert(gabyx.config.toggles)
     local ok, autopairs = pcall(require, "nvim-autopairs")
     if ok then
         if autopairs.state.disabled then
@@ -18,7 +21,7 @@ function M.autopairs(silent)
         else
             autopairs.disable()
         end
-        require("gabyxui").config.features.autopairs = autopairs.state.disabled
+        toggles.autopairs = autopairs.state.disabled
         ui_notify(silent, ("autopairs: %s"):format(bool2str(not autopairs.state.disabled)))
     else
         ui_notify(silent, "autopairs not available")
@@ -29,21 +32,25 @@ end
 ---@param silent? boolean if true then don't sent a notification
 ---@param bufnr? integer if given the buffer local variable is set.
 function M.format_on_save(silent, bufnr)
-    local config = assert(require("gabyxui.config"))
+    local toggles = assert(gabyx.config.toggles)
 
-    config.features.format_on_save = not config.features.format_on_save
-    ui_notify(silent, ("format on save: %s"):format(bool2str(config.features.format_on_save)))
+    toggles.format_on_save = not toggles.format_on_save
+    ui_notify(silent, ("format on save: %s"):format(bool2str(toggles.format_on_save)))
 end
 
 --- Toggle format-on-save for buffer.
 ---@param silent? boolean if true then don't sent a notification
 function M.format_on_save_buffer(silent)
-    local config = assert(require("gabyxui.config"))
-    local buffer = assert(require("gabyx.buffer"))
+    local toggles = assert(gabyx.config.toggles)
+    local buffer = assert(gabyx.buffer)
     local buf = vim.api.nvim_get_current_buf()
 
     if buffer.is_valid(buf) then
-        vim.b[buf].format_on_save = vim.b[buf].format_on_save ~= nil and not vim.b[buf].format_on_save or false
+        if vim.b[buf].format_on_save == nil then
+            vim.b[buf].format_on_save = toggles.format_on_save
+        end
+
+        vim.b[buf].format_on_save = not vim.b[buf].format_on_save
         ui_notify(silent, ("format on save (buffer): %s"):format(bool2str(vim.b[buf].format_on_save)))
     end
 end
@@ -55,22 +62,23 @@ function M.background(silent)
     ui_notify(silent, ("background: %s"):format(vim.go.background))
 end
 
---- Toggle cmp entrirely
+--- Toggle completion entrirely
 ---@param silent? boolean if true then don't sent a notification
 function M.cmp(silent)
-    local features = assert(require("gabyxui").config.features)
-    features.cmp = not features.cmp
+    local toggles = assert(gabyx.config.toggles)
+    toggles.completion = not toggles.completion
     local ok, _ = pcall(require, "cmp")
-    ui_notify(silent, ok and ("Global completion: %s"):format(bool2str(features.cmp)) or "completion not available")
+    ui_notify(silent, ok and ("Global completion: %s"):format(bool2str(toggles.cmp)) or "completion not available")
 end
 
---- Toggle buffer local cmp
+--- Toggle buffer local completion
 ---@param bufnr? integer the buffer to toggle cmp completion on
 ---@param silent? boolean if true then don't sent a notification
 function M.buffer_cmp(bufnr, silent)
+    local toggles = assert(gabyx.config.toggles)
     bufnr = (bufnr and bufnr ~= 0) and bufnr or vim.api.nvim_win_get_buf(0)
     if vim.b[bufnr].completion == nil then
-        vim.b[bufnr].completion = require("gabyxui").config.features.cmp
+        vim.b[bufnr].completion = toggles.completion
     end
     vim.b[bufnr].completion = not vim.b[bufnr].completion
     local ok, _ = pcall(require, "cmp")
@@ -136,9 +144,9 @@ function M.indent(silent)
         end
         vim.bo.expandtab = (indent > 0) -- local to buffer
         indent = math.abs(indent)
-        vim.bo.tabstop = indent -- local to buffer
-        vim.bo.softtabstop = indent -- local to buffer
-        vim.bo.shiftwidth = indent -- local to buffer
+        vim.bo.tabstop = indent         -- local to buffer
+        vim.bo.softtabstop = indent     -- local to buffer
+        vim.bo.shiftwidth = indent      -- local to buffer
         ui_notify(silent, ("indent=%d %s"):format(indent, vim.bo.expandtab and "expandtab" or "noexpandtab"))
     end
 end
@@ -146,7 +154,7 @@ end
 --- Change the number display modes
 ---@param silent? boolean if true then don't sent a notification
 function M.number(silent)
-    local number = vim.wo.number -- local to window
+    local number = vim.wo.number                 -- local to window
     local relativenumber = vim.wo.relativenumber -- local to window
     if not number and not relativenumber then
         vim.wo.number = true
@@ -190,18 +198,17 @@ function M.buffer_syntax(bufnr, silent)
     -- looks like `vim.treesitter.stop` has a bug with `0` being current
     bufnr = (bufnr and bufnr ~= 0) and bufnr or vim.api.nvim_win_get_buf(0)
 
-    local astrolsp_avail, lsp_toggle = pcall(require, "astrolsp.toggles")
     if vim.bo[bufnr].syntax == "off" then
         vim.treesitter.start(bufnr)
 
         vim.bo[bufnr].syntax = "on"
-        if astrolsp_avail and not vim.b[bufnr].semantic_tokens then
+        if not vim.b[bufnr].semantic_tokens then
             M.buffer_semantic_tokens(bufnr, true)
         end
     else
         vim.treesitter.stop(bufnr)
         vim.bo[bufnr].syntax = "off"
-        if astrolsp_avail and vim.b[bufnr].semantic_tokens then
+        if vim.b[bufnr].semantic_tokens then
             M.buffer_semantic_tokens(bufnr, true)
         end
     end
@@ -211,10 +218,10 @@ end
 --- Toggle URL/URI syntax highlighting rules
 ---@param silent? boolean if true then don't sent a notification
 function M.url_match(silent)
-    local features = assert(require("gabyxui").config.features)
-    features.highlighturl = not features.highlighturl
+    local toggles = assert(gabyx.config.toggles)
+    toggles.highlighturl = not toggles.highlighturl
     vim.tbl_map(M.set_url_match, vim.api.nvim_list_wins())
-    ui_notify(silent, ("URL highlighting: %s"):format(bool2str(features.highlighturl)))
+    ui_notify(silent, ("URL highlighting: %s"):format(bool2str(toggles.highlighturl)))
 end
 
 local last_active_foldcolumn
@@ -287,7 +294,7 @@ end
 
 --- regex used for matching a valid URL/URI string
 M.url_matcher =
-    "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
+"\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 
 --- Delete the syntax matching rules for URLs/URIs if set
 ---@param win? integer the window id to remove url highlighting in (default: current window)
@@ -306,12 +313,13 @@ end
 --- Add syntax matching rules for highlighting URLs/URIs
 ---@param win? integer the window id to remove url highlighting in (default: current window)
 function M.set_url_match(win)
+    local toggles = assert(gabyx.config.toggles)
     if not win then
         win = vim.api.nvim_get_current_win()
     end
     M.delete_url_match(win)
 
-    if require("gabyxui").config.features.highlighturl then
+    if toggles.highlighturl then
         vim.fn.matchadd("HighlightURL", M.url_matcher, 15, -1, { window = win })
         vim.w[win].highlighturl_enabled = true
     end

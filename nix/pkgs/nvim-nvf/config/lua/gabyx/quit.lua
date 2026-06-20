@@ -1,3 +1,4 @@
+---@class gabyx.quit
 local M = {}
 
 -- Quits nvim gracefully by confirming for all buffers.

@@ -1,3 +1,4 @@
+---@class gabyx.completion
 local M = {}
 
 ---@type function?, function?

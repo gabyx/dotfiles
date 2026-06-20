@@ -6,7 +6,7 @@
       key = "<Leader>ua";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").background() end
+        function() require("gabyx").toggles.autopairs() end
       '';
       desc = "Toggle autopairs.";
     }
@@ -15,7 +15,7 @@
       key = "<Leader>ub";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").background() end
+        function() require("gabyx").toggles.background() end
       '';
       desc = "Toggle background.";
     }
@@ -24,7 +24,7 @@
       key = "<Leader>ud";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").diagnostics() end
+        function() require("gabyx").toggles.diagnostics() end
       '';
       desc = "Toggle diagnostics.";
     }
@@ -33,7 +33,7 @@
       key = "<Leader>ug";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").signcolumn() end
+        function() require("gabyx").toggles.signcolumn() end
       '';
       desc = "Toggle signcolumn.";
     }
@@ -42,7 +42,7 @@
       key = "<Leader>u>";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").foldcolumn() end
+        function() require("gabyx").toggles.foldcolumn() end
       '';
       desc = "Toggle foldcolumn.";
     }
@@ -51,7 +51,7 @@
       key = "<Leader>ui";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").indent() end
+        function() require("gabyx").toggles.indent() end
       '';
       desc = "Change indent setting.";
     }
@@ -60,7 +60,7 @@
       key = "<Leader>uF";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").format_on_save() end
+        function() require("gabyx").toggles.format_on_save() end
       '';
       desc = "Toggle format on save.";
     }
@@ -69,7 +69,7 @@
       key = "<Leader>uf";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").format_on_save_buffer() end
+        function() require("gabyx").toggles.format_on_save_buffer() end
       '';
       desc = "Toggle format on save (buffer).";
     }
@@ -78,7 +78,7 @@
       key = "<Leader>ul";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").statusline() end
+        function() require("gabyx").toggles.statusline() end
       '';
       desc = "Toggle statusline.";
     }
@@ -87,7 +87,7 @@
       key = "<Leader>un";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").number() end
+        function() require("gabyx").toggles.number() end
       '';
       desc = "Change line numbering.";
     }
@@ -96,7 +96,7 @@
       key = "<Leader>up";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").paste() end
+        function() require("gabyx").toggles.paste() end
       '';
       desc = "Toggle paste mode.";
     }
@@ -105,7 +105,7 @@
       key = "<Leader>us";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").spell() end
+        function() require("gabyx").toggles.spell() end
       '';
       desc = "Toggle spellcheck.";
     }
@@ -114,7 +114,7 @@
       key = "<Leader>uS";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").conceal() end
+        function() require("gabyx").toggles.conceal() end
       '';
       desc = "Toggle conceal";
     }
@@ -123,7 +123,7 @@
       key = "<Leader>ut";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").tabline() end
+        function() require("gabyx").toggles.tabline() end
       '';
       desc = "Toggle tabline.";
     }
@@ -132,7 +132,7 @@
       key = "<Leader>uu";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").url_match() end
+        function() require("gabyx").toggles.url_match() end
       '';
       desc = "Toggle URL highlight.";
     }
@@ -141,7 +141,7 @@
       key = "<Leader>uv";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").virtual_text() end
+        function() require("gabyx").toggles.virtual_text() end
       '';
       desc = "Toggle virtual text.";
     }
@@ -150,7 +150,7 @@
       key = "<Leader>uV";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").virtual_lines() end
+        function() require("gabyx").toggles.virtual_lines() end
       '';
       desc = "Toggle virtual lines.";
     }
@@ -159,7 +159,7 @@
       key = "<Leader>uw";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").wrap() end
+        function() require("gabyx").toggles.wrap() end
       '';
       desc = "Toggle wrap.";
     }
@@ -168,7 +168,7 @@
       key = "<Leader>uy";
       lua = true;
       action = /* lua */ ''
-        function() require("gabyxui.toggles").buffer_syntax() end
+        function() require("gabyx").toggles.buffer_syntax() end
       '';
       desc = "Toggle syntax highlight..";
     }

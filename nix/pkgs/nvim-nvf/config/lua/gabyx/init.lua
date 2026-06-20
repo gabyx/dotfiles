@@ -65,6 +65,9 @@ end
 
 --- The setup function.
 function M.setup(opts)
+    --- Load icons first.
+    M.icons = require("gabyx.icons").setup({ icons = opts.icons })
+
     M.config = require("gabyx.config")
     M.config = vim.tbl_deep_extend("force", M.config, opts)
 
@@ -72,6 +75,7 @@ function M.setup(opts)
     M.buffer = require("gabyx.buffer")
     M.completion = require("gabyx.completion")
     M.diagnostics = require("gabyx.diagnostics")
+    M.toggles = require("gabyx.toggles")
     M.quit = require("gabyx.quit")
 
     --- Apply all options.

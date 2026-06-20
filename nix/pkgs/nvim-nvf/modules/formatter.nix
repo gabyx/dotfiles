@@ -27,9 +27,9 @@ in
           # Lua
           ''
             function(bufnr)
-              if (vim.b[bufnr].format_on_save ~= nil and 
-                not vim.b[bufnr].format_on_save) or 
-                not require("gabyxui").config.features.format_on_save then
+              if (vim.b[bufnr].format_on_save ~= nil and
+                not vim.b[bufnr].format_on_save) or
+                not require("gabyx").config.toggles.format_on_save then
                 return
               end
 

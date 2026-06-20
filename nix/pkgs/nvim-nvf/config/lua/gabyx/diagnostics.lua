@@ -1,3 +1,4 @@
+---@class gabyx.diagnostic
 local M = {}
 
 function M.jump(dir, severity)

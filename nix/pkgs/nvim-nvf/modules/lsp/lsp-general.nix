@@ -73,7 +73,7 @@ in
         key = "<Leader>uh";
         lua = true;
         action = /* Lua */ ''
-          function() require("gabyxui.toggles").buffer_inlay_hints() end
+          function() require("gabyx").toggles.buffer_inlay_hints() end
         '';
         desc = "Toggle LSP inlay hints (buffer).";
       }
@@ -82,7 +82,7 @@ in
         key = "<Leader>uH";
         lua = true;
         action = /* Lua */ ''
-          function() require("gabyxui.toggles").inlay_hints() end
+          function() require("gabyx").toggles.inlay_hints() end
         '';
         desc = "Toggle LSP inlay hints.";
       }
