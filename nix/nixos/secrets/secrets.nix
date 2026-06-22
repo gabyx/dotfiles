@@ -44,6 +44,13 @@ let
       hostDesktop
       hostTuxedo
     ];
+
+    # Nix Caches
+    "ssh-read-nix-cache-swisscustodian.age".publicKeys = [
+      chezmoi
+      hostDesktop
+      hostTuxedo
+    ];
   };
 in
 rules
