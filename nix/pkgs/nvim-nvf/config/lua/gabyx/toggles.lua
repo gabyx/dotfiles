@@ -144,9 +144,9 @@ function M.indent(silent)
         end
         vim.bo.expandtab = (indent > 0) -- local to buffer
         indent = math.abs(indent)
-        vim.bo.tabstop = indent         -- local to buffer
-        vim.bo.softtabstop = indent     -- local to buffer
-        vim.bo.shiftwidth = indent      -- local to buffer
+        vim.bo.tabstop = indent -- local to buffer
+        vim.bo.softtabstop = indent -- local to buffer
+        vim.bo.shiftwidth = indent -- local to buffer
         ui_notify(silent, ("indent=%d %s"):format(indent, vim.bo.expandtab and "expandtab" or "noexpandtab"))
     end
 end
@@ -154,7 +154,7 @@ end
 --- Change the number display modes
 ---@param silent? boolean if true then don't sent a notification
 function M.number(silent)
-    local number = vim.wo.number                 -- local to window
+    local number = vim.wo.number -- local to window
     local relativenumber = vim.wo.relativenumber -- local to window
     if not number and not relativenumber then
         vim.wo.number = true
@@ -294,7 +294,7 @@ end
 
 --- regex used for matching a valid URL/URI string
 M.url_matcher =
-"\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
+    "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 
 --- Delete the syntax matching rules for URLs/URIs if set
 ---@param win? integer the window id to remove url highlighting in (default: current window)
