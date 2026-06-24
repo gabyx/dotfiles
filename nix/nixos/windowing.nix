@@ -48,8 +48,8 @@ let
 
   adjustKeyring = ''
     # Adds some more components to the gnome keyring daemon.
-    export GNOME_KEYRING_CONTROL="/run/user/$UID/keyring"
-    eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,gpg);
+    # Only start stuff which is not owned by PAM.
+    eval $(gnome-keyring-daemon --start --components=gpg);
   '';
 
   commands = pkgs.callPackage ./windowing/commands.nix { inherit windowMgr; };
@@ -143,10 +143,14 @@ in
 
     # Display Manager ===========================================================
     services.displayManager = {
+      defaultSession = windowMgr;
+
       autoLogin.enable = false;
       autoLogin.user = "nixos";
+
       gdm = {
         enable = true;
+        debug = true;
       };
     };
 
@@ -215,17 +219,19 @@ in
     services.gnome.gnome-keyring = {
       enable = true;
     };
+
     security = {
       polkit.enable = true; # https://discourse.nixos.org/t/sway-does-not-start/22354/5
 
       pam.services = {
         login.enableGnomeKeyring = true;
-      };
+        gdm-password.enableGnomeKeyring = true;
+      }
       # Enable Keyring for sway and swaylock.
-      # // (lib.mkIf (config.settings.windowing.manager == "sway") {
-      #   sway.enableGnomeKeyring = true;
-      #   swaylock.enableGnomeKeyring = true;
-      # });
+      // (lib.mkIf (config.settings.windowing.manager == "sway") {
+        sway.enableGnomeKeyring = true;
+        swaylock.enableGnomeKeyring = true;
+      });
     };
 
     fonts.packages = with pkgs; [
