@@ -108,13 +108,19 @@ build-image *args:
 
 # Show NixOS options for a certain host.
 option opts *args:
-    nixos-option -F ".#{{default_host}}" "{{opts}}" "${@:2}"
+    #!/usr/bin/env nu
+    def main [opts: string, ...args: string] {
+        ^nixos-option -F ".#{{default_host}}" $opts ...$args
+    }
 
 ## Flake maintenance commands =================================================
 # Update the flake lock file. Use arguments to specify single inputs.
 update *args:
-    cd "{{root_dir}}" && nix flake update "$@"
-
+    #!/usr/bin/env nu
+    def main [...args: string] {
+        cd "{{root_dir}}"
+        ^nix flake update ...$args
+    }
 
 ## NixOS Commands to execute on NixOS systems =================================
 # Prints the NixOS version (based on nixpkgs repository).
@@ -133,7 +139,7 @@ switch *args:
     #!/usr/bin/env nu
     def main [...args: string] {
         ^just rebuild switch ...$args --show-trace --verbose
-        ^just diff 2
+        ^just diff
     }
 
 # Build with nix-output-monitor, then switch.
@@ -145,7 +151,7 @@ switch-visual *args:
         print "============= SWITCHING ============="
         ^just rebuild switch --show-trace --verbose ...$args
 
-        ^just diff 2
+        ^just diff
     }
 
 # Switch to the latest configuration but under boot entry `name`.
@@ -153,7 +159,7 @@ switch-test name="test" *args:
     #!/usr/bin/env nu
     def main [name: string = "test", ...args: string] {
         ^just rebuild switch -p $name --show-trace --verbose ...$args
-        ^just diff 2 $name
+        ^just diff $name
     }
 
 # Build the host and put it under the boot entry `name`.
@@ -161,13 +167,13 @@ boot-test name="test" *args:
     #!/usr/bin/env nu
     def main [name: string = "test", ...args: string] {
         ^just rebuild boot -p $name --show-trace --verbose ...$args
-        ^just diff 2 $name
+        ^just diff $name
     }
 
 # NixOS rebuild command for the host (defined in the flake).
 rebuild how *args:
     #!/usr/bin/env nu
-    def main [how: string, ...args: string] {
+    def --wrapped main [how: string, ...args: string] {
         cd "{{root_dir}}"
 
         let host = "{{default_host}}"
@@ -210,49 +216,71 @@ history:
 # Run the trim script to reduce the amount of generations kept on the system.
 # Usage with `--help`.
 trim *args:
-    ./tools/scripts/trim-generations.sh "$@"
+    #!/usr/bin/env nu
+    def main [...args: string] {
+        ^./tools/scripts/trim-generations.sh ...$args
+    }
 
-# Diff the profile `current-system` with the last system profile.
-# `last` can be a number (newest = 1) or a path to a profile link.
-diff last="1" profile_name="system" current_profile="/run/current-system":
+# Diff the generation at index `index` with the last one.
+# `last` and `current` can be a number (newest = 0) or a path to a profile link.
+diff profile_name="system" current="0" last="1":
     #!/usr/bin/env nu
     def sort-profiles [profile_name: string] {
-        ls /nix/var/nix/profiles
+        let match = if ($profile_name =~ "system") {
+            $".*/profiles/($profile_name)-[^/]+$"
+        } else {
+            $".*/system-profiles/($profile_name)-[^/]+$"
+        }
+
+        print $match
+        ls /nix/var/nix/profiles/* /nix/var/nix/profiles/system-profiles/*
         | where type == symlink
-        | where name =~ $"($profile_name)-"
+        | where name =~ $match
         | sort-by modified --reverse
         | get name
     }
 
     def main [
-        last: string = "1"
         profile_name: string = "system"
-        current_profile: string = "/run/current-system"
+        current: string = "0"
+        last: string = "1"
     ] {
         if (which nvd | is-empty) {
             print -e "! Command 'nvd' not installed to print difference."
             return
         }
 
-        let digits_only = ($last | str replace --all --regex '[^0-9]' '')
-        let is_index = ($digits_only == $last) and ($last | is-not-empty)
-
-        let last_profile = if $is_index {
-            let profiles = (sort-profiles $profile_name)
-            mut idx = ($last | into int)
-
-            let candidate = ($profiles | get ($idx - 1))
-            if (($candidate | path expand) == ("/run/current-system" | path expand)) {
-                print $"Last profile '($candidate)' points to '/run/current-system' -> Skip."
-                $idx = $idx + 1
-            }
-
-            $profiles | get ($idx - 1)
+        let profiles = (sort-profiles $profile_name)
+        if ($profiles | is-empty) {
+            error make $"No profiles with name '($profile_name)-*' found."
         } else {
-            $last
+            print "Profiles found:" $profiles
         }
 
-        ^nvd diff $last_profile $current_profile
+        mut $current = $current
+        mut idx = try { $current | into int } catch { null }
+        if $idx != null {
+            $current = $profiles | get $idx
+        }
+
+        mut last_profile = $last
+        mut idx = try { $last | into int } catch { null }
+        if $idx != null {
+            $last_profile = $profiles | get $idx
+        }
+
+        let map_to_current = { |p|
+            if ($p | path expand) == ("/run/current-system" | path expand) {
+                "/run/current-system"
+            } else {
+                $p
+            }
+        }
+
+        $current = do $map_to_current $current
+        $last_profile = do $map_to_current $last_profile
+
+        ^nvd diff $last_profile $current
     }
 
 # Diff closures from `dest_ref` to `src_ref`. This builds and
@@ -458,7 +486,7 @@ create-links-from-secrets file:
 [no-cd]
 cm *args:
     #!/usr/bin/env nu
-    def main [...args: string] {
+    def --wrapped main [...args: string] {
         let key = $"($env.HOME)/.config/chezmoi/key"
         mkdir $"($env.HOME)/.config/chezmoi"
 
