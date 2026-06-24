@@ -147,14 +147,13 @@ in
       autoLogin.user = "nixos";
       gdm = {
         enable = true;
-        wayland = true;
       };
     };
 
     hardware = {
       graphics = {
         enable = true;
-        enable32Bit = true;
+        enable32Bit = false;
       };
     };
     # ===========================================================================

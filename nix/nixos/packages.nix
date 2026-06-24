@@ -25,8 +25,8 @@
     lshw
     pciutils
     usbutils
-    xorg.xev # For keyboard key press properties.
-    xorg.xkbcomp # For checking xkb keyboard symbol tables.
+    xev # For keyboard key press properties.
+    xkbcomp # For checking xkb keyboard symbol tables.
 
     libGL
     libGLU

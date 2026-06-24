@@ -37,6 +37,28 @@ format:
     cd "{{root_dir}}" && \
       nix fmt
 
+eval *args:
+    #!/usr/bin/env bash
+    set -eu
+    host="{{default_host}}"
+    cmd=(nix eval
+        --verbose
+        --show-trace
+        ".#nixosConfigurations.$host.config.system.build.toplevel"
+        "$@"
+    )
+
+    echo "----"
+    echo "${cmd[@]}"
+    echo "----"
+
+    if [ "{{use_nom}}" = "true" ]; then
+        "${cmd[@]}" --log-format internal-json |& nom --json
+    else
+        "${cmd[@]}"
+    fi
+
+
 # Build the NixOS.
 build *args:
     #!/usr/bin/env bash

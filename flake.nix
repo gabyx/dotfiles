@@ -63,7 +63,7 @@
     };
 
     # Nixpkgs (stuff for the system.)
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
     # Nixpkgs (unstable stuff for certain packages.)
     # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
@@ -75,12 +75,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Building images from NixOS.
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Some Hardware Modules.
     hardware = {
       url = "github:NixOS/nixos-hardware";
@@ -88,7 +82,7 @@
 
     # Home-Manager for NixOS.
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -135,9 +129,8 @@
       url = "github:nix-community/neovim-nightly-overlay";
     };
 
-    # SBB Tui.
-    sbb-tui = {
-      url = "github:tomasriveral/nixpkgs?ref=sbb-tui";
+    nixpkgs-anydesk = {
+      url = "github:FraioVeio/nixpkgs/anydesk/fix-update-script";
     };
 
     # Instant direnv loading.

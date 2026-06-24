@@ -23,7 +23,7 @@
 
     kernel = {
       realtime = true;
-      packages = pkgs.linuxPackages-rt_latest;
+      packages = pkgs.linuxPackages;
     };
     das_watchdog.enable = true;
 

@@ -55,7 +55,7 @@
   environment.systemPackages = with pkgs; [
     # Logitech
     solaar
-    xorg.xmodmap
+    xmodmap
 
     # Tablets (Wacom)
     libwacom

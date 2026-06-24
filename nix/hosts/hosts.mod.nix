@@ -45,39 +45,39 @@ let
     );
 
   mkSystem = name: args: mk name args inputs.nixpkgs.lib.nixosSystem;
-  mkImage = name: args: mk name args inputs.nixos-generators.nixosGenerate;
 
+  desktop = mkSystem "desktop" {
+    system = "x86_64-linux";
+  };
+  desktop-music = mkSystem "desktop-music" {
+    system = "x86_64-linux";
+  };
+  tuxedo = mkSystem "tuxedo-pulse-14" {
+    system = "x86_64-linux";
+  };
+  vm = mkSystem "vm" {
+    system = "x86_64-linux";
+  };
 in
 {
   flake.nixosConfigurations = {
-    desktop = mkSystem "desktop" {
-      system = "x86_64-linux";
-    };
-    desktop-music = mkSystem "desktop-music" {
-      system = "x86_64-linux";
-    };
-    tuxedo = mkSystem "tuxedo-pulse-14" {
-      system = "x86_64-linux";
-    };
-    vm = mkSystem "vm" {
-      system = "x86_64-linux";
-    };
+    inherit
+      desktop
+      desktop-music
+      tuxedo
+      vm
+      ;
   };
 
   perSystem =
     { system, ... }:
     {
-      packages.vm-image = mkImage "vm-iso" {
-        inherit system;
-        format = "iso";
-      };
-      packages.desktop-image = mkImage "desktop-iso" {
-        inherit system;
-        format = "iso";
-      };
-      packages.famhome-image = mkImage "famhome" {
-        inherit system;
-        format = "raw-efi";
-      };
+      packages.vm-image = vm.config.system.build.images.iso;
+      packages.desktop-image = desktop.config.system.build.images.iso;
+
+      packages.famhome-image =
+        (mkSystem "famhome" {
+          inherit system;
+        }).config.build.images.raw-efi;
     };
 }

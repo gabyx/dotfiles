@@ -10,7 +10,6 @@
 let
   # Define some special packages.
   githooks = inputs'.githooks.packages.default;
-  sbb-tui = inputs'.sbb-tui.legacyPackages.sbb-tui;
 in
 {
   # List packages installed in system profile. To search, run:
@@ -99,10 +98,10 @@ in
     pkgsUnstable.yaml-language-server
 
     ## Python
-    pkgsUnstable.python313
-    pkgsUnstable.python313Packages.pip
-    pkgsUnstable.python313Packages.isort
-    pkgsUnstable.python313Packages.black
+    pkgsUnstable.python3
+    pkgsUnstable.python3Packages.pip
+    pkgsUnstable.python3Packages.isort
+    pkgsUnstable.python3Packages.black
     pkgsUnstable.pyright
 
     ## Nix
@@ -128,7 +127,7 @@ in
     pkgs.protonmail-bridge-gui
 
     # Trains
-    sbb-tui # SBB TUI app.
+    pkgs.sbb-tui # SBB TUI app.
 
     # MultiMedia
     pkgsUnstable.mediawriter # Like balena etcher.
@@ -172,7 +171,8 @@ in
 
     # Remote Desks
     pkgsUnstable.rustdesk # Remote desktop
-    pkgsUnstable.anydesk
+    # FIXME: https://github.com/NixOS/nixpkgs/pull/518524
+    # pkgsUnstable.anydesk
 
     # Dictionaries
     pkgsUnstable.aspell

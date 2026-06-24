@@ -1,5 +1,6 @@
 {
-  python313,
+  lib,
+  python3,
   perl,
   writeShellApplication,
 }:
@@ -10,13 +11,13 @@ writeShellApplication {
   name = "gabyx::file-regex-replace";
 
   runtimeInputs = [
-    python313
+    python3
     perl
   ];
 
   text =
     # bash
     ''
-      ${python313}/bin/python "${script}" "$@"
+      ${lib.getExe python3} "${script}" "$@"
     '';
 }
