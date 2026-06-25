@@ -11,6 +11,7 @@ in
       enable = true;
       setupOpts = {
         multiline_threshold = 10;
+        separator = null;
       };
     };
 
@@ -24,6 +25,11 @@ in
 
     indent.enable = true;
     textobjects.enable = true;
+  };
+
+  vim.highlight.TreesitterContextBottom = {
+    underline = true;
+    sp = "#d1cf00";
   };
 
   vim.extraPackages = [

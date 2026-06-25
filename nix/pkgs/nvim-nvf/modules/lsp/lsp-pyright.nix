@@ -1,11 +1,12 @@
 { lib, pkgs, ... }:
 let
   inherit (import ./lsp-resolve-cmd.lib.nix { inherit lib pkgs; }) resolveCmd;
+  enable = true;
 in
 {
-  vim.lsp.servers.presets.pyright.enable = true;
+  vim.lsp.servers.presets.pyright.enable = enable;
 
-  vim.lsp.servers.pyright = {
+  vim.lsp.servers.pyright = lib.mkIf enable {
     cmd = lib.mkForce [
       (resolveCmd {
         target = "pyright-langserver";

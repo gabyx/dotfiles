@@ -261,6 +261,5 @@ there.
 ### NVIM
 
 - [ ] Remove old nvim builds.
-- [ ] Fix TScontext visuals.
 - [ ] Check if appName is upstreamed.
 - [ ] Check if nvim-lint is usable.

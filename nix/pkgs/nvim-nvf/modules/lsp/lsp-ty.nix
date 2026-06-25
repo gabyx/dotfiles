@@ -1,11 +1,12 @@
 { lib, pkgs, ... }:
 let
   inherit (import ./lsp-resolve-cmd.lib.nix { inherit lib pkgs; }) resolveCmd;
+  enable = false;
 in
 {
-  vim.lsp.servers.presets.ty.enable = true;
+  vim.lsp.servers.presets.ty.enable = enable;
 
-  vim.lsp.servers.ty = {
+  vim.lsp.servers.ty = lib.mkIf enable {
     cmd = lib.mkForce [
       (resolveCmd {
         target = "ty";
