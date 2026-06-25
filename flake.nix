@@ -23,13 +23,9 @@
     inputs:
     let
       lib = inputs.nixpkgs.lib;
-    in
-    inputs.flake-parts.lib.mkFlake
-      {
-        inherit inputs;
-      }
-      (
-        lib.pipe inputs.import-tree [
+
+      tree =
+        inputs.import-tree # -
           (i: i.map (x: lib.info "Importing: '${x}'" x))
           (i: i.filter (lib.hasInfix ".mod."))
           (
@@ -38,9 +34,11 @@
               ./nix
               ./tools/nix
             ]
-          )
-        ]
-      );
+          );
+    in
+    inputs.flake-parts.lib.mkFlake {
+      inherit inputs;
+    } tree;
 
   inputs = {
     self = {
@@ -117,7 +115,7 @@
 
     # Pinning treesitter for Astronvim.
     nvim-astronvim = {
-      url = "github:NixOS/nixpkgs?rev=2fbfb1d73d239d2402a8fe03963e37aab15abe8b";
+      url = "github:NixOS/nixpkgs?rev=b3da656039dc7a6240f27b2ef8cc6a3ef3bccae7";
     };
 
     zen-browser = {
@@ -125,11 +123,16 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    nvim-nvf = {
-      url = "github:NotAShelf/nvf";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # Pinned Nixpkgs for nvim.
+    # TODO: Make own flake for Nvim.
+    nvim-nixpkgs = {
+      # Ref to : nixpkgs/nixos-unstable from `nixpkgs-unstable`
+      url = "github:nixos/nixpkgs?ref=549bd84d6279f9852cae6225e372cc67fb91a4c1";
     };
-
+    nvim-nvf = {
+      url = "github:gabyx/nvf?ref=feat/add-app-name";
+      inputs.nixpkgs.follows = "nvim-nixpkgs";
+    };
     # Neovim Nightly.
     nvim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";

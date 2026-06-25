@@ -35,6 +35,11 @@ keybind = ctrl+g>\=new_split:right
 # keybind = ctrl+;=previous_tab
 # keybind = ctrl+'=next_tab
 
+keybind = ctrl+h=goto_split:left
+keybind = ctrl+j=goto_split:bottom
+keybind = ctrl+k=goto_split:top
+keybind = ctrl+l=goto_split:right
+
 keybind = ctrl+shift+h=resize_split:left,40
 keybind = ctrl+shift+l=resize_split:right,40
 keybind = ctrl+shift+k=resize_split:up,40

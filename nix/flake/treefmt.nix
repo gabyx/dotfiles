@@ -24,9 +24,6 @@
   # Lua.
   programs.stylua.enable = true;
 
-  # Typos.
-  programs.typos.enable = false;
-
   # Nix.
   programs.nixfmt.enable = true;
 }
