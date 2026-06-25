@@ -11,7 +11,7 @@ in
   vim.lsp.servers.gopls = {
     enable = true;
     cmd = lib.mkForce [
-      (resolveCmd { target = "gopls"; })
+      (resolveCmd "gopls")
     ];
 
     filetypes = [
@@ -76,7 +76,7 @@ in
 
   vim.lsp.servers.golangci-lint-ls = {
     enable = true;
-    cmd = [ "golangci-lint-langserver" ];
+    cmd = [ (resolveCmd "golangci-lint-langserver") ];
 
     filetypes = [
       "go"

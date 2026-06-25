@@ -68,14 +68,15 @@ in
       programs.editors = mkOption {
         description = "All editors. First is the main one.";
         default = [
-          # Custom builds.
-          outputs.packages.${system}.nvim # Pinned version.
-          outputs.packages.${system}.nvim-new
-          outputs.packages.${system}.nvim-nightly
-
           # NVF builds.
-          outputs.packages.${system}.nvim-gabyx
           outputs.packages.${system}.nvim-gabyx-nightly
+          outputs.packages.${system}.nvim-gabyx
+
+          # Old builds.
+          outputs.packages.${system}.nvim # Pinned version.
+          # outputs.packages.${system}.nvim-new
+          # outputs.packages.${system}.nvim-nightly
+
           pkgsUnstable.vscode
         ];
         type = types.listOf types.package;

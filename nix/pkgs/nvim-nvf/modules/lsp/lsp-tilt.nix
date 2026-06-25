@@ -5,7 +5,7 @@ in
 {
   vim.lsp.servers.tilt_ls = {
     cmd = [
-      (resolveCmd { target = "tilt"; })
+      (resolveCmd "tilt")
       "lsp"
       "start"
     ];
@@ -13,14 +13,18 @@ in
     root_markers = [ "Tiltfile" ];
   };
 
+  vim.filetype = {
+    filename = {
+      "Tiltfile" = "tiltfile";
+    };
+    pattern = {
+      ".*%.tilt" = "tiltfile";
+    };
+  };
+
   vim.luaConfigRC.tiltfile-setup =
     # Lua
     ''
-      vim.filetype.add({
-        filename = { ["Tiltfile"] = "tiltfile" },
-        pattern  = { [".*%.tilt"] = "tiltfile" },
-      })
-
       -- Tell treesitter to highlight it with starlark parser.
       vim.treesitter.language.register("starlark", "tiltfile")
     '';

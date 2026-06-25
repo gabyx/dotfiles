@@ -5,7 +5,7 @@ in
 {
   vim.lsp.servers.texlab = {
     cmd = [
-      (resolveCmd { target = "texlab"; })
+      (resolveCmd "texlab")
     ];
 
     filetypes = [

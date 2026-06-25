@@ -23,7 +23,7 @@ in
   };
 
   vim.lsp.servers.nixd = {
-    cmd = [ (resolveCmd { target = "nixd"; }) ];
+    cmd = [ (resolveCmd "nixd") ];
     filetypes = [ "nix" ];
 
     root_markers = [
