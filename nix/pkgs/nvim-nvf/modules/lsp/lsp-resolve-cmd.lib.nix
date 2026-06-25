@@ -1,7 +1,10 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   resolveCmd =
-    target:
+    {
+      target,
+      args ? [ ],
+    }:
     let
       resolve = (
         pkgs.writeShellScriptBin "resolve"
@@ -10,7 +13,7 @@
             exe=$("${pkgs.which}/bin/which" "${target}")
             exe=$("${pkgs.coreutils}/bin/realpath" "$exe")
             if [ -x "$exe" ] ; then
-                exec "$exe" "$@"
+                exec "$exe" ${lib.escapeShellArgs args} "$@"
             fi
 
             echo "Could not resolve '${target}' for LSP start." &>2

@@ -4,15 +4,14 @@
   ...
 }:
 let
-  inherit (lib.generators) mkLuaInline;
-  inherit (import ./lsp-resolve-cmd.lib.nix { inherit pkgs; }) resolveCmd;
+  inherit (import ./lsp-resolve-cmd.lib.nix { inherit lib pkgs; }) resolveCmd;
 in
 {
   vim.lsp.presets.gopls.enable = true;
   vim.lsp.servers.gopls = {
     enable = true;
     cmd = lib.mkForce [
-      (resolveCmd "gopls")
+      (resolveCmd { target = "gopls"; })
     ];
 
     filetypes = [

@@ -8,14 +8,14 @@ let
   inherit (lib.nvim.lua) toLuaObject;
   cfg = config.gabyx.lsp;
 
-  inherit (import ./lsp-resolve-cmd.lib.nix { inherit pkgs; }) resolveCmd;
+  inherit (import ./lsp-resolve-cmd.lib.nix { inherit lib pkgs; }) resolveCmd;
 in
 {
   vim.languages.rust.enable = true;
   vim.languages.rust.lsp = {
     enable = true;
 
-    package = [ (resolveCmd "rust-analyzer") ];
+    package = [ (resolveCmd { target = "rust-analyzer"; }) ];
 
     opts =
       # Lua
