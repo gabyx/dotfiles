@@ -86,7 +86,12 @@ in
         '';
         desc = "Toggle LSP inlay hints.";
       }
-
+      {
+        mode = "n";
+        key = "<Leader>l.";
+        action = "<Cmd>lsp restart<CR>";
+        desc = "Restart LSP.";
+      }
     ];
 
     vim.lsp.mappings = {
