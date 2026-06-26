@@ -489,6 +489,16 @@ in
       silent = true;
       desc = "Search symbols.";
     }
+    {
+      key = "<Leader>lw";
+      mode = [ "n" ];
+      action = /* lua */ ''
+        function() require("snacks").picker.lsp_workspace_symbols() end
+      '';
+      lua = true;
+      silent = true;
+      desc = "Search workspace symbols.";
+    }
 
     # Git picker mappings.
     {
