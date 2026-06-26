@@ -175,18 +175,18 @@ keybinding:
     toggleRangeSelect: v
     rangeSelectDown: <shift+down>
     rangeSelectUp: <shift+up>
-    prevBlock: <left>
-    nextBlock: <right>
+    prevBlock: "["
+    nextBlock: "]"
     prevBlock-alt: h
     nextBlock-alt: l
     nextBlock-alt2: <tab>
     prevBlock-alt2: <backtab>
     jumpToBlock:
-      - "1"
-      - "2"
-      - "3"
-      - "4"
-      - "5"
+      - "!"
+      - "@"
+      - "#"
+      - "$"
+      - "%"
     focusMainView: "0"
     nextMatch: "n"
     prevMatch: "N"
@@ -219,8 +219,8 @@ keybinding:
     pullFiles: p
     refresh: R
     createPatchOptionsMenu: <ctrl+p>
-    nextTab: "]"
-    prevTab: "["
+    nextTab: "}"
+    prevTab: "{"
     nextScreenMode: +
     prevScreenMode: _
     cyclePagers: "|"
