@@ -20,7 +20,7 @@
   services.pipewire = {
     enable = true;
     alsa.enable = true;
-    alsa.support32Bit = true;
+    alsa.support32Bit = false;
     pulse.enable = true;
     jack.enable = true;
 
@@ -32,19 +32,20 @@
 
   services.mpd = {
     enable = false;
-    musicDirectory = "/home/nixos/Music";
 
-    extraConfig = ''
-      # must specify one or more outputs in order to play audio!
+    settings = {
+      music_directory = "/home/nixos/Music";
+
+      # Must specify one or more outputs in order to play audio!
       # (e.g. ALSA, PulseAudio, PipeWire), see next sections
-      audio_output {
-        type "pipewire"
-        name "My PipeWire Output"
-      }
-    '';
+      audio_output = {
+        type = "pipewire";
+        name = "My PipeWire Output";
+      };
 
-    # Optional:
-    network.listenAddress = "any"; # if you want to allow non-localhost connections
+      bind_to_address = "any"; # if you want to allow non-localhost connections
+    };
+
     startWhenNeeded = true; # systemd feature: only start MPD service upon connection to its socket
   };
   # ===========================================================================

@@ -8,9 +8,9 @@ let
 
   config = {
     allowUnfree = true;
+
     permittedInsecurePackages = [
-      "electron-12.2.3"
-      "electron-19.1.9"
+      "electron-39.8.10"
     ];
 
     nvidia.acceptLicense = true;

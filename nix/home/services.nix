@@ -10,11 +10,11 @@
   ];
 
   services = {
-    vdirsyncer = {
-      enable = true;
-      frequency = "*:0/2"; # Sync every 2 minutes.
-      package = pkgsUnstable.vdirsyncer;
-    };
+    # vdirsyncer = {
+    #   enable = true;
+    #   frequency = "*:0/2"; # Sync every 2 minutes.
+    #   package = pkgsUnstable.vdirsyncer;
+    # };
     # ===========================================================================
 
     ### Audio Effects ===========================================================

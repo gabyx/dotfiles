@@ -39,7 +39,6 @@
     kernelParams = [ ];
 
     supportedFilesystems = [ "zfs" ];
-    zfs.allowHibernation = true;
     zfs.forceImportRoot = false;
 
     ### Temp Files ==============================================================

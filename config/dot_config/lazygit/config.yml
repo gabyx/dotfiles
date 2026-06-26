@@ -1,17 +1,32 @@
 gui:
   authorColors: {}
   branchColors:
-    "bugfix": "#3498eb"
-    "feature": "#00ba3b"
-    "main": "#bfd404"
+    bugfix: "#3498eb"
+    feature: "#00ba3b"
+    main: "#bfd404"
+  branchColorPatterns: {}
+  customIcons:
+    filenames: {}
+    extensions: {}
   scrollHeight: 20
   scrollPastBottom: true
+  scrollOffMargin: 2
+  scrollOffBehavior: margin
+  tabWidth: 4
   mouseEvents: true
+  skipAmendWarning: false
   skipDiscardChangeWarning: false
   skipStashWarning: false
+  skipNoStagedFilesWarning: false
+  skipRewordInEditorWarning: false
+  skipSwitchWorktreeOnCheckoutWarning: false
   sidePanelWidth: 0.3333
   expandFocusedSidePanel: false
+  expandedSidePanelWeight: 2
   mainPanelSplitMode: flexible
+  enlargedSideViewLocation: left
+  wrapLinesInStagingView: true
+  useHunkModeInStagingView: true
   language: auto
   timeFormat: 02 Jan 06
   shortTimeFormat: 3:04PM
@@ -47,6 +62,8 @@ gui:
   showListFooter: true
   showFileTree: true
   showRootItemInFileTree: true
+  fileTreeSortOrder: mixed
+  fileTreeSortCaseSensitive: true
   showNumstatInFilesView: false
   showRandomTip: true
   showCommandLog: true
@@ -59,11 +76,27 @@ gui:
   commitAuthorLongLength: 17
   commitHashLength: 8
   showBranchCommitHash: false
+  showDivergenceFromBaseBranch: none
   commandLogSize: 8
   splitDiff: auto
   screenMode: normal
   border: single
   animateExplosion: true
+  portraitMode: auto
+  portraitModeAutoMaxWidth: 84
+  portraitModeAutoMinHeight: 46
+  filterMode: substring
+  spinner:
+    frames:
+      - "|"
+      - /
+      - "-"
+      - \
+    rate: 50
+  statusPanelView: dashboard
+  switchToFilesAfterStashPop: true
+  switchToFilesAfterStashApply: true
+  switchTabsWithPanelJumpKeys: false
 git:
   pagers:
     - colorArg: always
@@ -122,8 +155,8 @@ promptToReturnFromSubprocess: false
 keybinding:
   universal:
     quit: q
-    quit-alt1: <c-c>
-    suspendApp: <c-z>
+    quit-alt1: <ctrl+c>
+    suspendApp: <ctrl+z>
     return: <esc>
     quitWithoutChangingDirectory: Q
     togglePanel: <tab>
@@ -140,8 +173,8 @@ keybinding:
     gotoTop-alt: <home>
     gotoBottom-alt: <end>
     toggleRangeSelect: v
-    rangeSelectDown: <s-down>
-    rangeSelectUp: <s-up>
+    rangeSelectDown: <shift+down>
+    rangeSelectUp: <shift+up>
     prevBlock: "["
     nextBlock: "]"
     prevBlock-alt: h
@@ -154,18 +187,22 @@ keybinding:
       - "#"
       - "$"
       - "%"
+    focusMainView: "0"
     nextMatch: "n"
     prevMatch: "N"
     startSearch: /
-    optionMenu: <disabled>
-    optionMenu-alt1: "?"
+    moveWordLeft: <ctrl+left>
+    moveWordRight: <ctrl+right>
+    backspaceWord: <ctrl+backspace>
+    forwardDeleteWord: <ctrl+delete>
+    optionMenu: "?"
     select: <space>
     goInto: <enter>
     confirm: <enter>
     confirmMenu: <enter>
     confirmSuggestion: <enter>
-    confirmInEditor: <a-enter>
-    confirmInEditor-alt: <c-s>
+    confirmInEditor: <ctrl+enter>
+    confirmInEditor-alt: <ctrl+s>
     remove: d
     new: "n"
     edit: e
@@ -174,43 +211,45 @@ keybinding:
     scrollDownMain: <pgdown>
     scrollUpMain-alt1: K
     scrollDownMain-alt1: J
-    scrollUpMain-alt2: <c-u>
-    scrollDownMain-alt2: <c-d>
+    scrollUpMain-alt2: <ctrl+u>
+    scrollDownMain-alt2: <ctrl+d>
     executeShellCommand: ":"
     createRebaseOptionsMenu: m
     pushFiles: P
     pullFiles: p
     refresh: R
-    createPatchOptionsMenu: <c-p>
+    createPatchOptionsMenu: <ctrl+p>
     nextTab: "}"
     prevTab: "{"
     nextScreenMode: +
     prevScreenMode: _
+    cyclePagers: "|"
     undo: z
     redo: Z
-    filteringMenu: <c-s>
+    filteringMenu: <ctrl+s>
     diffingMenu: W
-    diffingMenu-alt: <c-e>
-    copyToClipboard: <c-o>
-    openRecentRepos: <c-r>
+    diffingMenu-alt: <ctrl+e>
+    copyToClipboard: <ctrl+o>
+    openRecentRepos: <ctrl+r>
     submitEditorText: <enter>
-    extrasMenu: "^"
-    toggleWhitespaceInDiffView: <c-w>
+    extrasMenu: "@"
+    toggleWhitespaceInDiffView: <ctrl+w>
     increaseContextInDiffView: "}"
     decreaseContextInDiffView: "{"
     increaseRenameSimilarityThreshold: )
     decreaseRenameSimilarityThreshold: (
-    openDiffTool: <c-t>
+    openDiffTool: <ctrl+t>
   status:
     checkForUpdate: u
     recentRepos: <enter>
     allBranchesLogGraph: a
+    allBranchesLogGraphReverse: A
   files:
     commitChanges: c
     commitChangesWithoutHook: w
     amendLastCommit: A
     commitChangesWithEditor: C
-    findBaseCommitForFixup: <c-f>
+    findBaseCommitForFixup: <ctrl+f>
     confirmDiscard: x
     ignoreFile: i
     refreshFiles: r
@@ -221,14 +260,15 @@ keybinding:
     fetch: f
     toggleTreeView: "`"
     openMergeOptions: M
-    openStatusFilter: <c-b>
+    openStatusFilter: <ctrl+b>
     copyFileInfoToClipboard: "y"
     collapseAll: "-"
     expandAll: =
   branches:
     createPullRequest: o
     viewPullRequestOptions: O
-    copyPullRequestURL: <c-y>
+    openPullRequestInBrowser: G
+    copyPullRequestURL: <ctrl+y>
     checkoutBranchByName: c
     forceCheckoutBranch: F
     checkoutPreviousBranch: "-"
@@ -242,6 +282,7 @@ keybinding:
     pushTag: P
     setUpstream: u
     fetchRemote: f
+    addForkRemote: F
     sortOrder: s
   worktrees:
     viewWorktreeOptions: w
@@ -251,10 +292,11 @@ keybinding:
     renameCommitWithEditor: R
     viewResetOptions: g
     markCommitAsFixup: f
+    setFixupMessage: c
     createFixupCommit: F
     squashAboveCommits: S
-    moveDownCommit: <c-j>
-    moveUpCommit: <c-k>
+    moveDownCommit: [<ctrl+j>, <alt-down>]
+    moveUpCommit: [<ctrl+k>, <alt-up>]
     amendToCommit: A
     resetCommitAuthor: a
     pickCommit: p
@@ -264,10 +306,11 @@ keybinding:
     markCommitAsBaseForRebase: B
     tagCommit: T
     checkoutCommit: <space>
-    resetCherryPick: <c-R>
+    resetCherryPick: <ctrl+r>
     copyCommitAttributeToClipboard: "y"
-    openLogMenu: <c-l>
+    openLogMenu: <ctrl+l>
     openInBrowser: o
+    openPullRequestInBrowser: G
     viewBisectOptions: b
     startInteractiveRebase: i
     selectCommitsOfCurrentBranch: "*"
@@ -281,6 +324,8 @@ keybinding:
   commitFiles:
     checkoutCommitFile: c
   main:
+    prevHunk: [<left>, h]
+    nextHunk: [<right>, l]
     toggleSelectHunk: a
     pickBothHunks: b
     editSelectHunk: E
@@ -289,4 +334,4 @@ keybinding:
     update: u
     bulkMenu: b
   commitMessage:
-    commitMenu: <c-o>
+    commitMenu: <ctrl+o>

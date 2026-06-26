@@ -69,7 +69,6 @@ in
     kernelPackages = pkgs.linuxPackages_xanmod;
 
     supportedFilesystems = [ "zfs" ];
-    zfs.allowHibernation = true;
     zfs.forceImportRoot = false;
 
     ### Temp Files ==============================================================
