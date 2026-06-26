@@ -3,8 +3,8 @@
 }:
 {
   # LSP derivation is backed. Thats fine.
-  vim.lsp.servers.presets.yaml-langauge-server.enable = true;
-  vim.lsp.servers.presets.json-langauge-server.enable = true;
+  vim.lsp.presets.yaml-language-server.enable = true;
+  vim.lsp.presets.vscode-json-language-server.enable = true;
 
   vim.lsp.servers.yaml-language-server = {
     filetypes = [
@@ -12,7 +12,7 @@
     ];
   };
 
-  vim.lsp.servers.json-language-server = {
+  vim.lsp.servers.vscode-json-language-server = {
     filetypes = [
       "json"
     ];

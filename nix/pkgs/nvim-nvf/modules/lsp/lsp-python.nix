@@ -4,7 +4,7 @@ let
   enable = true;
 in
 {
-  vim.lsp.servers.presets.pyright.enable = enable;
+  vim.lsp.presets.pyright.enable = enable;
 
   vim.lsp.servers.pyright = lib.mkIf enable {
     cmd = lib.mkForce [

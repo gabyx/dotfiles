@@ -3,7 +3,7 @@
 }:
 {
   # LSP derivation is backed. Thats fine.
-  vim.lsp.servers.presets.docker-language-server.enable = true;
+  vim.lsp.presets.docker-language-server.enable = true;
 
   vim.lsp.servers.docker-language-server = {
     filetypes = [
