@@ -209,10 +209,19 @@ in
     # over DBus.
     xdg.portal = {
       enable = true;
-      extraPortals = [
-        (if isSway then pkgs.xdg-desktop-portal-wlr else config.programs.hyprland.portalPackage)
-        pkgs.xdg-desktop-portal-gtk
-      ];
+      extraPortals = lib.optional isHyprland config.programs.hyprland.portalPackage;
+
+      wlr = {
+        enable = lib.mkIf isSway true;
+
+        settings = {
+          screencast = {
+            chooser_type = "simple";
+            chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+            max_fps = 30;
+          };
+        };
+      };
     };
 
     # Keyring Service
