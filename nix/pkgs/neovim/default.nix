@@ -1,6 +1,5 @@
 # Ref: https://github.com/Mic92/dotfiles/blob/7599d40986bc679075bf87539385254d770d8f12/home-manager/modules/neovim/nvim-standalone.nix#L4
 {
-  lib,
   pkgs,
 
   # The nvim to wrap.

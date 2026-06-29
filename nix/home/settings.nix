@@ -21,10 +21,14 @@ in
         type = types.package;
       };
 
-      programs.browser = mkOption {
+      programs.browsers = mkOption {
         description = "The default browser.";
-        default = inputs'.zen-browser.packages.zen-browser;
-        type = types.package;
+        default = [
+          inputs'.zen-browser.packages.zen-browser
+          pkgsUnstable.firefox
+          pkgsUnstable.google-chrome
+        ];
+        type = types.listOf types.package;
       };
 
       programs.signal = mkOption {
@@ -69,13 +73,11 @@ in
         description = "All editors. First is the main one.";
         default = [
           # NVF builds.
-          outputs.packages.${system}.nvim-gabyx-nightly
           outputs.packages.${system}.nvim-gabyx
+          outputs.packages.${system}.nvim-gabyx-nightly
 
           # Old builds.
           outputs.packages.${system}.nvim # Pinned version.
-          # outputs.packages.${system}.nvim-new
-          # outputs.packages.${system}.nvim-nightly
 
           pkgsUnstable.vscode
         ];
@@ -98,11 +100,11 @@ in
   config = {
     home.packages = [
       cfg.programs.archiver
-      cfg.programs.browser
       cfg.programs.fileBrowser
       cfg.programs.signal
       cfg.programs.videoPlayer
     ]
+    ++ cfg.programs.browsers
     ++ cfg.programs.images
     ++ cfg.programs.terminals
     ++ cfg.programs.editors;

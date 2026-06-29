@@ -1,3 +1,4 @@
+# TODO: Remove these derivations once nvf settles.
 { inputs, lib, ... }:
 {
   perSystem =
@@ -5,12 +6,6 @@
     let
       # Here we build the neovim wrapper
       # with `nvim-treesitter`.
-
-      nvimNew = import ./default.nix {
-        inherit lib;
-        name = "nvim-new";
-        pkgs = pkgsUnstable;
-      };
 
       pkgsPlugins = inputs.nvim-astronvim.legacyPackages.${system};
 
@@ -34,12 +29,8 @@
     in
     {
       packages = {
-        # Pinned neovims.
         nvim = nvimPinned.nvim;
         nvim-nightly = nvimPinnedNightly.nvim;
-
-        # Neovim with latest treesitter.
-        nvim-new = nvimNew.nvim;
       };
     };
 }
