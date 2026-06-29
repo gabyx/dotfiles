@@ -35,6 +35,8 @@
         # The unstable packages.
         inherit pkgsUnstable;
       };
+
+      docker-sbx = pkgsUnstable.callPackage ./docker-sbx { };
     in
     {
       packages = {
@@ -44,9 +46,13 @@
           nvim-gabyx-nightly
           nvim-gabyx-nightly-config
           ;
+
         inherit neural-amp-modeler-lv2;
+
         inherit age-plugin-fido2prf;
         inherit age-plugin-fido2-hmac;
+
+        inherit docker-sbx;
       }
       // gabyx-scripts;
     };

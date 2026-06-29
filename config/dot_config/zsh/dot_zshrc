@@ -5,6 +5,11 @@
     return 0
 }
 
+function try_source() {
+    [ -f "$1" ] && source "$1" || echo "Could not source '$1'." >&2
+    return 0
+}
+
 # Load completion system
 autoload -U compinit; compinit
 
@@ -59,12 +64,14 @@ function install_plugins() {
 
     # On the systems where I dont have antidote.
     if [ ! -d "$ZDOTDIR/.antidote" ]; then
-        git clone --depth=1 --branch v2.0.9 \
+        git clone --depth=1 --branch v2.1.0 \
             --single-branch https://github.com/mattmc3/antidote.git \
             "$ZDOTDIR/.antidote"
 
         force_bundle="true"
     fi
+
+    source "$ZDOTDIR/.antidote/antidote.zsh"
 
     # Destination not existing -> force.
     if [ ! -f "$zsh_plugins" ]; then
@@ -97,19 +104,17 @@ source "$ZDOTDIR/.zsh_plugins.zsh"
 
 # Wezterm shell integration.
 if [ -n "$WEZTERM_EXECUTABLE" ]; then
-    if [ -f "$HOME/.config/wezterm/shell-integration.sh" ]; then
-        source "$HOME/.config/wezterm/shell-integration.sh"
-    fi
+    try_source "$HOME/.config/wezterm/shell-integration.sh"
 fi
 
-# Promp setup.
-if [ -f "$ZDOTDIR/.p10k.zsh" ]; then
-    # To customize prompt, run 'p10k configure' or edit $ZDOTDIR/.p10k.zsh.
-    source "$ZDOTDIR/.p10k.zsh"
-fi
+# Prompt setup.
+# To customize prompt, run 'p10k configure' or edit $ZDOTDIR/.p10k.zsh.
+s="$ZDOTDIR/.p10k.zsh"
+[ -r "$s" ] && source "$s" || echo "Could not source '$s'" >&2
 
 # Tmux stuff.
-source "$HOME/.config/zsh/.zshrc-tmux.zsh"
+s="$HOME/.config/zsh/.zshrc-tmux.zsh"
+[ -r "$s" ] && source "$s" || echo "Could not source '$s'" >&2
 
 # Direnv hook.
 if command -v direnv &>/dev/null; then
@@ -121,20 +126,29 @@ if command -v zoxide &>/dev/null; then
     eval "$(zoxide init zsh)"
 fi
 
-
 # Fuzzy Find integration
 if command -v fzf &>/dev/null; then
-    source "$HOME/.config/fzf/fzf.zsh"
+    s="$HOME/.config/fzf/fzf.zsh"
+    [ -r "$s" ] && source "$s" || echo "Could not source '$s'" >&2
 fi
 
 # Aliases
-source "$HOME/.config/shell/aliases.bash"
-source "$HOME/.config/shell/aliases.zsh"
-source "$HOME/.config/shell/functions.bash"
+if [ -d "$HOME/.config/shell" ]; then
+    s="$HOME/.config/shell/aliases.bash"
+    [ -r "$s" ] && source "$s" || echo "Could not source '$s'" >&2
+    s="$HOME/.config/shell/aliases.zsh"
+    [ -r "$s" ] && source "$s" || echo "Could not source '$s'" >&2
+    s="$HOME/.config/shell/functions.bash"
+    [ -r "$s" ] && source "$s" || echo "Could not source '$s'" >&2
+fi
 
 # Python environment.
 # Do not activate python env by default.
-# source "$HOME/.config/zsh/.zshrc-python.zsh"
+# s="$HOME/.config/zsh/.zshrc-python.zsh"
+# [ -r "$s" ] && source "$s" || echo "Could not source '$s'" >&2
 
 # Keybindings
-source "$HOME/.config/zsh/.zshrc-keybindings.zsh"
+s="$HOME/.config/zsh/.zshrc-keybindings.zsh"
+[ -r "$s" ] && source "$s" || echo "Could not source '$s'" >&2
+
+unset -f try_source

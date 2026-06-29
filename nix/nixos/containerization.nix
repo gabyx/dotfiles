@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  packages,
   ...
 }:
 {
@@ -28,6 +29,7 @@
       flags = [ "--external" ];
     };
   };
+
   # =======================================
 
   # Podman ================================
@@ -87,6 +89,7 @@
   # Packages
   environment.systemPackages = [
     pkgs.docker-compose
+    packages.docker-sbx
   ];
   # ===========================================================================
 }

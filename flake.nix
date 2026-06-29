@@ -117,7 +117,15 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    claude-code = {
+      url = "github:sadjow/claude-code-nix?ref=v2.1.195";
+    };
+    agent-sandbox = {
+      url = "github:archie-judd/agent-sandbox.nix";
+    };
+
     # Pinned Nixpkgs for nvim.
+    # =========================================================================
     # TODO: Make own flake for Nvim.
     nvim-nixpkgs = {
       # Ref to : nixpkgs/nixos-unstable from `nixpkgs-unstable`
@@ -131,6 +139,7 @@
     nvim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
     };
+    # =========================================================================
 
     nixpkgs-anydesk = {
       url = "github:FraioVeio/nixpkgs/anydesk/fix-update-script";

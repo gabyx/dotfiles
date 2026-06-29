@@ -1,5 +1,4 @@
 # echo "Loading .zshenv ..."
-
 [ -n "$ZDOTDIR" ] || {
     echo "You must set '$ZDOTDIR' to use this file."
     return 0
@@ -27,10 +26,7 @@ export LANG=en_US.UTF-8
 # Set startship prompt location.
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
-source "$ZDOTDIR/.zshenv-tmux.zsh"
-source "$ZDOTDIR/.zshenv-homebrew.zsh"
-source "$ZDOTDIR/.zshenv-go.zsh"
-source "$ZDOTDIR/.zshenv-node.zsh"
-source "$ZDOTDIR/.zshenv-rust.zsh"
-source "$ZDOTDIR/.zshenv-kube.zsh"
-source "$ZDOTDIR/.zshenv-tools.zsh"
+for f in "$ZDOTDIR"/.zshenv-*.zsh(N.); do
+  source "$f"
+done
+

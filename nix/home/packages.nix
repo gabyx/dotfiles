@@ -68,6 +68,7 @@ in
     pkgsUnstable.remarshal
     pkgsUnstable.just
     pkgsUnstable.dive # Inspect container images.
+    packages.claude-jailed
 
     # FHS Environment with nix-alien
     inputs.nix-alien.packages.${system}.nix-alien

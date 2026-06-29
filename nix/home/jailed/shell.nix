@@ -29,7 +29,6 @@ let
       "~/.config/wezterm"
       "~/.config/zathura"
       "~/.config/zsh"
-      "~/.config/shell"
 
       "~/.ssh/sdsc-ordes-nix-cache-read"
 
@@ -86,12 +85,10 @@ let
         dest = "/tmp/.zsh_history";
       }
 
-      "~/.config/nvim"
-      "~/.local/share/nvim"
-      "~/.local/state/nvim"
-      "~/.config/nvim-nightly"
-      "~/.local/share/nvim-nightly"
-      "~/.local/state/nvim-nightly"
+      "~/.config/nvim-gabyx"
+      "~/.local/share/nvim-gabyx"
+      "~/.local/state/nvim-gabyx"
+      "~/.cache/nvim-gabyx"
 
       "~/.local/state/lazygit"
 
@@ -105,8 +102,6 @@ let
       "~/.cache/nix-alien"
       "~/.cache/nix-index"
       "~/.cache/nix-output-monitor"
-      "~/.cache/nvim"
-      "~/.cache/nvim-nightly"
     ];
 
   zsh-jailed = jailIt "zsh-jailed" pkgs.zsh (

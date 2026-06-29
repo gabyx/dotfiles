@@ -5,7 +5,13 @@
 }:
 {
   perSystem =
-    { pkgs, pkgsUnstable, ... }:
+    {
+      system,
+      pkgs,
+      pkgsUnstable,
+      inputs',
+      ...
+    }:
     let
       shell = import ./jailed/shell.nix {
         inherit lib pkgs pkgsUnstable;
@@ -16,8 +22,15 @@
         inherit lib pkgs pkgsUnstable;
         inherit (inputs) jail-nix;
       };
+
+      agents = import ./jailed/agents.nix {
+        inherit system;
+        inherit lib pkgs pkgsUnstable;
+        inherit (inputs) agent-sandbox;
+        inherit (inputs'.claude-code.packages) claude-code;
+      };
     in
     {
-      packages = shell // apps;
+      packages = shell // apps // agents;
     };
 }
