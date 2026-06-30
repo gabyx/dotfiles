@@ -14,8 +14,8 @@ let
 
       git_status_async = true;
 
-      popupBorderStyle = "rounded";
-      useDefaultMappings = false;
+      popup_border_style = "rounded";
+      use_default_mappings = false;
 
       filesystem = {
         hijack_netrw_behavior = "open_current";
@@ -25,20 +25,20 @@ let
           leave_dirs_open = true;
         };
 
-        filteredItems = {
-          hideDotfiles = false;
-          hideGitignored = false;
+        filtered_items = {
+          hide_dotfiles = false;
+          hide_gitignored = false;
         };
 
-        groupEmptyDirs = true;
-        bindToCwd = false;
+        group_empty_dirs = true;
+        bind_to_cwd = true;
         use_libuv_file_watcher = true;
       };
 
       commands = {
-        "copy_selector" = copySelector;
-        "parent_or_close" = parentOrClose;
-        "child_or_open" = childOrOpen;
+        copy_selector = copySelector;
+        parent_or_close = parentOrClose;
+        child_or_open = childOrOpen;
       };
 
       window = {
@@ -46,9 +46,11 @@ let
         position = "left";
 
         mappings = {
-          "<CR>" = "child_or_open";
+          "<CR>" = "open";
           "[b" = "prev_source";
           "]b" = "next_source";
+          "[g" = "prev_git_modified";
+          "]g" = "next_git_modified";
 
           Y = "copy_selector";
           h = "parent_or_close";
