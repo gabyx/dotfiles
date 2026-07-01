@@ -77,7 +77,6 @@ in
     # Linters/LSPs
     pkgsUnstable.markdownlint-cli
     pkgsUnstable.yamllint
-    pkgsUnstable.vscode-json-languageserver
     pkgsUnstable.codespell
     pkgsUnstable.typos
     pkgsUnstable.shfmt
@@ -86,7 +85,6 @@ in
     pkgsUnstable.prettier
     nixfmt-rs
     pkgsUnstable.shellcheck
-    pkgsUnstable.typos-lsp
 
     ## Python
     pkgsUnstable.python3
