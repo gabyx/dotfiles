@@ -10,7 +10,7 @@ let
   sbx = agent-sandbox.lib.${system};
 
   start = pkgsUnstable.writeShellScriptBin "start" ''
-    if [ -n "$CLAUDE_CODE_OAUTH_TOKEN" ]; then
+    if [ -z "$CLAUDE_CODE_OAUTH_TOKEN" ]; then
       echo "Env. var CLAUDE_CODE_OAUTH_TOKEN not defined." >&2
       exit 1
     fi
@@ -29,11 +29,12 @@ let
       claude-code
       pkgsUnstable.coreutils
       pkgsUnstable.findutils
-      pkgsUnstable.gawk
+      pkgsUnstable.just
+      pkgsUnstable.direnv
       pkgsUnstable.git
       pkgsUnstable.zsh
+      pkgsUnstable.tmux
       pkgsUnstable.bash
-      pkgsUnstable.ripgrep
     ];
 
     allowNix = true;
@@ -56,12 +57,14 @@ let
     ];
 
     env = {
+      SHELL = "$SHELL";
       JAILED = true;
+
       CLAUDE_CODE_OAUTH_TOKEN = "$CLAUDE_CODE_OAUTH_TOKEN";
-      CLAUDE_CONFIG_DIR = "$HOME/config/claude";
+      CLAUDE_CONFIG_DIR = "$HOME/.config/claude";
 
       GIT_AUTHOR_IDENT = "gabyx-agent";
-      GIT_COMMITER_IDENT = "gabyx-agent";
+      GIT_COMMITTER_IDENT = "gabyx-agent";
 
       LOCALE_ARCHIVE = "${pkgsUnstable.glibcLocales}/lib/locale/locale-archive";
       GITSTATUS_DAEMON = "$GITSTATUS_DAEMON";
