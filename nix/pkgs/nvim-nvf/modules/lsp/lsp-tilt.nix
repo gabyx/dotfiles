@@ -1,11 +1,10 @@
 { lib, pkgs, ... }:
 let
-  inherit (import ./lsp-resolve-cmd.lib.nix { inherit lib pkgs; }) resolveCmd;
+  inherit (import ./lsp-resolve-cmd.lib.nix { inherit lib pkgs; }) resolveCmdLua;
 in
 {
   vim.lsp.servers.tilt_ls = {
-    cmd = [
-      (resolveCmd "tilt")
+    cmd = resolveCmdLua "tilt" pkgs.tilt [
       "lsp"
       "start"
     ];

@@ -15,7 +15,7 @@ in
   vim.languages.rust.lsp = {
     enable = true;
 
-    package = [ (resolveCmd "rust-analyzer") ];
+    package = [ (resolveCmd "rust-analyzer" pkgs.rust-analyzer) ];
 
     opts =
       # Lua

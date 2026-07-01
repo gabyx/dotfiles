@@ -1,12 +1,10 @@
 { lib, pkgs, ... }:
 let
-  inherit (import ./lsp-resolve-cmd.lib.nix { inherit lib pkgs; }) resolveCmd;
+  inherit (import ./lsp-resolve-cmd.lib.nix { inherit lib pkgs; }) resolveCmdLua;
 in
 {
   vim.lsp.servers.texlab = {
-    cmd = [
-      (resolveCmd "texlab")
-    ];
+    cmd = resolveCmdLua "texlab" pkgs.texlab [ "run" ];
 
     filetypes = [
       "tex"

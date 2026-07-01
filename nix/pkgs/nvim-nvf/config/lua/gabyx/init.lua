@@ -77,6 +77,7 @@ function M.setup(opts)
     M.diagnostics = require("gabyx.diagnostics")
     M.toggles = require("gabyx.toggles")
     M.quit = require("gabyx.quit")
+    M.lsp = require("gabyx.lsp")
 
     --- Apply all options.
     if vim.tbl_get(M.config, "options", "opt", "clipboard") then

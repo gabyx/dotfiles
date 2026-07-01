@@ -15,7 +15,7 @@ let
       git_status_async = true;
 
       popup_border_style = "rounded";
-      use_default_mappings = false;
+      use_default_mappings = true;
 
       filesystem = {
         hijack_netrw_behavior = "open_current";
@@ -49,8 +49,6 @@ let
           "<CR>" = "open";
           "[b" = "prev_source";
           "]b" = "next_source";
-          "[g" = "prev_git_modified";
-          "]g" = "next_git_modified";
 
           Y = "copy_selector";
           h = "parent_or_close";

@@ -10,6 +10,7 @@
 let
   # Define some special packages.
   githooks = inputs'.githooks.packages.default;
+  nixfmt-rs = inputs'.nixfmt-rs.packages.default;
 in
 {
   # List packages installed in system profile. To search, run:
@@ -73,7 +74,7 @@ in
     # FHS Environment with nix-alien
     inputs.nix-alien.packages.${system}.nix-alien
 
-    # Linters
+    # Linters/LSPs
     pkgsUnstable.markdownlint-cli
     pkgsUnstable.yamllint
     pkgsUnstable.vscode-json-languageserver
@@ -81,43 +82,23 @@ in
     pkgsUnstable.typos
     pkgsUnstable.shfmt
     pkgsUnstable.nufmt
+    pkgsUnstable.stylua
+    pkgsUnstable.prettier
+    nixfmt-rs
     pkgsUnstable.shellcheck
-
-    ## Lsp
-    # rust-analyzer and clangd come with
-    # the toolchain.
-    pkgsUnstable.gopls
-    pkgsUnstable.golangci-lint-langserver
-    # pkgsUnstable.texlab
     pkgsUnstable.typos-lsp
-    pkgsUnstable.nixd
-    pkgsUnstable.marksman
-    pkgsUnstable.lua-language-server
-    pkgsUnstable.dockerfile-language-server
-    pkgsUnstable.bash-language-server
-    pkgsUnstable.vscode-json-languageserver
-    pkgsUnstable.yaml-language-server
 
     ## Python
     pkgsUnstable.python3
-    pkgsUnstable.python3Packages.pip
-    pkgsUnstable.python3Packages.isort
-    pkgsUnstable.python3Packages.black
-    pkgsUnstable.pyright
+    pkgsUnstable.python3Packages.ruff
 
     ## Nix
     pkgsUnstable.nix-tree
     pkgsUnstable.nixpkgs-lint
-    pkgsUnstable.stdenv.cc # for neovim treesitter.
-    pkgsUnstable.nixfmt # official Nix formatter.
     pkgsUnstable.dconf2nix # To generate the `dconf` settings.
     pkgsUnstable.comma # Run , jellyfin to quickly run a nix package.
 
     ## Lua
-    pkgsUnstable.stylua
-
-    # Config Files
-    pkgsUnstable.prettier
 
     # Writing
     # pkgsUnstable.texlive.combined.scheme-full

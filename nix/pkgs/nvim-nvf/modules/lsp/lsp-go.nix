@@ -4,15 +4,13 @@
   ...
 }:
 let
-  inherit (import ./lsp-resolve-cmd.lib.nix { inherit lib pkgs; }) resolveCmd;
+  inherit (import ./lsp-resolve-cmd.lib.nix { inherit lib pkgs; }) resolveCmdLua;
 in
 {
   vim.lsp.presets.gopls.enable = true;
   vim.lsp.servers.gopls = {
     enable = true;
-    cmd = lib.mkForce [
-      (resolveCmd "gopls")
-    ];
+    cmd = lib.mkForce (resolveCmdLua "gopls" pkgs.gopls [ ]);
 
     filetypes = [
       "go"
@@ -76,7 +74,7 @@ in
 
   vim.lsp.servers.golangci-lint-ls = {
     enable = true;
-    cmd = [ (resolveCmd "golangci-lint-langserver") ];
+    cmd = resolveCmdLua "golangci-lint-langserver" pkgs.golangci-lint-langserver [ ];
 
     filetypes = [
       "go"

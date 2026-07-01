@@ -6,7 +6,7 @@
 }:
 let
   hostName = "desktop";
-  inherit (import ./lsp-resolve-cmd.lib.nix { inherit lib pkgs; }) resolveCmd;
+  inherit (import ./lsp-resolve-cmd.lib.nix { inherit lib pkgs; }) resolveCmdLua;
 in
 {
   vim.languages.nix = {
@@ -23,7 +23,7 @@ in
   };
 
   vim.lsp.servers.nixd = {
-    cmd = [ (resolveCmd "nixd") ];
+    cmd = resolveCmdLua "nixd" pkgs.nixd [ ];
     filetypes = [ "nix" ];
 
     root_markers = [
