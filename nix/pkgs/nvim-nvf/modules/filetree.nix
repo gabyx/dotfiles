@@ -28,6 +28,14 @@ let
         filtered_items = {
           hide_dotfiles = false;
           hide_gitignored = false;
+
+          hide_by_name = [
+            ".git"
+          ];
+
+          never_show = [
+            ".DS_Store"
+          ];
         };
 
         group_empty_dirs = false;
