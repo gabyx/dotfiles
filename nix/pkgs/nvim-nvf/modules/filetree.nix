@@ -30,7 +30,7 @@ let
           hide_gitignored = false;
         };
 
-        group_empty_dirs = true;
+        group_empty_dirs = false;
         bind_to_cwd = true;
         use_libuv_file_watcher = true;
       };
