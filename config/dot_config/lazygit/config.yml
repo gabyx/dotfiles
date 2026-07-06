@@ -80,7 +80,7 @@ gui:
   commandLogSize: 8
   splitDiff: auto
   screenMode: normal
-  border: single
+  border: rounded
   animateExplosion: true
   portraitMode: auto
   portraitModeAutoMaxWidth: 84
@@ -219,8 +219,8 @@ keybinding:
     pullFiles: p
     refresh: R
     createPatchOptionsMenu: <ctrl+p>
-    nextTab: "}"
-    prevTab: "{"
+    nextTab: "]"
+    prevTab: "["
     nextScreenMode: +
     prevScreenMode: _
     cyclePagers: "|"
@@ -232,7 +232,7 @@ keybinding:
     copyToClipboard: <ctrl+o>
     openRecentRepos: <ctrl+r>
     submitEditorText: <enter>
-    extrasMenu: "@"
+    extrasMenu: "*"
     toggleWhitespaceInDiffView: <ctrl+w>
     increaseContextInDiffView: "}"
     decreaseContextInDiffView: "{"
