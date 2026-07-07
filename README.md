@@ -262,4 +262,5 @@ there.
 
 - [ ] Remove old nvim builds.
 - [ ] Check if appName is upstreamed.
+- [ ] Make autocommands in config.lua into nvf setup.
 - [ ] Check if nvim-lint is usable.
