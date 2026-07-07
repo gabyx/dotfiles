@@ -2,14 +2,14 @@
 # shellcheck disable=SC2015,SC1091,SC2153
 
 if [ "${GABYX_LIB_VPN:-}" != "loaded" ]; then
-    # Connect the NordVPN connection.
-    function gabyx::nordvpn_connect() {
-        wgnord-up "$@"
+    # Connect the proton connection.
+    function gabyx::protonvpn_connect() {
+        protonvpn connect --country "$@"
     }
 
-    # Disconnect the NordVPN connection.
-    function gabyx::nordvpn_disconnect() {
-        wgnord-down "$@"
+    # Disconnect the proton connection.
+    function gabyx::protonvpn_disconnect() {
+        protonvpn disconnect
     }
 
     # Connect to the named VPN connection.

@@ -113,6 +113,8 @@ in
     pkgsUnstable.mediawriter # Like balena etcher.
     pkgsUnstable.bitwarden-desktop # Password manager
     pkgsUnstable.bitwarden-cli
+    pkgsUnstable.proton-pass
+    pkgsUnstable.proton-pass-cli
     pkgsUnstable.bazecor # Dygma Defy Keyboard.
     pkgsUnstable.element-desktop # Matrix client.
     pkgsUnstable.slack # Messaging app
@@ -141,7 +143,7 @@ in
     pkgsUnstable.noson # Sonos device
 
     # VPN
-    pkgsUnstable.wgnord
+    pkgsUnstable.proton-vpn-cli
 
     # Networking
     pkgsUnstable.dig # DNS lookup tool.

@@ -43,7 +43,6 @@
     inputs.self.modules.nixos.time
     inputs.self.modules.nixos.user
     inputs.self.modules.nixos.virtualization
-    inputs.self.modules.nixos.vpn
     inputs.self.modules.nixos.windowing
     inputs.self.modules.nixos.yubikey
 

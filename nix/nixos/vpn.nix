@@ -3,11 +3,12 @@
   imports = [ ./vpn-wgnord.nix ];
 
   config = {
+    # FIXME: Use proton vpn
     # VPN over nordvpn with wgnord.
-    services.wgnord = {
-      enable = true;
-      tokenFile = "${config.settings.user.home}/.config/nordvpn/token";
-      country = "Switzerland";
-    };
+    # services.wgnord = {
+    #   enable = true;
+    #   tokenFile = "${config.settings.user.home}/.config/nordvpn/token";
+    #   country = "Switzerland";
+    # };
   };
 }
