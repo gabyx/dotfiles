@@ -93,6 +93,11 @@ local mid_mapping = false
 ---
 ---Toggles for the UI.
 ---@field toggles TogglesCfg
+---
+---Special file types which should be ignored on mappings etc.
+---@field special_filetypes table<string, string>
+---Special buffer types which should be ignored on mappings etc.
+---@field special_buftypes table<string, string>
 
 local function get_default_vim_options()
     local opt = {}
@@ -200,6 +205,38 @@ local M = {
         lines = 500000,
         line_length = nil,
         notify = true,
+    },
+
+    special_filetypes = {
+        "aerial",
+        "checkhealth",
+        "DiffviewFiles",
+        "fzf",
+        "gitcommit",
+        "help",
+        "lspinfo",
+        "man",
+        "minifiles",
+        "neo-tree",
+        "noice",
+        "notify",
+        "qf",
+        "query",
+        "snacks_dashboard",
+        "snacks_picker_input",
+        "snacks_picker_list",
+        "spectre_panel",
+        "toggleterm",
+        "trouble",
+        "Trouble",
+    },
+
+    special_buftypes = {
+        "help",
+        "nofile",
+        "prompt",
+        "quickfix",
+        "terminal",
     },
 
     autocmds = {
@@ -363,6 +400,7 @@ local M = {
                     end,
                 },
             },
+            -- FIXME: Probably this is for the `qf` appearing as a regular buffer in nvim at the top as well in the bottom. Figure out how this work?
             unlist_quickfix = {
                 {
                     event = "FileType",

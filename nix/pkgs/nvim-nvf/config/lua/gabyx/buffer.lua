@@ -14,6 +14,51 @@ function M.is_valid(bufnr)
     return vim.api.nvim_buf_is_valid(bufnr) and vim.bo[bufnr].buflisted
 end
 
+--- Check if a buffer is valid normal text buffer.
+---@param bufnr? integer The buffer to check, default to current buffer
+---@return boolean # Whether the buffer is valid or not
+function M.is_normal(bufnr)
+    if not bufnr then
+        bufnr = 0
+    end
+
+    if not M.is_valid(bufnr) then
+        return false
+    end
+
+    local bt = vim.bo.buftype
+    local ft = vim.bo.filetype
+
+    if vim.tbl_contains(gabyx.config.special_filetypes, ft) or vim.tbl_contains(gabyx.config.special_buftypes, bt) then
+        return false
+    end
+
+    -- Since buftype == "" covers only normal file buffers, this single check naturally excludes all other special buffers.
+    if bt ~= "" then
+        return true
+    end
+
+    return false
+end
+
+--- Check if a buffer has a treesitter parser attached.
+---@param bufnr? integer The buffer to check, default to current buffer
+---@return boolean # Whether the buffer is valid or not
+function M.has_treesitter_parser(bufnr)
+    if not bufnr then
+        bufnr = 0
+    end
+
+    local ft = vim.bo[bufnr].filetype
+    if ft == "" then
+        return false
+    end
+
+    local lang = vim.treesitter.language.get_lang(ft) or ft
+    local ok, parser = pcall(vim.treesitter.get_parser, bufnr, lang)
+    return ok and parser ~= nil
+end
+
 --- Check if a buffer is a large buffer (always returns false if large buffer detection is disabled)
 ---@param bufnr? integer the buffer to check the size of, default to current buffer
 ---@param large_buf_opts? LargeBugCfg large buffer parameters, default to AstroCore configuration

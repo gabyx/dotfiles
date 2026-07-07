@@ -1,5 +1,6 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 let
+  inherit (lib.generators) mkLuaInline;
 in
 {
   vim.treesitter = {
@@ -57,18 +58,62 @@ in
   vim.keymaps = [
     {
       key = "<CR>";
-      action = "<cmd>lua require('incselect').init()<CR>";
-      mode = [ "n" ];
-    }
-    {
-      key = "<CR>";
-      action = "<cmd>lua require('incselect').parent()<CR>";
+      lua = true;
+      action = /* lua */ ''
+        function()
+          require('incselect').parent()
+        end
+      '';
       mode = [ "x" ];
     }
     {
       key = "<BS>";
-      action = "<cmd>lua require('incselect').child()<CR>";
+      lua = true;
+      action = /* lua */ ''
+        function()
+          require('incselect').child()
+        end
+      '';
       mode = [ "x" ];
+    }
+  ];
+
+  # Normal-mode <CR> is only bound per-buffer, and only when a
+  # tree-sitter parser is actually attached to that buffer.
+  # This avoids ever mapping a global <CR> in other buffers where this is not wanted like
+  # qf, neo-tree, trouble, help, terminal, etc.
+  # those keep whatever mapping they already have.
+  vim.augroups = [
+    {
+      enable = true;
+      name = "incselect-init";
+      clear = true;
+    }
+  ];
+  vim.autocmds = [
+    {
+      event = [ "FileType" ];
+      group = "incselect-init";
+      enable = true;
+      desc = "incselect init by <CR>";
+      callback = mkLuaInline /* lua */ ''
+        function(ev)
+          local gabyx = require("gabyx")
+
+          if gabyx.buffer.has_treesitter_parser(ev.buf) then
+            vim.keymap.set("n", "<CR>", function()
+              if not require("incselect").init() then
+                gabyx.notify(
+                    "Could not install incselect init.",
+                    vim.log.levels.WARN
+                )
+                vim.cmd("normal! \r")
+              end
+            end, { buffer = ev.buf, silent = true, desc = "incselect init" })
+
+          end
+        end
+      '';
     }
   ];
 }
