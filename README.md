@@ -262,5 +262,6 @@ there.
 
 - [ ] Remove old nvim builds.
 - [ ] Check if appName is upstreamed.
+- [ ] Check how to disable qf buffer appearing in tab.
 - [ ] Make autocommands in config.lua into nvf setup.
 - [ ] Check if nvim-lint is usable.
