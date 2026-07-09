@@ -8,6 +8,7 @@
         ''
             require("astrotheme").setup({
               palette = "astrodark", -- String of the default palette to use when calling `:colorscheme astrotheme`
+
               background = { -- :h background, palettes to use when using the core vim background colors
               	light = "astrolight",
               	dark = "astrodark",
@@ -49,7 +50,7 @@
               			hl.IblScope = { fg = c.ui.none_text }
 
                     -- visual-whitespace plugin
-              			hl.VisualNonText = { fg =  c.ui.none_text }
+                    hl.VisualNonText = { fg = c.ui.none_text, bg = c.ui.selection }
               		end,
               	},
               },
