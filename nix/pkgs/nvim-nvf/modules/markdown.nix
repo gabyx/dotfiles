@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
 
   # Inline NVIM render with `Markview toggle`.
@@ -6,6 +6,17 @@
     package = pkgs.vimPlugins.markview-nvim;
 
     lazy = true;
+
+    setupModule = "markview";
+    setupOpts = lib.mkLuaInline ''
+      {
+        preview = {
+          enable = false,
+          hybrid_modes = { "n" },
+        }
+      }
+    '';
+
     ft = [ "markdown" ];
   };
 
