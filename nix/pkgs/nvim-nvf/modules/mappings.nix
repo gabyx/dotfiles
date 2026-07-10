@@ -345,44 +345,5 @@ in
       action = "<Cmd>enew<CR>";
       desc = "New file.";
     }
-
-    # TODO: Translate this.
-    # return {
-    #
-    #     -- initialize mappings table
-    #     local maps = astro.empty_map_table()
-    #     local sections = assert(opts._map_sections)
-    #
-    #     -- Normal --
-    #     -- Standard Operations DONE
-    #
-    #     maps.n["<Leader>b"] = vim.tbl_get(sections, "b")
-    #
-    #
-    #     -- Split navigation
-    #     maps.n["<C-H>"] = { "<C-w>h", desc = "Move to left split" }
-    #     maps.n["<C-J>"] = { "<C-w>j", desc = "Move to below split" }
-    #     maps.n["<C-K>"] = { "<C-w>k", desc = "Move to above split" }
-    #     maps.n["<C-L>"] = { "<C-w>l", desc = "Move to right split" }
-    #     maps.n["<C-Up>"] = { "<Cmd>resize -2<CR>", desc = "Resize split up" }
-    #     maps.n["<C-Down>"] = { "<Cmd>resize +2<CR>", desc = "Resize split down" }
-    #     maps.n["<C-Left>"] = { "<Cmd>vertical resize -2<CR>", desc = "Resize split left" }
-    #     maps.n["<C-Right>"] = { "<Cmd>vertical resize +2<CR>", desc = "Resize split right" }
-    #
-    #     -- List management
-    #     maps.n["<Leader>x"] = vim.tbl_get(sections, "x")
-    #     maps.n["<Leader>xq"] = { "<Cmd>copen<CR>", desc = "Quickfix List" }
-    #     maps.n["<Leader>xl"] = { "<Cmd>lopen<CR>", desc = "Location List" }
-    #     if vim.fn.has "nvim-0.11" == 0 then
-    #       maps.n["]q"] = { vim.cmd.cnext, desc = "Next quickfix" }
-    #       maps.n["[q"] = { vim.cmd.cprev, desc = "Previous quickfix" }
-    #       maps.n["]Q"] = { vim.cmd.clast, desc = "End quickfix" }
-    #       maps.n["[Q"] = { vim.cmd.cfirst, desc = "Beginning quickfix" }
-    #
-    #       maps.n["]l"] = { vim.cmd.lnext, desc = "Next loclist" }
-    #       maps.n["[l"] = { vim.cmd.lprev, desc = "Previous loclist" }
-    #       maps.n["]L"] = { vim.cmd.llast, desc = "End loclist" }
-    #       maps.n["[L"] = { vim.cmd.lfirst, desc = "Beginning loclist" }
-    #     end
   ];
 }
