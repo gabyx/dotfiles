@@ -238,8 +238,8 @@ diff profile_name="system" current="0" last="1":
         print $match
 
         (
-            (do -i {ls /nix/var/nix/profiles/*}) ++
-            (do -i {ls /nix/var/nix/profiles/system-profiles/*})
+            (do -i {ls /nix/var/nix/profiles/*} | default []) ++
+            (do -i {ls /nix/var/nix/profiles/system-profiles/*} | default [])
         )
         | where type == symlink
         | where name =~ $match
