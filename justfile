@@ -236,7 +236,11 @@ diff profile_name="system" current="0" last="1":
         }
 
         print $match
-        ls /nix/var/nix/profiles/* /nix/var/nix/profiles/system-profiles/*
+
+        (
+            (do -i {ls /nix/var/nix/profiles/*}) ++
+            (do -i {ls /nix/var/nix/profiles/system-profiles/*})
+        )
         | where type == symlink
         | where name =~ $match
         | sort-by modified --reverse
