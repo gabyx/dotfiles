@@ -9,24 +9,43 @@
 let
   sbx = agent-sandbox.lib.${system};
 
-  start = pkgsUnstable.writeShellScriptBin "start" ''
-    if [ -z "$CLAUDE_CODE_OAUTH_TOKEN" ]; then
-      echo "Env. var CLAUDE_CODE_OAUTH_TOKEN not defined." >&2
-      exit 1
-    fi
+  enter-shell =
+    pkgsUnstable.writeShellScriptBin "enter-shell"
+      # Bash
+      ''
+        mkdir -p ~/.config/nix
+        echo "extra-experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+        echo "allow-import-from-derivation = true" > ~/.config/nix/nix.conf
 
-    claude --dangerously-skip-permissions
-  '';
+        direnv allow || { echo "Direnv failed!"; }
+
+        zsh
+      '';
+
+  start =
+    pkgsUnstable.writeShellScriptBin "start"
+      # Bash
+      ''
+        echo "extra-experimental-features = nix-command flakes" > ~/.config/nix/nix.conf
+
+        if [ -z "$CLAUDE_CODE_OAUTH_TOKEN" ]; then
+          echo "Env. var CLAUDE_CODE_OAUTH_TOKEN not defined." >&2
+          exit 1
+        fi
+
+        claude --dangerously-skip-permissions
+      '';
 
   claude-jailed = sbx.mkSandbox {
-    pkg = pkgsUnstable.zsh;
+    pkg = enter-shell;
 
-    binName = "zsh";
+    binName = "enter-shell";
     outName = "claude-jailed";
 
     allowedPackages = [
       start
       claude-code
+      enter-shell
       pkgsUnstable.coreutils
       pkgsUnstable.findutils
       pkgsUnstable.just
