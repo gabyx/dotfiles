@@ -69,7 +69,6 @@ function M.setup(opts)
     M.icons = require("gabyx.icons").setup({ icons = opts.icons })
 
     M.config = require("gabyx.config")
-    M.config = vim.tbl_deep_extend("force", M.config, opts)
 
     -- Set missing libraries.
     M.buffer = require("gabyx.buffer")

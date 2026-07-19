@@ -115,5 +115,19 @@ in
         end
       '';
     }
+    {
+      event = [ "FileType" ];
+      enable = true;
+      desc = "treesitter folding";
+      callback = mkLuaInline /* lua */ ''
+        function(ev)
+          if gabyx.buffer.has_treesitter_parser(ev.buf) then
+            -- Set it to the window-buffer local option.
+            vim.wo[0][0].foldmethod = "expr"
+            vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+          end
+        end
+      '';
+    }
   ];
 }

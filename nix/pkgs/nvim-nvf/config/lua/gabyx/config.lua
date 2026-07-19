@@ -102,6 +102,7 @@ local mid_mapping = false
 local function get_default_vim_options()
     local opt = {}
     local get_icon = require("gabyx.icons").get_icon
+    print(vim.inspect(get_icon("FoldOpened")))
 
     opt.backspace = vim.list_extend(vim.opt.backspace:get(), { "nostop" }) -- don't stop backspace at insert
     opt.breakindent = true -- wrap indent to match  line start
@@ -120,6 +121,9 @@ local function get_default_vim_options()
         foldsep = get_icon("FoldSeparator"), -- fold separator
         foldinner = get_icon("FoldSeparator"), -- nested fold separator
     } -- disable `~` on nonexistent lines
+    opt.foldcolumn = "1"
+    opt.foldmethod = "indent" -- treesitter folding is set in treesitter.nix.
+    opt.foldlevelstart = 99 -- Start always without any folding (level 99).
     opt.ignorecase = true -- case insensitive searching
     opt.infercase = true -- infer cases in keyword completion
     opt.jumpoptions = {} -- apply no jumpoptions on startup
@@ -173,9 +177,6 @@ local M = {
             signcolumn = "auto", -- sets vim.opt.signcolumn to auto
             wrap = false, -- sets vim.opt.wrap
 
-            -- Treesitter folding
-            foldmethod = "expr",
-            foldexpr = "v:lua.vim.treesitter.foldexpr()",
             -- Whitespace Characters
             listchars = "tab:▷ ,trail:·,extends:◣,precedes:◢,nbsp:○",
             list = true,
