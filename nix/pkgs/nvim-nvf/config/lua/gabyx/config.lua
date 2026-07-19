@@ -175,7 +175,7 @@ local M = {
 
             -- Treesitter folding
             foldmethod = "expr",
-            foldexpr = "nvim_treesitter#foldexpr()",
+            foldexpr = "v:lua.vim.treesitter.foldexpr()",
             -- Whitespace Characters
             listchars = "tab:▷ ,trail:·,extends:◣,precedes:◢,nbsp:○",
             list = true,
