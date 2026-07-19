@@ -61,6 +61,7 @@ let
     rwDirs = [
       "$HOME/.config/claude"
       "$HOME/.config/zsh/.antidote"
+      "$HOME/.cache/nix"
     ];
 
     roFiles = [
