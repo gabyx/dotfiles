@@ -1,26 +1,32 @@
 {
+  lib,
   stdenv,
-  fetchgit,
+  fetchFromGitHub,
   cmake,
-  ninja,
 }:
-let
-  version = "0.1.9";
-in
-
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   pname = "neural-amp-modeler-lv2";
-  inherit version;
+  version = "0.2.3";
 
-  src = fetchgit {
-    url = "https://github.com/mikeoliphant/neural-amp-modeler-lv2";
-    rev = "v${version}";
+  src = fetchFromGitHub {
+    owner = "mikeoliphant";
+    repo = "neural-amp-modeler-lv2";
+    tag = "v${finalAttrs.version}";
     fetchSubmodules = true;
-    hash = "sha256-hgHuN+cwFxaPuQLHbamdPtvsDE0ErTViJaCb5gYmLJE=";
+    hash = "sha256-TkynGmhwnkTqieJNuC+H2rDgxYZ9IFvqukfmtbSj790=";
   };
 
   nativeBuildInputs = [
     cmake
-    ninja
   ];
-}
+
+  meta = {
+    maintainers = [
+      lib.maintainers.viraptor
+      lib.maintainers.gabyx
+    ];
+    description = "Neural Amp Modeler LV2 plugin implementation";
+    homepage = finalAttrs.src.meta.homepage;
+    license = [ lib.licenses.gpl3 ];
+  };
+})

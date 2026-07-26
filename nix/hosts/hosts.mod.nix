@@ -53,9 +53,6 @@ let
   desktop = mkSystem "desktop" {
     system = "x86_64-linux";
   };
-  desktop-music = mkSystem "desktop-music" {
-    system = "x86_64-linux";
-  };
   tuxedo = mkSystem "tuxedo-pulse-14" {
     system = "x86_64-linux";
   };
@@ -67,7 +64,6 @@ in
   flake.nixosConfigurations = {
     inherit
       desktop
-      desktop-music
       tuxedo
       vm
       ;
