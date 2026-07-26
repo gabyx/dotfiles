@@ -13,7 +13,9 @@
 
   environment.systemPackages = [
     pkgsUnstable.ardour # Music recording.
+    pkgsUnstable.carla # Music plugins patchbar.
     pkgsUnstable.calf # Calf music plugins.
+    pkgsUnstable.x42-plugins # x42 lv2 plugins
   ];
 
   # Check kernel parameters:
