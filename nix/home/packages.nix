@@ -121,6 +121,7 @@ in
     pkgsUnstable.ffmpeg # Movie converter
     pkgsUnstable.vlc # Movie player
     pkgsUnstable.amberol # Music player
+    pkgsUnstable.obs-studio # Video/screen recording studio.
     pkgsUnstable.showmethekey # Screencast the key-presses.
 
     pkgsUnstable.viu # Terminal image viewer
