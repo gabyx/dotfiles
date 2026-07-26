@@ -132,7 +132,7 @@
       url = "github:nixos/nixpkgs?ref=567a49d1913ce81ac6e9582e3553dd90a955875f";
     };
     nvim-nvf = {
-      url = "github:gabyx/nvf?ref=feat/add-app-name";
+      url = "github:NotAShelf/nvf";
       inputs.nixpkgs.follows = "nvim-nixpkgs";
     };
     # Neovim Nightly.

@@ -255,13 +255,13 @@ there.
 
 ### OS
 
-- [ ] Upgrade to 26.11
-  - [ ] Remove `age-plugin-` own vendors.
+- [x] Upgrade to 26.11
+  - [x] Remove `age-plugin-` own vendors.
 
 ### NVIM
 
 - [ ] Remove old nvim builds.
-- [ ] Check if appName is upstreamed.
+- [x] Check if appName is upstreamed.
 - [ ] Check how to disable qf buffer appearing in tab.
 - [ ] Make autocommands in config.lua into nvf setup.
 - [ ] Check if nvim-lint is usable.

@@ -38,7 +38,7 @@
   mesa,
 }:
 let
-  version = "0.0.12";
+  version = "3200693d73c1c75f484c15679bdc9fd6f3e507e7";
 in
 
 stdenv.mkDerivation {

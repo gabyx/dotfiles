@@ -11,13 +11,12 @@ let
   inherit (import ./lsp-resolve-cmd.lib.nix { inherit lib pkgs; }) resolveCmd;
 in
 {
-  vim.languages.rust.enable = true;
-  vim.languages.rust.lsp = {
+  vim.lsp.servers.rust-analyzer = {
     enable = true;
 
     package = [ (resolveCmd "rust-analyzer" pkgs.rust-analyzer) ];
 
-    opts =
+    init_options =
       # Lua
       ''
         ["rust-analyzer"] = {
