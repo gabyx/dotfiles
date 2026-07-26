@@ -20,6 +20,10 @@
 
             pkgs.fd
           ];
+
+          shellHook = ''
+            just --list
+          '';
         };
       };
     };

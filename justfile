@@ -19,9 +19,10 @@ list:
 
 # Enter a development shell to ensure all tools are here.
 alias dev := develop
+[group("dev")]
 develop *args:
     #!/usr/bin/env nu
-    def main [...args: string] {
+    def --wrapped main [...args: string] {
         let flake_dir = "."
         let shell = "default"
         let cmd = if ($args | is-empty) {
@@ -33,17 +34,18 @@ develop *args:
     }
 
 # Format the whole repository.
+[group("dev")]
 format:
     #!/usr/bin/env nu
-    def main [...args: string] {
+    def --wrapped main [...args: string] {
         ^nix fmt ...$args
     }
 
 # Eval the NixOS toplevel.
+[group("nixos")]
 eval *args:
     #!/usr/bin/env nu
-    def main [...args: string] {
-        let host = "{{default_host}}"
+    def --wrapped main [--host: string = "{{default_host}}" ...args: string] {
         let cmd = [
             eval
             --verbose
@@ -63,10 +65,10 @@ eval *args:
     }
 
 # Build the NixOS.
+[group("nixos")]
 build *args:
     #!/usr/bin/env nu
-    def main [...args: string] {
-        let host = "{{default_host}}"
+    def --wrapped main [--host: string = "{{default_host}}" ...args: string] {
         let cmd = [
             build
             --verbose
@@ -86,10 +88,10 @@ build *args:
     }
 
 # Build a host image (no submodules / secrets).
+[group("nixos")]
 build-image *args:
     #!/usr/bin/env nu
-    def main [...args: string] {
-        let host = "{{default_host}}"
+    def --wrapped main [--host: string = "{{default_host}}" ...args: string] {
         let package = $"($host)-image"
         let cmd = [
             build
@@ -110,45 +112,51 @@ build-image *args:
     }
 
 # Show NixOS options for a certain host.
+[group("nixos")]
 option opts *args:
     #!/usr/bin/env nu
-    def main [opts: string, ...args: string] {
-        ^nixos-option -F ".#{{default_host}}" $opts ...$args
+    def --wrapped main [--host: string = "{{default_host}}" opts: string, ...args: string] {
+        ^nixos-option -F $".#($host)" $opts ...$args
     }
 
 ## Flake maintenance commands =================================================
 # Update the flake lock file. Use arguments to specify single inputs.
+[group("flake")]
 update *args:
     #!/usr/bin/env nu
-    def main [...args: string] {
+    def --wrapped main [...args: string] {
         cd "{{root_dir}}"
         ^nix flake update ...$args
     }
 
 ## NixOS Commands to execute on NixOS systems =================================
 # Prints the NixOS version (based on nixpkgs repository).
+[group("nixos")]
 version:
     nixos-version --revision
 
 # Build the new configuration and set it the boot default.
+[group("nixos")]
 boot *args:
     #!/usr/bin/env nu
-    def main [...args: string] {
+    def --wrapped main [...args: string] {
         ^just rebuild boot ...$args
     }
 
 # Switch the host to the latest configuration.
+[group("nixos")]
 switch *args:
     #!/usr/bin/env nu
-    def main [...args: string] {
+    def --wrapped main [...args: string] {
         ^just rebuild switch ...$args --show-trace --verbose
         ^just diff
     }
 
 # Build with nix-output-monitor, then switch.
+[group("nixos")]
 switch-visual *args:
     #!/usr/bin/env nu
-    def main [...args: string] {
+    def --wrapped main [...args: string] {
         ^just use_nom=true build
 
         print "============= SWITCHING ============="
@@ -158,28 +166,34 @@ switch-visual *args:
     }
 
 # Switch to the latest configuration but under boot entry `name`.
-switch-test name="test" *args:
+[group("nixos")]
+switch-test *args:
     #!/usr/bin/env nu
-    def main [name: string = "test", ...args: string] {
+    def --wrapped main [--name: string = "test", ...args: string] {
         ^just rebuild switch -p $name --show-trace --verbose ...$args
         ^just diff $name
     }
 
 # Build the host and put it under the boot entry `name`.
-boot-test name="test" *args:
+[group("nixos")]
+boot-test *args:
     #!/usr/bin/env nu
-    def main [name: string = "test", ...args: string] {
+    def --wrapped main [--name: string = "test", ...args: string] {
         ^just rebuild boot -p $name --show-trace --verbose ...$args
         ^just diff $name
     }
 
 # NixOS rebuild command for the host (defined in the flake).
-rebuild how *args:
+[group("nixos")]
+rebuild *args:
     #!/usr/bin/env nu
-    def --wrapped main [how: string, ...args: string] {
+    def --wrapped main [
+        how: string,
+        --host: string = "{{default_host}}",
+        ...args: string
+    ] {
         cd "{{root_dir}}"
 
-        let host = "{{default_host}}"
         let cmd = [
             --sudo
             $how
@@ -199,9 +213,10 @@ rebuild how *args:
     }
 
 # Show the history of the system profile and test profiles.
+[group("nixos")]
 history:
     #!/usr/bin/env nu
-    def main [] {
+    def --wrapped main [] {
         print "History in 'system' profile:"
         ^nix profile history --profile /nix/var/nix/profiles/system
 
@@ -218,15 +233,17 @@ history:
 
 # Run the trim script to reduce the amount of generations kept on the system.
 # Usage with `--help`.
+[group("nixos")]
 trim *args:
     #!/usr/bin/env nu
-    def main [...args: string] {
+    def --wrapped main [...args: string] {
         ^./tools/scripts/trim-generations.sh ...$args
     }
 
 # Diff the generation at index `index` with the last one.
 # `last` and `current` can be a number (newest = 0) or a path to a profile link.
-diff profile_name="system" current="0" last="1":
+[group("nixos")]
+diff *args:
     #!/usr/bin/env nu
     def sort-profiles [profile_name: string] {
         let match = if ($profile_name =~ "system") {
@@ -247,10 +264,11 @@ diff profile_name="system" current="0" last="1":
         | get name
     }
 
-    def main [
-        profile_name: string = "system"
-        current: string = "0"
-        last: string = "1"
+    def --wrapped main [
+        --profile_name: string = "system"
+        --current: string = "0"
+        --last: string = "1"
+        ...args: string
     ] {
         if (which nvd | is-empty) {
             print -e "! Command 'nvd' not installed to print difference."
@@ -287,17 +305,18 @@ diff profile_name="system" current="0" last="1":
         $current = do $map_to_current $current
         $last_profile = do $map_to_current $last_profile
 
-        ^nvd diff $last_profile $current
+        ^nvd diff $last_profile $current ...$args
     }
 
 # Diff closures from `dest_ref` to `src_ref`. This builds and
 # computes the closure which might take some time.
-diff-closure dest_ref="/" src_ref="origin/main" host=default_host:
+[group("nixos")]
+diff-closure *args:
     #!/usr/bin/env nu
-    def main [
-        dest_ref: string = "/"
-        src_ref: string = "origin/main"
-        host: string = "{{default_host}}"
+    def --wrapped main [
+        --host: string = "{{default_host}}"
+        --dest_ref: string = "/"
+        --src_ref: string = "origin/main"
     ] {
         print $"Diffing closures of host '($host)' from '($src_ref)' to '($dest_ref)'"
 
@@ -305,13 +324,15 @@ diff-closure dest_ref="/" src_ref="origin/main" host=default_host:
     }
 
 # Run nix-tree to get the tree of all packages.
+[group("nix")]
 tree *args:
     #!/usr/bin/env nu
-    def main [...args: string] {
+    def --wrapped main [...args: string] {
         ^nix-tree ...$args
     }
 
 # Run Nix garbage-collection on the system-profile.
+[group("nixos")]
 gc:
     #!/usr/bin/env nu
     def rm-rf [pattern: string] {
@@ -321,7 +342,7 @@ gc:
         }
     }
 
-    def main [] {
+    def --wrapped main [] {
         print "Remove test profile"
         rm-rf "/nix/var/nix/profiles/system-profiles/test"
         rm-rf "/nix/var/nix/profiles/system-profiles/test-*"
@@ -339,9 +360,14 @@ gc:
     }
 
 # Start the NixOS VM.
-start host="vm" remote_viewer="false":
+[group("vm")]
+start *args:
     #!/usr/bin/env nu
-    def main [host: string = "vm", remote_viewer: string = "false"] {
+    def --wrapped main [
+        --host: string = "vm",
+        --remote_viewer: string = "false",
+        ...args: string,
+    ] {
         let host = if ($host | is-empty) { "{{default_host}}" } else { $host }
 
         let out_dir = $"{{build_dir}}/($host)"
@@ -354,7 +380,8 @@ start host="vm" remote_viewer="false":
             --verbose
             --log-format internal-json
             $"{{root_dir}}#nixosConfigurations.($host).config.system.build.vmWithDisko"
-        ]
+        ] | append $args
+
 
         print "----"
         print $"nix ($cmd | str join ' ')"
@@ -390,38 +417,43 @@ start host="vm" remote_viewer="false":
     }
 
 # Diff current branch against origin/main.
+[group("git")]
 diff-to-main:
     git fetch origin; git diff "origin/main...HEAD"
 
 # Apply all configs, also encrypted ones.
+[group("chezmoi")]
 apply-configs *args:
     #!/usr/bin/env nu
-    def main [...args: string] {
+    def --wrapped main [...args: string] {
         ^just cm apply ...$args
     }
 
 # Apply all configs but not encrypted ones.
+[group("chezmoi")]
 apply-configs-exclude-encrypted *args:
     #!/usr/bin/env nu
-    def main [...args: string] {
+    def --wrapped main [...args: string] {
         ^chezmoi -S "." apply --exclude encrypted ...$args
     }
 
 # Encrypt a file using the encryption configured in `.chezmoi.yaml`.
 # This is using the public key.
 [no-cd]
+[group("chezmoi")]
 encrypt file:
     #!/usr/bin/env nu
-    def main [file: string] {
+    def --wrapped main [file: string] {
         ^just cm encrypt $file
     }
 
 # Decrypt a file using the encryption configured.
 # You need `store-keyfile-private-key` executed.
 [no-cd]
+[group("chezmoi")]
 decrypt file:
     #!/usr/bin/env nu
-    def main [file: string] {
+    def --wrapped main [file: string] {
         ^just cm decrypt $file
     }
 
@@ -430,11 +462,12 @@ decrypt file:
 [no-cd]
 decrypt-edit file:
     #!/usr/bin/env nu
-    def main [file: string] {
+    def --wrapped main [file: string] {
         ^just cm edit $file
     }
 
 # Move all regular files in the repo to the secret folder.
+[group("secrets")]
 move-all-to-secrets:
     #!/usr/bin/env nu
     def main [] {
@@ -448,6 +481,7 @@ move-all-to-secrets:
 
 # Move a file to the secrets folder.
 [private]
+[group("secrets")]
 move-to-secrets file:
     #!/usr/bin/env nu
     def main [file: string] {
@@ -464,6 +498,7 @@ move-to-secrets file:
 
 # Align file name of link to secrets.
 [private]
+[group("secrets")]
 create-links-from-secrets file:
     #!/usr/bin/env nu
     def main [file: string] {
@@ -491,6 +526,7 @@ create-links-from-secrets file:
 # temporarily and deletes it afterwards again.
 # Only used for invocations which need the private key.
 [no-cd]
+[group("chezmoi")]
 cm *args:
     #!/usr/bin/env nu
     def --wrapped main [...args: string] {
@@ -531,14 +567,16 @@ cm *args:
     }
 
 # Like `cm` but with no encryption.
+[group("chezmoi")]
 cmn *args:
     #!/usr/bin/env nu
-    def main [...args: string] {
+    def --wrapped main [...args: string] {
         with-env { NO_ENCRYPTION_SETUP: "true" } {
             ^just cm --exclude encrypted ...$args
         }
     }
 
 # Delete the script state of chezmoi to rerun scripts.
+[group("chezmoi")]
 delete-chezmoi-script-state:
     chezmoi -S "." state delete-bucket --bucket scriptState
