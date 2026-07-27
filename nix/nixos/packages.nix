@@ -8,6 +8,7 @@
     mkpasswd
 
     gnutar
+    zip
     unzip
 
     binutils
