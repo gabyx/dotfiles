@@ -27,9 +27,9 @@ let
           # Bash
           ''
             exe=$("${pkgs.which}/bin/which" "${exeName}")
-            exe=$("${pkgs.coreutils}/bin/realpath" "$exe")
+            exe=$("${pkgs.coreutils}/bin/realpath" "$exe") || true
 
-            if [ -x "$exe" ]; then
+            if [ -n "$exe" ] && [ -x "$exe" ]; then
                 exec "${lib.getExe lspStart}" "$exe" "$@"
             elif [ -x "${bakedExe}" ]; then
               echo "gabyx:: Could not resolve exec. '${exeName}' for LSP start." >&2

@@ -28,6 +28,18 @@
           "ripgrep"
           "spell"
         ];
+
+        # Source order in `default` does NOT set priority: blink pools all
+        # items and sorts by fuzzy score + per-source `score_offset`. The
+        # word-based sources (buffer/ripgrep/spell) have a 0 or small offset,
+        # so they can outrank LSP items. Make them *fallbacks* of the LSP
+        # source so they only appear when LSP returns no items (this also
+        # keeps them working in buffers with no LSP attached).
+        providers.lsp.fallbacks = [
+          "buffer"
+          "ripgrep"
+          "spell"
+        ];
       };
 
       completion = {
