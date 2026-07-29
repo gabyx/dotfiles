@@ -216,7 +216,7 @@ rebuild *args:
 [group("nixos")]
 history:
     #!/usr/bin/env nu
-    def --wrapped main [] {
+    def main [] {
         print "History in 'system' profile:"
         ^nix profile history --profile /nix/var/nix/profiles/system
 
