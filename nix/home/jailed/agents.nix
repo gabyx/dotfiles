@@ -30,7 +30,6 @@ let
 
         if [ -z "$CLAUDE_CODE_OAUTH_TOKEN" ]; then
           echo "Env. var CLAUDE_CODE_OAUTH_TOKEN not defined." >&2
-          exit 1
         fi
 
         claude --dangerously-skip-permissions
