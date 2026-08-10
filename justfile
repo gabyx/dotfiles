@@ -342,7 +342,7 @@ gc:
         }
     }
 
-    def --wrapped main [] {
+    def main [] {
         print "Remove test profile"
         rm-rf "/nix/var/nix/profiles/system-profiles/test"
         rm-rf "/nix/var/nix/profiles/system-profiles/test-*"
