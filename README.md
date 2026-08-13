@@ -34,8 +34,8 @@ other shit OS which desperately tries to convert itself into a \*nix OS) and
 | Nightshifting               | [gammastep](https://gitlab.com/chinstrap/gammastep)                                                                                               |
 | Notification                | [swaync](https://github.com/ErikReider/SwayNotificationCenter)                                                                                    |
 | Calendar and Meeting Status | [vdirsyncer](https://vdirsyncer.pimutils.org/en/stable) and [khal](https://khal.readthedocs.io/en/latest/)                                        |
-| Browser                     | [Chrome](https://www.google.com/intl/de/chrome/)                                                                                                  |
-| Editor                      | [Nvim](https://neovim.io/) with [Astrovim](https://github.com/gabyx/astrovim)                                                                     |
+| Browser                     | [Zen](https://zen-browser.app/)                                                                                                                   |
+| Editor                      | [Nvim](https://neovim.io/) with [nvf](https://nvf.notashelf.dev/)                                                                                 |
 | Normal Font                 | [NotoSans Nerd Font](https://www.nerdfonts.com/)                                                                                                  |
 | Editor/Terminal Font        | [JetBrainsMono Nerd Font](https://www.jetbrains.com/lp/mono)                                                                                      |
 | Shell                       | [zsh](https://www.zsh.org/)                                                                                                                       |
