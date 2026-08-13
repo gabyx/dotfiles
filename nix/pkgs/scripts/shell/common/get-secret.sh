@@ -132,7 +132,7 @@ function main() {
     if [ -n "$(ykman list)" ]; then
         gabyx::print_info "Yubikey seems present."
 
-        fido_identity="$HOME/.local/share/chezmoi/secrets/config/dot_config/age/private_gabyx-$yubikey_name-fido2-hmac.identity"
+        fido_identity="$HOME/.config/age/gabyx-$yubikey_name-fido2-hmac.identity"
         if [ ! -f "$fido_identity" ]; then
             gabyx::print_info "FIDO2 age identity '$fido_identity' not existing."
             fido_identity=$(

@@ -112,6 +112,31 @@ secret-tool store --label='Chezmoi Key-File Passphrase' chezmoi keyfile-private-
 
 Inspect the store with `seahorse`.
 
+### Yubikey
+
+Generate new FIDO2 SSH key, plug it and run:
+
+```bash
+ssh-keygen -t ed25519-sk -O resident -O verify-required -C "openssh"
+ykman fido credentials list
+```
+
+Generate an `age` identity for `normal`,`s1`, `s2` Yubikeys for the
+`age-plugin-fido2-hmac`. Useful for `gabyx::get-secret` script.
+
+```bash
+age-plugin-fido2-hmac -g > ./config/dot_config/age/private_gabyx-s1-fido2-hmac.identity
+```
+
+Get a scecret from bitwarden or prompt and encrypt it with Yubikey to `--file`
+(e.g the chezmoi key file):
+
+```bash
+gabyx::get_secret -y s1 -p "Enter the secret:" --file ~/.config/chezmoi/key
+```
+
+which produces `~/.config/chezmoi/key.s1.age-fido`.
+
 ### Element Desktop
 
 Sometimes it does not start due to credential backend changes (?). Specify
