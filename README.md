@@ -125,7 +125,8 @@ Generate an `age` identity for `normal`,`s1`, `s2` Yubikeys for the
 `age-plugin-fido2-hmac`. Useful for `gabyx::get-secret` script.
 
 ```bash
-age-plugin-fido2-hmac -g > ./config/dot_config/age/private_gabyx-s1-fido2-hmac.identity
+age-plugin-fido2-hmac -g > ./config/config/age/gabyx-s1-fido2-hmac.identity
+just cm add --encrypt ./config/config/age/gabyx-s1-fido2-hmac.identity
 ```
 
 Get a scecret from bitwarden or prompt and encrypt it with Yubikey to `--file`
@@ -136,6 +137,14 @@ gabyx::get_secret -y s1 -p "Enter the secret:" --file ~/.config/chezmoi/key
 ```
 
 which produces `~/.config/chezmoi/key.s1.age-fido`.
+
+Adjust the `~/.config/yubikey/u2f_keys` file by generating the universal
+two-factor key with (adjust the right keys! in the file, needs to be one line
+for user `nixos`):
+
+```bash
+sudo pamu2fcfg -u nixos >> ~/.config/yubikey/u2f_keys
+```
 
 ### Element Desktop
 
