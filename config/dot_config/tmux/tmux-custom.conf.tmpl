@@ -4,45 +4,49 @@
 # Use | and - to split a window vertically and horizontally instead of " and % respoectively
 unbind '"'
 unbind %
-bind-key \\ split-window -h -c "#{pane_current_path}"
+bind-key '\' split-window -h -c "#{pane_current_path}"
 bind-key - split-window -v -c "#{pane_current_path}"
 
 # Open ~/.tmux.conf in vim and reload settings on quit
 unbind e
 bind-key e new-window -n '~/.config/tmux/tmux.conf' "sh -c 'nvim ~/.config/tmux/tmux.conf && tmux source ~/.config/tmux/tmux.conf'"
 
-# Resize panes with Ctrl+Alt+hjkl
-bind-key -n 'C-M-h' resize-pane -L 2
-bind-key -n 'C-M-l' resize-pane -R 2
-bind-key -n 'C-M-k' resize-pane -U 2
-bind-key -n 'C-M-j' resize-pane -D 2
-
-
 # Smart pane switching with awareness of Vim splits.
-# See: https://github.com/christoomey/vim-tmux-navigator
-# decide whether we're in a Vim process
-# ======================================================
-is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
-    | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
+# '@pane-is-vim' is a pane-local option that is set by the plugin on load,
+# and unset when Neovim exits or suspends; note that this means you'll probably
+# not want to lazy-load smart-splits.nvim, as the variable won't be set until
+# the plugin is loaded
 
-bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h' 'select-pane -L'
-bind-key -n 'C-j' if-shell "$is_vim" 'send-keys C-j' 'select-pane -D'
-bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k' 'select-pane -U'
-bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l' 'select-pane -R'
+# Smart pane switching with awareness of Neovim splits.
+bind-key -n C-h if -F "#{@pane-is-vim}" 'send-keys C-h'  'select-pane -L'
+bind-key -n C-j if -F "#{@pane-is-vim}" 'send-keys C-j'  'select-pane -D'
+bind-key -n C-k if -F "#{@pane-is-vim}" 'send-keys C-k'  'select-pane -U'
+bind-key -n C-l if -F "#{@pane-is-vim}" 'send-keys C-l'  'select-pane -R'
+
+# Alternatively, if you want to disable wrapping when moving in non-neovim panes, use these bindings
+# bind-key -n C-h if -F '#{@pane-is-vim}' { send-keys C-h } { if -F '#{pane_at_left}'   '' 'select-pane -L' }
+# bind-key -n C-j if -F '#{@pane-is-vim}' { send-keys C-j } { if -F '#{pane_at_bottom}' '' 'select-pane -D' }
+# bind-key -n C-k if -F '#{@pane-is-vim}' { send-keys C-k } { if -F '#{pane_at_top}'    '' 'select-pane -U' }
+# bind-key -n C-l if -F '#{@pane-is-vim}' { send-keys C-l } { if -F '#{pane_at_right}'  '' 'select-pane -R' }
+
+# Smart pane resizing with awareness of Neovim splits.
+bind-key -n C-M-h if -F "#{@pane-is-vim}" 'send-keys M-h' 'resize-pane -L 3'
+bind-key -n C-M-j if -F "#{@pane-is-vim}" 'send-keys M-j' 'resize-pane -D 3'
+bind-key -n C-M-k if -F "#{@pane-is-vim}" 'send-keys M-k' 'resize-pane -U 3'
+bind-key -n C-M-l if -F "#{@pane-is-vim}" 'send-keys M-l' 'resize-pane -R 3'
 
 tmux_version='$(tmux -V | sed -En "s/^tmux ([0-9]+(.[0-9]+)?).*/\1/p")'
-
 if-shell -b '[ "$(echo "$tmux_version < 3.0" | bc)" = 1 ]' \
-    "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\'  'select-pane -l'"
+    "bind-key -n 'C-\\' if -F \"#{@pane-is-vim}\" 'send-keys C-\\'  'select-pane -l'"
 if-shell -b '[ "$(echo "$tmux_version >= 3.0" | bc)" = 1 ]' \
-    "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'"
+    "bind-key -n 'C-\\' if -F \"#{@pane-is-vim}\" 'send-keys C-\\\\'  'select-pane -l'"
 
-# bind-key -n 'C-Space' if-shell "$is_vim" 'send-keys C-Space' 'select-pane -t:.+'
 bind-key -T copy-mode-vi 'C-h' select-pane -L
 bind-key -T copy-mode-vi 'C-j' select-pane -D
 bind-key -T copy-mode-vi 'C-k' select-pane -U
 bind-key -T copy-mode-vi 'C-l' select-pane -R
 bind-key -T copy-mode-vi 'C-\' select-pane -l
+
 # Confuses my typing in nvim.
 # bind-key -T copy-mode-vi 'C-Space' select-pane -t:.+
 # =====================================================
