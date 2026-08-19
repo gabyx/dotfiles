@@ -39,20 +39,20 @@ in
 
       setupOpts = {
         keymaps.view = [
-          (vkey "<Leader>to" "conflict_choose" "ours" "Choose the OURS version of a conflict")
-          (vkey "<Leader>tt" "conflict_choose" "theirs" "Choose the THEIRS version of a conflict")
-          (vkey "<Leader>tb" "conflict_choose" "base" "Choose the BASE version of a conflict")
-          (vkey "<Leader>ta" "conflict_choose" "all" "Choose all the versions of a conflict")
-          (vkey "<Leader>tO" "conflict_choose_all" "ours"
+          (vkey "<Leader>gdo" "conflict_choose" "ours" "Choose the OURS version of a conflict")
+          (vkey "<Leader>gdt" "conflict_choose" "theirs" "Choose the THEIRS version of a conflict")
+          (vkey "<Leader>gdb" "conflict_choose" "base" "Choose the BASE version of a conflict")
+          (vkey "<Leader>gda" "conflict_choose" "all" "Choose all the versions of a conflict")
+          (vkey "<Leader>gdO" "conflict_choose_all" "ours"
             "Choose the OURS version of a conflict for the whole file"
           )
-          (vkey "<Leader>tT" "conflict_choose_all" "theirs"
+          (vkey "<Leader>gdT" "conflict_choose_all" "theirs"
             "Choose the THEIRS version of a conflict for the whole file"
           )
-          (vkey "<Leader>tB" "conflict_choose_all" "base"
+          (vkey "<Leader>gdB" "conflict_choose_all" "base"
             "Choose the BASE version of a conflict for the whole file"
           )
-          (vkey "<Leader>tA" "conflict_choose_all" "all"
+          (vkey "<Leader>gdA" "conflict_choose_all" "all"
             "Choose all the versions of a conflict for the whole file"
           )
         ];
