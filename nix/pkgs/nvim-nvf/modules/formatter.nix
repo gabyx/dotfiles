@@ -1,6 +1,23 @@
 { lib, ... }:
 let
-  inherit (lib.generators) mkLuaInline;
+  inherit (lib.generators) mkLuaInline toLua;
+
+  defaultFormatters = [ "trim_whitespace" ];
+
+  # Prefer treefmt when a 'treefmt' config is present for the buffer,
+  # otherwise fall back to the given per-filetype formatter list.
+  tf =
+    fallback:
+    mkLuaInline
+      # Lua
+      ''
+        function(bufnr)
+          if require("conform").get_formatter_info("treefmt", bufnr).available then
+            return ${toLua { } ([ "treefmt" ] ++ defaultFormatters)}
+          end
+          return ${toLua { } fallback}
+        end
+      '';
 in
 {
   # We dont want formatting over the LSP.
@@ -41,55 +58,62 @@ in
 
               vim.notify("Formatting file with:" .. names)
 
-              return { timeout_ms = 300 }
+              return { timeout_ms = 500 }
             end
           '';
 
       formatters_by_ft = {
-        typescriptreact = [ "prettier" ];
-        javascriptreact = [ "prettier" ];
-        javascript = [ "prettier" ];
-        typescript = [ "prettier" ];
-        json = [ "prettier" ];
-        jsonc = [ "prettier" ];
-        html = [ "prettier" ];
-        css = [ "prettier" ];
-        scss = [ "prettier" ];
-        graphql = [ "prettier" ];
-        markdown = [ "prettier" ];
-        vue = [ "prettier" ];
-        astro = [ "prettier" ];
-        yaml = [ "prettier" ];
+        typescriptreact = tf [ "prettier" ];
+        javascriptreact = tf [ "prettier" ];
+        javascript = tf [ "prettier" ];
+        typescript = tf [ "prettier" ];
+        json = tf [ "prettier" ];
+        jsonc = tf [ "prettier" ];
+        html = tf [ "prettier" ];
+        css = tf [ "prettier" ];
+        scss = tf [ "prettier" ];
+        graphql = tf [ "prettier" ];
+        markdown = tf [ "prettier" ];
+        vue = tf [ "prettier" ];
+        astro = tf [ "prettier" ];
+        yaml = tf [ "prettier" ];
 
-        go = [
+        go = tf [
           "gofmt"
           "goimports"
           "golines"
         ]; # run sequentially, golines last
-        cpp = [ "clang_format" ]; # note: underscore, not "clangformat"
-        rust = [ "rustfmt" ];
+        cpp = tf [ "clang_format" ]; # note: underscore, not "clangformat"
+        rust = tf [ "rustfmt" ];
 
-        sql = [ "sqlfluff" ];
+        sql = tf [ "sqlfluff" ];
 
-        starlark = [
+        starlark = tf [
           "black"
         ];
-        python = [
+        python = tf [
           "ruff"
           "isort"
         ];
 
-        sh = [ "shfmt" ];
-        lua = [ "stylua" ];
-        nix = [ "nixfmt" ];
-        nu = [ "nufmt" ];
+        sh = tf [ "shfmt" ];
+        lua = tf [ "stylua" ];
+        nix = tf [ "nixfmt" ];
+        nu = tf [ "nufmt" ];
 
         # "*" runs on every filetype
         # "_" runs on all filetypes which have no formatter.
-        "*" = [ "trim_whitespace" ];
+        "*" = defaultFormatters;
       };
 
       formatters = {
+        treefmt = {
+          command = "treefmt";
+          cwd = false;
+          args = [ ];
+          stdin = false;
+        };
+
         golines.prepend_args = [ "--no-reformat-tags" ];
 
         sqlfluff = {

@@ -1,7 +1,7 @@
 { ... }:
 {
   perSystem =
-    { pkgs, ... }:
+    { self', pkgs, ... }:
     {
       devShells = {
         default = pkgs.mkShellNoCC {
@@ -19,6 +19,8 @@
             pkgs.just # Command executor like `make` but better.
 
             pkgs.fd
+
+            self'.packages.treefmt
           ];
 
           shellHook = ''
