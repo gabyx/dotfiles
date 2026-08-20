@@ -72,12 +72,12 @@ def replace_files(
     else:
         print(f"Replacing in '{len(files)}' files.")
 
-    def exec(force: bool) -> list[str]:
+    def run_replacements(force: bool) -> list[str]:
         func = functools.partial(replace, regexes=regex, force=force)
         return Pool().map(func, files)  # type: ignore
 
     if verbose:
-        cmds = exec(False)
+        cmds = run_replacements(False)
         msg = "\n".join([f" - {c}" for c in [f"'{c}'" for c in cmds]])
         if not force:
             print(f"Dry-run: would executed:\n{msg}")
@@ -85,7 +85,7 @@ def replace_files(
             print(f"Executing:\n{msg}")
 
     if force:
-        exec(True)
+        run_replacements(True)
 
 
 def main():
