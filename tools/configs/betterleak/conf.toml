@@ -1,0 +1,14 @@
+# Keep all the built-in secret rules, then layer our ignores on top.
+# Without this, providing a config replaces the default ruleset entirely.
+[extend]
+useDefault = true
+
+# prefilter: runs before any regex (cheap). Only `attributes` (e.g. path)
+# is available here. Skips whole files/dirs.
+prefilter = '''
+asdf
+matchesAny(attributes["path"], [
+  `.*`
+])
+'''
+
