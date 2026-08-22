@@ -3,7 +3,7 @@
 {
   osConfig,
   inputs,
-  outputs,
+  self,
   ...
 }:
 {
@@ -31,7 +31,7 @@
 
     ./music.nix
 
-    outputs.modules.homeManager.chezmoi
+    self.modules.homeManager.chezmoi
   ];
 
   home = rec {

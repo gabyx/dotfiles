@@ -5,25 +5,26 @@
   ...
 }:
 let
-  outputs = self;
 
   # Creates a nixoConfiguration or an image.
-  mk =
+  mkSystem =
     name:
     args@{ system, ... }:
-    create:
     # Wrap flake-parts arguments into using `withSystem`...
     withSystem system (
       {
         config,
         inputs',
+        self',
+        pkgs,
+        pkgsUnstable,
         ...
       }:
-      create (
+      inputs.nixpkgs.lib.nixosSystem (
         args
         // {
           # Set packages.
-          pkgs = outputs.lib.importPkgs system;
+          inherit pkgs;
 
           # Import all modules.
           modules = [
@@ -35,20 +36,18 @@ let
             inherit
               system
               inputs
-              outputs
+              self
               ;
 
             # Flake parts inputs (already system scoped).
             inherit inputs';
+            inherit self';
             packages = config.packages;
-
-            pkgsUnstable = outputs.lib.importPkgsUnstable system;
+            inherit pkgsUnstable;
           };
         }
       )
     );
-
-  mkSystem = name: args: mk name args inputs.nixpkgs.lib.nixosSystem;
 
   desktop = mkSystem "desktop" {
     system = "x86_64-linux";

@@ -2,7 +2,7 @@
   config,
   osConfig,
   lib,
-  outputs,
+  self,
   inputs',
   pkgsUnstable,
   system,
@@ -73,11 +73,11 @@ in
         description = "All editors. First is the main one.";
         default = [
           # NVF builds.
-          outputs.packages.${system}.nvim-gabyx
-          outputs.packages.${system}.nvim-gabyx-nightly
+          self.packages.${system}.nvim-gabyx
+          self.packages.${system}.nvim-gabyx-nightly
 
           # Old builds.
-          outputs.packages.${system}.nvim # Pinned version.
+          self.packages.${system}.nvim # Pinned version.
 
           pkgsUnstable.vscode
         ];

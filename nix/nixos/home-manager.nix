@@ -2,7 +2,8 @@
   config,
   inputs,
   inputs',
-  outputs,
+  self,
+  self',
   system,
   packages,
   pkgs,
@@ -17,12 +18,13 @@
   config = {
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
-    home-manager.users.${config.settings.user.name} = outputs.modules.homeManager.gabyx;
+    home-manager.users.${config.settings.user.name} = self.modules.homeManager.gabyx;
     home-manager.extraSpecialArgs = {
       inherit
         inputs
         inputs'
-        outputs
+        self
+        self'
         system
         packages
         pkgs

@@ -1,12 +1,12 @@
 {
-  outputs,
+  self,
   system,
   ...
 }:
 {
   home.packages = [
-    outputs.packages.${system}.gabyx-shell-run
-    outputs.packages.${system}.gabyx-shell-source
-    outputs.packages.${system}.gabyx-python
+    self.packages.${system}.gabyx-shell-run
+    self.packages.${system}.gabyx-shell-source
+    self.packages.${system}.gabyx-python
   ];
 }
