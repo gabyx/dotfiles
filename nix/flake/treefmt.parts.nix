@@ -1,17 +1,57 @@
 { inputs, ... }:
 {
+  imports = [
+    inputs.treefmt-nix.flakeModule
+  ];
+
   perSystem =
-    { inputs', pkgsUnstable, ... }:
+    {
+      config,
+      inputs',
+      pkgsUnstable,
+      ...
+    }:
     let
       pkgs = pkgsUnstable // {
         nixfmt = inputs'.nixfmt-rs.packages.default;
       };
 
-      treefmtEval = inputs.treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
-      treefmt = treefmtEval.config.build.wrapper;
+      treefmt = config.treefmt.build.wrapper;
     in
     {
-      packages.treefmt = treefmt;
+      # Define formatter for `nix fmt`.
       formatter = treefmt;
+      packages.treefmt = treefmt;
+
+      treefmt = {
+        inherit pkgs;
+
+        # Used to find the project root
+        projectRootFile = ".git/config";
+
+        settings.global.excludes = [
+          "wezterm/shell-integration.sh"
+          "config/keyboard/linux/docs/**"
+          "**/fzf-git.sh"
+          "**/*nmcli-rofi.sh"
+        ];
+
+        # Markdown, JSON, YAML, etc.
+        programs.prettier.enable = true;
+
+        # Shellscripts (which we should not have!)
+        programs.shfmt = {
+          enable = true;
+          indent_size = 4;
+        };
+
+        programs.shellcheck.enable = true;
+
+        # Lua.
+        programs.stylua.enable = true;
+
+        # Nix.
+        programs.nixfmt.enable = true;
+      };
     };
 }

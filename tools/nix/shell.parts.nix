@@ -19,6 +19,7 @@
             pkgs.just # Command executor like `make` but better.
 
             pkgs.fd
+            pkgs.nushell
 
             self'.packages.treefmt
           ];
