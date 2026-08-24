@@ -6,7 +6,6 @@ let
     gabyx = import ./home.nix;
   };
 
-  flake.modules.homeManager = modules;
   # Expose all home manager modules on the flake.
   flake.homeModules = modules;
 in

@@ -31,7 +31,7 @@
 
     ./music.nix
 
-    self.modules.homeManager.chezmoi
+    self.homeModules.chezmoi
   ];
 
   home = rec {

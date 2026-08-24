@@ -6,11 +6,11 @@
   imports = [
     ./configuration-base.nix
 
-    ./hardware-configuration.nix
+    ./filesystem.nix
 
-    inputs.self.modules.nixos.secrets
-    inputs.self.modules.nixos.bluetooth
-    inputs.self.modules.nixos.apfs
+    inputs.self.nixosModules.secrets
+    inputs.self.nixosModules.bluetooth
+    inputs.self.nixosModules.apfs
 
     ./settings.nix
     ../common/yubikey.nix
@@ -25,7 +25,19 @@
         { ... }:
         {
           imports = [
-            inputs.self.modules.nixos.music
+            inputs.self.nixosModules.music
+          ];
+        };
+    };
+
+    # The Lix specialization.
+    lix = {
+      inheritParentConfig = true;
+      configuration =
+        { ... }:
+        {
+          imports = [
+            inputs.self.nixosModules.lix
           ];
         };
     };

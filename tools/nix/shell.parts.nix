@@ -20,6 +20,7 @@
 
             pkgs.fd
             pkgs.nushell
+            pkgs.nix-output-monitor
 
             self'.packages.treefmt
           ];

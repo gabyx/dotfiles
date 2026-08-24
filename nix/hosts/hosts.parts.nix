@@ -9,44 +9,41 @@ let
   # Creates a nixoConfiguration or an image.
   mkSystem =
     name:
-    args@{ system, ... }:
+    { system, ... }:
     # Wrap flake-parts arguments into using `withSystem`...
     withSystem system (
       {
-        config,
         inputs',
         self',
         pkgs,
         pkgsUnstable,
+        mkNixOSSystem,
         ...
       }:
-      inputs.nixpkgs.lib.nixosSystem (
-        args
-        // {
-          # Set packages.
-          inherit pkgs;
+      mkNixOSSystem {
+        modules = [
+          {
+            nixpkgs.pkgs = pkgs;
+            nixpkgs.hostPlatform = system;
+          }
+          ./${name}/configuration.nix
+        ];
 
-          # Import all modules.
-          modules = [
-            ./${name}/configuration.nix
-          ];
+        # Set special arguments to the modules.
+        specialArgs = {
+          inherit
+            system
+            inputs
+            self
+            ;
 
-          # Set special arguments to the modules.
-          specialArgs = {
-            inherit
-              system
-              inputs
-              self
-              ;
-
-            # Flake parts inputs (already system scoped).
-            inherit inputs';
-            inherit self';
-            packages = config.packages;
-            inherit pkgsUnstable;
-          };
-        }
-      )
+          # Flake parts inputs (already system scoped).
+          inherit inputs';
+          inherit self';
+          inherit (self') packages;
+          inherit pkgsUnstable;
+        };
+      }
     );
 
   desktop = mkSystem "desktop" {

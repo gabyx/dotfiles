@@ -15,38 +15,38 @@
     inputs.auto-cpufreq.nixosModules.default
     inputs.agenix.nixosModules.default
 
-    ./hardware-configuration.nix
+    ./hardware.nix
+    ./filesystem.nix
     ./cpu.nix
     ./boot.nix
-    ./hardware.nix
 
-    inputs.self.modules.nixos.settings
-    inputs.self.modules.nixos.backup
-    inputs.self.modules.nixos.bluetooth
-    inputs.self.modules.nixos.containerization
-    inputs.self.modules.nixos.display
-    inputs.self.modules.nixos.environment
-    inputs.self.modules.nixos.fonts
-    inputs.self.modules.nixos.kernel
-    inputs.self.modules.nixos.keyboard
-    inputs.self.modules.nixos.networking
-    inputs.self.modules.nixos.networking-profiles
-    inputs.self.modules.nixos.nix
-    inputs.self.modules.nixos.packages
-    inputs.self.modules.nixos.printing
-    inputs.self.modules.nixos.programs
-    inputs.self.modules.nixos.secrets
-    inputs.self.modules.nixos.security
-    inputs.self.modules.nixos.services
-    inputs.self.modules.nixos.sound
-    inputs.self.modules.nixos.system
-    inputs.self.modules.nixos.time
-    inputs.self.modules.nixos.user
-    inputs.self.modules.nixos.virtualization
-    inputs.self.modules.nixos.windowing
-    inputs.self.modules.nixos.yubikey
+    inputs.self.nixosModules.settings
+    inputs.self.nixosModules.backup
+    inputs.self.nixosModules.bluetooth
+    inputs.self.nixosModules.containerization
+    inputs.self.nixosModules.display
+    inputs.self.nixosModules.environment
+    inputs.self.nixosModules.fonts
+    inputs.self.nixosModules.kernel
+    inputs.self.nixosModules.keyboard
+    inputs.self.nixosModules.networking
+    inputs.self.nixosModules.networking-profiles
+    inputs.self.nixosModules.nix
+    inputs.self.nixosModules.packages
+    inputs.self.nixosModules.printing
+    inputs.self.nixosModules.programs
+    inputs.self.nixosModules.secrets
+    inputs.self.nixosModules.security
+    inputs.self.nixosModules.services
+    inputs.self.nixosModules.sound
+    inputs.self.nixosModules.system
+    inputs.self.nixosModules.time
+    inputs.self.nixosModules.user
+    inputs.self.nixosModules.virtualization
+    inputs.self.nixosModules.windowing
+    inputs.self.nixosModules.yubikey
 
-    inputs.self.modules.nixos.home-manager
+    inputs.self.nixoshomeModules
 
     ./settings.nix
     ../common/yubikey.nix

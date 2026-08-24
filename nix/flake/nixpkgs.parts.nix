@@ -29,7 +29,6 @@ let
     };
 in
 {
-
   # Add two library functions.
   flake.lib.importPkgs = stable;
   flake.lib.importPkgsUnstable = unstable;
@@ -45,8 +44,9 @@ in
     in
     {
       _module.args.pkgs = pkgs;
-      _module.args.pkgsUnstable = pkgsUnstable;
+      _module.args.mkNixOSSystem = inputs.nixpkgs.lib.nixosSystem; # Pin the nixosSystem to the imported pkgs.
 
+      _module.args.pkgsUnstable = pkgsUnstable;
       legacyPackages.unstable = pkgsUnstable;
     };
 }

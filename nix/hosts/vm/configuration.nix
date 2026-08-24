@@ -10,7 +10,7 @@
     ./boot.nix
     ./settings.nix
 
-    inputs.self.modules.nixos.networking-profiles
-    inputs.self.modules.nixos.secrets
+    inputs.self.nixosModules.networking-profiles
+    inputs.self.nixosModules.secrets
   ];
 }

@@ -3,6 +3,7 @@ set dotenv-load := true
 set shell := ["nu", "--no-config-file", "-c"]
 root_dir := justfile_directory()
 build_dir := root_dir / "build"
+shell := env("SHELL", "zsh")
 
 mod vm "./tools/just/vm.just"
 
@@ -26,7 +27,7 @@ develop *args:
         let flake_dir = "."
         let shell = "default"
         let cmd = if ($args | is-empty) {
-            [ env $"SHELL=($env.SHELL)" $env.SHELL ]
+            [ "env" $"SHELL=($shell)" $shell ]
         } else {
             $args
         }
