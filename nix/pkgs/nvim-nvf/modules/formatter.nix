@@ -110,8 +110,11 @@ in
         treefmt = {
           command = "treefmt";
           cwd = false;
-          args = [ ];
-          stdin = false;
+          args = [
+            "--stdin"
+            "$FILENAME"
+          ];
+          stdin = true;
         };
 
         golines.prepend_args = [ "--no-reformat-tags" ];

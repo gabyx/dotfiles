@@ -15,6 +15,7 @@
     home-manager = import ./home-manager.nix;
     kernel = import ./kernel.nix;
     keyboard = import ./keyboard.nix;
+    lix = import ./lix.nix;
     music = import ./music.nix;
     networking = import ./networking.nix;
     networking-profiles = import ./networking-profiles;
