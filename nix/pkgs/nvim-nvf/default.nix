@@ -31,9 +31,11 @@ let
                 package = nvim;
               };
               imports = [
-                (inputs.import-tree (i: i.map (x: lib.info "Importing: '${x}'" x)) (
-                  i: i.filter (x: !lib.hasInfix ".lib." x)
-                ) [ ./modules ])
+                (inputs.import-tree
+                  # (i: i.map (x: lib.info "Importing: '${x}'" x))
+                  (i: i.filter (x: !lib.hasInfix ".lib." x))
+                  [ ./modules ]
+                )
               ];
             }
           ];

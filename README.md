@@ -295,6 +295,7 @@ there.
 ### NVIM
 
 - [ ] Remove old nvim builds.
+  - [x] Deprecated it and removed from Nix.
 - [x] Check if appName is upstreamed.
 - [ ] Check how to disable qf buffer appearing in tab.
 - [ ] Make autocommands in config.lua into nvf setup.

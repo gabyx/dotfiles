@@ -38,6 +38,8 @@ docs
 .config/evolution
 {{- end }}
 
+.config/nvim-old-to-delete
+
 {{- if eq .chezmoi.osRelease.id "nixos" }}
 # Ignore only on NixOS
 .config/tmux/tmux.conf

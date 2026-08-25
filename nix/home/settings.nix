@@ -76,9 +76,6 @@ in
           self.packages.${system}.nvim-gabyx
           self.packages.${system}.nvim-gabyx-nightly
 
-          # Old builds.
-          self.packages.${system}.nvim # Pinned version.
-
           pkgsUnstable.vscode
         ];
         type = types.listOf types.package;

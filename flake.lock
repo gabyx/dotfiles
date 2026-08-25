@@ -788,22 +788,6 @@
         "type": "github"
       }
     },
-    "nvim-astronvim": {
-      "locked": {
-        "lastModified": 1778274207,
-        "narHash": "sha256-I4puXmX1iovcCHZlRmztO3vW0mAbbRvq4F8wgIMQ1MM=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "b3da656039dc7a6240f27b2ef8cc6a3ef3bccae7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "b3da656039dc7a6240f27b2ef8cc6a3ef3bccae7",
-        "type": "github"
-      }
-    },
     "nvim-nightly": {
       "inputs": {
         "flake-parts": "flake-parts_3",
@@ -884,7 +868,6 @@
         "nixpkgs": "nixpkgs_8",
         "nixpkgs-anydesk": "nixpkgs-anydesk",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "nvim-astronvim": "nvim-astronvim",
         "nvim-nightly": "nvim-nightly",
         "nvim-nixpkgs": "nvim-nixpkgs",
         "nvim-nvf": "nvim-nvf",

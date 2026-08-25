@@ -23,6 +23,10 @@ typeset -U path PATH
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+# Set default editors.
+export EDITOR="${EDITOR:-nvim-gabyx}"
+export VISUAL="${EDITOR:-nvim-gabyx}"
+
 # Set startship prompt location.
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 

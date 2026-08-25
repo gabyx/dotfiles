@@ -1,4 +1,5 @@
 {
+  lib,
   inputs,
   ...
 }:
@@ -31,7 +32,7 @@
     };
 
     # The Lix specialization.
-    lix = {
+    lix = lib.mkIf false {
       inheritParentConfig = true;
       configuration =
         { ... }:

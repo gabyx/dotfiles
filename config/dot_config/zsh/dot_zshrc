@@ -36,10 +36,6 @@ setopt AUTO_PUSHD                # Push the current directory visited on the sta
 setopt PUSHD_IGNORE_DUPS         # Do not store duplicates in the stack.
 setopt PUSHD_SILENT              # Do not print the directory stack after pushd or popd.
 
-# Set default editors.
-export EDITOR="nvim"
-export VISUAL="nvim"
-
 # Settings for plugins.
 local ZSH_AUTOSUGGEST_USE_ASYNC=true
 local ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=247'
