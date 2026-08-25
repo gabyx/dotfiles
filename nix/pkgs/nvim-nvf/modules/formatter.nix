@@ -58,7 +58,7 @@ in
 
               vim.notify("Formatting file with:" .. names)
 
-              return { timeout_ms = 500 }
+              return { timeout_ms = 300 }
             end
           '';
 
