@@ -58,6 +58,8 @@ in
       "resume_offset=${toString swapConfig.resumeOffset}"
     ];
 
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
+
     supportedFilesystems = [ "zfs" ];
     zfs.forceImportRoot = false;
 
