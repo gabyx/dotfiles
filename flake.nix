@@ -3,12 +3,9 @@
 
   nixConfig = {
     substituters = [
-      # Replace the official cache with a mirror located in China
-      # Add here some other mirror if needed.
-      "https://cache.nixos.org/"
+      "https://cache.nixos.org"
     ];
     extra-substituters = [
-      # Nix community's cache server
       "https://nix-community.cachix.org"
     ];
     extra-trusted-public-keys = [
