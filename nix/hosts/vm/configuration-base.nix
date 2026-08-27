@@ -32,7 +32,7 @@
     inputs.self.nixosModules.virtualization
     inputs.self.nixosModules.windowing
 
-    inputs.self.nixoshomeModules
+    inputs.self.homeModules
   ];
 
   ### NixOS Release Settings===================================================

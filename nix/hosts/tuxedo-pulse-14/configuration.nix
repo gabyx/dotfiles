@@ -46,7 +46,7 @@
     inputs.self.nixosModules.windowing
     inputs.self.nixosModules.yubikey
 
-    inputs.self.nixoshomeModules
+    inputs.self.nixosModules.home-manager
 
     ./settings.nix
     ../common/yubikey.nix
