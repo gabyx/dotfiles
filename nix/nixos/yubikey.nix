@@ -145,7 +145,7 @@ in
         #yubikey-agent.enable = true;
 
         udev.extraRules =
-          lib.optionalString pkgs.stdenv.isLinux ''
+          lib.optionalString pkgs.stdenv.hostPlatform.isLinux ''
             # Link/unlink ssh key on yubikey add/remove
             SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="1050", RUN+="${lib.getBin yubikey-up}/bin/yubikey-up"
 

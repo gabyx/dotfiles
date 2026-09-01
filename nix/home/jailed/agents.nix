@@ -56,6 +56,7 @@ let
     ];
 
     allowNix = true;
+    allowUnixSockets = true;
 
     rwDirs = [
       "$HOME/.config/claude"

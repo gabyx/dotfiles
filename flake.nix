@@ -61,8 +61,9 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
     # Nixpkgs (unstable stuff for certain packages.)
-    # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs?rev=56c02bc00adcf003215cc4bd996d6efaf4cff188";
+
+    multiverse.url = "github:fzakaria/nixpkgs-multiverse";
 
     # Index the nix-store.
     nix-index-database = {
@@ -110,31 +111,18 @@
     };
 
     claude-code = {
-      url = "github:sadjow/claude-code-nix?ref=v2.1.195";
+      url = "github:sadjow/claude-code-nix?ref=v2.1.257";
     };
     agent-sandbox = {
       url = "github:archie-judd/agent-sandbox.nix";
     };
 
-    # Pinned Nixpkgs for nvim.
-    # =========================================================================
-    # TODO: Make own flake for Nvim.
-    nvim-nixpkgs = {
-      # Ref to : nixpkgs/nixos-unstable from `nixpkgs-unstable`
-      url = "github:nixos/nixpkgs?ref=567a49d1913ce81ac6e9582e3553dd90a955875f";
-    };
     nvim-nvf = {
       url = "github:NotAShelf/nvf";
-      inputs.nixpkgs.follows = "nvim-nixpkgs";
     };
     # Neovim Nightly.
     nvim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
-    };
-    # =========================================================================
-
-    nixpkgs-anydesk = {
-      url = "github:FraioVeio/nixpkgs/anydesk/fix-update-script";
     };
 
     # Instant direnv loading.
@@ -154,7 +142,7 @@
     };
 
     jail-nix = {
-      url = "sourcehut:~alexdavid/jail.nix?ref=beta";
+      url = "sourcehut:~alexdavid/jail.nix";
     };
 
     nixfmt-rs = {

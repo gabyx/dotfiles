@@ -172,7 +172,7 @@ switch-test *args:
     #!/usr/bin/env nu
     def --wrapped main [--name: string = "test", ...args: string] {
         ^just rebuild switch -p $name --show-trace --verbose ...$args
-        ^just diff $name
+        ^just diff --profile-name $name
     }
 
 # Build the host and put it under the boot entry `name`.
@@ -181,7 +181,7 @@ boot-test *args:
     #!/usr/bin/env nu
     def --wrapped main [--name: string = "test", ...args: string] {
         ^just rebuild boot -p $name --show-trace --verbose ...$args
-        ^just diff $name
+        ^just diff --profile-name $name
     }
 
 # NixOS rebuild command for the host (defined in the flake).

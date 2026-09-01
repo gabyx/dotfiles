@@ -17,6 +17,7 @@ let
         self',
         pkgs,
         pkgsUnstable,
+        mvs,
         mkNixOSSystem,
         ...
       }:
@@ -42,6 +43,7 @@ let
           inherit self';
           inherit (self') packages;
           inherit pkgsUnstable;
+          inherit mvs;
         };
       }
     );

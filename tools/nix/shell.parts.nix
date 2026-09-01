@@ -1,26 +1,28 @@
-{ ... }:
+{ lib, ... }:
 {
   perSystem =
-    { self', pkgs, ... }:
+    {
+      self',
+      inputs',
+      pkgsUnstable,
+      ...
+    }:
     {
       devShells = {
-        default = pkgs.mkShellNoCC {
-          packages = with pkgs; [
-            coreutils
-            findutils
+        default = pkgsUnstable.mkShellNoCC {
+          packages = [
+            (lib.hiPrio pkgsUnstable.git)
+            pkgsUnstable.git-lfs
+            pkgsUnstable.bash
+            pkgsUnstable.coreutils
+            pkgsUnstable.findutils
+            pkgsUnstable.direnv # Auto apply stuff on entering directory `cd`.
+            pkgsUnstable.just # Command executor like `make` but better.
+            pkgsUnstable.fd
+            pkgsUnstable.nushell
+            pkgsUnstable.nix-output-monitor
 
-            (lib.hiPrio pkgs.git)
-            pkgs.git-lfs
-            pkgs.bash
-
-            pkgs.coreutils
-            pkgs.findutils
-            pkgs.direnv # Auto apply stuff on entering directory `cd`.
-            pkgs.just # Command executor like `make` but better.
-
-            pkgs.fd
-            pkgs.nushell
-            pkgs.nix-output-monitor
+            inputs'.multiverse.packages.mvs
 
             self'.packages.treefmt
           ];

@@ -20,26 +20,22 @@
     };
     fontDir.enable = true;
 
-    packages = with pkgs; [
-      corefonts
-      ubuntu-classic
-
-      fira
-
-      noto-fonts
-      noto-fonts-color-emoji
-
-      google-fonts
-
-      nerd-fonts.jetbrains-mono
-      nerd-fonts.dejavu-sans-mono
-      nerd-fonts.sauce-code-pro
-      nerd-fonts.fira-code
+    packages = [
+      pkgs.corefonts
+      pkgs.ubuntu-classic
+      pkgs.fira
+      pkgs.noto-fonts
+      pkgs.noto-fonts-color-emoji
+      pkgs.google-fonts
+      pkgs.nerd-fonts.jetbrains-mono
+      pkgs.nerd-fonts.dejavu-sans-mono
+      pkgs.nerd-fonts.sauce-code-pro
+      pkgs.nerd-fonts.fira-code
     ];
   };
 
-  environment.systemPackages = with pkgs; [
-    font-manager
+  environment.systemPackages = [
+    pkgs.font-manager
   ];
 
   # ===========================================================================
