@@ -14,8 +14,8 @@ let
       # Bash
       ''
         mkdir -p ~/.config/nix
-        echo "extra-experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
         echo "allow-import-from-derivation = true" > ~/.config/nix/nix.conf
+        echo "extra-experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 
         direnv allow || { echo "Direnv failed!"; }
 
@@ -77,7 +77,7 @@ let
     ];
 
     env = {
-      SHELL = "$SHELL";
+      SHELL = "$(realpath $SHELL)";
       JAILED = true;
 
       CLAUDE_CODE_OAUTH_TOKEN = "$CLAUDE_CODE_OAUTH_TOKEN";
@@ -87,7 +87,7 @@ let
       GIT_COMMITTER_IDENT = "gabyx-agent";
 
       LOCALE_ARCHIVE = "${pkgsUnstable.glibcLocales}/lib/locale/locale-archive";
-      GITSTATUS_DAEMON = "$GITSTATUS_DAEMON";
+      GITSTATUS_DAEMON = "$(realpath $GITSTATUS_DAEMON)";
     };
 
     allowedDomains = {
