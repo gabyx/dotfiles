@@ -31,6 +31,7 @@
         inherit inputs';
 
         # The pinned nvim packages.
+        # nixos-unstable.
         pkgs = mvs.at "567a49d1913ce81ac6e9582e3553dd90a955875f";
 
         # The unstable packages.

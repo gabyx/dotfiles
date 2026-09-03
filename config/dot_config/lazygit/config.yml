@@ -98,11 +98,9 @@ gui:
   switchToFilesAfterStashApply: true
   switchTabsWithPanelJumpKeys: false
 git:
-  pagers:
+  diffRenderers:
     - colorArg: always
-      pager: delta --paging=never
-      externalDiffCommand: ""
-      useExternalDiffGitConfig: false
+      command: delta --paging=never
   commit:
     signOff: false
     autoWrapCommitMessage: true
@@ -223,7 +221,7 @@ keybinding:
     prevTab: "["
     nextScreenMode: +
     prevScreenMode: _
-    cyclePagers: "|"
+    cycleDiffRenderers: "|"
     undo: z
     redo: Z
     filteringMenu: <ctrl+s>
@@ -239,6 +237,7 @@ keybinding:
     increaseRenameSimilarityThreshold: )
     decreaseRenameSimilarityThreshold: (
     openDiffTool: <ctrl+t>
+    newWorktree: w
   status:
     checkForUpdate: u
     recentRepos: <enter>
@@ -284,8 +283,6 @@ keybinding:
     fetchRemote: f
     addForkRemote: F
     sortOrder: s
-  worktrees:
-    viewWorktreeOptions: w
   commits:
     squashDown: s
     renameCommit: r
