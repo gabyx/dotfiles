@@ -26,8 +26,6 @@ let
     pkgsUnstable.writeShellScriptBin "start"
       # Bash
       ''
-        echo "extra-experimental-features = nix-command flakes" > ~/.config/nix/nix.conf
-
         if [ -z "$CLAUDE_CODE_OAUTH_TOKEN" ]; then
           echo "Env. var CLAUDE_CODE_OAUTH_TOKEN not defined." >&2
         fi
@@ -80,7 +78,7 @@ let
       SHELL = "$(realpath $SHELL)";
       JAILED = true;
 
-      CLAUDE_CODE_OAUTH_TOKEN = "$CLAUDE_CODE_OAUTH_TOKEN";
+      CLAUDE_CODE_OAUTH_TOKEN = "\${CLAUDE_CODE_OAUTH_TOKEN:-}";
       CLAUDE_CONFIG_DIR = "$HOME/.config/claude";
 
       GIT_AUTHOR_IDENT = "gabyx-agent";
