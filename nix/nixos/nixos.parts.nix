@@ -1,7 +1,6 @@
 { ... }:
 {
   flake.nixosModules = {
-    settings = import ./settings.nix;
     adblock-dns = import ./adblock-dns.nix;
     apfs = import ./apfs.nix;
     backup = import ./backup.nix;
@@ -26,6 +25,9 @@
     secrets = import ./secrets.nix;
     security = import ./security.nix;
     services = import ./services.nix;
+    settings = import ./settings.nix;
+    size-reduction = import ./side-reduction.nix;
+    smartd = import ./smartd.nix;
     sound = import ./sound.nix;
     steam = import ./steam.nix;
     system = import ./system.nix;

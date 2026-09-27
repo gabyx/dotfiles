@@ -20,7 +20,6 @@
     ./cpu.nix
     ./boot.nix
 
-    inputs.self.nixosModules.settings
     inputs.self.nixosModules.backup
     inputs.self.nixosModules.bluetooth
     inputs.self.nixosModules.containerization
@@ -38,6 +37,9 @@
     inputs.self.nixosModules.secrets
     inputs.self.nixosModules.security
     inputs.self.nixosModules.services
+    inputs.self.nixosModules.settings
+    inputs.self.nixosModules.size-reduction
+    inputs.self.nixosModules.smartd
     inputs.self.nixosModules.sound
     inputs.self.nixosModules.system
     inputs.self.nixosModules.time
@@ -45,7 +47,6 @@
     inputs.self.nixosModules.virtualization
     inputs.self.nixosModules.windowing
     inputs.self.nixosModules.yubikey
-
     inputs.self.nixosModules.home-manager
 
     ./settings.nix

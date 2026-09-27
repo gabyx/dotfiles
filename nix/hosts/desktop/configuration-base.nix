@@ -15,7 +15,6 @@
     ./cpu.nix
     ./boot.nix
 
-    inputs.self.nixosModules.settings
     inputs.self.nixosModules.backup
     inputs.self.nixosModules.containerization
     inputs.self.nixosModules.display
@@ -31,6 +30,9 @@
     inputs.self.nixosModules.programs
     inputs.self.nixosModules.security
     inputs.self.nixosModules.services
+    inputs.self.nixosModules.settings
+    inputs.self.nixosModules.size-reduction
+    inputs.self.nixosModules.smartd
     inputs.self.nixosModules.sound
     inputs.self.nixosModules.system
     inputs.self.nixosModules.time
