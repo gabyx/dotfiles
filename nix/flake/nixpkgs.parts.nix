@@ -42,10 +42,14 @@ in
       mvs = mkMultiverse system;
 
       # Use a 7 days behind unstable for security reasons.
-      pkgsUnstableCooldown = mvs.daysBehind "tip" 7;
+      pkgsUnstableCooldown = mvs.daysBehind "34ab99075ac4f7e40cf037eef32cb1c360bb85e9" 7;
+
       pkgsUnstable =
-        assert lib.assertMsg (pkgsUnstableCooldown.multiverse.rev == inputs.nixpkgs-unstable.rev)
-          "Input 'nixpkgs-unstable' must be aligned with cooldown 7 days behind '${pkgsUnstableCooldown.multiverse.rev}'.";
+        assert lib.assertMsg (pkgsUnstableCooldown.multiverse.rev == inputs.nixpkgs-unstable.rev) ''
+          Input 'nixpkgs-unstable' must be
+          aligned with cooldown 7 days behind "${pkgsUnstableCooldown.multiverse.rev}".
+          NixOS unstable tip: '${mvs.tip.multiverse.rev}'.
+        '';
         pkgsUnstableCooldown;
     in
     {

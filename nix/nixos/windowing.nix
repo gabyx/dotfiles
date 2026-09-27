@@ -3,6 +3,7 @@
   lib,
   pkgs,
   pkgsUnstable,
+  mvs,
   ...
 }:
 let
@@ -82,6 +83,7 @@ let
       rofi-power-menu # Rofi powermenu.
       rofi-bluetooth # Rofi bluetooth.
       rofi-systemd # Rofi systemd.
+      (mvs.versions.rofi-rbw."1.7.0") # Rofi bitwarden.
 
       avizo # Nice brightnessctl and audio volume visualization for wayland.
       brightnessctl # Brightness control in waybar.
