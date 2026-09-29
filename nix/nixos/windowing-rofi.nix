@@ -13,6 +13,8 @@ let
       "--clipboarder" = "wl-copy";
       "--clear-after" = "20";
       "--action" = "copy";
+      "--keybindings" =
+        "Control+1:type:username,Control+2:type:password,Control+3:type:totp,Control+4:copy:password,Control+5:copy:username,Control+6:copy:totp";
     };
   };
 

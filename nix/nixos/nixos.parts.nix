@@ -26,7 +26,7 @@
     security = import ./security.nix;
     services = import ./services.nix;
     settings = import ./settings.nix;
-    size-reduction = import ./side-reduction.nix;
+    size-reduction = import ./size-reduction.nix;
     smartd = import ./smartd.nix;
     sound = import ./sound.nix;
     steam = import ./steam.nix;
