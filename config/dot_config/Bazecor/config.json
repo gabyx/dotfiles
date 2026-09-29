@@ -7,7 +7,7 @@
     "hideBluetoothExperimental": false,
     "showDefaults": false,
     "allowBeta": true,
-    "version": "1.6.4"
+    "version": "1.9.0"
   },
   "neurons": [
     {
@@ -176,5 +176,8 @@
         "chipId": "cdb81118a24abe15"
       }
     }
-  ]
+  ],
+  "capabilities": {
+    "sk20": true
+  }
 }
