@@ -21,6 +21,7 @@ bindsym $mod+Shift+a exec $sound-menu
 bindsym $mod+Shift+d exec $systemd-menu
 bindsym $mod+Shift+t exec $procs-menu
 bindsym $mod+Shift+m exec $emoji-menu
+bindsym $mod+Shift+o exec $passwdmgr-menu
 bindsym $mod+Shift+s exec $screenshot-menu
 bindsym $mod+Shift+r exec $screenrecord-menu
 bindsym $mod+Shift+y exec $color-picker-menu

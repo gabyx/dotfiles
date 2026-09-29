@@ -83,7 +83,18 @@ let
       rofi-power-menu # Rofi powermenu.
       rofi-bluetooth # Rofi bluetooth.
       rofi-systemd # Rofi systemd.
-      (mvs.versions.rofi-rbw."1.7.0") # Rofi bitwarden.
+
+      # Rofi bitwarden.
+      (pkgs.buildEnv {
+        name = "rofi-rbw-env";
+        pname = "rofi-rbw-env";
+        version = "1.7.0";
+        paths = [
+          (mvs.versions.rbw."1.7.0") # bitwarden alternative CLI stateless.
+          (mvs.versions.rofi-rbw-wayland."1.7.0")
+          pkgs.pinentry-rofi
+        ];
+      })
 
       avizo # Nice brightnessctl and audio volume visualization for wayland.
       brightnessctl # Brightness control in waybar.

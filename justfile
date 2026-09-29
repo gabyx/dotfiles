@@ -454,8 +454,8 @@ encrypt file:
 [group("chezmoi")]
 decrypt file:
     #!/usr/bin/env nu
-    def --wrapped main [file: string] {
-        ^just cm decrypt $file
+    def --wrapped main [...args: string] {
+        ^just cm decrypt ...$args
     }
 
 # Decrypt and edit the file.
@@ -463,8 +463,8 @@ decrypt file:
 [no-cd]
 decrypt-edit file:
     #!/usr/bin/env nu
-    def --wrapped main [file: string] {
-        ^just cm edit $file
+    def --wrapped main [...args: string] {
+        ^just cm edit ...$args
     }
 
 # Move all regular files in the repo to the secret folder.
