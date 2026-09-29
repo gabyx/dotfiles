@@ -18,6 +18,7 @@ let
         pkgs,
         pkgsUnstable,
         mvs,
+        wrappersLib,
         mkNixOSSystem,
         ...
       }:
@@ -44,6 +45,7 @@ let
           inherit (self') packages;
           inherit pkgsUnstable;
           inherit mvs;
+          inherit wrappersLib;
         };
       }
     );

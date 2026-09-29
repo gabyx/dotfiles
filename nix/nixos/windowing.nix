@@ -4,6 +4,7 @@
   pkgs,
   pkgsUnstable,
   mvs,
+  wrappersLib,
   ...
 }:
 let
@@ -54,6 +55,7 @@ let
   '';
 
   commands = pkgs.callPackage ./windowing/commands.nix { inherit windowMgr; };
+  commonPkgsRofi = import ./windowing-rofi.nix { inherit pkgs mvs wrappersLib; };
 
   commonPkgs =
     with pkgs;
@@ -78,30 +80,13 @@ let
       gcolor3 # Colorwheel picker.
       hyprpicker # Colorpicker on screen.
 
-      rofi # Menus for various things.
-      rofimoji # Emoji selector.
-      rofi-power-menu # Rofi powermenu.
-      rofi-bluetooth # Rofi bluetooth.
-      rofi-systemd # Rofi systemd.
-
-      # Rofi bitwarden.
-      (pkgs.buildEnv {
-        name = "rofi-rbw-env";
-        pname = "rofi-rbw-env";
-        version = "1.7.0";
-        paths = [
-          (mvs.versions.rbw."1.7.0") # bitwarden alternative CLI stateless.
-          (mvs.versions.rofi-rbw-wayland."1.7.0")
-          pkgs.pinentry-rofi
-        ];
-      })
-
       avizo # Nice brightnessctl and audio volume visualization for wayland.
       brightnessctl # Brightness control in waybar.
       playerctl # Player control in waybar.
 
       waybar # Top bar.
     ]
+    ++ commonPkgsRofi
     ++ (lib.optionals isSway [
       pkgs.swaybg
       pkgs.i3-back

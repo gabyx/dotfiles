@@ -94,6 +94,9 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # Wrapper executables and other stuff.
+    wrappers.url = "github:lassulus/wrappers";
+
     # Terminal `wezterm` nightly
     wezterm = {
       url = "github:wez/wezterm?dir=nix";

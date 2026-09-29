@@ -42,6 +42,7 @@ set $network-menu gabyx::network-menu
 set $bluetooth-menu gabyx::bluetooth-menu
 set $emoji-menu gabyx::emoji-menu
 set $systemd-menu gabyx::systemd-menu
+set $passwdmgr-menu gabyx::passwdmgr-menu
 set $procs-menu gabyx::procs-menu
 set $sound-menu gabyx::sound-menu
 set $calculator-menu gabyx::calculator-menu

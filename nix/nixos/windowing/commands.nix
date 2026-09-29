@@ -30,6 +30,7 @@ let
     bluetooth-menu.cmd = "rofi-bluetooth";
     emoji-menu.cmd = "rofimoji --clipboarder wl-copy --action type copy --keybinding-copy Ctrl-y";
     systemd-menu.cmd = "rofi-systemd";
+    passwdmgr-menu.cmd = "rofi-rbw";
     procs-menu.cmd = "gabyx::term btop";
     sound-menu.cmd = "pavucontrol";
     calculator-menu.cmd = "qalculate-gtk";
