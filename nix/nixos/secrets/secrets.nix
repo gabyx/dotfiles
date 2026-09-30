@@ -51,6 +51,11 @@ let
       hostDesktop
       hostTuxedo
     ];
+    "netrc-nix-cache.age".publicKeys = [
+      chezmoi
+      hostDesktop
+      hostTuxedo
+    ];
   };
 in
 rules
