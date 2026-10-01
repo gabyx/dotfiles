@@ -18,12 +18,10 @@
     settings = {
       extra-substituters = [
         "ssh://nix-ssh@nix-cache.swisscustodian.ch"
-        "https://nix-cache.sck-sit-dev.dscompute.ch"
       ];
 
       extra-trusted-public-keys = [
         "nix-cache.swisscustodian.ch.1:rPQnp1nJav3UluO5MeomJTEPeqffeIu7Y41xpecBqMA="
-        "nix-cache:lVTYyJ3CTjHRnuhxA5APy9jrdZGdfyuxKOwU7lKihZE="
       ];
 
       netrc-file = "${config.age.secrets.netrc-nix-cache.path}";
