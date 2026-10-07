@@ -40,7 +40,7 @@ else
 fi
 assert_exe rofi
 assert_exe copyq
-assert_exe swappy
+assert_exe gradia
 
 if ! out=$($grimshot check 2>&1); then
     show_error "Grimshot has not all tools available. Run 'grimshot check':\n$out."
@@ -72,7 +72,7 @@ fi
 # If swappy is installed, prompt the user to
 # edit the captured screenshot
 EDIT_CHOICE="no"
-if command -v swappy $ >/dev/null; then
+if command -v gradia $ >/dev/null; then
     EDIT_CHOICE=$(
         rofi -dmenu -p 'Edit the shot?' -lines 2 <<EOF
 no
@@ -114,7 +114,7 @@ esac
 
 case "$EDIT_CHOICE" in
 yes)
-    swappy -f "$FILENAME" -o "$FILENAME"
+    gradia "$FILENAME"
     ;;
 no) ;;
 '') ;;

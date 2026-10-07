@@ -76,7 +76,7 @@ let
       grim # Screenshot tool in Wayland.
       slurp # Wayland region selector.
 
-      swappy # Edit tool for screenshots.
+      gradia # Edit tool for screenshots.
       gcolor3 # Colorwheel picker.
       hyprpicker # Colorpicker on screen.
 
