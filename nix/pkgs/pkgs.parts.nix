@@ -21,9 +21,7 @@
 
       gabyx-scripts = import ./scripts { inherit pkgsUnstable; };
       neural-amp-modeler-lv2 = pkgsUnstable.callPackage ./neural-amp-modeler-lv2 { };
-
-      age-plugin-fido2prf = pkgsUnstable.callPackage ./age-plugin-fido2prf { };
-      age-plugin-fido2-hmac = pkgsUnstable.callPackage ./age-plugin-fido2-hmac { };
+      tone3000-plugin = pkgsUnstable.callPackage ./tone3000-plugin { };
 
       nvim = import ./nvim-nvf {
         inherit lib;
@@ -50,9 +48,7 @@
           ;
 
         inherit neural-amp-modeler-lv2;
-
-        inherit age-plugin-fido2prf;
-        inherit age-plugin-fido2-hmac;
+        inherit tone3000-plugin;
 
         inherit docker-sbx;
       }
