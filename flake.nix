@@ -114,7 +114,7 @@
     };
 
     claude-code = {
-      url = "github:sadjow/claude-code-nix?ref=v2.1.257";
+      url = "github:sadjow/claude-code-nix?ref=v2.1.289";
     };
     agent-sandbox = {
       url = "github:archie-judd/agent-sandbox.nix";
