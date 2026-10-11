@@ -2,6 +2,7 @@
   inputs,
   lib,
   config,
+  packages,
   pkgs,
   pkgsUnstable,
   ...
@@ -16,7 +17,22 @@
     pkgsUnstable.carla # Music plugins patchbar.
     pkgsUnstable.calf # Calf music plugins.
     pkgsUnstable.x42-plugins # x42 lv2 plugins
+    pkgsUnstable.x42-avldrums
+    pkgsUnstable.drumgizmo
+
+    # VST2/VST3 on Windows
+    # pkgsUnstable.wineWow64Packages.staging
+    # pkgsUnstable.yabridge
+    # pkgsUnstable.yabridgectl
+    # pkgsUnstable.wineWow64Packages.yabridge
+
+    packages.tone3000-plugin
   ];
+
+  # Some user settings. # Home Manager changes, merged with the base definition above
+  environment.sessionVariables = {
+    WINEPREFIX = "/persist/wine";
+  };
 
   # Check kernel parameters:
   # `zgrep -e "CONFIG_IRQ_FORCED_THREADING=y" -e "CONFIG_PREEMPT_RT=y" /proc/config.gz`
