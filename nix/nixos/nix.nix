@@ -17,20 +17,47 @@
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
     settings = {
-      # Enable flakes and new 'nix' command
-      experimental-features = "nix-command flakes";
+      experimental-features = [
+        "auto-allocate-uids"
+        "ca-derivations"
+        "cgroups"
+        "dynamic-derivations"
+        "fetch-closure"
+        "fetch-tree"
+        "flakes"
+        "impure-derivations"
+        "nix-command"
+        "parse-toml-timestamps"
+        "pipe-operators"
+        "recursive-nix"
+      ];
+
+      use-xdg-base-directories = true;
+
+      lint-url-literals = "fatal";
+      # lint-short-path-literals = "warn";
+      # lint-absolute-path-literals = "warn";
+
+      warn-dirty = false;
+      max-jobs = "auto"; # Use all available CPU cores for building packages.
+
       # Deduplicate and optimize nix store
       auto-optimise-store = true;
+      # Avoid unwanted garbage collection when using nix-direnv.
+      keep-outputs = true;
+      keep-derivations = true;
 
-      # Add your own username to the trusted list
-      trusted-users = [ "nixos" ];
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
     };
 
-    # Garbage collector
+    # Garbage collector.
     gc = {
       automatic = true;
       dates = "daily";
-      options = "--delete-older-than 60d";
+      options = "--delete-older-than 180d";
     };
   };
 }
