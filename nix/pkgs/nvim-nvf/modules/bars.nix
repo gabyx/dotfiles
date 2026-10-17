@@ -38,21 +38,25 @@ in
         # lua
         ''
           lib = require("heirline-components.all")
+          libBuffer = require("heirline-components.buffer")
 
           local opts = {
-            -- opts = {
-            --   disable_winbar_cb = function(args) -- avoid showing winbar on the greeter
-            --     local is_disabled = not require("heirline-components.buffer").is_valid(args.buf) or
-            --         lib.condition.buffer_matches({
-            --           buftype = { "terminal", "prompt", "nofile", "help", "quickfix" },
-            --           filetype = {
-            --             "neo-tree",
-            --             "dashboard",
-            --           },
-            --         }, args.buf)
-            --     return is_disabled
-            --   end,
-            -- },
+            opts = {
+              disable_winbar_cb = function(args)
+                -- Avoid showing winbar on certain floats.
+                local is_disabled = not libBuffer.is_valid(args.buf) or
+                    lib.condition.buffer_matches({
+                      buftype = {
+                        "terminal", "prompt", "nofile", "help", "quickfix"
+                      },
+                      filetype = {
+                        "neo-tree",
+                        "dashboard",
+                      },
+                    }, args.buf)
+                return is_disabled
+              end,
+            },
             tabline = { -- UI upper bar
               lib.component.tabline_conditional_padding(),
               lib.component.tabline_buffers(),

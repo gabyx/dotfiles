@@ -13,25 +13,6 @@
               event = "msg_showmode";
             };
           }
-          # Trying to
-          # {
-          #   filter = {
-          #     event = "msg_show";
-          #     kind = [
-          #       ""
-          #       "echo"
-          #       "echomsg"
-          #       "lua_print"
-          #       "list_cmd"
-          #     ];
-          #   };
-          #   opts = {
-          #     merge = false;
-          #     replace = false;
-          #     title = "Messages";
-          #   };
-          #   view = "notify";
-          # }
         ];
 
         presets = {
