@@ -13,6 +13,11 @@ in
       layer = "top";
       position = "top";
 
+      margin-top = 0;
+      margin-left = 0;
+      margin-right = 0;
+      margin-bottom = 0;
+
       # If height property would be not present, it'd be calculated dynamically
       height = 30;
 

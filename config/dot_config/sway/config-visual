@@ -12,18 +12,28 @@ client.background        $base
 font pango:NotoSans Nerd Font Bold 10
 
 # Border
-hide_edge_borders both
+hide_edge_borders smart
 default_border pixel 2
-# No border for browsers
-# for_window [app_id="(?i).*(firefox)"] default_border pixel 1
 
 # Configure 5px of space between windows and to the screen edges.
 gaps inner 8
 # Configure an additional 5px of extra space to the screen edges,
 # for a total gap of 10px to the screen edges, and 5px between windows.
-gaps outer 5
+gaps outer 2
 # Only enable outer gaps when there is exactly one window or split container on the workspace.
-smart_gaps on
+# smart_gaps on
 
 # Default wallpaper (more resolutions are available in /run/current-system/sw/share/backgrounds/sway/)
 output * bg ~/.config/wallpapers/background-sand.jpg fill
+
+
+# SwayFX Settings
+corner_radius 10
+blur enable
+shadows enable
+titlebar_separator enable
+
+layer_effects "waybar" {
+    corner_radius 0
+}
+

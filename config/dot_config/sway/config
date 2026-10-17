@@ -109,7 +109,6 @@ set $secondaryDispWork 'Dell Inc. DELL U3421WE B6V1753'
 # Only one file will be deployed and picked and included.
 include config-private
 include config-work
-include config-fx
 
 include config-visual
 include config-idle
