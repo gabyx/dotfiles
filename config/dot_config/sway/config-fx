@@ -1,0 +1,13 @@
+# SwayFX Settings
+
+corner_radius 20
+animation_duration_ms 300
+blur disable
+shadows disable
+titlebar_separator disable
+
+layer_effects "waybar" {
+    corner_radius 20
+}
+
+
