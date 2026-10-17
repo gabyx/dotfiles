@@ -23,6 +23,10 @@
     autoSetupRemote = true
     default = upstream
     followTags = false
+[pull]
+    ff = only
+[fetch]
+    prune = true
 [include]
     path = {{ .git.configPath }}/gitconfig-shared
     path = {{ .git.configPath }}/gitconfig-tools
@@ -61,6 +65,7 @@
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
 [diff]
+    algorithm = histogram
     tool = {{ .git.diffTool }}
     guitool = {{ .git.diffTool }}
     colorMoved = default
@@ -72,8 +77,10 @@
     conflictstyle = diff3
 [mergetool]
     prompt = false
-[pull]
-    ff = only
+[rerere]
+    enabled = true
+[rebase]
+    autosquash = true
 [color]
     ui = true
 [status]
