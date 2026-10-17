@@ -45,6 +45,8 @@
 
     };
 
+    colorizer.enable = true;
+
     borders = {
       enable = true;
 
