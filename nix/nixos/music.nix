@@ -16,6 +16,7 @@
     pkgsUnstable.ardour # Music recording.
     pkgsUnstable.carla # Music plugins patchbar.
     pkgsUnstable.calf # Calf music plugins.
+    pkgsUnstable.lsp-plugins # https://lsp-plug.in/?page=plugins
     pkgsUnstable.x42-plugins # x42 lv2 plugins
     pkgsUnstable.x42-avldrums
     pkgsUnstable.drumgizmo
@@ -27,6 +28,7 @@
     # pkgsUnstable.wineWow64Packages.yabridge
 
     packages.tone3000-plugin
+    packages.mt-powerdrumkit
   ];
 
   # Some user settings. # Home Manager changes, merged with the base definition above

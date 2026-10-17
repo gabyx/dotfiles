@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MIDINameDocument PUBLIC "-//MIDI Manufacturers Association//DTD MIDINameDocument 1.0//EN" "http://www.midi.org/dtds/MIDINameDocument10.dtd">
+<MIDINameDocument>
+  <Author>Peter Zenk</Author>
+  <MasterDeviceNames>
+    <Manufacturer>Manda Audio</Manufacturer>
+    <Model>MT-PowerDrumKit 2</Model>
+    <CustomDeviceMode Name="Drumkit Keymap">
+      <ChannelNameSetAssignments>
+        <ChannelNameSetAssign Channel="1" NameSet="Names"/>
+        <ChannelNameSetAssign Channel="10" NameSet="Names"/>
+      </ChannelNameSetAssignments>
+    </CustomDeviceMode>
+    <ChannelNameSet Name="Names">
+      <AvailableForChannels>
+        <AvailableChannel Channel="1" Available="true"/>
+        <AvailableChannel Channel="10" Available="true"/>
+      </AvailableForChannels>
+      <UsesNoteNameList Name="Notes"/>
+      <PatchBank Name="User Patches">
+        <PatchNameList Name="User Patches"/>
+      </PatchBank>
+    </ChannelNameSet>
+    <NoteNameList Name="Notes">
+      <Note Number="35" Name="(Kick)"/>
+      <Note Number="36" Name="KICK"/>
+      <Note Number="37" Name="SIDE-STICK"/>
+      <Note Number="38" Name="SNARE"/>
+      <Note Number="39" Name="(Snare)"/>
+      <Note Number="40" Name="(Snare)"/>
+      <Note Number="41" Name="TOM LOW"/>
+      <Note Number="42" Name="HI-HAT CLOSED"/>
+      <Note Number="43" Name="(Tom Low)"/>
+      <Note Number="44" Name="HI-HAT HALF OPEN"/>
+      <Note Number="45" Name="TOM MID"/>
+      <Note Number="46" Name="HI-HAT OPEN"/>
+      <Note Number="47" Name="(Tom Mid)"/>
+      <Note Number="48" Name="TOM HI"/>
+      <Note Number="49" Name="CRASH LEFT"/>
+      <Note Number="50" Name="(Tom Hi)"/>
+      <Note Number="51" Name="RIDE"/>
+      <Note Number="52" Name="CHINA"/>
+      <Note Number="53" Name="RIDE BELL"/>
+      <Note Number="55" Name="SPLASH"/>
+      <Note Number="57" Name="CRASH RIGHT"/>
+      <Note Number="58" Name="CRASH RIGHT CHOKED"/>
+      <Note Number="60" Name="HI-HAT OPEN"/>
+      <Note Number="61" Name="HI-HAT HALF OPEN"/>
+      <Note Number="62" Name="HI-HAT CLOSED"/>
+      <Note Number="63" Name="(Hi-HAt closed)"/>
+      <Note Number="65" Name="HI-HAT PEDAL"/>
+      <Note Number="83" Name="CHOKE ALL CYMBALS"/>
+    </NoteNameList>
+   </MasterDeviceNames>
+</MIDINameDocument>

@@ -1,0 +1,43 @@
+HOW TO INSTALL
+==============
+
+Step 1)
+
+Copy the whole folder "MT-PowerDrumKit.vst3" into:
+
+Home -> .vst3
+
+You may have to enable "Show hidden files" in your file explorer settings for the folder to show up. 
+
+If the folder .vst3 doesn't exist in your Home directory, just create it yourself. All major DAWs are scanning this location by default.
+
+
+Step 2)
+
+Install required libraries.
+
+Most of the required libraries might already be installed on your system. To make sure everything is present and up to date for Arch based systems e.g. Manjaro just copy and paste the following command into your terminal.
+
+sudo pacman -Syu && sudo pacman -S --needed \
+  libx11 \
+  libxcb \
+  xcb-util \
+  xcb-util-cursor \
+  xcb-util-keysyms \
+  libxkbcommon \
+  libxkbcommon-x11 \
+  freetype2 \
+  glib2 \
+  cairo \
+  pango \
+  fontconfig \
+  libpng \
+  zlib
+
+
+ Please submit your bug reports to:
+ https://www.powerdrumkit.com/linux.php
+
+ Consider donating to support the development:
+ https://www.powerdrumkit.com/donate.php?ref=linux_release
+

@@ -91,7 +91,7 @@ stdenv.mkDerivation (finalAttrs: {
     repo = "tone3000-plugin";
     tag = "v${finalAttrs.version}";
     fetchSubmodules = true;
-    hash = "sha256-KkDFROBtHi1f1iHs7g5JtIqqRD+WqUeKoZz3h1oybfM=";
+    hash = "sha256-eqytMDN727rAUFCWkr1eSYpPwTdjtgPKpl1iusL/oWs=";
   };
 
   nativeBuildInputs = [

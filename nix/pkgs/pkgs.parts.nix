@@ -22,6 +22,7 @@
       gabyx-scripts = import ./scripts { inherit pkgsUnstable; };
       neural-amp-modeler-lv2 = pkgsUnstable.callPackage ./neural-amp-modeler-lv2 { };
       tone3000-plugin = pkgsUnstable.callPackage ./tone3000-plugin { };
+      mt-powerdrumkit = pkgsUnstable.callPackage ./mt-powerdrumkit { };
 
       nvim = import ./nvim-nvf {
         inherit lib;
@@ -47,8 +48,11 @@
           nvim-gabyx-nightly-config
           ;
 
-        inherit neural-amp-modeler-lv2;
-        inherit tone3000-plugin;
+        inherit
+          neural-amp-modeler-lv2
+          tone3000-plugin
+          mt-powerdrumkit
+          ;
 
         inherit docker-sbx;
       }

@@ -187,6 +187,7 @@ in
     # ===========================================================================
     programs.sway = {
       enable = isSway;
+      package = pkgs.swayfx;
       xwayland.enable = true;
       wrapperFeatures.gtk = true; # so that gtk works properly
 
