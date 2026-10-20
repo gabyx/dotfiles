@@ -20,7 +20,6 @@
       # batz = pkgs.callPackage ./batz { };
 
       gabyx-scripts = import ./scripts { inherit pkgsUnstable; };
-      neural-amp-modeler-lv2 = pkgsUnstable.callPackage ./neural-amp-modeler-lv2 { };
       tone3000-plugin = pkgsUnstable.callPackage ./tone3000-plugin { };
       mt-powerdrumkit = pkgsUnstable.callPackage ./mt-powerdrumkit { };
 
@@ -49,7 +48,6 @@
           ;
 
         inherit
-          neural-amp-modeler-lv2
           tone3000-plugin
           mt-powerdrumkit
           ;

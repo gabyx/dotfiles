@@ -26,6 +26,7 @@
         { ... }:
         {
           imports = [
+            { settings.music.enable = true; }
             inputs.self.nixosModules.music
           ];
         };

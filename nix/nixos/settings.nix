@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkOption types;
+  inherit (lib) mkOption mkEnableOption types;
   cfg = config.settings.user;
 in
 {
@@ -42,6 +42,10 @@ in
           default = "private";
           type = types.str;
         };
+      };
+
+      music = {
+        enabled = mkEnableOption "all music related things";
       };
     };
   };
