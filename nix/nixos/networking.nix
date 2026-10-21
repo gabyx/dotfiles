@@ -3,6 +3,10 @@
   ...
 }:
 {
+  imports = [
+    ./networking-profiles
+  ];
+
   networking = {
     ### Networking ==============================================================
     networkmanager = {

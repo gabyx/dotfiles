@@ -17,7 +17,6 @@
     lix = import ./lix.nix;
     music = import ./music.nix;
     networking = import ./networking.nix;
-    networking-profiles = import ./networking-profiles;
     nix = import ./nix.nix;
     packages = import ./packages.nix;
     printing = import ./printing.nix;

@@ -1,11 +1,12 @@
 {
+  inputs,
   ...
 }:
 {
   imports = [
-    ./../desktop/configuration-base.nix
+    inputs.disko.nixosModules.disko
 
-    ./../desktop/boot.nix
+    ./../desktop/configuration-base.nix
     ./disko.nix
 
     ./settings.nix

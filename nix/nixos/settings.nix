@@ -6,6 +6,14 @@ in
 {
   options = {
     settings = {
+      secrets = {
+        enable = mkOption {
+          description = "Enable secrets over agenix.";
+          default = true;
+          type = types.bool;
+        };
+      };
+
       user = {
         name = mkOption {
           description = "The main user.";
@@ -45,7 +53,7 @@ in
       };
 
       music = {
-        enabled = mkEnableOption "all music related things";
+        enable = mkEnableOption "all music related things";
       };
     };
   };

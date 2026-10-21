@@ -4,13 +4,12 @@
 }:
 {
   imports = [
+    ./boot.nix
+    ./hardware-configuration.nix
+
     ./configuration-base.nix
 
-    ./hardware-configuration.nix
-    ./boot.nix
+    ./disko.nix
     ./settings.nix
-
-    inputs.self.nixosModules.networking-profiles
-    inputs.self.nixosModules.secrets
   ];
 }

@@ -9,7 +9,6 @@
 {
   imports = [
     (modulesPath + "/virtualisation/qemu-vm.nix")
-    ./hardware-disks-ext4.nix
     ./qemu.nix
   ];
 
@@ -27,7 +26,6 @@
     "kvm-arm"
   ];
   boot.extraModulePackages = [ ];
-
   # Set the platform where the NixOS configuration will run.
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

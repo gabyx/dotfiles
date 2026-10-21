@@ -1,8 +1,10 @@
 {
+  lib,
   config,
   ...
 }:
 {
+  config = lib.mkIf config.settings.secrets.enable {
   age.secrets = {
     networkmanager-secrets.file = builtins.path { path = ../secrets/networkmanager-secrets.env.age; };
   };
@@ -343,5 +345,6 @@
         };
       };
     };
+  };
   };
 }

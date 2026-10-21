@@ -9,7 +9,6 @@
 
     ./filesystem.nix
 
-    inputs.self.nixosModules.secrets
     inputs.self.nixosModules.bluetooth
     inputs.self.nixosModules.apfs
 

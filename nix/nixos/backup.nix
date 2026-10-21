@@ -152,7 +152,7 @@ in
         ".PKInstallSandboxManager"
       ];
 
-      exclude = excludeMacOS;
+      exclude = excludeAll ++ excludeMacOS;
 
       extraOptions = [
         (

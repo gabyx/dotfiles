@@ -10,9 +10,9 @@
   # You can import other home-manager modules here
   imports = [
     inputs.nix-index-database.homeModules.nix-index
-    inputs.agenix.homeManagerModules.default
 
     ./settings.nix
+    ./secrets.nix
     ./environment.nix
     ./packages.nix
     ./scripts.nix

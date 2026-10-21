@@ -6,6 +6,7 @@ build_dir := root_dir / "build"
 shell := env("SHELL", "zsh")
 
 mod vm "./tools/just/vm.just"
+mod nix "./tools/just/nix.just"
 
 # The host for which most commands work below.
 default_host := env("NIXOS_HOST", "not-defined")
@@ -24,14 +25,14 @@ alias dev := develop
 develop *args:
     #!/usr/bin/env nu
     def --wrapped main [...args: string] {
-        let flake_dir = "."
-        let shell = "default"
-        let cmd = if ($args | is-empty) {
-            [ "env" $"SHELL=($shell)" $shell ]
-        } else {
-            $args
-        }
-        ^nix develop --accept-flake-config $"($flake_dir)#($shell)" --command ...$cmd
+        ^just nix::develop default ...$args
+    }
+
+[private]
+ci *args:
+    #!/usr/bin/env nu
+    def --wrapped main [...args: string] {
+        just nix::develop default "$@"
     }
 
 # Format the whole repository.

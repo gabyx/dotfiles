@@ -12,8 +12,6 @@
 
   imports = [
     inputs.hardware.nixosModules.tuxedo-pulse-14-gen3
-    inputs.auto-cpufreq.nixosModules.default
-    inputs.agenix.nixosModules.default
 
     ./hardware.nix
     ./filesystem.nix
@@ -26,10 +24,10 @@
     inputs.self.nixosModules.display
     inputs.self.nixosModules.environment
     inputs.self.nixosModules.fonts
+    inputs.self.nixosModules.home-manager
     inputs.self.nixosModules.kernel
     inputs.self.nixosModules.keyboard
     inputs.self.nixosModules.networking
-    inputs.self.nixosModules.networking-profiles
     inputs.self.nixosModules.nix
     inputs.self.nixosModules.packages
     inputs.self.nixosModules.printing
@@ -47,7 +45,6 @@
     inputs.self.nixosModules.virtualization
     inputs.self.nixosModules.windowing
     inputs.self.nixosModules.yubikey
-    inputs.self.nixosModules.home-manager
 
     ./settings.nix
     ../common/yubikey.nix

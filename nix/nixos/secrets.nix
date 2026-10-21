@@ -1,10 +1,16 @@
 {
+  lib,
+  config,
   system,
   inputs,
   ...
 }:
 {
-  config = {
+  imports = [
+    inputs.agenix.nixosModules.default
+  ];
+
+  config = lib.mkIf config.settings.secrets.enable {
     # Setup encryption for secrets in this NixOS configuration.
     age = {
       identityPaths = [

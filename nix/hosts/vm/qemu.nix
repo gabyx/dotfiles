@@ -5,6 +5,7 @@ in
 {
   services = {
     spice-vdagentd.enable = true;
+    qemuGuest.enable = true;
   };
 
   disko.memSize = memSize;

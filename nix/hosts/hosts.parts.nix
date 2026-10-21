@@ -6,7 +6,6 @@
 }:
 let
 
-  # Creates a nixoConfiguration or an image.
   mkSystem =
     name:
     { system, ... }:
@@ -56,6 +55,10 @@ let
   tuxedo = mkSystem "tuxedo-pulse-14" {
     system = "x86_64-linux";
   };
+
+  desktop-image = mkSystem "desktop-image" {
+    system = "x86_64-linux";
+  };
   vm = mkSystem "vm" {
     system = "x86_64-linux";
   };
@@ -64,6 +67,7 @@ in
   flake.nixosConfigurations = {
     inherit
       desktop
+      desktop-image
       tuxedo
       vm
       ;
@@ -72,8 +76,7 @@ in
   perSystem =
     { system, ... }:
     {
-      packages.vm-image = vm.config.system.build.images.iso;
-      packages.desktop-image = desktop.config.system.build.images.iso;
+      packages.desktop-iso = desktop-image.config.system.build.images.iso;
 
       packages.famhome-image =
         (mkSystem "famhome" {

@@ -1,9 +1,14 @@
 {
+inputs,
   pkgs,
   lib,
   ...
 }:
 {
+  imports = [
+    inputs.auto-cpufreq.nixosModules.default
+  ];
+
   # Enable bluetooth
   hardware.bluetooth = {
     enable = true; # enables support for Bluetooth

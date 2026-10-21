@@ -21,6 +21,7 @@
     inputs.self.nixosModules.environment
     inputs.self.nixosModules.flatpak
     inputs.self.nixosModules.fonts
+    inputs.self.nixosModules.home-manager
     inputs.self.nixosModules.kernel
     inputs.self.nixosModules.keyboard
     inputs.self.nixosModules.networking
@@ -28,6 +29,7 @@
     inputs.self.nixosModules.packages
     inputs.self.nixosModules.printing
     inputs.self.nixosModules.programs
+    inputs.self.nixosModules.secrets
     inputs.self.nixosModules.security
     inputs.self.nixosModules.services
     inputs.self.nixosModules.settings
@@ -42,7 +44,6 @@
     inputs.self.nixosModules.windowing
     inputs.self.nixosModules.yubikey
 
-    inputs.self.nixosModules.home-manager
   ];
 
   ### NixOS Release Settings===================================================

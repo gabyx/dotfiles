@@ -5,7 +5,7 @@
   ...
 }:
 {
-  home.file.".lv2/neural-amp-modeler" = lib.mkIf osConfig.settings.music.enabled {
+  home.file.".lv2/neural-amp-modeler" = lib.mkIf osConfig.settings.music.enable {
     source = "${pkgsUnstable.neural-amp-modeler-lv2}/lib/lv2/neural_amp_modeler.lv2";
   };
 }
