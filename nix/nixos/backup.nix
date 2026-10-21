@@ -134,6 +134,11 @@ in
           "${cfg.storageHostname}"
       '';
 
+      excludeAll = [
+        ".devenv"
+        ".direnv"
+      ];
+
       excludeMacOS = [
         ".DS_Store"
         ".AppleDouble*"
@@ -274,13 +279,20 @@ in
               (homeDir ".config/evolution")
               (homeDir ".local/share/evolution*")
 
+              (homeDir ".local/share/chezmoi")
+
               # Dconf
               (homeDir ".config/dconf")
             ]
             ++ (lib.optionals bk.enablePersist [
               # Persistent Repos
               (persistDir "music")
+
               (persistDir "repos/chezmoi")
+              (persistDir "repos/applications")
+              (persistDir "repos/gabyx")
+              (persistDir "repos/notes")
+
               (persistDir "repos/technical-markdown")
               (persistDir "repos/technical-presentation")
               (persistDir "repos/grsframework")
@@ -291,11 +303,13 @@ in
               (persistDir "repos/quitsh")
               (persistDir "repos/kikist")
               (persistDir "repos/executiongraph")
-              (persistDir "repos/notes")
               (persistDir "repos/cpp-playground")
               (persistDir "repos/rs-playground")
+              (persistDir "repos/rsfluid")
               (persistDir "repos/applications")
               (persistDir "repos/dissertation")
+
+              (persistDir "repos/sdsc")
             ]);
 
             inherit exclude;
