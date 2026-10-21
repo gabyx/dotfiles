@@ -61,7 +61,6 @@
     sans-serif;
   font-weight: bold;
   font-size: 11pt;
-  background: transparent;
 }
 
 window.eDP-1 * {
@@ -71,11 +70,10 @@ window.eDP-1 * {
 
 /* The whole bar */
 #waybar {
-  background: transparent;
+    background: #323233
 }
 
 #waybar > box {
-  background: #323232;
   border-radius: 0px;
   margin: 0;
   color: white;
