@@ -1,0 +1,25 @@
+name: "Setup Nix Environment"
+description: "Sets up Nix and Cachix"
+
+inputs:
+  cachix_cache_name:
+    description: "Cachix cache name"
+    required: true
+  cachix_auth_token:
+    description: "Cachix authentication token"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - uses: cachix/install-nix-action@v31
+      with:
+        nix_path: nixpkgs=channel:nixos-unstable
+    - uses: Mic92/hestia@v3
+    # - uses: cachix/cachix-action@v16
+    #   with:
+    #     name: "${{ inputs.cachix_cache_name }}"
+    #     authToken: "${{ inputs.cachix_auth_token }}"
+    - name: bootstrap
+      run: nix profile install "./tools/nix#bootstrap"
+      shell: bash

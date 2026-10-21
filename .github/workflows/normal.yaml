@@ -1,0 +1,60 @@
+name: normal
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup-nix
+        with:
+          cachix_cache_name: "${{ secrets.CACHIX_CACHE_NAME }}"
+          cachix_auth_token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - name: lint
+        run: just ci just lint
+
+  tests:
+    runs-on: "ubuntu-latest"
+    strategy:
+      matrix:
+        include:
+          - name: desktop
+          - name: desktop-image
+          - name: vm
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup-nix
+        with:
+          cachix_cache_name: "${{ secrets.CACHIX_CACHE_NAME }}"
+          cachix_auth_token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+
+      - name: ${{ matrix.name }}-debug
+        if: ${{ matrix.debug == true }}
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
+
+      - name: test-${{ matrix.name }}
+        run: just ci just default_host="${{ matrix.name }}" build
+
+  # Aggregate check for protection rule.
+  tests-all:
+    if: always()
+    needs:
+      - tests # your matrix job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify all matrix jobs passed.
+        run: |
+          if [[ "${{ needs.tests.result }}" != "success" ]]; then
+            echo "One or more checks failed: ${{ needs.tests.result }}"
+            exit 1
+          fi

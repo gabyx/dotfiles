@@ -1,0 +1,30 @@
+name: format
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-nix
+        with:
+          cachix_cache_name: "${{ secrets.CACHIX_CACHE_NAME }}"
+          cachix_auth_token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - name: treefmt
+        run: |
+          just format --fail-on-change --no-cache ||
+          {
+            echo "You have not formatted these files: run 'just format' locally!"
+            echo "Note: For stability -> run it over Nix: 'just develop just format'"
+            echo "=============================================================="
+            git diff --name-only
+            echo "=============================================================="
+          }
