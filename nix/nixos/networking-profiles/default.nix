@@ -17,8 +17,9 @@
       environmentFiles = [
         config.age.secrets.networkmanager-secrets.path
       ];
-      profiles = {
-        sisterlan = {
+      profiles = (lib.optionalAttrs config.settings.networking.wlan-profiles.enable {
+        sisterlan =
+          {
           connection = {
             id = "sisterlan";
             interface-name = "wlp2s0";
@@ -118,26 +119,6 @@
             psk = "$OIDALECK_PASSWD";
           };
         };
-        sbb-free = {
-          connection = {
-            id = "SBB-FREE";
-            interface-name = "wlp2s0";
-            type = "wifi";
-            uuid = "8dc8baea-49da-4640-b785-8913c2916a2c";
-          };
-          ipv4 = {
-            method = "auto";
-          };
-          ipv6 = {
-            addr-gen-mode = "default";
-            method = "auto";
-          };
-          proxy = { };
-          wifi = {
-            mode = "infrastructure";
-            ssid = "SBB-FREE";
-          };
-        };
         sdsc-zurich-ethernet = {
           "802-1x" = {
             eap = "peap;";
@@ -163,6 +144,120 @@
           };
           proxy = { };
         };
+        sdsc-zurich-eduroam = {
+          "802-1x" = {
+            eap = "ttls;";
+            identity = "$SDSC_ZURICH_IDENTITY";
+            password = "$SDSC_ZURICH_PASSWD";
+            phase2-auth = "mschapv2";
+          };
+          connection = {
+            id = "sdsc-zurich-eduroam";
+            interface-name = "wlp2s0";
+            timestamp = "1718017960";
+            type = "wifi";
+            uuid = "73a422d5-77f1-4db3-bb47-850e0efb2966";
+          };
+          ipv4 = {
+            method = "auto";
+          };
+          ipv6 = {
+            addr-gen-mode = "stable-privacy";
+            method = "auto";
+          };
+          proxy = { };
+          wifi = {
+            mode = "infrastructure";
+            ssid = "eduroam";
+          };
+          wifi-security = {
+            key-mgmt = "wpa-eap";
+          };
+        };
+        sdsc-eduroam = {
+          "802-1x" = {
+            anonymous-identity = "anonymous@ethz.ch";
+            eap = "peap;";
+            identity = "$SDSC_ZURICH_IDENTITY";
+            password = "$SDSC_ZURICH_PASSWD";
+            phase2-auth = "mschapv2";
+          };
+          connection = {
+            id = "sdsc-eduroam";
+            interface-name = "wlp2s0";
+            type = "wifi";
+            uuid = "f7153a97-4a36-4e21-852b-6c2e15005123";
+          };
+          ipv4 = {
+            method = "auto";
+          };
+          ipv6 = {
+            addr-gen-mode = "stable-privacy";
+            method = "auto";
+          };
+          proxy = { };
+          wifi = {
+            mode = "infrastructure";
+            ssid = "eduroam";
+          };
+          wifi-security = {
+            key-mgmt = "wpa-eap";
+          };
+        };
+
+        sdsc-lausanne-eduroam = {
+          "802-1x" = {
+            anonymous-identity = "anonymous@ethz.ch";
+            ca-cert = "${./DigiCertGlobalRootG2.crt.pem}";
+            eap = "peap;";
+            identity = "$SDSC_ZURICH_IDENTITY";
+            password = "$SDSC_ZURICH_PASSWD";
+            phase2-auth = "mschapv2";
+          };
+          connection = {
+            id = "sdsc-lausanne-eduroam";
+            interface-name = "wlp2s0";
+            type = "wifi";
+            uuid = "7a247b55-b554-49f5-adfb-8685b2599d15";
+          };
+          ipv4 = {
+            method = "auto";
+          };
+          ipv6 = {
+            addr-gen-mode = "stable-privacy";
+            method = "auto";
+          };
+          proxy = { };
+          wifi = {
+            mode = "infrastructure";
+            ssid = "eduroam";
+          };
+          wifi-security = {
+            key-mgmt = "wpa-eap";
+          };
+        };
+
+        sbb-free = {
+          connection = {
+            id = "SBB-FREE";
+            interface-name = "wlp2s0";
+            type = "wifi";
+            uuid = "8dc8baea-49da-4640-b785-8913c2916a2c";
+          };
+          ipv4 = {
+            method = "auto";
+          };
+          ipv6 = {
+            addr-gen-mode = "default";
+            method = "auto";
+          };
+          proxy = { };
+          wifi = {
+            mode = "infrastructure";
+            ssid = "SBB-FREE";
+          };
+        };
+        }) // {
         eth-zurich-vpn = {
           connection = {
             id = "eth-zurich-vpn";
@@ -205,97 +300,7 @@
             xmlconfig = "$ETH_ZURICH_VPN_XML_CONFIG";
           };
         };
-        sdsc-eduroam = {
-          "802-1x" = {
-            anonymous-identity = "anonymous@ethz.ch";
-            eap = "peap;";
-            identity = "$SDSC_ZURICH_IDENTITY";
-            password = "$SDSC_ZURICH_PASSWD";
-            phase2-auth = "mschapv2";
-          };
-          connection = {
-            id = "sdsc-eduroam";
-            interface-name = "wlp2s0";
-            type = "wifi";
-            uuid = "f7153a97-4a36-4e21-852b-6c2e15005123";
-          };
-          ipv4 = {
-            method = "auto";
-          };
-          ipv6 = {
-            addr-gen-mode = "stable-privacy";
-            method = "auto";
-          };
-          proxy = { };
-          wifi = {
-            mode = "infrastructure";
-            ssid = "eduroam";
-          };
-          wifi-security = {
-            key-mgmt = "wpa-eap";
-          };
-        };
-        sdsc-lausanne-eduroam = {
-          "802-1x" = {
-            anonymous-identity = "anonymous@ethz.ch";
-            ca-cert = "${./DigiCertGlobalRootG2.crt.pem}";
-            eap = "peap;";
-            identity = "$SDSC_ZURICH_IDENTITY";
-            password = "$SDSC_ZURICH_PASSWD";
-            phase2-auth = "mschapv2";
-          };
-          connection = {
-            id = "sdsc-lausanne-eduroam";
-            interface-name = "wlp2s0";
-            type = "wifi";
-            uuid = "7a247b55-b554-49f5-adfb-8685b2599d15";
-          };
-          ipv4 = {
-            method = "auto";
-          };
-          ipv6 = {
-            addr-gen-mode = "stable-privacy";
-            method = "auto";
-          };
-          proxy = { };
-          wifi = {
-            mode = "infrastructure";
-            ssid = "eduroam";
-          };
-          wifi-security = {
-            key-mgmt = "wpa-eap";
-          };
-        };
-        sdsc-zurich-eduroam = {
-          "802-1x" = {
-            eap = "ttls;";
-            identity = "$SDSC_ZURICH_IDENTITY";
-            password = "$SDSC_ZURICH_PASSWD";
-            phase2-auth = "mschapv2";
-          };
-          connection = {
-            id = "sdsc-zurich-eduroam";
-            interface-name = "wlp2s0";
-            timestamp = "1718017960";
-            type = "wifi";
-            uuid = "73a422d5-77f1-4db3-bb47-850e0efb2966";
-          };
-          ipv4 = {
-            method = "auto";
-          };
-          ipv6 = {
-            addr-gen-mode = "stable-privacy";
-            method = "auto";
-          };
-          proxy = { };
-          wifi = {
-            mode = "infrastructure";
-            ssid = "eduroam";
-          };
-          wifi-security = {
-            key-mgmt = "wpa-eap";
-          };
-        };
+
         gabyx-iphone = {
           connection = {
             autoconnect-priority = "999";
@@ -322,6 +327,7 @@
             psk = "$GABYX_IPHONE_PASSWD";
           };
         };
+
         gabyx-iphone-bluetooth = {
           bluetooth = {
             bdaddr = "64:70:33:21:06:E1";

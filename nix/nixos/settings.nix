@@ -14,6 +14,10 @@ in
         };
       };
 
+      networking = {
+        wlan-profiles.enable = mkEnableOption "WLAN networking profiles.";
+      };
+
       user = {
         name = mkOption {
           description = "The main user.";

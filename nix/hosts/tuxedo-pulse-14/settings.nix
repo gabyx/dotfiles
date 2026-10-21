@@ -5,6 +5,8 @@
   settings = {
     user.chezmoi.workspace = "work";
 
+    networking.wlan-profiles.enable = true;
+
     windowing = {
       manager = "sway";
     };
