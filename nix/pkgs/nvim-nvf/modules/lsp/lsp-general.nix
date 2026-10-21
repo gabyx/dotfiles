@@ -60,6 +60,16 @@ in
         desc = "Show diagnostics.";
       }
       {
+        # nvf's `vim.lsp.mappings` are normal-mode only.
+        mode = "x";
+        key = "<Leader>la";
+        lua = true;
+        action = /* lua */ ''
+          function() vim.lsp.buf.code_action() end
+        '';
+        desc = "Code action.";
+      }
+      {
         mode = "n";
         key = "K";
         lua = true;
