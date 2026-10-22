@@ -3,67 +3,67 @@
   ...
 }:
 {
-  environment.systemPackages = with pkgsUnstable; [
+  environment.systemPackages = [
     # Basic
-    mkpasswd
+    pkgsUnstable.mkpasswd
 
-    gnutar
-    zip
-    unzip
+    pkgsUnstable.gnutar
+    pkgsUnstable.zip
+    pkgsUnstable.unzip
 
-    binutils
-    coreutils-full
-    findutils
-    binutils
-    moreutils
+    pkgsUnstable.binutils
+    pkgsUnstable.coreutils-full
+    pkgsUnstable.findutils
+    pkgsUnstable.binutils
+    pkgsUnstable.moreutils
 
-    efibootmgr # Writing NVRAM boot entries.
-    hdparm
-    exfatprogs
-    zfs
+    pkgsUnstable.efibootmgr # Writing NVRAM boot entries.
+    pkgsUnstable.hdparm
+    pkgsUnstable.exfatprogs
+    pkgsUnstable.zfs
 
-    dmidecode # BIOS read tool.
-    lshw
-    pciutils
-    usbutils
-    xev # For keyboard key press properties.
-    xkbcomp # For checking xkb keyboard symbol tables.
+    pkgsUnstable.dmidecode # BIOS read tool.
+    pkgsUnstable.lshw
+    pkgsUnstable.pciutils
+    pkgsUnstable.usbutils
+    pkgsUnstable.xev # For keyboard key press properties.
+    pkgsUnstable.xkbcomp # For checking xkb keyboard symbol tables.
 
-    libGL
-    libGLU
+    pkgsUnstable.libGL
+    pkgsUnstable.libGLU
 
-    mlocate
-    ncurses5
+    pkgsUnstable.mlocate
+    pkgsUnstable.ncurses5
 
-    fd
-    tree
-    file
-    fzf
-    fzf-git-sh
-    eza
+    pkgsUnstable.fd
+    pkgsUnstable.tree
+    pkgsUnstable.file
+    pkgsUnstable.fzf
+    pkgsUnstable.fzf-git-sh
+    pkgsUnstable.eza
 
-    netcat-gnu
-    wget
-    curl
-    openvpn
-    keychain # ssh agent.
+    pkgsUnstable.netcat-gnu
+    pkgsUnstable.wget
+    pkgsUnstable.curl
+    pkgsUnstable.openvpn
+    pkgsUnstable.keychain # ssh agent.
 
-    btop
-    killall
-    ripgrep
+    pkgsUnstable.btop
+    pkgsUnstable.killall
+    pkgsUnstable.ripgrep
 
     # Some minimal stuff, for basic admin stuff.
-    zsh
-    bash
-    neovim
-    just
-    git
-    git-lfs
-    git-filter-repo
-    kitty
+    pkgsUnstable.zsh
+    pkgsUnstable.bash
+    pkgsUnstable.neovim
+    pkgsUnstable.just
+    pkgsUnstable.git
+    pkgsUnstable.git-lfs
+    pkgsUnstable.git-filter-repo
+    pkgsUnstable.kitty
 
     # Nix tools
-    nvd
-    nix-output-monitor
+    pkgsUnstable.nvd
+    pkgsUnstable.nix-output-monitor
   ];
 }

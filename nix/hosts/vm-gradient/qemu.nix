@@ -1,6 +1,6 @@
 { modulesPath, ... }:
 let
-  memSize = 8192;
+  memSize = 16000;
 in
 {
   imports = [

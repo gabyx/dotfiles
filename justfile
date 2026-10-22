@@ -377,12 +377,13 @@ start *args:
 
         let out_dir = $"{{build_dir}}/($host)"
         mkdir $out_dir
-        let disk_dir = $disk_dir | path join $host
+        let disk_dir = $disk_dir | path join $host | path expand
         mkdir $disk_dir
 
-        # Build the VM run script and the disko disk image.
-        # With two installables `nix build` links them as `vm` and `vm-1`.
-        let attr = $"{{root_dir}}#nixosConfigurations.($host).config.system.build"
+        # Build the VM run script and the disko disk image of the
+        # `vmVariantWithDisko` configuration
+        # Image: qcow2 and copyNixStore = false
+        let attr = $"{{root_dir}}#nixosConfigurations.($host).config.virtualisation.vmVariantWithDisko.system.build"
         let cmd = [
             build
             --out-link $"($out_dir)/vm"
@@ -411,7 +412,7 @@ start *args:
         print "----"
         ^nix ...$cmdDisko o+e>| nom --json
 
-        mut qemu_args = if $remote_viewer == "true" {
+        let qemu_args = if $remote_viewer == "true" {
             print "IMPORTANT: ----------------------"
             print $"IMPORTANT: Connect with 'remote-viewer spice+unix://($out_dir)/spice.sock'"
             print "IMPORTANT: ----------------------"
@@ -431,9 +432,11 @@ start *args:
 
         # Persistent disk: a copy of the disko image (instead of the
         # temporary overlay which `vmWithDisko` deletes on exit).
+        # It holds the root file system with the `/nix/store` overlay.
         let image = ($"($out_dir)/vm-root/root.qcow2" | path expand)
-        let efi_vars = $"($out_dir)/vm-root/efi-vars.fd"
-        let tmp_dir = $out_dir | path join tmp
+        let efi_vars = $"($disk_dir)/efi-vars.fd"
+        let tmp_dir = $disk_dir | path join tmp
+        mkdir $tmp_dir
 
         let disk = $"($disk_dir)/root.qcow2"
         if $fresh {
@@ -447,15 +450,16 @@ start *args:
             chmod u+w $disk
         }
 
-        $qemu_args = $qemu_args | append ["-drive" $"if=pflash,format=raw,unit=1,readonly=off,file=($efi_vars)"]
-
         let vm_bin = (glob $"($out_dir)/vm/bin/run-*-vm" | first)
         print $"Starting with '($vm_bin)' and disk '($disk)'."
 
-        let args = $qemu_args
+        # The run script opens the root drive at `$tmp/root.qcow2` (set by
+        # disko's `interactive-vm.nix`) and creates `NIX_EFI_VARS` if missing.
+        # let args = $qemu_args
         with-env {
+            tmp: $disk_dir,
             TMPDIR: $tmp_dir,
-            NIX_DISK_IMAGE: $disk,
+            NIX_EFI_VARS: $efi_vars,
         } {
             ^$vm_bin ...$args
         }

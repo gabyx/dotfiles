@@ -4,6 +4,7 @@
     ./shell.nix
     ./session.nix
     ./tmux.nix
+    ./packages.nix
   ];
 
   # Enable home-manager.
