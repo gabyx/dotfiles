@@ -20,7 +20,7 @@ bare-metal.
 To launch the NixOS VM when you are on a system with Nix run
 
 ```bash
-just start vm
+just start --host vm
 ```
 
 Test my NixOS by creating an `.iso` to boot from USB.
@@ -65,8 +65,8 @@ install.
 - Learn the
   [Nix basics from the workshop](https://sdsc-ordes.github.io/technical-presentation/gh-pages/nix-workshop/part-1/#/title-slide).
 
-- The NixOS installation is customized using my [`dotfiles`](../config) managed
-  through [`chezmoi`](https://www.chezmoi.io). The application of these
+- The NixOS installation is customized using my [`dotfiles`](../../config)
+  managed through [`chezmoi`](https://www.chezmoi.io). The application of these
   configuration files is only lightly integrated into the system. I
   intentionally strike a balance between configuring **everything** through Nix
   and maintaining a few traditional configuration files. Going all-in on
@@ -106,7 +106,7 @@ useful information when going through these steps.
 ### Create VM with `virt-manager` (not recommended)
 
 1. Open `virt-manager` and create a new machine `nixos` by using the
-   [downloaded NixOS ISO file](https://channels.nixos.org/nixos-23.05/latest-nixos-gnome-x86_64-linux.iso).
+   [downloaded NixOS ISO file](https://nixos.org/download#download-nixos).
    Create a virtual disk `nixos.qcow2` somewhere.
 
 1. Boot up the virtual machine `nixos` in `virt-manager`. The graphical
@@ -121,7 +121,7 @@ follow the below steps in a terminal to install directly a preconfigured system.
    configuration by doing the following
 
    ```bash
-   nixos-install /mnt --flake github:gabyx/dotfiles#vm
+   nixos-install --root /mnt --flake github:gabyx/dotfiles#vm
    reboot
    ```
 
@@ -142,7 +142,7 @@ Go to the section [first login](#first-login) for further instructions.
 
 ### Connect to VM over SSH
 
-1. Start the virtual machine with [`scripts/start-vm.sh`](scripts/start-vm.sh).
+1. Start the virtual machine with `just vm::start`.
 1. On the host inside a terminal connect over SSH with
 
    ```shell
@@ -354,7 +354,7 @@ root partition.
 1. Copy the hardware configuration to the repo for the installation:
 
    ```shell
-   cp /mnt/etc/nixos/hardware-configuration.nix /mnt/persist/repos/dotfiles/nixos/hosts/<host>/hardware-configuration.nix
+   cp /mnt/etc/nixos/hardware-configuration.nix /mnt/persist/repos/dotfiles/nix/hosts/<host>/hardware-configuration.nix
    ```
 
 1. **Finally run the install command** by doing:
@@ -375,13 +375,12 @@ root partition.
 
 1. Login with the initial login `nixos` and default password `nixos`.
 
-1. Move the initial configuration out of the way and point to the new
-   configuration (create a hardlink).
+1. Clone this repository to `~/.local/share/chezmoi` (the `chezmoi` source
+   directory). The system is rebuilt from the flake in this directory (see
+   [Modify NixOS](#modify-nixos)), `/etc/nixos` is not used.
 
    ```shell
-   sudo mv /etc/nixos /etc/nixos.bak # Backup the original configuration
-   ln ~/nixos-config ~/.local/share/chezmoi
-   sudo ln ~/nixos-config/ /etc/nixos
+   git clone https://github.com/gabyx/dotfiles ~/.local/share/chezmoi
    ```
 
 1. Change the password
@@ -398,37 +397,41 @@ root partition.
 
 ## Modify NixOS
 
-1. Modify the [`configuration.nix`](configuration.nix) in this repo and use
+1. Modify the host configuration
+   [`nix/hosts/<host>/configuration.nix`](../../nix/hosts) in this repo and use
 
    ```shell
-   just deploy [desktop|vm|tuxedo]
+   just switch --host [desktop|tuxedo|vm]
    ```
 
-   Use `build` to just build the NixOS system. Use `boot` to build the NixOS (a
-   new generation) and add a new entry in the bootloader with the profile `test`
-   and use `switch` to additionally switch live to the new generation. Use
-   `--force` to make a new generation for the system profile and not using the
-   default `test` (because of safety).
+   The default host is taken from the env. variable `NIXOS_HOST`.
+
+   Use `just build` to only build the NixOS system. Use `just boot` to build the
+   NixOS (a new generation) and set it as the boot default and use `just switch`
+   to additionally switch live to the new generation. Use `just boot-test` or
+   `just switch-test` to put the new generation under the separate profile
+   `test` (change it with `--name`) instead of the system profile.
 
 ## Troubleshooting
 
 ### Resizing the _LUKS Encrypted_ Disk (if disk is full)
 
 If `nixos-rebuild` fails due to too little disk space, use the following easy
-fix. On the host do the following:
+fix. On the host do the following in the directory `build/nixos-install` (where
+`just vm::create` creates the disk):
 
 1. Resize the `.qcow2` file with
 
    ```shell
-   source .env-os-vm
-   qemu-img resize "$NIXOS_DISK" +40G
+   source ../../docs/nixos/.env-vm
+   qemu-img resize "$VM_NIXOS_DISK" +40G
    ```
 
 1. Mount the disk with
 
    ```shell
-   source .env-os-vm
-   sudo qemu-nbd -c /dev/nbd0 "$NIXOS_DISK"
+   source ../../docs/nixos/.env-vm
+   sudo qemu-nbd -c /dev/nbd0 "$VM_NIXOS_DISK"
    ```
 
 1. Run `gparted` with:

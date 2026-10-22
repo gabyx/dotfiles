@@ -92,10 +92,10 @@ build *args:
 
 # Build a host image (no submodules / secrets).
 [group("nixos")]
-build-image *args:
+build-iso *args:
     #!/usr/bin/env nu
     def --wrapped main [--host: string = "{{default_host}}" ...args: string] {
-        let package = $"($host)-image"
+        let package = $"($host)-iso"
         let cmd = [
             build
             --verbose
