@@ -35,8 +35,6 @@
         # The unstable packages.
         inherit pkgsUnstable;
       };
-
-      docker-sbx = pkgsUnstable.callPackage ./docker-sbx { };
     in
     {
       packages = {
@@ -52,7 +50,6 @@
           mt-powerdrumkit
           ;
 
-        inherit docker-sbx;
         inherit gabyx-cli;
       };
     };
