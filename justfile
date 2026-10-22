@@ -369,30 +369,49 @@ start *args:
     def --wrapped main [
         --host: string = "vm",
         --remote_viewer: string = "false",
+        --disk_dir: string = "/persist/vms",
+        --fresh, # Delete the persistent disk and EFI vars first.
         ...args: string,
     ] {
         let host = if ($host | is-empty) { "{{default_host}}" } else { $host }
 
         let out_dir = $"{{build_dir}}/($host)"
         mkdir $out_dir
+        let disk_dir = $disk_dir | path join $host
+        mkdir $disk_dir
 
+        # Build the VM run script and the disko disk image.
+        # With two installables `nix build` links them as `vm` and `vm-1`.
+        let attr = $"{{root_dir}}#nixosConfigurations.($host).config.system.build"
         let cmd = [
             build
-            --out-link $"($out_dir)/vmWithDisko"
+            --out-link $"($out_dir)/vm"
             --show-trace
             --verbose
             --log-format internal-json
-            $"{{root_dir}}#nixosConfigurations.($host).config.system.build.vmWithDisko"
+            $"($attr).vm"
         ] | append $args
 
+        let cmdDisko = [
+            build
+            --out-link $"($out_dir)/vm-root"
+            --show-trace
+            --verbose
+            --log-format internal-json
+            $"($attr).diskoImages"
+        ] | append $args
 
         print "----"
         print $"nix ($cmd | str join ' ')"
         print "----"
-
         ^nix ...$cmd o+e>| nom --json
 
-        let qemu_args = if $remote_viewer == "true" {
+        print "----"
+        print $"nix ($cmdDisko | str join ' ')"
+        print "----"
+        ^nix ...$cmdDisko o+e>| nom --json
+
+        mut qemu_args = if $remote_viewer == "true" {
             print "IMPORTANT: ----------------------"
             print $"IMPORTANT: Connect with 'remote-viewer spice+unix://($out_dir)/spice.sock'"
             print "IMPORTANT: ----------------------"
@@ -402,20 +421,43 @@ start *args:
                 "-chardev" "spicevmc,id=ch1,name=vdagent"
                 "-device" "virtserialport,chardev=ch1,name=com.redhat.spice.0"
             ]
+        } else if $remote_viewer == "false" {
+            [
+                "-display" "gtk,gl=on"
+            ]
         } else {
-            [ "-display" "gtk,gl=on" ]
+            # Leave all options.
         }
 
-        let vm_bin = $"($out_dir)/vmWithDisko/bin/disko-vm"
-        if not ($vm_bin | path exists) {
-            print $"Host '($host)' not built. Use 'just build'."
+        # Persistent disk: a copy of the disko image (instead of the
+        # temporary overlay which `vmWithDisko` deletes on exit).
+        let image = ($"($out_dir)/vm-root/root.qcow2" | path expand)
+        let efi_vars = $"($out_dir)/vm-root/efi-vars.fd"
+        let tmp_dir = $out_dir | path join tmp
+
+        let disk = $"($disk_dir)/root.qcow2"
+        if $fresh {
+            print $"Deleting '($disk)' and '($efi_vars)'."
+            rm --force $disk $efi_vars
         }
 
-        print $"Starting with '($vm_bin)'"
+        if not ($disk | path exists) {
+            print $"Creating disk '($disk)' from '($image)'."
+            cp $image $disk
+            chmod u+w $disk
+        }
 
-        # FIXME: Forward qemu opts like this: https://github.com/nix-community/disko/pull/1142
-        with-env { QEMU_OPTS: ($qemu_args | str join ' ') } {
-            ^$vm_bin
+        $qemu_args = $qemu_args | append ["-drive" $"if=pflash,format=raw,unit=1,readonly=off,file=($efi_vars)"]
+
+        let vm_bin = (glob $"($out_dir)/vm/bin/run-*-vm" | first)
+        print $"Starting with '($vm_bin)' and disk '($disk)'."
+
+        let args = $qemu_args
+        with-env {
+            TMPDIR: $tmp_dir,
+            NIX_DISK_IMAGE: $disk,
+        } {
+            ^$vm_bin ...$args
         }
     }
 

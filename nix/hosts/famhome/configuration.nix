@@ -10,7 +10,6 @@
     inputs.hardware.nixosModules.common-cpu-intel
     inputs.hardware.nixosModules.common-gpu-nvidia-nonprime
     inputs.hardware.nixosModules.common-pc-ssd
-    inputs.disko.nixosModules.disko
 
     # ./disko.nix
     ./boot.nix

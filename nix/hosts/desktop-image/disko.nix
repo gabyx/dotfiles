@@ -1,8 +1,12 @@
-{ ... }:
+{ inputs, ... }:
 let
   rootDisk = "/dev/vda";
 in
 {
+  imports = [
+    inputs.disko.nixosModules.disko
+  ];
+
   disko.devices = {
     disk = {
       main = {

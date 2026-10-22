@@ -59,7 +59,10 @@ let
   desktop-image = mkSystem "desktop-image" {
     system = "x86_64-linux";
   };
-  vm = mkSystem "vm" {
+  vm-desktop = mkSystem "vm-desktop" {
+    system = "x86_64-linux";
+  };
+  vm-gradient = mkSystem "vm-gradient" {
     system = "x86_64-linux";
   };
 in
@@ -69,7 +72,9 @@ in
       desktop
       desktop-image
       tuxedo
-      vm
+
+      vm-desktop
+      vm-gradient
       ;
   };
 

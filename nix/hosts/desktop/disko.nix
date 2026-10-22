@@ -1,8 +1,12 @@
-{ ... }:
+{ inputs, ... }:
 let
   rootDisk = "/dev/disk/by-id/ata-Crucial_CT1050MX300SSD1_1651150F2AB0";
 in
 {
+  imports = [
+    inputs.disko.nixosModules.disko
+  ];
+
   disko.devices = {
     disk = {
       main = {

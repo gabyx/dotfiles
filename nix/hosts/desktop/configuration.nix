@@ -6,7 +6,6 @@
 {
   imports = [
     ./configuration-base.nix
-
     ./filesystem.nix
 
     inputs.self.nixosModules.bluetooth

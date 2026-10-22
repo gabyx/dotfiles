@@ -19,7 +19,8 @@
   config = {
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
-    home-manager.users.${config.settings.user.name} = self.homeModules.gabyx;
+
+    home-manager.users.${config.settings.user.name} = self.homeModules.${config.settings.user.profile};
 
     home-manager.extraSpecialArgs = {
       inherit

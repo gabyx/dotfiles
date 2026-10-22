@@ -1,8 +1,12 @@
-{ ... }:
+{ modulesPath, ... }:
 let
   memSize = 5000;
 in
 {
+  imports = [
+    (modulesPath + "/virtualisation/qemu-vm.nix")
+  ];
+
   services = {
     spice-vdagentd.enable = true;
     qemuGuest.enable = true;

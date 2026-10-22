@@ -20,7 +20,7 @@ bare-metal.
 To launch the NixOS VM when you are on a system with Nix run
 
 ```bash
-just start --host vm
+just start --host vm-desktop
 ```
 
 Test my NixOS by creating an `.iso` to boot from USB.

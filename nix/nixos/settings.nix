@@ -19,6 +19,12 @@ in
       };
 
       user = {
+        profile = mkOption {
+          description = "The home profile to load from homeModules.";
+          default = "home-gabyx";
+          type = types.str;
+        };
+
         name = mkOption {
           description = "The main user.";
           default = "nixos";
@@ -42,11 +48,13 @@ in
 
         openssh.authKeyFiles = mkOption {
           description = "The openssh public key files.";
-          default = [ ../../config/private_dot_ssh/gabyx_ed25519.pub ];
-          type = types.oneOf [
-            types.str
-            types.path
-          ];
+          default = [ ../../config/private_dot_ssh/readonly_gabyx_ed25519.pub ];
+          type = types.listOf (
+            types.oneOf [
+              types.str
+              types.path
+            ]
+          );
         };
 
         chezmoi.workspace = mkOption {

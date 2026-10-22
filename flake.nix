@@ -178,6 +178,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Nix CI (used in the `vm-gradient` host).
+    # Not following `nixpkgs` to use the pre-built packages from its cache.
+    gradient = {
+      url = "github:wavelens/gradient/latest";
+    };
+
     # Tool to regulate CPU power.
     auto-cpufreq = {
       url = "github:AdnanHodzic/auto-cpufreq";

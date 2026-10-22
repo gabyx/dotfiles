@@ -1,15 +1,14 @@
 {
-  inputs,
   ...
 }:
 {
   imports = [
-    ./boot.nix
-    ./hardware-configuration.nix
-
     ./configuration-base.nix
 
+    ./boot.nix
     ./disko.nix
+    ./qemu.nix
+
     ./settings.nix
   ];
 }

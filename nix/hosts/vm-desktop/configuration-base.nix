@@ -7,8 +7,6 @@
 }:
 {
   imports = [
-    inputs.disko.nixosModules.disko
-
     inputs.self.nixosModules.backup
     inputs.self.nixosModules.containerization
     inputs.self.nixosModules.display

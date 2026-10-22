@@ -15,6 +15,22 @@
     tmp.useTmpfs = true;
     tmp.cleanOnBoot = true;
     # ===========================================================================
-  };
 
+    initrd.availableKernelModules = [
+      "ata_piix"
+      "uhci_hcd"
+      "virtio_pci"
+      "virtio_blk"
+    ];
+
+    initrd.kernelModules = [ ];
+
+    kernelModules = [
+      "kvm"
+      "kvm-intel"
+      "kvm-arm"
+    ];
+
+    extraModulePackages = [ ];
+  };
 }
