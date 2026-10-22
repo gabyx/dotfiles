@@ -10,8 +10,18 @@
     excludeFiles = {{ .git.configPath }}/gitignore
 [user]
     name = {{ .git.userName | quote }}
-    email = {{ .git.userEmail | quote }}
     signingkey = {{ .gpg.defaultKeyFingerprint }}
+
+[includeIf "hasconfig:remote.*.url:git@github.com:*/**"]
+    path = {{ .git.configPath }}/gitconfig-github
+[includeIf "hasconfig:remote.*.url:https://github.com/**"]
+    path = {{ .git.configPath }}/gitconfig-github
+
+[includeIf "hasconfig:remote.*.url:git@gitlab.com:*/**"]
+    path = {{ .git.configPath }}/gitconfig-gitlab
+[includeIf "hasconfig:remote.*.url:https://gitlab.com/**"]
+    path = {{ .git.configPath }}/gitconfig-gitlab
+
 [commit]
     gpgsign = true
     template = {{ .git.configPath }}/commit-template.txt
