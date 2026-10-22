@@ -10,7 +10,7 @@
     ./filesystem.nix
 
     inputs.self.nixosModules.bluetooth
-    inputs.self.nixosModules.apfs
+    # inputs.self.nixosModules.apfs
 
     ./settings.nix
     ../common/yubikey.nix

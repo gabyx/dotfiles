@@ -43,7 +43,7 @@
 
     kernel = {
       realtime = true;
-      packages = pkgs.linuxPackages;
+      packages = pkgs.linuxPackages_7_2;
     };
     das_watchdog.enable = true;
 

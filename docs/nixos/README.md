@@ -431,6 +431,7 @@ fix. On the host do the following in the directory `build/nixos-install` (where
 
    ```shell
    source ../../docs/nixos/.env-vm
+   sudo modprobe nbd max_part=8
    sudo qemu-nbd -c /dev/nbd0 "$VM_NIXOS_DISK"
    ```
 
@@ -444,6 +445,8 @@ fix. On the host do the following in the directory `build/nixos-install` (where
 
 1. Use `Partition -> Check` which does an automatic resize to fill the
    partition.
+
+1. Disconnect the drive `sudo qemu-nbd --disconnect /dev/nbd0`.
 
 ### Running Root GUI Application in Sway
 
