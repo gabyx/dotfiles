@@ -11,7 +11,7 @@ let
   inherit (lib) types mkOption;
   cfg = config.settings.backup;
 
-  gabyx-shell-source = self.packages.${system}.gabyx-shell-source;
+  gabyx = lib.getExe self.packages.${system}.gabyx-cli;
 in
 {
   options =
@@ -378,10 +378,8 @@ in
             backupPrepareCommand =
               # bash
               ''
-                export PATH="${gabyx-shell-source}/bin:$PATH"
                 set -eu
-                eval "$(gabyx::shell-source)"
-                gabyx::mount_zfs_disks personal
+                ${gabyx} filesystem mount-zfs-disks personal
 
                 # Force the kernel to read all directory entries.
                 # Such that the stuff is there.
@@ -392,10 +390,8 @@ in
             backupCleanupCommand =
               # bash
               ''
-                export PATH="${gabyx-shell-source}/bin:$PATH"
                 set -eu
-                eval "$(gabyx::shell-source)"
-                gabyx::unmount_zfs_disks personal
+                ${gabyx} filesystem unmount-zfs-disks personal
               '';
 
             pruneOpts = [

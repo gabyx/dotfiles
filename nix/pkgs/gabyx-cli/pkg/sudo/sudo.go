@@ -1,0 +1,23 @@
+package sudo
+
+import (
+	"os"
+
+	"github.com/gabyx/quitsh/pkg/exec"
+)
+
+// IsRoot returns `true` if the process runs as root.
+func IsRoot() bool {
+	return os.Geteuid() == 0
+}
+
+// NewCmdCtxBuilder returns a command builder which runs
+// the command over `sudo` if the process is not root.
+func NewCmdCtxBuilder() exec.CmdContextBuilder {
+	b := exec.NewCmdCtxBuilder()
+	if !IsRoot() {
+		b = b.BaseCmd("sudo")
+	}
+
+	return b
+}

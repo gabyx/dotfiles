@@ -27,7 +27,6 @@ source "$HOME/.config/zsh/.zshenv-rust.zsh"
 source "$HOME/.config/zsh/.zshenv-kube.zsh"
 
 source "$HOME/.config/shell/aliases.bash"
-source "$HOME/.config/shell/functions.bash"
 
 # Python environment.
 if [ -f "$HOME/python-envs/default/bin/activate" ]; then

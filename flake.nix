@@ -28,8 +28,7 @@
           (
             i:
             i [
-              ./nix
-              ./tools/nix
+              ./.
             ]
           );
     in
@@ -59,11 +58,26 @@
 
     # Nixpkgs (stuff for the system.)
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
-
     # Nixpkgs (unstable stuff for certain packages.)
     nixpkgs-unstable.url = "github:nixos/nixpkgs?rev=56c02bc00adcf003215cc4bd996d6efaf4cff188";
-
     multiverse.url = "github:fzakaria/nixpkgs-multiverse";
+
+    # The devenv module to create good development shells.
+    # The `nixpkgs-devenv` must be aligned with the pinned version.
+    devenv = {
+      url = "github:cachix/devenv?ref=v2.1.2";
+      inputs.nixpkgs.follows = "nixpkgs-devenv";
+    };
+    # This is the rolling nixpkgs with what devenv was tested.
+    nixpkgs-devenv = {
+      url = "github:cachix/devenv-nixpkgs?ref=ec3063523dcd911aeadb50faa589f237cdab5853";
+    };
+
+    # Quitsh functionality.
+    quitsh = {
+      url = "github:gabyx/quitsh?ref=main&dir=tools/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Index the nix-store.
     nix-index-database = {

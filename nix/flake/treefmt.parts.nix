@@ -52,6 +52,9 @@
 
         # Nix.
         programs.nixfmt.enable = true;
+
+        # Go.
+        programs.gofmt.enable = true;
       };
     };
 }

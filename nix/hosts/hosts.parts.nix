@@ -74,13 +74,8 @@ in
   };
 
   perSystem =
-    { system, ... }:
+    { ... }:
     {
       packages.desktop-iso = desktop-image.config.system.build.images.iso;
-
-      packages.famhome-image =
-        (mkSystem "famhome" {
-          inherit system;
-        }).config.build.images.raw-efi;
     };
 }

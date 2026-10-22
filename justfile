@@ -7,6 +7,7 @@ shell := env("SHELL", "zsh")
 
 mod vm "./tools/just/vm.just"
 mod nix "./tools/just/nix.just"
+mod gabyx-cli "./nix/pkgs/gabyx-cli/justfile"
 
 # The host for which most commands work below.
 default_host := env("NIXOS_HOST", "not-defined")
@@ -543,7 +544,7 @@ cm *args:
                 print "Skip encryption setup."
             } else {
                 let k = (
-                    ^"{{root_dir}}/nix/pkgs/scripts/shell/common/get-secret.sh"
+                    ^nix run $"{{root_dir}}#gabyx-cli" -- secret get
                         --bw-id "3cc1b9eb-2504-4cec-8dda-b17501145099"
                         --yubikey "{{yubikey_name}}"
                         --prompt "Chezmoi encryption age identity: "

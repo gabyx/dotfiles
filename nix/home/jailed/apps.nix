@@ -42,7 +42,7 @@ let
 
   signal-jailed = jailApp {
     name = "signal-desktop";
-    pkg = pkgsUnstable.signal-desktop-bin;
+    pkg = pkgsUnstable.signal-desktop;
     args = "-s %U";
     desktop = {
       Terminal = "false";

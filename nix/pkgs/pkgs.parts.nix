@@ -19,7 +19,7 @@
       # Batman Timezone Converter.
       # batz = pkgs.callPackage ./batz { };
 
-      gabyx-scripts = import ./scripts { inherit pkgsUnstable; };
+      gabyx-cli = pkgsUnstable.callPackage ./gabyx-cli { };
       tone3000-plugin = pkgsUnstable.callPackage ./tone3000-plugin { };
       mt-powerdrumkit = pkgsUnstable.callPackage ./mt-powerdrumkit { };
 
@@ -53,7 +53,7 @@
           ;
 
         inherit docker-sbx;
-      }
-      // gabyx-scripts;
+        inherit gabyx-cli;
+      };
     };
 }

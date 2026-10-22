@@ -134,8 +134,6 @@ if [ -d "$HOME/.config/shell" ]; then
     [ -r "$s" ] && source "$s" || echo "Could not source '$s'" >&2
     s="$HOME/.config/shell/aliases.zsh"
     [ -r "$s" ] && source "$s" || echo "Could not source '$s'" >&2
-    s="$HOME/.config/shell/functions.bash"
-    [ -r "$s" ] && source "$s" || echo "Could not source '$s'" >&2
 fi
 
 # Python environment.

@@ -1,0 +1,66 @@
+set positional-arguments
+set fallback := true
+set shell := ["bash", "-cue"]
+comp_dir := justfile_directory()
+root_dir := `git rev-parse --show-toplevel`
+out_dir := comp_dir / ".output"
+
+default:
+    just --list --unsorted
+
+# Build gabyx.
+build *args:
+    just run-dev -c "*" build
+
+# Run gabyx in the current directory.
+[no-cd]
+run *args: build
+    "{{out_dir}}/bin/gabyx" "$@"
+
+# Build the dev tool.
+build-dev *args:
+    cd "{{comp_dir}}" && \
+    go build -o "{{out_dir}}/bin/dev" "$@" ./cmd/dev/main.go
+
+# Run the dev tool.
+run-dev *args: build-dev
+    "{{out_dir}}/bin/dev" "$@"
+
+# Lint the stuff.
+lint *args:
+    just run-dev -c "*" lint
+
+# Test the stuff.
+test *args:
+    just run-dev -c "*" test
+
+# Fix hash of Nix build.
+nix-fix:
+    just run-dev nix fix-hash
+
+# Run the Nix package.
+nix-run *args:
+    cd "{{root_dir}}" && \
+    nix run ".#gabyx-cli" "$@"
+
+# Build the Nix package.
+nix-build *args:
+    cd "{{root_dir}}" && \
+    nix build -L ".#gabyx-cli" -o "{{out_dir}}/package" "$@" && \
+    nix build -L ".#gabyx-cli.passthru.tests.version" -o "{{out_dir}}/package-test"
+
+# Update the quitsh dependency (fork `gabyx/quitsh`) to latest on `branch`.
+# Afterwards update `vendorHash` in `default.nix` with `just package-nix`.
+update-deps branch="main":
+    #!/usr/bin/env bash
+    set -eu
+    cd "{{comp_dir}}"
+
+    echo "Updating 'quitsh'."
+    shaQuitsh=$(git ls-remote -q \
+        https://github.com/gabyx/quitsh.git \
+        refs/heads/{{branch}} | cut -f 1)
+    go get "github.com/gabyx/quitsh@$shaQuitsh"
+
+    go mod tidy
+    git add .

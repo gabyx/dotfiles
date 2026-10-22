@@ -1,0 +1,17 @@
+name: gabyx-cli
+version: 1.0.0
+language: go
+
+targets:
+  test:
+    inputs: ["self"]
+    steps:
+      - runner: go
+
+  build:
+    inputs: ["self"]
+    steps:
+      - runner: go
+  lint:
+    steps:
+      - runner: go

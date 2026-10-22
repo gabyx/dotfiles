@@ -11,7 +11,7 @@
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
-# See the function `gabyx::get_input_properties`.
+# See the command `gabyx windowing get-input-properties`.
 input type:keyboard {
     xkb_layout programmer-defy,programmer,us,de
     xkb_options ctrl:nocaps,compose:ralt
