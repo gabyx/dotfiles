@@ -25,5 +25,5 @@
     #     IdentityFile ${config.age.secrets.ssh-read-nix-cache-swisscustodian-ch.path}
     #     IdentitiesOnly yes
     # '';
-};
+  };
 }

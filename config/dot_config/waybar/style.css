@@ -70,7 +70,7 @@ window.eDP-1 * {
 
 /* The whole bar */
 #waybar {
-    background: #323233
+  background: #323233;
 }
 
 #waybar > box {
