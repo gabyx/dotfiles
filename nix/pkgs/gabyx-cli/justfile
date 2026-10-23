@@ -4,6 +4,7 @@ set shell := ["bash", "-cue"]
 comp_dir := justfile_directory()
 root_dir := `git rev-parse --show-toplevel`
 out_dir := comp_dir / ".output"
+bin_dir := out_dir / "build/bin"
 
 default:
     just --list --unsorted
@@ -15,16 +16,16 @@ build *args:
 # Run gabyx in the current directory.
 [no-cd]
 run *args: build
-    "{{out_dir}}/bin/gabyx" "$@"
+    "{{bin_dir}}/gabyx" "$@"
 
 # Build the dev tool.
 build-dev *args:
     cd "{{comp_dir}}" && \
-    go build -o "{{out_dir}}/bin/dev" "$@" ./cmd/dev/main.go
+    go build -o "{{bin_dir}}/dev" "$@" ./cmd/dev/main.go
 
 # Run the dev tool.
 run-dev *args: build-dev
-    "{{out_dir}}/bin/dev" "$@"
+    "{{bin_dir}}/dev" "$@"
 
 # Lint the stuff.
 lint *args:

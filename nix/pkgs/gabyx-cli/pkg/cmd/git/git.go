@@ -12,6 +12,7 @@ func AddCmd(root *cobra.Command) {
 
 	addDeleteMergedBranchesCmd(gitCmd)
 	addDeleteBranchesOlderThanWeeksCmd(gitCmd)
+	addCleanReposCmd(gitCmd)
 
 	root.AddCommand(gitCmd)
 }
