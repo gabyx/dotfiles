@@ -193,21 +193,34 @@ rebuild *args:
     def --wrapped main [
         how: string,
         --host: string = "{{default_host}}",
+        --specialisation: string = ""
         ...args: string
     ] {
         cd "{{root_dir}}"
+        mut $how = $how
 
-        let cmd = [
-            --sudo
-            $how
-            --flake $".#($host)"
-        ] | append $args
+        if $how == "switch" and $specialisation != "" {
+            # Always first rebuilt with boot and then
+            # switch with test to not overwrite the default.
+            let cmd = [ --sudo boot --flake $".#($host)" ] | append $args
+            print "----"
+            print $"nixos-rebuild ($cmd | str join ' ')"
+            print "----"
+
+            ^nixos-rebuild --sudo boot --flake $".#($host)"
+
+            $how = "test"
+        }
 
         print "Checkout all LFS files."
         ^git lfs checkout
         print "Fetch all submodules."
         ^git submodule update --recursive --init
 
+        mut cmd = [ --sudo $how --flake $".#($host)" ] | append $args
+        if ($specialisation != "") {
+            $cmd = $cmd | append [ --specialisation $specialisation ]
+        }
         print "----"
         print $"nixos-rebuild ($cmd | str join ' ')"
         print "----"

@@ -14,12 +14,16 @@
 
   environment.systemPackages = [
     pkgsUnstable.ardour # Music recording.
+
     pkgsUnstable.carla # Music plugins patchbar.
     pkgsUnstable.calf # Calf music plugins.
+
     pkgsUnstable.lsp-plugins # https://lsp-plug.in/?page=plugins
     pkgsUnstable.x42-plugins # x42 lv2 plugins
     pkgsUnstable.x42-avldrums
     pkgsUnstable.drumgizmo
+    pkgsUnstable.sfizz # Sampler
+    pkgsUnstable.sfizz-ui # Sampler UI
 
     # VST2/VST3 on Windows
     # pkgsUnstable.wineWow64Packages.staging

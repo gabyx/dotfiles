@@ -20,6 +20,7 @@
     pkgsUnstable.efibootmgr # Writing NVRAM boot entries.
     pkgsUnstable.hdparm
     pkgsUnstable.exfatprogs
+    pkgsUnstable.xfsprogs
     pkgsUnstable.zfs
 
     pkgsUnstable.dmidecode # BIOS read tool.
