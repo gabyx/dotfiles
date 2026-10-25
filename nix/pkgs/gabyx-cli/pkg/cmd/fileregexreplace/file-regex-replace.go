@@ -3,6 +3,7 @@ package fileregexreplacecmd
 import (
 	"io/fs"
 	"os"
+	"path"
 	"path/filepath"
 	"regexp"
 	"runtime"
@@ -279,7 +280,7 @@ func getFiles(dir string) ([]string, error) {
 		}
 
 		if d.Type().IsRegular() {
-			files = append(files, filepath.ToSlash(p))
+			files = append(files, p)
 		}
 
 		return nil
@@ -298,14 +299,14 @@ func getGitFiles(dir string) ([]string, error) {
 
 	files := make([]string, 0, len(paths))
 	for _, p := range paths {
-		f := filepath.Join(dir, p)
+		f := path.Join(dir, p)
 
 		info, e := os.Lstat(f)
 		if e != nil || !info.Mode().IsRegular() {
 			continue
 		}
 
-		files = append(files, filepath.ToSlash(f))
+		files = append(files, f)
 	}
 
 	return files, nil

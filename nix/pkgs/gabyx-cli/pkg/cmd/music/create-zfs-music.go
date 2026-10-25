@@ -2,9 +2,10 @@ package musiccmd
 
 import (
 	"context"
+	"fmt"
 	"os"
+	"path"
 	"path/filepath"
-	"slices"
 	"strconv"
 	"strings"
 	"syscall"
@@ -22,8 +23,8 @@ import (
 const longDescCreateZfsMusic = `
     Create or import the ZFS pool for music and create the datasets
     'instruments' and 'projects' mounted at '<mount>/<dataset>'.
-    With '--format' the disk 'disk' is shown with 'lsblk' and, after a
-    confirmation, all signatures are erased ('wipefs -a') and a new pool is created.
+    With '--format' the disk or partition 'disk' is shown with 'lsblk' and, after a
+    confirmation, a new pool is created on it ('zpool create -f').
     Without '--format' the existing pool is imported.
     With '--setup' all instruments which are not yet present below
     '<mount>/instruments' are downloaded and extracted.
@@ -75,9 +76,7 @@ func addCreateZfsMusicCmd(parent *cobra.Command) {
 		Use:   "create-zfs-music",
 		Short: "Create or import the ZFS music pool, its datasets and install instruments.",
 		Long:  longDescCreateZfsMusic,
-		Example: "  gabyx music create-zfs-music --disk /dev/disk/by-id/XXX --format --setup\n" +
-			"  gabyx music create-zfs-music --setup",
-		Args: cobra.NoArgs,
+		Args:  cobra.NoArgs,
 		PreRunE: func(_cmd *cobra.Command, _args []string) error {
 			if args.format && args.disk == "" {
 				return errors.New("'--format' needs '--disk'")
@@ -91,7 +90,7 @@ func addCreateZfsMusicCmd(parent *cobra.Command) {
 	}
 
 	cmd.Flags().
-		StringVarP(&args.disk, "disk", "d", "", "The disk to format (e.g. '/dev/disk/by-id/...').")
+		StringVarP(&args.disk, "disk", "d", "", "The disk or partition to format (e.g. '/dev/disk/by-id/...').")
 	cmd.Flags().
 		StringVarP(&args.mount, "mount", "m", "/mnt/music", "The directory where the datasets are mounted.")
 	cmd.Flags().
@@ -99,8 +98,8 @@ func addCreateZfsMusicCmd(parent *cobra.Command) {
 	cmd.Flags().
 		BoolVar(&args.format, "format", false, "Erase the disk and create a new pool.")
 	cmd.Flags().
-		BoolVarP(&args.force, "force", "f", false,
-			"Do not ask for confirmation and pass '-f' to 'zpool create'.")
+		BoolVar(&args.force, "force", false,
+			"Do not ask for confirmation before formatting.")
 	cmd.Flags().
 		BoolVar(&args.setup, "setup", true, "Download and extract missing instruments.")
 
@@ -120,7 +119,7 @@ func createZfsMusic(ctx context.Context, args *createZfsMusicArgs) error {
 	}
 
 	for _, ds := range musicDatasets {
-		err = setupDataset(args.pool, ds, filepath.Join(args.mount, ds))
+		err = setupDataset(args.pool, ds, path.Join(args.mount, ds))
 		if err != nil {
 			return err
 		}
@@ -130,15 +129,17 @@ func createZfsMusic(ctx context.Context, args *createZfsMusicArgs) error {
 		return nil
 	}
 
-	return installInstruments(ctx, filepath.Join(args.mount, datasetInstruments), instruments)
+	return installInstruments(ctx, path.Join(args.mount, datasetInstruments), instruments)
 }
 
 func importPool(pool string) error {
 	exists, err := zfs.PoolExists(pool)
 	if err != nil || exists {
+		log.Infof("Pool '%v' already exists.", pool)
 		return err
 	}
 
+	log.Info("Import pool '%s'.", pool)
 	err = zfs.Import(pool)
 	if err != nil {
 		return errors.AddContext(
@@ -169,10 +170,8 @@ func formatDisk(args *createZfsMusicArgs) error {
 		return errors.New("pool '%s' is imported, destroy or export it first", args.pool)
 	}
 
-	vdev := diskByID(disk)
-
 	if !args.force {
-		ok, e := confirmFormat(disk, vdev, args.pool)
+		ok, e := confirmFormat(disk, args.pool)
 		if e != nil {
 			return e
 		} else if !ok {
@@ -180,20 +179,11 @@ func formatDisk(args *createZfsMusicArgs) error {
 		}
 	}
 
-	err = wipeDisk(disk)
-	if err != nil {
-		return err
-	}
-
-	opts := poolOpts
-	if args.force {
-		opts = append([]string{"-f"}, opts...)
-	}
-
-	return zfs.CreatePool(args.pool, opts, vdev)
+	// `-f`: Overwrite existing filesystems or partition tables on the device.
+	return zfs.CreatePool(args.pool, append([]string{"-f"}, poolOpts...), disk)
 }
 
-// checkDisk returns an error if `disk` is not a whole disk or if
+// checkDisk returns an error if `disk` is not a whole disk or a partition or if
 // any filesystem on it is mounted.
 func checkDisk(disk string) error {
 	lsblk := exec.NewCmdCtxBuilder().Quiet().Build()
@@ -201,8 +191,8 @@ func checkDisk(disk string) error {
 	typ, err := lsblk.Get("lsblk", "--nodeps", "--noheadings", "--output", "TYPE", disk)
 	if err != nil {
 		return err
-	} else if typ != "disk" {
-		return errors.New("'%s' is not a whole disk but type '%s'", disk, typ)
+	} else if typ != "disk" && typ != "part" {
+		return errors.New("'%s' is not a disk or partition but type '%s'", disk, typ)
 	}
 
 	mounts, err := lsblk.Get("lsblk", "--noheadings", "--raw", "--output", "MOUNTPOINTS", disk)
@@ -215,96 +205,44 @@ func checkDisk(disk string) error {
 	return nil
 }
 
-// diskByID returns the `/dev/disk/by-id` path of `disk`.
-// IDs with the model and serial (e.g. `ata-...`) are preferred over `wwn-...`.
-// If none is found `disk` is returned.
-func diskByID(disk string) string {
-	const dir = "/dev/disk/by-id"
-
-	entries, err := os.ReadDir(dir)
+func confirmFormat(disk string, pool string) (ok bool, err error) {
+	// For a partition show its whole disk (`PKNAME`, empty for a disk):
+	// the model and serial are only set on the disk.
+	parent, err := exec.NewCommandCtx(".").
+		Get("lsblk", "--nodeps", "--noheadings", "--paths", "--output", "PKNAME", disk)
 	if err != nil {
-		return disk
+		return false, err
+	} else if parent == "" {
+		parent = disk
 	}
 
-	var ids []string
-	for _, e := range entries {
-		p := filepath.Join(dir, e.Name())
-		if target, e := filepath.EvalSymlinks(p); e == nil && target == disk {
-			ids = append(ids, p)
-		}
-	}
-
-	if len(ids) == 0 {
-		return disk
-	}
-
-	slices.SortFunc(ids, func(a, b string) int {
-		aWWN := strings.HasPrefix(filepath.Base(a), "wwn-")
-		bWWN := strings.HasPrefix(filepath.Base(b), "wwn-")
-
-		switch {
-		case aWWN == bWWN:
-			return strings.Compare(a, b)
-		case aWWN:
-			return 1
-		default:
-			return -1
-		}
-	})
-
-	return ids[0]
-}
-
-func confirmFormat(disk string, vdev string, pool string) (ok bool, err error) {
 	info, err := exec.NewCommandCtx(".").
-		Get("lsblk", "--output", "NAME,SIZE,TYPE,MODEL,SERIAL,FSTYPE,LABEL,MOUNTPOINTS", disk)
+		Get("lsblk", "--paths", "--output", "NAME,SIZE,TYPE,MODEL,SERIAL,FSTYPE,LABEL,MOUNTPOINTS", parent)
 	if err != nil {
 		return false, err
 	}
 
-	confirm := huh.NewConfirm().
-		Title("Erase all data on '" + disk + "' and create pool '" + pool + "'?").
-		Description(info + "\n\nDevice: " + vdev).
-		Affirmative("Erase").
-		Negative("Abort").
-		Value(&ok)
+	retryMsg := ""
 
-	err = huh.NewForm(huh.NewGroup(confirm)).
-		WithOutput(os.Stderr).
-		Run()
+	for range 2 {
+		confirm := huh.NewConfirm().
+			Title(fmt.Sprintf("%sErase all data on '%s' and create pool '%s'?", retryMsg, disk, pool)).
+			Description(info + "\n\nDevice: " + disk + "\nDisk:   " + parent).
+			Affirmative("Erase").
+			Negative("Abort").
+			Value(&ok)
+
+		err = huh.NewForm(huh.NewGroup(confirm)).
+			WithOutput(os.Stderr).
+			Run()
+		if err != nil || !ok {
+			return false, err
+		}
+
+		retryMsg = "ARE YOU REALLY SURE? :"
+	}
 
 	return ok, err
-}
-
-// wipeDisk erases all signatures on all partitions of `disk` and then on `disk`.
-// Partitions are wiped first, they are not accessible anymore after
-// the partition table is erased.
-func wipeDisk(disk string) error {
-	lines, err := exec.NewCommandCtx("").
-		GetSplit("lsblk", "--noheadings", "--raw", "--paths", "--output", "NAME,TYPE", disk)
-	if err != nil {
-		return err
-	}
-
-	var devices []string
-	for _, l := range lines {
-		if f := strings.Fields(l); len(f) == 2 && f[1] == "part" {
-			devices = append(devices, f[0])
-		}
-	}
-	devices = append(devices, disk)
-
-	sudox := sudo.NewCmdCtxBuilder().Build()
-	for _, d := range devices {
-		log.Info("Erase all signatures.", "device", d)
-
-		err = sudox.Check("wipefs", "--all", d)
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
 }
 
 // setupDataset creates the dataset `pool/dataset` if it does not exist,
@@ -320,8 +258,11 @@ func setupDataset(pool string, dataset string, mountpoint string) error {
 		if err != nil {
 			return err
 		}
+	} else {
+		log.Infof("Dataset '%s' already exists.", dataset)
 	}
 
+	log.Infof("Mount dataset '%s'.", dataset)
 	err = zfs.MountAt(pool, dataset, mountpoint)
 	if err != nil {
 		return err
@@ -344,7 +285,5 @@ func chownToUser(dir string) error {
 
 	log.Info("Change owner to current user.", "dir", dir)
 
-	return sudo.NewCmdCtxBuilder().
-		Build().
-		Check("chown", strconv.Itoa(uid)+":"+strconv.Itoa(gid), dir)
+	return sudo.NewCommandCtx(".").Check("chown", strconv.Itoa(uid)+":"+strconv.Itoa(gid), dir)
 }

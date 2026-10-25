@@ -46,6 +46,10 @@ type model struct {
 // The data is written to `<dest>.part` and renamed to `dest` when complete.
 // It returns the `Content-Type` header of the response.
 func File(ctx context.Context, url string, dest string) (contentType string, err error) {
+	if qfs.Exists(dest) {
+		return "", errors.New("file exists '%s'", dest)
+	}
+
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return "", err
@@ -55,7 +59,7 @@ func File(ctx context.Context, url string, dest string) (contentType string, err
 	if err != nil {
 		return "", errors.AddContext(err, "could not download '%s'", url)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode != http.StatusOK {
 		return "", errors.New("could not download '%s': status '%s'", url, resp.Status)
@@ -89,7 +93,13 @@ func File(ctx context.Context, url string, dest string) (contentType string, err
 
 // copyWithProgress copies `src` to the file `dest` and renders a progress bar
 // on stderr while copying.
-func copyWithProgress(ctx context.Context, title string, total int64, src io.Reader, dest string) error {
+func copyWithProgress(
+	ctx context.Context,
+	title string,
+	total int64,
+	src io.Reader,
+	dest string,
+) error {
 	p := tea.NewProgram(newModel(title, total),
 		tea.WithContext(ctx),
 		tea.WithInput(nil),

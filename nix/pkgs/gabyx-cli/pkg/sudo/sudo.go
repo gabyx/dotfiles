@@ -21,3 +21,9 @@ func NewCmdCtxBuilder() exec.CmdContextBuilder {
 
 	return b
 }
+
+// NewCommandCtx returns a command context in `cwd` which runs
+// the command over `sudo` if the process is not root.
+func NewCommandCtx(cwd string) *exec.CmdContext {
+	return NewCmdCtxBuilder().Cwd(cwd).Build()
+}

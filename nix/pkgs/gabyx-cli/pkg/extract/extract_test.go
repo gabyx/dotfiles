@@ -6,7 +6,7 @@ import (
 	"bytes"
 	"compress/gzip"
 	"os"
-	"path/filepath"
+	"path"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -55,23 +55,24 @@ func TestArchiveTarGzWithTopLevelDir(t *testing.T) {
 	dir := t.TempDir()
 
 	// No file extension: the format must be detected from the content.
-	archive := filepath.Join(dir, "archive")
+	archive := path.Join(dir, "archive")
 	writeTarGz(t, archive, map[string]string{
 		"Kit/kit.xml":         "kit",
 		"Kit/samples/a.wav":   "a",
 		"./Kit/samples/b.wav": "b",
 	})
 
-	partial := filepath.Join(dir, "out.partial")
+	partial := path.Join(dir, "out.partial")
 	require.NoError(t, Archive(t.Context(), archive, partial))
 
-	target := filepath.Join(dir, "drumgizmo", "kit")
+	target := path.Join(dir, "drumgizmo", "kit")
 	require.NoError(t, Promote(partial, target))
 
-	data, err := os.ReadFile(filepath.Join(target, "samples", "b.wav"))
+	// The top-level directory of the archive is kept.
+	data, err := os.ReadFile(path.Join(target, "Kit", "samples", "b.wav"))
 	require.NoError(t, err)
 	assert.Equal(t, "b", string(data))
-	assert.FileExists(t, filepath.Join(target, "kit.xml"))
+	assert.FileExists(t, path.Join(target, "Kit", "kit.xml"))
 	assert.NoDirExists(t, partial)
 }
 
@@ -79,42 +80,39 @@ func TestArchiveZipWithoutTopLevelDir(t *testing.T) {
 	t.Parallel()
 	dir := t.TempDir()
 
-	archive := filepath.Join(dir, "archive")
+	archive := path.Join(dir, "archive")
 	writeZip(t, archive, map[string]string{
-		"a.sfz":                "a",
-		"samples/a.wav":        "a",
-		"__MACOSX/._a.sfz":     "meta",
-		"__MACOSX/samples/._a": "meta",
+		"a.sfz":         "a",
+		"samples/a.wav": "a",
 	})
 
-	partial := filepath.Join(dir, "out.partial")
+	partial := path.Join(dir, "out.partial")
 	require.NoError(t, Archive(t.Context(), archive, partial))
-	assert.NoDirExists(t, filepath.Join(partial, "__MACOSX"))
 
-	target := filepath.Join(dir, "bass")
+	target := path.Join(dir, "bass")
 	require.NoError(t, Promote(partial, target))
-	assert.FileExists(t, filepath.Join(target, "a.sfz"))
-	assert.FileExists(t, filepath.Join(target, "samples", "a.wav"))
+	assert.FileExists(t, path.Join(target, "a.sfz"))
+	assert.FileExists(t, path.Join(target, "samples", "a.wav"))
 }
 
 func TestArchiveRejectsPathOutsideDest(t *testing.T) {
 	t.Parallel()
 	dir := t.TempDir()
 
-	archive := filepath.Join(dir, "archive")
+	archive := path.Join(dir, "archive")
 	writeZip(t, archive, map[string]string{"../evil": "x"})
 
-	err := Archive(t.Context(), archive, filepath.Join(dir, "out"))
+	err := Archive(t.Context(), archive, path.Join(dir, "out"))
 	require.Error(t, err)
-	assert.NoFileExists(t, filepath.Join(dir, "evil"))
+	assert.NoFileExists(t, path.Join(dir, "evil"))
 }
 
 func TestArchiveRejectsNonArchive(t *testing.T) {
 	t.Parallel()
 	dir := t.TempDir()
 
-	archive := filepath.Join(dir, "archive")
+	archive := path.Join(dir, "archive")
 	require.NoError(t, os.WriteFile(archive, []byte("<html>not an archive</html>"), 0o600))
 
-	require.Error(t, Archive(t.Context(), archive, filepath.Join(dir, "out")))
+	require.Error(t, Archive(t.Context(), archive, path.Join(dir, "out")))
 }

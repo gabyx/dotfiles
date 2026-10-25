@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"path"
-	"path/filepath"
 	"strings"
 
 	"gabyx-cli/pkg/prompt"
@@ -126,9 +125,7 @@ func getSecret(args *getArgs) error {
 		}
 	}
 
-	err = exec.NewCmdCtxBuilder().
-		Build().
-		Check("age", "-d", "-i", identityFile, encFile)
+	err = exec.NewCommandCtx(".").Check("age", "-d", "-i", identityFile, encFile)
 	if err != nil {
 		return errors.AddContext(err, "decrypting '%s' failed", encFile)
 	}
@@ -174,7 +171,7 @@ func getFidoIdentity(yubikey string, bwField string) (string, error) {
 }
 
 func writeEncryptedFile(args *getArgs, identityFile string, encFile string) error {
-	err := os.MkdirAll(filepath.Dir(encFile), fs.DefaultPermissionsDir)
+	err := os.MkdirAll(path.Dir(encFile), fs.DefaultPermissionsDir)
 	if err != nil {
 		return err
 	}
@@ -184,16 +181,15 @@ func writeEncryptedFile(args *getArgs, identityFile string, encFile string) erro
 		return err
 	}
 
-	tmp, err := os.CreateTemp(filepath.Dir(encFile), ".age-fido-*")
+	tmp, err := os.CreateTemp(path.Dir(encFile), ".age-fido-*")
 	if err != nil {
 		return err
 	}
-	tmp.Close()
+	_ = tmp.Close()
 	defer func() { _ = os.Remove(tmp.Name()) }()
 
 	log.Info("Writing encrypted file.", "path", encFile)
-	err = exec.NewCmdCtxBuilder().
-		Build().
+	err = exec.NewCommandCtx(".").
 		WithStdin(strings.NewReader(secret+"\n")).
 		Check("age", "-e", "-i", identityFile, "-o", tmp.Name())
 	if err != nil {

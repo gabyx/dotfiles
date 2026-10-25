@@ -54,7 +54,7 @@ func FindRecent(dir string, globs ...string) ([]File, error) {
 				return false
 			}
 
-			return fs.MatchByPatterns(filepath.ToSlash(rel), globs, nil)
+			return fs.MatchByPatterns(rel, globs, nil)
 		}, true))
 	if err != nil {
 		return nil, err

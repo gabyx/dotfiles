@@ -3,6 +3,7 @@ package gitcmd
 import (
 	"fmt"
 	"os"
+	"path"
 	"path/filepath"
 	"slices"
 	"strings"
@@ -140,10 +141,10 @@ func cleanRepos(args *cleanReposArgs, rootDir string) error {
 // findGitRepos returns all directories below `rootDir` which contain a `.git`
 // directory or file. It does not descend into found repositories.
 func findGitRepos(rootDir string) ([]string, error) {
-	rootDir = filepath.Clean(rootDir)
+	rootDir = path.Clean(rootDir)
 
 	isRepo := func(dir string) bool {
-		_, e := os.Lstat(filepath.Join(dir, ".git"))
+		_, e := os.Lstat(path.Join(dir, ".git"))
 
 		return e == nil
 	}
@@ -152,7 +153,7 @@ func findGitRepos(rootDir string) ([]string, error) {
 		fs.WithReportOnlyDirs(true),
 		fs.WithWalkDirFilterDefault(true),
 		fs.WithWalkDirFilter(func(p string, _ os.DirEntry) bool {
-			return p == rootDir || !isRepo(filepath.Dir(p))
+			return p == rootDir || !isRepo(path.Dir(p))
 		}, true),
 		fs.WithPathFilter(func(p string, _ os.DirEntry) bool {
 			return isRepo(p)

@@ -50,7 +50,7 @@ func Mount(pool string, dataset string, dir string) error {
 	mount := path.Join(Mountpoint(), dir, dataset)
 	log.Info("Mount ZFS dataset.", "dataset", ds, "mountpoint", mount)
 
-	sudox := sudo.NewCmdCtxBuilder().Build()
+	sudox := sudo.NewCommandCtx(".")
 	err = sudox.Check("zfs", "set", "-u", "mountpoint="+mount, ds)
 	if err != nil {
 		return err
@@ -78,7 +78,7 @@ func Unmount(pool string, dataset string) error {
 	}
 
 	log.Info("Unmount ZFS dataset.", "dataset", ds)
-	err = sudo.NewCmdCtxBuilder().Build().Check("zfs", "unmount", ds)
+	err = sudo.NewCommandCtx(".").Check("zfs", "unmount", ds)
 	if err != nil {
 		return errors.AddContext(err, "could not unmount dataset '%s'", ds)
 	}
@@ -90,7 +90,7 @@ func Unmount(pool string, dataset string) error {
 func ImportAll() error {
 	log.Info("Import all ZFS pools.")
 
-	return sudo.NewCmdCtxBuilder().Build().Check("zpool", "import", "-f", "-a")
+	return sudo.NewCommandCtx(".").Check("zpool", "import", "-f", "-a")
 }
 
 // PoolExists returns `true` if the pool `pool` is imported.
@@ -107,7 +107,7 @@ func PoolExists(pool string) (exists bool, err error) {
 func Import(pool string) error {
 	log.Info("Import ZFS pool.", "pool", pool)
 
-	return sudo.NewCmdCtxBuilder().Build().Check("zpool", "import", pool)
+	return sudo.NewCommandCtx(".").Check("zpool", "import", pool)
 }
 
 // CreatePool creates the pool `pool` on the vdevs `vdevs`.
@@ -119,12 +119,13 @@ func CreatePool(pool string, opts []string, vdevs ...string) error {
 	args = append(args, pool)
 	args = append(args, vdevs...)
 
-	return sudo.NewCmdCtxBuilder().Build().Check(args...)
+	return sudo.NewCommandCtx(".").Check(args...)
 }
 
 // DatasetExists returns `true` if the dataset `pool/dataset` exists.
 func DatasetExists(pool string, dataset string) (exists bool, err error) {
 	err = exec.NewCmdCtxBuilder().
+		Quiet().
 		ExitCodeHandler(exec.ExitCode0And1SuccessVar(&exists)).
 		Build().
 		Check("zfs", "list", "-H", "-o", "name", path.Join(pool, dataset))
@@ -144,22 +145,22 @@ func CreateDataset(pool string, dataset string, props ...string) error {
 	}
 	args = append(args, ds)
 
-	return sudo.NewCmdCtxBuilder().Build().Check(args...)
+	return sudo.NewCommandCtx(".").Check(args...)
 }
 
 // MountAt sets the mountpoint of the dataset `pool/dataset` permanently to
 // `mountpoint` and mounts it if not yet mounted.
 func MountAt(pool string, dataset string, mountpoint string) error {
 	ds := path.Join(pool, dataset)
-	sudox := sudo.NewCmdCtxBuilder().Build()
-
-	err := sudox.Check("zfs", "set", "mountpoint="+mountpoint, ds)
-	if err != nil {
-		return err
-	}
+	sudox := sudo.NewCommandCtx(".")
 
 	mounted, err := IsMounted(pool, dataset)
 	if err != nil || mounted {
+		return err
+	}
+
+	err = sudox.Check("zfs", "set", "mountpoint="+mountpoint, ds)
+	if err != nil {
 		return err
 	}
 

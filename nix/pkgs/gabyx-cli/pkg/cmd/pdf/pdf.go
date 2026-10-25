@@ -41,8 +41,7 @@ func compress(file string, output string, level string) error {
 		return errors.New("the level '%s' must be one of '%v'", level, levels)
 	}
 
-	return exec.NewCmdCtxBuilder().
-		Build().
+	return exec.NewCommandCtx(".").
 		Check("gs",
 			"-sDEVICE=pdfwrite",
 			"-dCompatibilityLevel=1.4",

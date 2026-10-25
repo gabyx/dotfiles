@@ -129,7 +129,5 @@ func imagesToPodman(regex string) error {
 
 	log.Info("Pulling images.", "images", images)
 
-	return exec.NewCmdCtxBuilder().
-		Build().
-		Check(append([]string{"podman", "pull"}, images...)...)
+	return exec.NewCommandCtx(".").Check(append([]string{"podman", "pull"}, images...)...)
 }

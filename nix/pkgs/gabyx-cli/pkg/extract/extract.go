@@ -15,9 +15,6 @@ import (
 	"github.com/mholt/archives"
 )
 
-// Directories created by macOS archivers which are not extracted.
-const macOSMetadataDir = "__MACOSX"
-
 // Archive extracts the archive file `archive` into the directory `destDir`.
 // The format (zip, tar, tar.gz, tar.xz, 7z, ...) is detected from the file
 // content, not from the file name.
@@ -27,7 +24,7 @@ func Archive(ctx context.Context, archive string, destDir string) error {
 	if err != nil {
 		return err
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 
 	// No file name is given: the format is only matched by the content.
 	format, stream, err := archives.Identify(ctx, "", f)
@@ -52,7 +49,58 @@ func Archive(ctx context.Context, archive string, destDir string) error {
 		return errors.AddContext(err, "could not extract '%s'", archive)
 	}
 
-	return nil
+	return FlattenSingleDirs(destDir)
+}
+
+func FlattenSingleDirs(destDir string) error {
+	deepestDir := destDir
+	entries, err := os.ReadDir(deepestDir)
+	if err != nil {
+		return err
+	}
+
+	for {
+		if len(entries) != 1 {
+			break
+		}
+		p := path.Join(deepestDir, entries[0].Name())
+
+		stat, err := os.Stat(p)
+		if err != nil {
+			return err
+		}
+
+		if !stat.IsDir() {
+			break
+		}
+
+		// Go to next folder.
+		deepestDir = path.Join(deepestDir, entries[0].Name())
+		entries, err = os.ReadDir(deepestDir)
+		if err != nil {
+			return err
+		}
+	}
+
+	if deepestDir == destDir {
+		log.Infof("Directory '%v' already flattened.", destDir)
+
+		return nil
+	}
+
+	log.Infof("Flatten directory '%v' to '%v'.", deepestDir, destDir)
+	newP := path.Join(destDir + ".temp")
+	err = os.Rename(deepestDir, newP)
+	if err != nil {
+		return err
+	}
+
+	err = os.RemoveAll(destDir)
+	if err != nil {
+		return err
+	}
+
+	return os.Rename(newP, destDir)
 }
 
 func extractFile(destDir string, file archives.FileInfo) error {
@@ -61,7 +109,7 @@ func extractFile(destDir string, file archives.FileInfo) error {
 		return err
 	}
 
-	dest := filepath.Join(destDir, name)
+	dest := path.Join(destDir, name)
 	mode := file.Mode()
 
 	switch {
@@ -69,13 +117,13 @@ func extractFile(destDir string, file archives.FileInfo) error {
 		return os.MkdirAll(dest, qfs.DefaultPermissionsDir)
 
 	case mode&fs.ModeSymlink != 0:
-		target := filepath.Join(filepath.Dir(name), filepath.FromSlash(file.LinkTarget))
-		if filepath.IsAbs(file.LinkTarget) || !filepath.IsLocal(target) {
+		target := path.Join(path.Dir(name), file.LinkTarget)
+		if path.IsAbs(file.LinkTarget) || !filepath.IsLocal(target) {
 			return errors.New("symlink '%s' -> '%s' points outside the destination",
 				file.NameInArchive, file.LinkTarget)
 		}
 
-		err = os.MkdirAll(filepath.Dir(dest), qfs.DefaultPermissionsDir)
+		err = os.MkdirAll(path.Dir(dest), qfs.DefaultPermissionsDir)
 		if err != nil {
 			return err
 		}
@@ -86,7 +134,13 @@ func extractFile(destDir string, file archives.FileInfo) error {
 		return writeFile(dest, file)
 
 	default:
-		log.Warn("Skip unsupported archive entry.", "entry", file.NameInArchive, "mode", mode.String())
+		log.Warn(
+			"Skip unsupported archive entry.",
+			"entry",
+			file.NameInArchive,
+			"mode",
+			mode.String(),
+		)
 
 		return nil
 	}
@@ -94,23 +148,25 @@ func extractFile(destDir string, file archives.FileInfo) error {
 
 // localName returns the cleaned relative path of an archive entry.
 // It returns an error for entries which would be written outside the destination
-// and `skip == true` for entries which are not extracted.
+// and `skip == true` for the root entry `.`.
 func localName(nameInArchive string) (name string, skip bool, err error) {
 	name = path.Clean(strings.TrimPrefix(nameInArchive, "./"))
-	if name == "." || name == macOSMetadataDir || strings.HasPrefix(name, macOSMetadataDir+"/") {
+	if name == "." {
 		return "", true, nil
 	}
 
-	name = filepath.FromSlash(name)
 	if !filepath.IsLocal(name) {
-		return "", false, errors.New("archive entry '%s' points outside the destination", nameInArchive)
+		return "", false, errors.New(
+			"archive entry '%s' points outside the destination",
+			nameInArchive,
+		)
 	}
 
 	return name, false, nil
 }
 
 func writeFile(dest string, file archives.FileInfo) error {
-	err := os.MkdirAll(filepath.Dir(dest), qfs.DefaultPermissionsDir)
+	err := os.MkdirAll(path.Dir(dest), qfs.DefaultPermissionsDir)
 	if err != nil {
 		return err
 	}
@@ -119,7 +175,7 @@ func writeFile(dest string, file archives.FileInfo) error {
 	if err != nil {
 		return err
 	}
-	defer src.Close()
+	defer func() { _ = src.Close() }()
 
 	// The owner always gets read and write access, some archives store `0` permissions.
 	perm := file.Mode().Perm() | 0o600 //nolint:mnd // Owner read/write.
@@ -132,31 +188,4 @@ func writeFile(dest string, file archives.FileInfo) error {
 	_, err = io.Copy(out, src)
 
 	return errors.Combine(err, out.Close())
-}
-
-// Promote moves the extracted directory `extracted` to `target`.
-// If `extracted` contains only a single directory (the usual top-level
-// directory of an archive), that directory is moved to `target` instead.
-// The parent directories of `target` are created.
-func Promote(extracted string, target string) error {
-	entries, err := os.ReadDir(extracted)
-	if err != nil {
-		return err
-	}
-
-	err = os.MkdirAll(filepath.Dir(target), qfs.DefaultPermissionsDir)
-	if err != nil {
-		return err
-	}
-
-	if len(entries) != 1 || !entries[0].IsDir() {
-		return os.Rename(extracted, target)
-	}
-
-	err = os.Rename(filepath.Join(extracted, entries[0].Name()), target)
-	if err != nil {
-		return err
-	}
-
-	return os.Remove(extracted)
 }

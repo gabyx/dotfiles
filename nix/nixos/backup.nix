@@ -371,6 +371,7 @@ in
 
             paths = [
               "/mnt/data/personal"
+              "/mnt/music/projects"
             ];
 
             inherit exclude;
@@ -379,7 +380,7 @@ in
               # bash
               ''
                 set -eu
-                ${gabyx} filesystem mount-zfs-disks personal
+                ${gabyx} filesystem mount-zfs-disks personal music
 
                 # Force the kernel to read all directory entries.
                 # Such that the stuff is there.

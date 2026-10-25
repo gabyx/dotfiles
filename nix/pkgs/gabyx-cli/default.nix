@@ -21,7 +21,7 @@ let
     git
     zfs
     expect
-    util-linux # `lsblk`, `wipefs`.
+    util-linux # `lsblk`.
   ];
 
   self = buildGo126Module {

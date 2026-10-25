@@ -3,24 +3,25 @@ package musiccmd
 import (
 	"context"
 	"os"
-	"path/filepath"
+	"path"
 	"strings"
 
 	"gabyx-cli/pkg/download"
 	"gabyx-cli/pkg/extract"
 
 	"github.com/gabyx/quitsh/pkg/errors"
+	fs "github.com/gabyx/quitsh/pkg/filesystem"
 	"github.com/gabyx/quitsh/pkg/log"
 )
 
-// Directory (relative to the instruments dataset) for downloaded archives.
-const downloadDir = ".download"
+// Directory (relative to the instruments dataset) where downloaded archives are kept.
+const archiveDir = ".archive"
 
 //nolint:gochecknoglobals // Allowed for constant definitions.
 var instruments = []instrument{
 	{
-		dir: "drumgizmo/aasimonster2",
-		url: "https://www.drumgizmo.org/kits/Aasimonster/DrumGizmo-Aasimonster.tar.gz",
+		dir: "drumgizmo/aasimonster",
+		url: "https://drumgizmo.org/kits/Aasimonster/aasimonster2_1.zip",
 	},
 	{
 		dir: "drumgizmo/crocellkit",
@@ -37,7 +38,7 @@ var instruments = []instrument{
 	},
 	{
 		dir: "sfizz/piano/piano-moonlight-salamander",
-		url: "https://kamo.teracloud.jp/v2/api/share/public/12917a5a1e8eb4b6/6adb204a45ae",
+		url: "https://archive.org/download/httpswww.ir.isas.jaxa.jpcyamauchaccuratesalamander/MoonlightSalamanderGrandPianoV6.2a_48khz24bit_flac.zip",
 	},
 	{
 		dir: "mt-powerdrumkit/drummap",
@@ -72,45 +73,41 @@ func installInstruments(ctx context.Context, root string, insts []instrument) (e
 }
 
 // installInstrument downloads and extracts the instrument `inst` into `root/inst.dir`,
-// if that directory does not exist or is empty.
+// if that directory does not exist.
+// The archive is kept in `root/.archive/` and only downloaded if it is not there.
 // The archive is extracted into `<dir>.partial` and renamed to `<dir>` when complete,
 // so `<dir>` only exists after a complete extraction.
-func installInstrument(ctx context.Context, root string, inst instrument) error {
-	target := filepath.Join(root, inst.dir)
-	if isInstalled(target) {
+func installInstrument(ctx context.Context, root string, inst instrument) (err error) {
+	target := path.Join(root, inst.dir)
+	if fs.Exists(target) {
 		log.Info("Instrument present, skip.", "dir", target)
 
-		return nil
+		return extract.FlattenSingleDirs(target)
 	}
 
-	partial := target + ".partial"
-	err := os.RemoveAll(partial)
-	if err != nil {
-		return err
-	}
+	// The download is renamed to `archive` only when complete,
+	// an existing `archive` is a complete download.
+	archive := path.Join(root, archiveDir, strings.ReplaceAll(inst.dir, "/", "-"))
+	contentType := "unknown"
 
-	archive := filepath.Join(root, downloadDir, strings.ReplaceAll(inst.dir, "/", "-"))
-	contentType, err := download.File(ctx, inst.url, archive)
-	if err != nil {
-		return err
+	if fs.Exists(archive) {
+		log.Info("Archive present, skip download.", "archive", archive)
+	} else {
+		contentType, err = download.File(ctx, inst.url, archive)
+		if err != nil {
+			return err
+		}
 	}
-	defer os.Remove(archive)
 
 	log.Info("Extracting.", "archive", archive, "dir", target)
-
-	err = extract.Archive(ctx, archive, partial)
+	err = extract.Archive(ctx, archive, target)
 	if err != nil {
-		_ = os.RemoveAll(partial)
+		_ = os.RemoveAll(target)
 
-		return errors.AddContext(err, "content type of '%s' was '%s'", inst.url, contentType)
+		return errors.AddContext(err,
+			"content type of '%s' was '%s', remove '%s' to download it again",
+			inst.url, contentType, target)
 	}
 
-	return extract.Promote(partial, target)
-}
-
-// isInstalled returns `true` if `dir` is a non-empty directory.
-func isInstalled(dir string) bool {
-	entries, err := os.ReadDir(dir)
-
-	return err == nil && len(entries) > 0
+	return nil
 }
