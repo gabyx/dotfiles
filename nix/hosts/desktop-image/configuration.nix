@@ -8,5 +8,7 @@
 
     ./settings.nix
     ../common/yubikey.nix
+
+    ./usb-bootable.nix
   ];
 }

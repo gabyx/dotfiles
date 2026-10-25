@@ -78,6 +78,7 @@
               packages = [
                 pkgs.nix-output-monitor
                 inputs'.multiverse.packages.mvs
+                pkgs.caligula
 
                 self'.packages.gabyx-cli
               ];

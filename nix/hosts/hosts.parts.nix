@@ -81,6 +81,7 @@ in
   perSystem =
     { ... }:
     {
+      # Inspect options in: nixosConfigurations.desktop-image.config.system.build.images.iso.passthru.config.isoImage.
       packages.desktop-iso = desktop-image.config.system.build.images.iso;
     };
 }

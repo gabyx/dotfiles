@@ -23,16 +23,14 @@ To launch the NixOS VM when you are on a system with Nix run
 just start --host vm-desktop
 ```
 
-Test my NixOS by creating an `.iso` to boot from USB.
-
-With
+Test my NixOS by creating an hybrid bootable `.iso` to burn onto an USB, with
 
 ```bash
 just default_host=desktop build-iso
 ```
 
 you can afterwards copy `./result/iso/nixos-xxx.iso` onto a USB stick with
-`sudo nix run "nixpkgs#mediawriter"`.
+`nix run "nixpkgs#caligula"`.
 
 and boot the NixOS to test it out.
 

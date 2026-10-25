@@ -110,7 +110,7 @@ in
     pkgs.sbb-tui # SBB TUI app.
 
     # MultiMedia
-    pkgsUnstable.mediawriter # Like balena etcher.
+    pkgsUnstable.caligula # Like balena etcher but TUI.
     pkgsUnstable.bitwarden-desktop # Password manager
     pkgsUnstable.bitwarden-cli
     pkgsUnstable.proton-pass
