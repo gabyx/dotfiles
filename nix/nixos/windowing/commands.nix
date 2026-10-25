@@ -23,20 +23,20 @@ let
           gabyx::die "No display manager defined."
         '';
 
-    launcher-menu.cmd = "~/.config/rofi/show-launcher-menu.sh";
-    power-menu.cmd = "~/.config/rofi/show-power-menu.sh";
-    wireless-menu.cmd = "~/.config/rofi/show-network-menu.sh --wireless";
-    network-menu.cmd = "~/.config/rofi/show-network-menu.sh --editor";
+    launcher-menu.cmd = "gabyx rofi launcher";
+    power-menu.cmd = "gabyx rofi power";
+    wireless-menu.cmd = "gabyx rofi network wireless";
+    network-menu.cmd = "gabyx rofi network editor";
     bluetooth-menu.cmd = "rofi-bluetooth";
     emoji-menu.cmd = "rofimoji --clipboarder wl-copy --action type copy --keybinding-copy Ctrl-y";
-    systemd-menu.cmd = "rofi-systemd";
+    systemd-menu.cmd = "gabyx rofi systemd";
     passwdmgr-menu.cmd = "rofi-rbw";
     procs-menu.cmd = "gabyx::term btop";
     sound-menu.cmd = "pavucontrol";
     calculator-menu.cmd = "qalculate-gtk";
-    screenshot-menu.cmd = "~/.config/rofi/scripts/rofi-screenshot.sh";
-    screenrecord-menu.cmd = "~/.config/rofi/scripts/rofi-screenrecord.sh";
-    color-picker-menu.cmd = "~/.config/rofi/scripts/rofi-color-picker.sh";
+    screenshot-menu.cmd = "gabyx rofi screenshot";
+    screenrecord-menu.cmd = "gabyx rofi screenrecord";
+    color-picker-menu.cmd = "gabyx rofi color-picker";
     copy-menu.cmd = "copyq toggle";
 
     brightness-up.cmd = "brightnessctl set '10%+'";

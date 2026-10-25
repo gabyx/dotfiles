@@ -9,6 +9,7 @@ import (
 	musicCmd "gabyx-cli/pkg/cmd/music"
 	nixosCmd "gabyx-cli/pkg/cmd/nixos"
 	pdfCmd "gabyx-cli/pkg/cmd/pdf"
+	rofiCmd "gabyx-cli/pkg/cmd/rofi"
 	secretCmd "gabyx-cli/pkg/cmd/secret"
 	tmuxCmd "gabyx-cli/pkg/cmd/tmux"
 	vpnCmd "gabyx-cli/pkg/cmd/vpn"
@@ -29,6 +30,7 @@ func AddCommands(cl cli.ICLI) {
 	musicCmd.AddCmd(root)
 	nixosCmd.AddCmd(root)
 	pdfCmd.AddCmd(root)
+	rofiCmd.AddCmd(root)
 	secretCmd.AddCmd(root)
 	tmuxCmd.AddCmd(root)
 	vpnCmd.AddCmd(root)
