@@ -1,7 +1,9 @@
 let
-  rootDisk = "";
+  rootDisk = "/dev/disk/by-id/nvme-Samsung_SSD_990_EVO_2TB_S7GDNS0WC06836F";
 in
 {
+  disko.enableConfig = false; # We have not reformatted the disk yet and if `true` disko wants to maintain that what is in filesystem.
+
   disko.devices = {
     disk = {
       main = {
@@ -38,6 +40,8 @@ in
                 # additionalKeyFiles = [ "/tmp/additionalSecret.key" ];
 
                 content = {
+                  label = "SYSTEM";
+
                   type = "btrfs";
                   extraArgs = [ "-f" ];
                   subvolumes = {

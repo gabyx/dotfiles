@@ -1,11 +1,13 @@
 { inputs, ... }:
 let
-  rootDisk = "/dev/disk/by-id/ata-Crucial_CT1050MX300SSD1_1651150F2AB0";
+  rootDisk = "";
 in
 {
   imports = [
     inputs.disko.nixosModules.disko
   ];
+
+  disko.enableConfig = false; # We have not reformatted the disk yet and if `true` disko wants to maintain that what is in filesystem.
 
   disko.devices = {
     disk = {

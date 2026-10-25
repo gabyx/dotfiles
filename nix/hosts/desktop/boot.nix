@@ -1,11 +1,6 @@
 {
-  config,
   ...
 }:
-let
-  # Use script: `scripts/compute-swap-offset.nix`.
-  swapConfig = import ./swap-offset.nix;
-in
 {
   boot = {
 
@@ -53,9 +48,6 @@ in
     kernelParams = [
       "amdgpu.dpm=0"
       "amdgpu.dcdebugmask=0x10"
-      # Hibernation parameters
-      "resume=UUID=${baseNameOf config.fileSystems."/swap".device}"
-      "resume_offset=${toString swapConfig.resumeOffset}"
     ];
 
     binfmt.emulatedSystems = [ "aarch64-linux" ];

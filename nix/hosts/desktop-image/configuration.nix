@@ -4,7 +4,7 @@
 {
   imports = [
     ./../desktop/configuration-base.nix
-    ./disko.nix
+    ./../desktop/disko.nix
 
     ./settings.nix
     ../common/yubikey.nix
