@@ -6,6 +6,7 @@ import (
 	fileRegexReplaceCmd "gabyx-cli/pkg/cmd/fileregexreplace"
 	filesystemCmd "gabyx-cli/pkg/cmd/filesystem"
 	gitCmd "gabyx-cli/pkg/cmd/git"
+	musicCmd "gabyx-cli/pkg/cmd/music"
 	nixosCmd "gabyx-cli/pkg/cmd/nixos"
 	pdfCmd "gabyx-cli/pkg/cmd/pdf"
 	secretCmd "gabyx-cli/pkg/cmd/secret"
@@ -24,6 +25,7 @@ func AddCommands(cl cli.ICLI) {
 	fileRegexReplaceCmd.AddCmd(root)
 	filesystemCmd.AddCmd(root)
 	gitCmd.AddCmd(root)
+	musicCmd.AddCmd(root)
 	nixosCmd.AddCmd(root)
 	pdfCmd.AddCmd(root)
 	secretCmd.AddCmd(root)

@@ -8,6 +8,7 @@
   git,
   zfs,
   expect,
+  util-linux,
 }:
 let
   # The version from the `.component.yaml`.
@@ -20,6 +21,7 @@ let
     git
     zfs
     expect
+    util-linux # `lsblk`, `wipefs`.
   ];
 
   self = buildGo126Module {
@@ -38,7 +40,7 @@ let
 
     # This hash defines the fixed-output derivation of the dependencies (FOD).
     # Set it to `""` and run `just gabyx-cli::package-nix` to get the new hash.
-    vendorHash = "sha256-X3LgjTu0aMxGNYJ1X1aTnc4/1I8+cZoRl6Bo4Qybvr4=";
+    vendorHash = "sha256-FufTWAICMatjhSQyDx+FJ/y5yAGFUIE5vdsWscn83Ts=";
 
     nativeBuildInputs = [
       installShellFiles

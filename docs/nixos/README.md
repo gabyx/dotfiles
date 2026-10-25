@@ -256,37 +256,29 @@ NixOS on them. At this point activating the swap (if you created one) is a good
 idea. The `/boot` partition is mounted in a new folder `/mnt/boot` inside the
 root partition.
 
-> [!TIP]
->
-> If NixOS is on another drive e.g. `/dev/nvme0n1` do:
->
-> ```bash
-> export MYDISK="/dev/nvme0n1"
-> sudo cryptsetup luksOpen ${MYDISK}2 enc-physical-vol-new
-> ```
+```bash
+
+```
 
 1. Mount all file systems by doing:
 
    ```bash
-   export DISKMAP=/dev/mapper/enc-physical-vol
-   export MNTPNT="/mnt"
-   ```
+   MYDISK=/dev/nvme0n1p   # REPLACE
+   ESP_PART="${MYDISK}1"  # EFI partition (check with `lsblk`).
+   LUKS_PART="${MYDISK}2" # LUKS partition.
+   DISKMAP=/dev/mapper/enc-physical-vol
+   MNTPNT="/mnt"
 
-   ```bash
-   sudo mkdir -p "$MNTPNT"
+   sudo cryptsetup luksOpen "$LUKS_PART" enc-physical-vol
+
    sudo mount -o subvol=root,compress=zstd,noatime $DISKMAP $MNTPNT
-
-   sudo mkdir -p $MNTPNT/{boot,home,nix,persist,persist/etc,var/log,swap}
-
    sudo mount -o subvol=home,compress=zstd,noatime $DISKMAP $MNTPNT/home
    sudo mount -o subvol=nix,compress=zstd,noatime $DISKMAP $MNTPNT/nix
    sudo mount -o subvol=persist,compress=zstd,noatime $DISKMAP $MNTPNT/persist
    sudo mount -o subvol=persist/etc,compress=zstd,noatime $DISKMAP $MNTPNT/persist/etc
    sudo mount -o subvol=log,compress=zstd,noatime $DISKMAP $MNTPNT/var/log
    sudo mount -o subvol=swap,defaults,noatime $DISKMAP $MNTPNT/swap
-
-   # Don't forget this!
-   sudo mount "${MYDISK}1" $MNTPNT/boot
+   sudo mount "$ESP_PART" $MNTPNT/boot
 
    # Enable swap
    sudo swapon $MNTPNT/swap/swapfile

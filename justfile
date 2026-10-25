@@ -380,7 +380,7 @@ gc:
 start *args:
     #!/usr/bin/env nu
     def --wrapped main [
-        --host: string = "vm",
+        --host: string = "vm-desktop",
         --remote_viewer: string = "false",
         --disk_dir: string = "/persist/vms",
         --fresh, # Delete the persistent disk and EFI vars first.
