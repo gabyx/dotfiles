@@ -1,6 +1,7 @@
 package filesystemcmd
 
 import (
+	"maps"
 	"slices"
 
 	"gabyx-cli/pkg/zfs"
@@ -16,24 +17,13 @@ const (
 	datasetBackups  = "backups"
 	datasetAll      = "all"
 
-	datasetMusicInstruments = "instruments"
-	datasetMusicProjects    = "projects"
+	DatasetMusicInstruments = "instruments"
+	DatasetMusicProjects    = "projects"
+	DatasetMusicCollection  = "collections"
 
 	poolData        = "zfs-pool-data"
 	poolMusic       = "zfs-pool-music"
 	poolExternalSSD = "zfs-pool-external-ssd"
-)
-
-//nolint:gochecknoglobals // Allowed for constant definitions.
-var (
-	datasetNames = []string{
-		datasetPersonal,
-		datasetWork,
-		datasetBackups,
-		datasetMusicProjects,
-		datasetMusicInstruments,
-		datasetAll,
-	}
 )
 
 type dataset struct {
@@ -41,6 +31,16 @@ type dataset struct {
 	pool    string
 	dataset string
 	dir     string
+}
+
+// datasetKeys returns the sorted keys of `getDatasets`.
+func datasetKeys() []string {
+	return slices.Sorted(maps.Keys(getDatasets()))
+}
+
+// datasetNames returns all valid arguments: the keys of `getDatasets` and `all`.
+func datasetNames() []string {
+	return append(datasetKeys(), datasetAll)
 }
 
 func getDatasets() map[string][]*dataset {
@@ -59,15 +59,21 @@ func getDatasets() map[string][]*dataset {
 		}},
 		"music": {
 			{
-				name:    datasetMusicInstruments,
+				name:    DatasetMusicInstruments,
 				pool:    poolMusic,
-				dataset: datasetMusicInstruments,
+				dataset: DatasetMusicInstruments,
 				dir:     "music",
 			},
 			{
-				name:    datasetMusicProjects,
+				name:    DatasetMusicProjects,
 				pool:    poolMusic,
-				dataset: datasetMusicProjects,
+				dataset: DatasetMusicProjects,
+				dir:     "music",
+			},
+			{
+				name:    DatasetMusicCollection,
+				pool:    poolMusic,
+				dataset: DatasetMusicCollection,
 				dir:     "music",
 			},
 		},
@@ -85,7 +91,7 @@ func addMountCmds(parent *cobra.Command) {
 		Use:       "mount-zfs-disks [personal|work|music|backups|all]",
 		Short:     "Import all ZFS pools and mount the datasets (default: 'personal').",
 		Args:      cobra.MaximumNArgs(1),
-		ValidArgs: datasetNames,
+		ValidArgs: datasetNames(),
 		RunE: func(_cmd *cobra.Command, args []string) error {
 			return mountZFSDisks(args, false)
 		},
@@ -95,7 +101,7 @@ func addMountCmds(parent *cobra.Command) {
 		Use:       "unmount-zfs-disks [personal|work|music|backups|all]",
 		Short:     "Import all ZFS pools and unmount the datasets (default: 'personal').",
 		Args:      cobra.MaximumNArgs(1),
-		ValidArgs: datasetNames,
+		ValidArgs: datasetNames(),
 		RunE: func(_cmd *cobra.Command, args []string) error {
 			return mountZFSDisks(args, true)
 		},
@@ -108,7 +114,7 @@ func mountZFSDisks(keys []string, unmount bool) error {
 	if len(keys) == 0 {
 		keys = []string{datasetPersonal}
 	} else if slices.Contains(keys, datasetAll) {
-		keys = datasetNames
+		keys = datasetKeys()
 	}
 
 	err := zfs.ImportAll()
@@ -119,25 +125,27 @@ func mountZFSDisks(keys []string, unmount bool) error {
 	for _, d := range keys {
 		datasets, ok := getDatasets()[d]
 		if !ok {
-			return errors.New("datasets '%s' must be one of '%v'", d, datasetNames)
+			return errors.New("datasets '%s' must be one of '%v'", d, datasetNames())
 		}
 
 		for _, d := range datasets {
-			err = zfs.Unmount(d.pool, d.dataset)
-			if err != nil {
-				log.WarnE(err, "Could not unmount dataset.", "dataset", d.name)
+			e := zfs.Unmount(d.pool, d.dataset)
+			if e != nil {
+				err = errors.Combine(err, e)
+				log.WarnE(err, "Could not unmount dataset. Continue", "dataset", d.name)
 			}
 
 			if unmount {
 				continue
 			}
 
-			err = zfs.Mount(d.pool, d.dataset, d.dir)
-			if err != nil {
-				return err
+			e = zfs.Mount(d.pool, d.dataset, d.dir)
+			if e != nil {
+				log.WarnE(err, "Could not mount dataset. Continue", "dataset", d.name)
+				err = errors.Combine(err, e)
 			}
 		}
 	}
 
-	return nil
+	return err
 }

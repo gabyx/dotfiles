@@ -154,13 +154,13 @@ func MountAt(pool string, dataset string, mountpoint string) error {
 	ds := path.Join(pool, dataset)
 	sudox := sudo.NewCommandCtx(".")
 
-	mounted, err := IsMounted(pool, dataset)
-	if err != nil || mounted {
+	err := sudox.Check("zfs", "set", "mountpoint="+mountpoint, ds)
+	if err != nil {
 		return err
 	}
 
-	err = sudox.Check("zfs", "set", "mountpoint="+mountpoint, ds)
-	if err != nil {
+	mounted, err := IsMounted(pool, dataset)
+	if err != nil || mounted {
 		return err
 	}
 

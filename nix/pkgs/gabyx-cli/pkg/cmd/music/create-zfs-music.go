@@ -10,6 +10,7 @@ import (
 	"strings"
 	"syscall"
 
+	filesystemcmd "gabyx-cli/pkg/cmd/filesystem"
 	"gabyx-cli/pkg/sudo"
 	"gabyx-cli/pkg/zfs"
 
@@ -30,17 +31,33 @@ const longDescCreateZfsMusic = `
     '<mount>/instruments' are downloaded and extracted.
 `
 
-const datasetInstruments = "instruments"
+const datasetInstruments = filesystemcmd.DatasetMusicInstruments
 
-//nolint:gochecknoglobals // Allowed for constant definitions.
-var (
-	musicDatasets = []string{datasetInstruments, "projects"}
+type createZfsMusicArgs struct {
+	disk   string
+	mount  string
+	pool   string
+	format bool
+	force  bool
+	setup  bool
+}
 
-	// Properties of all datasets.
-	// Large records: audio files are large and read sequentially.
-	datasetProps = []string{"recordsize=1M"}
+func musicDatasets() []string {
+	return []string{
+		filesystemcmd.DatasetMusicInstruments,
+		filesystemcmd.DatasetMusicCollection,
+		filesystemcmd.DatasetMusicProjects,
+	}
+}
 
-	poolOpts = []string{
+// datasetProps returns the properties of all datasets.
+// Large records: audio files are large and read sequentially.
+func datasetProps() []string {
+	return []string{"recordsize=1M"}
+}
+
+func poolOpts() []string {
+	return []string{
 		"-o",
 		"ashift=12", // 4 KiB minimum block size, usual for SSDs.
 		"-o",
@@ -58,15 +75,6 @@ var (
 		"-O",
 		"mountpoint=none", // Only the datasets are mounted.
 	}
-)
-
-type createZfsMusicArgs struct {
-	disk   string
-	mount  string
-	pool   string
-	format bool
-	force  bool
-	setup  bool
 }
 
 func addCreateZfsMusicCmd(parent *cobra.Command) {
@@ -118,7 +126,7 @@ func createZfsMusic(ctx context.Context, args *createZfsMusicArgs) error {
 		return err
 	}
 
-	for _, ds := range musicDatasets {
+	for _, ds := range musicDatasets() {
 		err = setupDataset(args.pool, ds, path.Join(args.mount, ds))
 		if err != nil {
 			return err
@@ -180,7 +188,7 @@ func formatDisk(args *createZfsMusicArgs) error {
 	}
 
 	// `-f`: Overwrite existing filesystems or partition tables on the device.
-	return zfs.CreatePool(args.pool, append([]string{"-f"}, poolOpts...), disk)
+	return zfs.CreatePool(args.pool, append([]string{"-f"}, poolOpts()...), disk)
 }
 
 // checkDisk returns an error if `disk` is not a whole disk or a partition or if
@@ -254,7 +262,7 @@ func setupDataset(pool string, dataset string, mountpoint string) error {
 	}
 
 	if !exists {
-		err = zfs.CreateDataset(pool, dataset, datasetProps...)
+		err = zfs.CreateDataset(pool, dataset, datasetProps()...)
 		if err != nil {
 			return err
 		}

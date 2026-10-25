@@ -371,7 +371,9 @@ in
 
             paths = [
               "/mnt/data/personal"
+
               "/mnt/music/projects"
+              "/mnt/music/collections"
             ];
 
             inherit exclude;
