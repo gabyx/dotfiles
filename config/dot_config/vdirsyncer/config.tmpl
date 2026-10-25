@@ -11,28 +11,6 @@
 # A folder where vdirsyncer can store some metadata about each pair.
 status_path = "~/.local/state/vdirsyncer/status/"
 
-# Work Calendar
-# =============================================================================
-[pair work_default]
-a = "work_local"
-b = "work_remote"
-collections = ["from a", "from b"]
-# This is important because we do not want to
-# sync back any change to the server.
-conflict_resolution = "b wins"
-
-[storage work_local]
-type = "filesystem"
-path = "~/.local/share/khal/calendars/work"
-fileext = ".ics"
-
-[storage work_remote]
-read_only = true
-type = "caldav"
-url = "http://localhost:1080/{{ .calendar.work.exchange.path }}"
-username.fetch = ["command", "cat", "~/.config/vdirsyncer/exchange-work-calendar-username"]
-password.fetch = ["command", "cat", "~/.config/vdirsyncer/exchange-work-calendar-password"]
-
 # Personal Calendar
 # =============================================================================
 [pair google_default]
