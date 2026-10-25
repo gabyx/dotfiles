@@ -78,8 +78,8 @@ in
       package = pkgsUnstable.qemu;
       enableSharedMemory = true;
       options = [
-        "-device virtio-gpu-gl,hostmem=8G"
-        "-display gtk,gl=on"
+        # "-device virtio-vga-gl,hostmem=8G"
+        # "-display gtk,gl=on"
         # "-device usb-tablet"
         # "-spice port=5900,addr=127.0.0.1,disable-ticketing=on"
         # "-device qxl"

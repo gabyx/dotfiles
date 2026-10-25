@@ -15,7 +15,7 @@ import (
 func AddCmd(root *cobra.Command) {
 	windowingCmd := &cobra.Command{
 		Use:   "windowing",
-		Short: "Windowing (X11/sway) commands.",
+		Short: "Windowing commands (used in the Sway, Niri, Hyprland and Waybar configs).",
 	}
 
 	windowingCmd.AddCommand(
@@ -57,6 +57,10 @@ func AddCmd(root *cobra.Command) {
 			},
 		},
 	)
+
+	addCommands(windowingCmd)
+	addDisplayManagerCmd(windowingCmd)
+	addWindowMgrExecCmd(windowingCmd)
 
 	root.AddCommand(windowingCmd)
 }

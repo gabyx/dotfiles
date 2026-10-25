@@ -25,42 +25,42 @@ set $right l
 
 # Your preferred terminal emulator
 # ==================================================
-set $term gabyx::term
-# A wrapper script to start the terminal with additional env. variables.
-set $term-start gabyx::term-start
+set $term gabyx term start
+# Start the terminal into a tmux session.
+set $term-start gabyx term start-into-tmux
 # ==================================================
 
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 
-set $file-manager gabyx::file-manager-menu
-set $display-manager gabyx::display-manager
-set $launcher-menu gabyx::launcher-menu
-set $power-menu gabyx::power-menu
-set $wireless-menu gabyx::wireless-menu
-set $network-menu gabyx::network-menu
-set $bluetooth-menu gabyx::bluetooth-menu
-set $emoji-menu gabyx::emoji-menu
-set $systemd-menu gabyx::systemd-menu
-set $passwdmgr-menu gabyx::passwdmgr-menu
-set $procs-menu gabyx::procs-menu
-set $sound-menu gabyx::sound-menu
-set $calculator-menu gabyx::calculator-menu
-set $screenshot-menu gabyx::screenshot-menu
-set $screenrecord-menu gabyx::screenrecord-menu
-set $color-picker-menu gabyx::color-picker-menu
-set $clipboard-menu gabyx::clipboard-menu
+set $file-manager gabyx windowing file-manager
+set $display-manager gabyx windowing display-manager
+set $launcher-menu gabyx windowing launcher-menu
+set $power-menu gabyx windowing power-menu
+set $wireless-menu gabyx windowing wireless-menu
+set $network-menu gabyx windowing network-menu
+set $bluetooth-menu gabyx windowing bluetooth-menu
+set $emoji-menu gabyx windowing emoji-menu
+set $systemd-menu gabyx windowing systemd-menu
+set $passwdmgr-menu gabyx windowing passwdmgr-menu
+set $procs-menu gabyx windowing procs-menu
+set $sound-menu gabyx windowing sound-menu
+set $calculator-menu gabyx windowing calculator-menu
+set $screenshot-menu gabyx windowing screenshot-menu
+set $screenrecord-menu gabyx windowing screenrecord-menu
+set $color-picker-menu gabyx windowing color-picker-menu
+set $clipboard-menu gabyx windowing clipboard-menu
 
-set $brightness-up gabyx::brightness-up
-set $brightness-down gabyx::brightness-down
+set $brightness-up gabyx windowing brightness-up
+set $brightness-down gabyx windowing brightness-down
 
-set $clipboard gabyx::clipboard
-set $clipboard-menu gabyx::clipboard-menu
+set $clipboard gabyx windowing clipboard
+set $clipboard-menu gabyx windowing clipboard-menu
 
-set $notifications gabyx::notifications
-set $notification-menu gabyx::notifications-menu
+set $notifications gabyx windowing notifications
+set $notification-menu gabyx windowing notification-menu
 
-set $nightshifter gabyx::nightshifter
+set $nightshifter gabyx windowing nightshifter
 
 # Special workspaces
 # Icons can be found at:

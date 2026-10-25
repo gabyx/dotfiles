@@ -19,8 +19,10 @@ func AddCmd(root *cobra.Command) {
 	}
 
 	addColorPickerCmd(rofiCmd)
+	addEmojiCmd(rofiCmd)
 	addLauncherCmd(rofiCmd)
 	addNetworkCmd(rofiCmd)
+	addPasswordCmd(rofiCmd)
 	addPowerCmd(rofiCmd)
 	addScreenrecordCmd(rofiCmd)
 	addScreenshotCmd(rofiCmd)
@@ -87,7 +89,13 @@ func notifyError(summary string, body ...string) {
 		return
 	}
 
-	_ = cmdx.Check("swaynag", "-t", "warning", "-m", strings.Join(append([]string{summary}, body...), "\n"))
+	_ = cmdx.Check(
+		"swaynag",
+		"-t",
+		"warning",
+		"-m",
+		strings.Join(append([]string{summary}, body...), "\n"),
+	)
 }
 
 // assertExe returns an error if one of the executables `exes` is not found in `PATH`.

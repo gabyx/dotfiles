@@ -54,7 +54,6 @@ let
     eval $(gnome-keyring-daemon --start --components=gpg);
   '';
 
-  commands = pkgs.callPackage ./windowing/commands.nix { inherit windowMgr; };
   commonPkgsRofi = import ./windowing-rofi.nix { inherit pkgs mvs wrappersLib; };
 
   commonPkgs =
@@ -109,8 +108,7 @@ let
       pkgsUnstable.hyprshot
       pkgsUnstable.swaynotificationcenter
       pkgsUnstable.grimblast
-    ])
-    ++ commands;
+    ]);
 
 in
 {
@@ -203,6 +201,11 @@ in
       XDG_SESSION_TYPE = sessionType;
     }
     // desktopEnvs;
+
+    # Read by `gabyx windowing ...` commands.
+    environment.sessionVariables = {
+      GABYX_WINDOW_MANAGER = windowMgr;
+    };
 
     # To make screencasting work in Chrome and other Apps communicating
     # over DBus.

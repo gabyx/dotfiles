@@ -87,7 +87,7 @@ in
         return-type = "json";
         exec = "gabyx waybar tooltip 'Calculator'";
         interval = "once";
-        on-click = "gabyx::window-mgr-exec gabyx::calculator-menu";
+        on-click = "gabyx windowing mgr-exec gabyx windowing calculator-menu";
         tooltip = true;
       };
 
@@ -96,7 +96,7 @@ in
         return-type = "json";
         exec = "gabyx waybar tooltip 'Symbols/Emojis'";
         interval = "once";
-        on-click = "gabyx::window-mgr-exec gabyx::emoji-menu";
+        on-click = "gabyx windowing mgr-exec gabyx windowing emoji-menu";
         tooltip = true;
       };
 
@@ -105,7 +105,7 @@ in
         return-type = "json";
         exec = "gabyx waybar tooltip 'Screenshot'";
         interval = "once";
-        on-click = "gabyx::window-mgr-exec gabyx::screenshot-menu";
+        on-click = "gabyx windowing mgr-exec gabyx windowing screenshot-menu";
         tooltip = true;
       };
 
@@ -183,7 +183,7 @@ in
         format-alt = "  {percentage_used}% ";
         format-alt-click = "click-right";
         return-type = "json";
-        on-click = "gabyx::window-mgr-exec gabyx::storage-menu";
+        on-click = "gabyx windowing mgr-exec gabyx windowing storage-menu";
         interval = 60;
         path = "/";
       };
@@ -220,8 +220,8 @@ in
           critical = 90;
         };
 
-        on-click = "gabyx::window-mgr-exec gabyx::procs-menu";
-        on-click-right = "gabyx::window-mgr-exec gabyx::systemd-menu";
+        on-click = "gabyx windowing mgr-exec gabyx windowing procs-menu";
+        on-click-right = "gabyx windowing mgr-exec gabyx windowing systemd-menu";
       };
 
       "sway/language" = {
@@ -259,8 +259,8 @@ in
           "󰃠"
         ];
 
-        on-scroll-up = "gabyx::window-mgr-exec gabyx::brightness-up";
-        on-scroll-down = "gabyx::window-mgr-exec gabyx::brightness-down";
+        on-scroll-up = "gabyx windowing mgr-exec gabyx windowing brightness-up";
+        on-scroll-down = "gabyx windowing mgr-exec gabyx windowing brightness-down";
       };
 
       "custom/vpn" = {
@@ -286,8 +286,8 @@ in
         tooltip-format = "{ifname}: {ipaddr}";
         tooltip-format-wifi = "{essid} | {signalStrength}%: {ipaddr}";
 
-        on-click = "gabyx::window-mgr-exec gabyx::wireless-menu";
-        on-click-right = "gabyx::window-mgr-exec gabyx::network-menu";
+        on-click = "gabyx windowing mgr-exec gabyx windowing wireless-menu";
+        on-click-right = "gabyx windowing mgr-exec gabyx windowing network-menu";
       };
 
       "sway/mode" = {
@@ -354,7 +354,7 @@ in
           ];
         };
 
-        on-click = "gabyx::window-mgr-exec gabyx::sound-menu";
+        on-click = "gabyx windowing mgr-exec gabyx windowing sound-menu";
       };
 
       temperature = {
@@ -406,19 +406,19 @@ in
           disabled = "󰂲";
         };
 
-        on-click-right = "gabyx::window-mgr-exec gabyx::bluetooth-menu";
+        on-click-right = "gabyx windowing mgr-exec gabyx windowing bluetooth-menu";
         tooltip-format = "{status}";
       };
 
       "custom/powermenu" = {
         format = " ";
-        on-click = "gabyx::window-mgr-exec gabyx::power-menu";
+        on-click = "gabyx windowing mgr-exec gabyx windowing power-menu";
         tooltip = false;
       };
 
       "custom/launcher" = {
         format = " ";
-        on-click = "gabyx::window-mgr-exec gabyx::launcher-menu";
+        on-click = "gabyx windowing mgr-exec gabyx windowing launcher-menu";
         tooltip = false;
       };
 

@@ -1,27 +1,27 @@
 binds {
     // ── Basics ────────────────────────────────────────────────────────────────
-    Mod+Return { spawn "sh" "-c" "~/.config/niri/scripts/run-in-focused-cwd.sh gabyx::term"; }
-    Mod+Shift+Return { spawn "sh" "-c" "~/.config/niri/scripts/run-in-focused-cwd.sh gabyx::file-manager"; }
+    Mod+Return { spawn "sh" "-c" "~/.config/niri/scripts/run-in-focused-cwd.sh gabyx term start"; }
+    Mod+Shift+Return { spawn "sh" "-c" "~/.config/niri/scripts/run-in-focused-cwd.sh gabyx windowing file-manager"; }
 
     Mod+Q { close-window; }
     // sway's deep-parent kill has no equivalent; simple close-window used.
     Mod+Ctrl+Shift+Q { close-window; }
 
     // Menus / launchers.
-    Mod+Shift+P { spawn "gabyx::power-menu"; }
-    Mod+Shift+W { spawn "gabyx::wireless-menu"; }
-    Mod+Shift+I { spawn "gabyx::network-menu"; }
-    Mod+Shift+B { spawn "gabyx::bluetooth-menu"; }
-    Mod+Shift+N { spawn "gabyx::notifications-menu"; }
-    Mod+Shift+A { spawn "gabyx::sound-menu"; }
-    Mod+Shift+D { spawn "gabyx::systemd-menu"; }
-    Mod+Shift+T { spawn "gabyx::procs-menu"; }
-    Mod+Shift+M { spawn "gabyx::emoji-menu"; }
-    Mod+Shift+S { spawn "gabyx::screenshot-menu"; }
-    Mod+Shift+R { spawn "gabyx::screenrecord-menu"; }
-    Mod+Shift+Y { spawn "gabyx::color-picker-menu"; }
-    Mod+C       { spawn "gabyx::clipboard-menu"; }
-    Mod+D       { spawn "gabyx::launcher-menu"; }
+    Mod+Shift+P { spawn "gabyx" "windowing" "power-menu"; }
+    Mod+Shift+W { spawn "gabyx" "windowing" "wireless-menu"; }
+    Mod+Shift+I { spawn "gabyx" "windowing" "network-menu"; }
+    Mod+Shift+B { spawn "gabyx" "windowing" "bluetooth-menu"; }
+    Mod+Shift+N { spawn "gabyx" "windowing" "notification-menu"; }
+    Mod+Shift+A { spawn "gabyx" "windowing" "sound-menu"; }
+    Mod+Shift+D { spawn "gabyx" "windowing" "systemd-menu"; }
+    Mod+Shift+T { spawn "gabyx" "windowing" "procs-menu"; }
+    Mod+Shift+M { spawn "gabyx" "windowing" "emoji-menu"; }
+    Mod+Shift+S { spawn "gabyx" "windowing" "screenshot-menu"; }
+    Mod+Shift+R { spawn "gabyx" "windowing" "screenrecord-menu"; }
+    Mod+Shift+Y { spawn "gabyx" "windowing" "color-picker-menu"; }
+    Mod+C       { spawn "gabyx" "windowing" "clipboard-menu"; }
+    Mod+D       { spawn "gabyx" "windowing" "launcher-menu"; }
 
     // Screen lock.
     Mod+Escape { spawn "swaylock" "--grace" "0" "-f"; }
