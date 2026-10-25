@@ -6,6 +6,7 @@ require (
 	charm.land/bubbles/v2 v2.0.0
 	charm.land/bubbletea/v2 v2.0.2
 	charm.land/huh/v2 v2.0.3
+	deedles.dev/xiter v0.2.1
 	github.com/charmbracelet/x/term v0.2.2
 	github.com/creasty/defaults v1.8.0
 	github.com/dlclark/regexp2 v1.12.0
@@ -25,7 +26,6 @@ require (
 	carvel.dev/imgpkg v0.46.1 // indirect
 	charm.land/lipgloss/v2 v2.0.5 // indirect
 	charm.land/log/v2 v2.0.1 // indirect
-	deedles.dev/xiter v0.2.1 // indirect
 	github.com/Masterminds/goutils v1.1.1 // indirect
 	github.com/Masterminds/semver v1.5.0 // indirect
 	github.com/Masterminds/sprig v2.22.0+incompatible // indirect

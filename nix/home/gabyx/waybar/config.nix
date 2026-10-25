@@ -51,6 +51,7 @@ in
         "custom/emoji"
         "custom/screenshot"
         "custom/backup"
+        "custom/media-player"
         "backlight"
         "memory"
         "cpu"
@@ -84,7 +85,7 @@ in
       "custom/calculator" = {
         format = " ";
         return-type = "json";
-        exec = "~/.config/waybar/scripts/tooltip.sh 'Calculator'";
+        exec = "gabyx waybar tooltip 'Calculator'";
         interval = "once";
         on-click = "gabyx::window-mgr-exec gabyx::calculator-menu";
         tooltip = true;
@@ -93,7 +94,7 @@ in
       "custom/emoji" = {
         format = " ";
         return-type = "json";
-        exec = "~/.config/waybar/scripts/tooltip.sh 'Symbols/Emojis'";
+        exec = "gabyx waybar tooltip 'Symbols/Emojis'";
         interval = "once";
         on-click = "gabyx::window-mgr-exec gabyx::emoji-menu";
         tooltip = true;
@@ -102,7 +103,7 @@ in
       "custom/screenshot" = {
         format = "󰄀";
         return-type = "json";
-        exec = "~/.config/waybar/scripts/tooltip.sh 'Screenshot'";
+        exec = "gabyx waybar tooltip 'Screenshot'";
         interval = "once";
         on-click = "gabyx::window-mgr-exec gabyx::screenshot-menu";
         tooltip = true;
@@ -111,7 +112,7 @@ in
       "custom/ssh" = {
         format = "{icon}";
         return-type = "json";
-        exec = "~/.config/waybar/scripts/ssh-connections.sh";
+        exec = "gabyx waybar ssh-connections";
         interval = 5;
 
         format-icons = {
@@ -125,7 +126,7 @@ in
       "custom/backup" = {
         format = "{icon}";
         return-type = "json";
-        exec = "~/.config/waybar/scripts/backup-watcher.sh";
+        exec = "gabyx waybar backup";
         interval = 5;
 
         format-icons = {
@@ -135,6 +136,20 @@ in
         };
 
         tooltip = true;
+      };
+
+      # Hidden if no player is running (no icon for `none`).
+      "custom/media-player" = {
+        format = "{icon}";
+        return-type = "json";
+        exec = "gabyx waybar media-player";
+        interval = 2;
+        format-icons = {
+          playing = "󰐊";
+          paused = "󰏤";
+        };
+        tooltip = true;
+        on-click = "gabyx waybar media-player toggle";
       };
 
       battery = {
@@ -188,9 +203,9 @@ in
 
       "custom/agenda" = {
         format = "{}";
-        exec = "~/.config/waybar/scripts/nextmeeting-khal.py --config ~/.config/khal/nextmeeting-conf.json";
+        exec = "gabyx waybar next-meeting --config ~/.config/khal/nextmeeting-conf.json";
         on-click-right = "kitty -- /usr/bin/env bash -c ikhal";
-        on-click = "~/.config/waybar/scripts/nextmeeting-khal.py --config ~/.config/khal/nextmeeting-conf.json --open-url";
+        on-click = "gabyx waybar next-meeting --config ~/.config/khal/nextmeeting-conf.json --open-url";
         interval = 59;
         return-type = "json";
         tooltip = "true";
@@ -250,7 +265,7 @@ in
 
       "custom/vpn" = {
         format = "{icon}";
-        exec = "~/.config/waybar/scripts/vpn-status.sh";
+        exec = "gabyx waybar vpn-status";
         interval = 5;
 
         format-icons = [

@@ -110,6 +110,7 @@ window.eDP-1 * {
 #battery,
 #custom-notification,
 #custom-backup,
+#custom-media-player,
 #custom-powermenu {
   padding-left: 4pt;
   padding-right: 4pt;
@@ -157,6 +158,7 @@ window.eDP-1 #pulseaudio,
 window.eDP-1 #battery,
 window.eDP-1 #custom-notification,
 window.eDP-1 #custom-backup,
+window.eDP-1 #custom-media-player,
 window.eDP-1 #custom-powermenu {
   padding-left: 2pt;
   padding-right: 2pt;

@@ -1,0 +1,3 @@
+package waybarcmd
+
+const Bullet = "●"

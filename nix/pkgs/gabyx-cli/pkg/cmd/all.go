@@ -12,6 +12,7 @@ import (
 	secretCmd "gabyx-cli/pkg/cmd/secret"
 	tmuxCmd "gabyx-cli/pkg/cmd/tmux"
 	vpnCmd "gabyx-cli/pkg/cmd/vpn"
+	waybarCmd "gabyx-cli/pkg/cmd/waybar"
 	windowingCmd "gabyx-cli/pkg/cmd/windowing"
 
 	"github.com/gabyx/quitsh/pkg/cli"
@@ -31,5 +32,6 @@ func AddCommands(cl cli.ICLI) {
 	secretCmd.AddCmd(root)
 	tmuxCmd.AddCmd(root)
 	vpnCmd.AddCmd(root)
+	waybarCmd.AddCmd(root)
 	windowingCmd.AddCmd(root)
 }
