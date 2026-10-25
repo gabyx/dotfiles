@@ -37,7 +37,6 @@ function start_tmux() {
     # Create all sessions if not yet existing
     tmux new-session -D -s Main-1
     tmux new-session -D -s Main-2
-    tmux new-session -D -s AstroNVim
     tmux new-session -D -s NixOS
 
     echo "Sessions are:"
