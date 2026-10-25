@@ -46,10 +46,9 @@ function start_tmux() {
     echo "-----------"
 
     echo "Start workspaces"
-    swaymsg 'workspace $ws-2; exec gabyx::term-start AstroNVim gabyx::term'
-    swaymsg 'workspace $ws-3; exec gabyx::term-start Main-1 gabyx::term'
-    swaymsg 'workspace $ws-4; exec gabyx::term-start Main-2 gabyx::term'
-    swaymsg 'workspace $ws-1; exec gabyx::term-start NixOS gabyx::term'
+    swaymsg 'workspace $ws-3; exec gabyx term start-into-tmux Main-1'
+    swaymsg 'workspace $ws-4; exec gabyx term start-into-tmux Main-2'
+    swaymsg 'workspace $ws-1; exec gabyx term start-into-tmux NixOS'
 }
 
 # Save stdout and stderr to file

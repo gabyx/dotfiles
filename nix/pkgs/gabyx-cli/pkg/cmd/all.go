@@ -12,6 +12,7 @@ import (
 	rofiCmd "gabyx-cli/pkg/cmd/rofi"
 	secretCmd "gabyx-cli/pkg/cmd/secret"
 	swayCmd "gabyx-cli/pkg/cmd/sway"
+	termCmd "gabyx-cli/pkg/cmd/term"
 	tmuxCmd "gabyx-cli/pkg/cmd/tmux"
 	vpnCmd "gabyx-cli/pkg/cmd/vpn"
 	waybarCmd "gabyx-cli/pkg/cmd/waybar"
@@ -34,6 +35,7 @@ func AddCommands(cl cli.ICLI) {
 	rofiCmd.AddCmd(root)
 	secretCmd.AddCmd(root)
 	swayCmd.AddCmd(root)
+	termCmd.AddCmd(root)
 	tmuxCmd.AddCmd(root)
 	vpnCmd.AddCmd(root)
 	waybarCmd.AddCmd(root)

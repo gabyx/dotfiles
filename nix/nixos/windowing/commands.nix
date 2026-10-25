@@ -10,8 +10,8 @@ let
   isNiri = windowMgr == "niri";
 
   cmds = {
-    term.cmd = "wezterm start --always-new-process";
-    term-start.cmd = "~/.config/sway/scripts/start-term.sh";
+    term.cmd = "gabyx term start";
+    term-start.cmd = "gabyx term start-into-tmux";
 
     file-manager.cmd = "gabyx::term lf";
 
