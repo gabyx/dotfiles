@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"os"
 
+	gexec "gabyx-cli/pkg/exec"
 	"gabyx-cli/pkg/interactive"
 
 	"github.com/gabyx/quitsh/pkg/errors"
@@ -24,7 +25,7 @@ func AddCmd(root *cobra.Command) {
 			Short: "Print the keycodes of the active keyboard.",
 			Args:  cobra.NoArgs,
 			RunE: func(_cmd *cobra.Command, _args []string) error {
-				return interactive.Run(nil, "xmodmap", "-pke")
+				return interactive.Run(nil, gexec.ExtCmdXmodmap, "-pke")
 			},
 		},
 		&cobra.Command{
@@ -32,7 +33,7 @@ func AddCmd(root *cobra.Command) {
 			Short: "Get a keycode from a keypress.",
 			Args:  cobra.NoArgs,
 			RunE: func(_cmd *cobra.Command, _args []string) error {
-				return interactive.Run(nil, "xev")
+				return interactive.Run(nil, gexec.ExtCmdXev)
 			},
 		},
 		&cobra.Command{
@@ -66,7 +67,7 @@ func AddCmd(root *cobra.Command) {
 }
 
 func getWindowProperties() error {
-	out, err := exec.NewCmdCtxBuilder().Quiet().Build().Get("swaymsg", "-t", "get_tree", "--raw")
+	out, err := exec.NewCmdCtxBuilder().Quiet().Build().Get(gexec.ExtCmdSwaymsg, "-t", "get_tree", "--raw")
 	if err != nil {
 		return err
 	}
@@ -75,7 +76,7 @@ func getWindowProperties() error {
 }
 
 func getInputProperties(deviceType string) error {
-	out, err := exec.NewCmdCtxBuilder().Quiet().Build().Get("swaymsg", "-t", "get_inputs", "--raw")
+	out, err := exec.NewCmdCtxBuilder().Quiet().Build().Get(gexec.ExtCmdSwaymsg, "-t", "get_inputs", "--raw")
 	if err != nil {
 		return err
 	}

@@ -1,6 +1,8 @@
 package termcmd
 
 import (
+	gexec "gabyx-cli/pkg/exec"
+
 	"github.com/spf13/cobra"
 )
 
@@ -19,5 +21,5 @@ func AddCmd(root *cobra.Command) {
 // terminalCmd returns the command to start a new terminal in the current
 // directory with the arguments `args` (e.g. a program to run).
 func terminalCmd(args ...string) []string {
-	return append([]string{"wezterm", "start", "--always-new-process", "--cwd", "."}, args...)
+	return append([]string{gexec.ExtCmdWezterm, "start", "--always-new-process", "--cwd", "."}, args...)
 }

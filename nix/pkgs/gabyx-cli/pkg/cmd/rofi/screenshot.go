@@ -7,6 +7,8 @@ import (
 	"strings"
 	"time"
 
+	gexec "gabyx-cli/pkg/exec"
+
 	"github.com/gabyx/quitsh/pkg/errors"
 	"github.com/gabyx/quitsh/pkg/exec"
 	"github.com/spf13/cobra"
@@ -40,12 +42,12 @@ func addScreenshotCmd(parent *cobra.Command) {
 
 // Adapted from https://github.com/gibbz00/sway-rofi-screenshot/blob/master/sway-rofi-screenshot.
 func screenshot() error {
-	grimshot := "grimshot"
+	grimshot := gexec.ExtCmdGrimshot
 	if os.Getenv("XDG_CURRENT_DESKTOP") == "Hyprland" {
-		grimshot = "grimblast"
+		grimshot = gexec.ExtCmdGrimblast
 	}
 
-	err := assertExe(grimshot, "rofi", "copyq", "gradia", "wl-copy")
+	err := assertExe(grimshot, gexec.ExtCmdRofi, gexec.ExtCmdCopyq, gexec.ExtCmdGradia, gexec.ExtCmdWlCopy)
 	if err != nil {
 		return err
 	}
@@ -88,7 +90,7 @@ func screenshot() error {
 	}
 
 	if edit {
-		err = cmdx.Check("gradia", file)
+		err = cmdx.Check(gexec.ExtCmdGradia, file)
 		if err != nil {
 			return err
 		}
@@ -99,7 +101,7 @@ func screenshot() error {
 		return err
 	}
 
-	_ = cmdx.Check("notify-send", "Screenshot",
+	_ = cmdx.Check(gexec.ExtCmdNotifySend, "Screenshot",
 		"File saved as <i>'"+file+"'</i> and copied to the clipboard.", "-i", file)
 
 	return nil
@@ -161,18 +163,18 @@ func copyImage(file string) error {
 
 	// `copyq` has some trouble when copying big images,
 	// therefore disable it and load the image manually.
-	err = cmdx.Check("copyq", "disable")
+	err = cmdx.Check(gexec.ExtCmdCopyq, "disable")
 	if err != nil {
 		return err
 	}
-	defer func() { _ = cmdx.Check("copyq", "enable") }()
+	defer func() { _ = cmdx.Check(gexec.ExtCmdCopyq, "enable") }()
 
-	err = cmdx.WithStdin(bytes.NewReader(content)).Check("wl-copy", "-t", "image/png")
+	err = cmdx.WithStdin(bytes.NewReader(content)).Check(gexec.ExtCmdWlCopy, "-t", "image/png")
 	if err != nil {
 		return err
 	}
 
-	return cmdx.WithStdin(bytes.NewReader(content)).Check("copyq", "write", "image/png", "-")
+	return cmdx.WithStdin(bytes.NewReader(content)).Check(gexec.ExtCmdCopyq, "write", "image/png", "-")
 }
 
 // screenshotDir returns the screenshot directory `dir` with a leading `~` replaced by `home`.

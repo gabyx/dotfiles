@@ -3,11 +3,10 @@ package swaycmd
 import (
 	"encoding/json"
 	"os"
-	"path"
-	"path/filepath"
-	"strconv"
 
+	gexec "gabyx-cli/pkg/exec"
 	"gabyx-cli/pkg/interactive"
+	"gabyx-cli/pkg/process"
 
 	"github.com/gabyx/quitsh/pkg/errors"
 	"github.com/gabyx/quitsh/pkg/exec"
@@ -59,7 +58,7 @@ func runInFocusedCwd(args []string) error {
 // focusedCwd returns the working directory (symlinks resolved) of the first
 // child process of the focused window.
 func focusedCwd() (string, error) {
-	out, err := exec.NewCommandCtx(".").Get("swaymsg", "-t", "get_tree", "--raw")
+	out, err := exec.NewCommandCtx(".").Get(gexec.ExtCmdSwaymsg, "-t", "get_tree", "--raw")
 	if err != nil {
 		return "", err
 	}
@@ -76,12 +75,13 @@ func focusedCwd() (string, error) {
 		return "", errors.New("no focused window to get cwd from")
 	}
 
-	children, err := exec.NewCommandCtx(".").GetSplit("pgrep", "-P", strconv.Itoa(pid))
-	if err != nil || len(children) == 0 {
-		return "", errors.New("no child process found for '%v'", pid)
+	child, err := process.FirstChild(pid)
+	if err != nil {
+		return "", errors.AddContext(err, "no child process found for '%v'", pid)
 	}
 
-	return filepath.EvalSymlinks(path.Join("/proc", children[0], "cwd"))
+	// The kernel resolves symlinks in the working directory (like `cd -P`).
+	return child.Cwd()
 }
 
 // focusedPID returns the PID of the focused node in the tree `n` or `0`.

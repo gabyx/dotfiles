@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"strings"
 
+	gexec "gabyx-cli/pkg/exec"
+
 	"github.com/gabyx/quitsh/pkg/exec"
 	"github.com/gabyx/quitsh/pkg/log"
 	"github.com/spf13/cobra"
@@ -119,7 +121,7 @@ func backupUnitStatus(reportDir string, name string, running bool) (backupState,
 // unitExists returns `true` if the systemd unit `unit` is loaded.
 func unitExists(unit string) bool {
 	state, err := exec.NewCommandCtx(".").
-		Get("systemctl", "show", "-p", "LoadState", "--value", unit)
+		Get(gexec.ExtCmdSystemctl, "show", "-p", "LoadState", "--value", unit)
 
 	return err == nil && state == "loaded"
 }
@@ -129,7 +131,7 @@ func unitExists(unit string) bool {
 func unitRunning(unit string) bool {
 	// `systemctl is-active` exits non-zero if the unit is not active.
 	state, _ := exec.NewCommandCtx(".").
-		GetWithEC(func(*exec.CmdError) error { return nil }, "systemctl", "is-active", unit)
+		GetWithEC(func(*exec.CmdError) error { return nil }, gexec.ExtCmdSystemctl, "is-active", unit)
 
 	return !strings.Contains(state, "inactive") && !strings.Contains(state, "failed")
 }

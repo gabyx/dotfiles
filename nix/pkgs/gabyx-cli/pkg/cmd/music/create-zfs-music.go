@@ -11,6 +11,7 @@ import (
 	"syscall"
 
 	filesystemcmd "gabyx-cli/pkg/cmd/filesystem"
+	gexec "gabyx-cli/pkg/exec"
 	"gabyx-cli/pkg/sudo"
 	"gabyx-cli/pkg/zfs"
 
@@ -196,14 +197,14 @@ func formatDisk(args *createZfsMusicArgs) error {
 func checkDisk(disk string) error {
 	lsblk := exec.NewCmdCtxBuilder().Quiet().Build()
 
-	typ, err := lsblk.Get("lsblk", "--nodeps", "--noheadings", "--output", "TYPE", disk)
+	typ, err := lsblk.Get(gexec.ExtCmdLsblk, "--nodeps", "--noheadings", "--output", "TYPE", disk)
 	if err != nil {
 		return err
 	} else if typ != "disk" && typ != "part" {
 		return errors.New("'%s' is not a disk or partition but type '%s'", disk, typ)
 	}
 
-	mounts, err := lsblk.Get("lsblk", "--noheadings", "--raw", "--output", "MOUNTPOINTS", disk)
+	mounts, err := lsblk.Get(gexec.ExtCmdLsblk, "--noheadings", "--raw", "--output", "MOUNTPOINTS", disk)
 	if err != nil {
 		return err
 	} else if strings.TrimSpace(mounts) != "" {
@@ -217,7 +218,7 @@ func confirmFormat(disk string, pool string) (ok bool, err error) {
 	// For a partition show its whole disk (`PKNAME`, empty for a disk):
 	// the model and serial are only set on the disk.
 	parent, err := exec.NewCommandCtx(".").
-		Get("lsblk", "--nodeps", "--noheadings", "--paths", "--output", "PKNAME", disk)
+		Get(gexec.ExtCmdLsblk, "--nodeps", "--noheadings", "--paths", "--output", "PKNAME", disk)
 	if err != nil {
 		return false, err
 	} else if parent == "" {
@@ -225,7 +226,7 @@ func confirmFormat(disk string, pool string) (ok bool, err error) {
 	}
 
 	info, err := exec.NewCommandCtx(".").
-		Get("lsblk", "--paths", "--output", "NAME,SIZE,TYPE,MODEL,SERIAL,FSTYPE,LABEL,MOUNTPOINTS", parent)
+		Get(gexec.ExtCmdLsblk, "--paths", "--output", "NAME,SIZE,TYPE,MODEL,SERIAL,FSTYPE,LABEL,MOUNTPOINTS", parent)
 	if err != nil {
 		return false, err
 	}
@@ -293,5 +294,5 @@ func chownToUser(dir string) error {
 
 	log.Info("Change owner to current user.", "dir", dir)
 
-	return sudo.NewCommandCtx(".").Check("chown", strconv.Itoa(uid)+":"+strconv.Itoa(gid), dir)
+	return sudo.NewCommandCtx(".").Check(gexec.ExtCmdChown, strconv.Itoa(uid)+":"+strconv.Itoa(gid), dir)
 }

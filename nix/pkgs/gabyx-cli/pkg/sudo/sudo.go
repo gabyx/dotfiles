@@ -3,6 +3,8 @@ package sudo
 import (
 	"os"
 
+	gexec "gabyx-cli/pkg/exec"
+
 	"github.com/gabyx/quitsh/pkg/exec"
 )
 
@@ -16,7 +18,7 @@ func IsRoot() bool {
 func NewCmdCtxBuilder() exec.CmdContextBuilder {
 	b := exec.NewCmdCtxBuilder()
 	if !IsRoot() {
-		b = b.BaseCmd("sudo")
+		b = b.BaseCmd(gexec.ExtCmdSudo)
 	}
 
 	return b

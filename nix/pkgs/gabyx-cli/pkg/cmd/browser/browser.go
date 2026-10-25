@@ -7,6 +7,8 @@ import (
 	"path"
 	"syscall"
 
+	gexec "gabyx-cli/pkg/exec"
+
 	fs "github.com/gabyx/quitsh/pkg/filesystem"
 	"github.com/gabyx/quitsh/pkg/log"
 	"github.com/spf13/cobra"
@@ -48,8 +50,9 @@ func startNew() error {
 	}
 
 	// Not canceled with the CLI context, since the browser is detached.
-	cmd := exec.CommandContext(context.Background(), "zen", "--profile", dir) //nolint:gosec // Path from config dir.
-	cmd.SysProcAttr = &syscall.SysProcAttr{Setsid: true}                      //nolint:exhaustruct // Only a new session.
+	//nolint:gosec // Path from config dir.
+	cmd := exec.CommandContext(context.Background(), gexec.ExtCmdZen, "--profile", dir)
+	cmd.SysProcAttr = &syscall.SysProcAttr{Setsid: true} //nolint:exhaustruct // Only a new session.
 
 	log.Info("Starting browser.", "profile", dir)
 	err = cmd.Start()

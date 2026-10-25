@@ -13,6 +13,8 @@ import (
 	"strings"
 	"time"
 
+	gexec "gabyx-cli/pkg/exec"
+
 	"github.com/gabyx/quitsh/pkg/errors"
 	"github.com/gabyx/quitsh/pkg/exec"
 	"github.com/gabyx/quitsh/pkg/log"
@@ -66,7 +68,7 @@ func addNextMeetingCmd(parent *cobra.Command) {
 			err := nextMeeting(&args)
 			if err != nil {
 				_ = exec.NewCommandCtx(".").
-					Check("notify-send", "--category", "warning", "Exception happened.", err.Error())
+					Check(gexec.ExtCmdNotifySend, "--category", "warning", "Exception happened.", err.Error())
 			}
 
 			return err
@@ -146,7 +148,7 @@ func nextMeeting(args *nextMeetingArgs) error {
 // khalEvents returns the events of the next 24h which are not all-day and
 // not cancelled, sorted by start and duration.
 func khalEvents(calendars []string, now time.Time) ([]event, error) {
-	args := []string{"khal", "list", "now", "24h", "--day-format", ""}
+	args := []string{gexec.ExtCmdKhal, "list", "now", "24h", "--day-format", ""}
 	for _, c := range calendars {
 		args = append(args, "--include-calendar", c)
 	}
@@ -349,7 +351,7 @@ func openURL(u string) error {
 		return errors.New("URL '%s' cannot be parsed", u)
 	}
 
-	_ = exec.NewCommandCtx(".").Check("notify-send", "Opening URL in browser.", "URL: "+u)
+	_ = exec.NewCommandCtx(".").Check(gexec.ExtCmdNotifySend, "Opening URL in browser.", "URL: "+u)
 
-	return exec.NewCommandCtx(".").Check("xdg-open", u)
+	return exec.NewCommandCtx(".").Check(gexec.ExtCmdXdgOpen, u)
 }

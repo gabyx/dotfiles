@@ -7,6 +7,7 @@ import (
 	"path"
 	"strings"
 
+	gexec "gabyx-cli/pkg/exec"
 	"gabyx-cli/pkg/prompt"
 
 	"github.com/gabyx/quitsh/pkg/errors"
@@ -125,7 +126,7 @@ func getSecret(args *getArgs) error {
 		}
 	}
 
-	err = exec.NewCommandCtx(".").Check("age", "-d", "-i", identityFile, encFile)
+	err = exec.NewCommandCtx(".").Check(gexec.ExtCmdAge, "-d", "-i", identityFile, encFile)
 	if err != nil {
 		return errors.AddContext(err, "decrypting '%s' failed", encFile)
 	}
@@ -136,7 +137,7 @@ func getSecret(args *getArgs) error {
 }
 
 func isYubikeyPresent() bool {
-	out, err := exec.NewCmdCtxBuilder().Quiet().Build().Get("ykman", "list")
+	out, err := exec.NewCmdCtxBuilder().Quiet().Build().Get(gexec.ExtCmdYkman, "list")
 	if err != nil {
 		log.Debug("Could not list Yubikeys.", "error", err)
 
@@ -191,7 +192,7 @@ func writeEncryptedFile(args *getArgs, identityFile string, encFile string) erro
 	log.Info("Writing encrypted file.", "path", encFile)
 	err = exec.NewCommandCtx(".").
 		WithStdin(strings.NewReader(secret+"\n")).
-		Check("age", "-e", "-i", identityFile, "-o", tmp.Name())
+		Check(gexec.ExtCmdAge, "-e", "-i", identityFile, "-o", tmp.Name())
 	if err != nil {
 		return errors.AddContext(err, "could not encrypt to '%s'", encFile)
 	}
@@ -234,7 +235,7 @@ func getBitwarden(id string, field string) (string, error) {
 	}
 
 	log.Info("Getting secret from Bitwarden.", "id", id, "field", field)
-	out, err := exec.NewCmdCtxBuilder().Quiet().Build().Get("bw", "get", "item", id)
+	out, err := exec.NewCmdCtxBuilder().Quiet().Build().Get(gexec.ExtCmdBw, "get", "item", id)
 	if err != nil {
 		return "", err
 	}

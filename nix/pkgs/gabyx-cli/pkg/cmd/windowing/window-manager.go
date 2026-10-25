@@ -3,6 +3,7 @@ package windowingcmd
 import (
 	"os"
 
+	gexec "gabyx-cli/pkg/exec"
 	"gabyx-cli/pkg/interactive"
 
 	"github.com/gabyx/quitsh/pkg/errors"
@@ -32,7 +33,7 @@ func addDisplayManagerCmd(parent *cobra.Command) {
 
 			switch wm {
 			case wmSway, wmNiri:
-				return interactive.Exec(nil, append([]string{"way-displays"}, args...)...)
+				return interactive.Exec(nil, append([]string{gexec.ExtCmdWayDisplays}, args...)...)
 			default:
 				return die("No display manager defined for window manager '%s'.", wm)
 			}
@@ -63,11 +64,11 @@ func addWindowMgrExecCmd(parent *cobra.Command) {
 func windowMgrExecArgs(wm string) ([]string, error) {
 	switch wm {
 	case wmSway:
-		return []string{"swaymsg", "exec"}, nil
+		return []string{gexec.ExtCmdSwaymsg, "exec"}, nil
 	case wmNiri:
-		return []string{"niri", "msg", "action", "spawn", "--"}, nil
+		return []string{gexec.ExtCmdNiri, "msg", "action", "spawn", "--"}, nil
 	case wmHyprland:
-		return []string{"hyprctl", "dispatch", "exec"}, nil
+		return []string{gexec.ExtCmdHyprctl, "dispatch", "exec"}, nil
 	default:
 		return nil, errors.New(
 			"window manager '%s' (env. '%s') is not defined",
@@ -81,7 +82,7 @@ func windowMgrExecArgs(wm string) ([]string, error) {
 func die(format string, args ...any) error {
 	err := errors.New(format, args...)
 	log.ErrorE(err, "Error ocured.")
-	_ = exec.NewCommandCtx(".").Check("notify-send", "--category", "warning", err.Error())
+	_ = exec.NewCommandCtx(".").Check(gexec.ExtCmdNotifySend, "--category", "warning", err.Error())
 
 	return err
 }

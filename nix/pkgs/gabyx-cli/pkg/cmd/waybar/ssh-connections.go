@@ -4,6 +4,8 @@ import (
 	"strconv"
 	"strings"
 
+	gexec "gabyx-cli/pkg/exec"
+
 	"github.com/gabyx/quitsh/pkg/exec"
 	"github.com/spf13/cobra"
 )
@@ -20,7 +22,7 @@ func addSSHConnectionsCmd(parent *cobra.Command) {
 }
 
 func sshConnections() error {
-	lines, err := exec.NewCommandCtx(".").GetSplit("last", "-a")
+	lines, err := exec.NewCommandCtx(".").GetSplit(gexec.ExtCmdLast, "-a")
 	if err != nil {
 		return err
 	}

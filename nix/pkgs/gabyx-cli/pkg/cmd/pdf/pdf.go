@@ -3,6 +3,8 @@ package pdfcmd
 import (
 	"slices"
 
+	gexec "gabyx-cli/pkg/exec"
+
 	"github.com/gabyx/quitsh/pkg/errors"
 	"github.com/gabyx/quitsh/pkg/exec"
 	"github.com/spf13/cobra"
@@ -42,7 +44,7 @@ func compress(file string, output string, level string) error {
 	}
 
 	return exec.NewCommandCtx(".").
-		Check("gs",
+		Check(gexec.ExtCmdGs,
 			"-sDEVICE=pdfwrite",
 			"-dCompatibilityLevel=1.4",
 			"-dPDFSETTINGS=/"+level,

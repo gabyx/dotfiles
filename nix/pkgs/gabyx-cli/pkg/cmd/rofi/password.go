@@ -1,6 +1,8 @@
 package roficmd
 
 import (
+	gexec "gabyx-cli/pkg/exec"
+
 	"github.com/gabyx/quitsh/pkg/exec"
 	"github.com/spf13/cobra"
 )
@@ -11,7 +13,7 @@ func addPasswordCmd(parent *cobra.Command) {
 		Short: "Show the password manager menu ('rofi-rbw' for Bitwarden).",
 		Args:  cobra.NoArgs,
 		RunE: func(_cmd *cobra.Command, _args []string) error {
-			return exec.NewCommandCtx(".").Check("rofi-rbw")
+			return exec.NewCommandCtx(".").Check(gexec.ExtCmdRofiRbw)
 		},
 	})
 }

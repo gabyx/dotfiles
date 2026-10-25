@@ -1,6 +1,8 @@
 package roficmd
 
 import (
+	gexec "gabyx-cli/pkg/exec"
+
 	"github.com/gabyx/quitsh/pkg/exec"
 	"github.com/spf13/cobra"
 )
@@ -14,7 +16,7 @@ func addSystemdCmd(parent *cobra.Command) {
 			return exec.NewCmdCtxBuilder().
 				Env("ROFI_SYSTEMD_TERM=wezterm start").
 				Build().
-				Check(append([]string{"rofi-systemd"}, args...)...)
+				Check(append([]string{gexec.ExtCmdRofiSystemd}, args...)...)
 		},
 	})
 }

@@ -4,6 +4,7 @@ import (
 	"regexp"
 	"strings"
 
+	gexec "gabyx-cli/pkg/exec"
 	"gabyx-cli/pkg/sudo"
 
 	"github.com/gabyx/quitsh/pkg/errors"
@@ -53,10 +54,10 @@ func removeImages(regex string, usePodman bool) error {
 		return errors.AddContext(err, "could not compile regex '%s'", regex)
 	}
 
-	tool := "docker"
+	tool := gexec.ExtCmdDocker
 	cmdx := sudo.NewCmdCtxBuilder().Quiet().Build()
 	if usePodman {
-		tool = "podman"
+		tool = gexec.ExtCmdPodman
 		cmdx = exec.NewCmdCtxBuilder().Quiet().Build()
 	}
 
@@ -109,7 +110,7 @@ func imagesToPodman(regex string) error {
 	lines, err := exec.NewCmdCtxBuilder().
 		Quiet().
 		Build().
-		GetSplit("docker", "images", "--format", transport+":{{.Repository}}:{{.Tag}}")
+		GetSplit(gexec.ExtCmdDocker, "images", "--format", transport+":{{.Repository}}:{{.Tag}}")
 	if err != nil {
 		return err
 	}
@@ -129,5 +130,5 @@ func imagesToPodman(regex string) error {
 
 	log.Info("Pulling images.", "images", images)
 
-	return exec.NewCommandCtx(".").Check(append([]string{"podman", "pull"}, images...)...)
+	return exec.NewCommandCtx(".").Check(append([]string{gexec.ExtCmdPodman, "pull"}, images...)...)
 }

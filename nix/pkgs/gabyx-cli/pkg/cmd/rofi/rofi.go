@@ -4,6 +4,8 @@ import (
 	osexec "os/exec"
 	"strings"
 
+	gexec "gabyx-cli/pkg/exec"
+
 	"github.com/gabyx/quitsh/pkg/errors"
 	"github.com/gabyx/quitsh/pkg/exec"
 	"github.com/spf13/cobra"
@@ -62,7 +64,7 @@ func menu(prompt string, entries []string, args ...string) (choice string, ok bo
 
 				return e
 			},
-			append([]string{"rofi", "-dmenu", "-p", prompt}, args...)...)
+			append([]string{gexec.ExtCmdRofi, "-dmenu", "-p", prompt}, args...)...)
 	if err != nil {
 		return "", false, err
 	}
@@ -73,7 +75,7 @@ func menu(prompt string, entries []string, args ...string) (choice string, ok bo
 // notify sends a desktop notification with `summary` and `body`.
 // Errors are ignored.
 func notify(summary string, body ...string) {
-	_ = exec.NewCommandCtx(".").Check(append([]string{"notify-send", summary}, body...)...)
+	_ = exec.NewCommandCtx(".").Check(append([]string{gexec.ExtCmdNotifySend, summary}, body...)...)
 }
 
 // notifyError sends a warning notification with `summary` and `body`
@@ -82,15 +84,15 @@ func notify(summary string, body ...string) {
 func notifyError(summary string, body ...string) {
 	cmdx := exec.NewCommandCtx(".")
 
-	if _, err := osexec.LookPath("notify-send"); err == nil {
+	if _, err := osexec.LookPath(gexec.ExtCmdNotifySend); err == nil {
 		_ = cmdx.Check(append([]string{
-			"notify-send", "--category", "warning", summary}, body...)...)
+			gexec.ExtCmdNotifySend, "--category", "warning", summary}, body...)...)
 
 		return
 	}
 
 	_ = cmdx.Check(
-		"swaynag",
+		gexec.ExtCmdSwayNag,
 		"-t",
 		"warning",
 		"-m",

@@ -1,6 +1,8 @@
 package roficmd
 
 import (
+	gexec "gabyx-cli/pkg/exec"
+
 	"github.com/gabyx/quitsh/pkg/exec"
 	"github.com/spf13/cobra"
 )
@@ -20,7 +22,7 @@ func addColorPickerCmd(parent *cobra.Command) {
 }
 
 func colorPicker() error {
-	err := assertExe("rofi")
+	err := assertExe(gexec.ExtCmdRofi)
 	if err != nil {
 		return err
 	}
@@ -32,13 +34,13 @@ func colorPicker() error {
 
 	switch choice {
 	case colorPickOnScreen:
-		err = assertExe("hyprpicker")
+		err = assertExe(gexec.ExtCmdHyprpicker)
 		if err != nil {
 			return err
 		}
 
 		// Copies the color to the clipboard (`-a`).
-		color, e := exec.NewCommandCtx(".").Get("hyprpicker", "-a", "--render-inactive")
+		color, e := exec.NewCommandCtx(".").Get(gexec.ExtCmdHyprpicker, "-a", "--render-inactive")
 		if e != nil {
 			return e
 		}
@@ -49,12 +51,12 @@ func colorPicker() error {
 
 		return nil
 	case colorPickColorwheel:
-		err = assertExe("gcolor3")
+		err = assertExe(gexec.ExtCmdGcolor3)
 		if err != nil {
 			return err
 		}
 
-		return exec.NewCommandCtx(".").Check("gcolor3")
+		return exec.NewCommandCtx(".").Check(gexec.ExtCmdGcolor3)
 	}
 
 	return nil

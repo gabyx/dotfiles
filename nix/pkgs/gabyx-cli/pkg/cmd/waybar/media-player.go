@@ -3,6 +3,8 @@ package waybarcmd
 import (
 	"strings"
 
+	gexec "gabyx-cli/pkg/exec"
+
 	"github.com/gabyx/quitsh/pkg/exec"
 	"github.com/spf13/cobra"
 )
@@ -26,7 +28,7 @@ func addMediaPlayerCmd(parent *cobra.Command) {
 		Short: "Toggle between play and pause of the media player.",
 		Args:  cobra.NoArgs,
 		RunE: func(_cmd *cobra.Command, _args []string) error {
-			return exec.NewCommandCtx(".").Check("playerctl", "play-pause")
+			return exec.NewCommandCtx(".").Check(gexec.ExtCmdPlayerctl, "play-pause")
 		},
 	})
 
@@ -39,7 +41,7 @@ func mediaPlayer() error {
 	o := output{Text: "", Alt: valueNone, Tooltip: "", Class: valueNone, Percentage: 0}
 
 	// Fails if no player is running.
-	out, err := exec.NewCommandCtx(".").Get("playerctl", "metadata", "--format",
+	out, err := exec.NewCommandCtx(".").Get(gexec.ExtCmdPlayerctl, "metadata", "--format",
 		strings.Join([]string{"{{status}}", "{{artist}}", "{{title}}"}, playerctlSep))
 	if err != nil {
 		return o.print()

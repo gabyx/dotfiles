@@ -4,6 +4,7 @@ import (
 	"os"
 	"slices"
 
+	gexec "gabyx-cli/pkg/exec"
 	"gabyx-cli/pkg/interactive"
 
 	"github.com/gabyx/quitsh/pkg/errors"
@@ -63,12 +64,12 @@ func newSession(args *newSessionArgs, posArgs []string) error {
 	tmuxx := exec.NewCmdCtxBuilder().Quiet().Build()
 
 	// Fails if no tmux server is running, which means no sessions exist.
-	sessions, _ := tmuxx.GetSplit("tmux", "list-sessions", "-F", "#{session_name}")
+	sessions, _ := tmuxx.GetSplit(gexec.ExtCmdTmux, "list-sessions", "-F", "#{session_name}")
 
 	if slices.Contains(sessions, name) {
 		if args.force {
 			log.Info("Closing session.", "name", name)
-			err = tmuxx.Check("tmux", "kill-session", "-t", name)
+			err = tmuxx.Check(gexec.ExtCmdTmux, "kill-session", "-t", name)
 			if err != nil {
 				return err
 			}
@@ -87,5 +88,5 @@ func newSession(args *newSessionArgs, posArgs []string) error {
 			"TMUXIFIER_SESSION_NAME=" + name,
 			"TMUXIFIER_WINDOW_LAYOUT=" + windowLayout,
 		},
-		"tmuxifier", "load-session", sessionLayout)
+		gexec.ExtCmdTmuxifier, "load-session", sessionLayout)
 }

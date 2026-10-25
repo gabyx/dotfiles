@@ -9,6 +9,8 @@ import (
 	"slices"
 	"strings"
 
+	gexec "gabyx-cli/pkg/exec"
+
 	"deedles.dev/xiter"
 	qStrs "github.com/gabyx/quitsh/pkg/common/strings"
 	"github.com/gabyx/quitsh/pkg/errors"
@@ -74,7 +76,7 @@ func addAssignWorkspacesCmd(parent *cobra.Command) {
 			err := assignWorkspaces(&r, args.swap)
 
 			e := exec.NewCommandCtx(".").
-				Check(append([]string{"notify-send"}, notifyArgs(r.String(), err)...)...)
+				Check(append([]string{gexec.ExtCmdNotifySend}, notifyArgs(r.String(), err)...)...)
 
 			return errors.Combine(err, e)
 		},
@@ -135,7 +137,7 @@ func assignWorkspaces(r *report, swap bool) error {
 	}
 
 	swaymsg := func(command string) error {
-		return exec.NewCommandCtx(".").Check("swaymsg", "-q", command)
+		return exec.NewCommandCtx(".").Check(gexec.ExtCmdSwaymsg, "-q", command)
 	}
 
 	// Configure all displays.
@@ -174,7 +176,7 @@ func assignWorkspaces(r *report, swap bool) error {
 }
 
 func getOutputs() (outputs []swayOutput, err error) {
-	out, err := exec.NewCommandCtx(".").Get("swaymsg", "-t", "get_outputs", "--raw")
+	out, err := exec.NewCommandCtx(".").Get(gexec.ExtCmdSwaymsg, "-t", "get_outputs", "--raw")
 	if err != nil {
 		return nil, err
 	}
@@ -188,7 +190,7 @@ func getOutputs() (outputs []swayOutput, err error) {
 }
 
 func focusedWorkspace() (string, error) {
-	out, err := exec.NewCommandCtx(".").Get("swaymsg", "-t", "get_workspaces", "--raw")
+	out, err := exec.NewCommandCtx(".").Get(gexec.ExtCmdSwaymsg, "-t", "get_workspaces", "--raw")
 	if err != nil {
 		return "", err
 	}

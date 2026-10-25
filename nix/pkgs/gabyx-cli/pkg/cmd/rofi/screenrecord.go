@@ -2,9 +2,12 @@ package roficmd
 
 import (
 	"os"
-	"os/user"
 	"path"
+	"syscall"
 	"time"
+
+	gexec "gabyx-cli/pkg/exec"
+	"gabyx-cli/pkg/process"
 
 	"github.com/gabyx/quitsh/pkg/errors"
 	"github.com/gabyx/quitsh/pkg/exec"
@@ -41,7 +44,13 @@ func addScreenrecordCmd(parent *cobra.Command) {
 }
 
 func screenrecord() error {
-	err := assertExe("rofi", "slurp", "wf-recorder", "ffmpeg", "pkill", "timeout")
+	err := assertExe(
+		gexec.ExtCmdRofi,
+		gexec.ExtCmdSlurp,
+		gexec.ExtCmdWfRecorder,
+		gexec.ExtCmdFfmpeg,
+		gexec.ExtCmdTimeout,
+	)
 	if err != nil {
 		return err
 	}
@@ -102,28 +111,28 @@ func recordManual(rec recording) error {
 
 	cmdx := exec.NewCommandCtx(".")
 
-	coords, err := cmdx.Get("slurp")
+	coords, err := cmdx.Get(gexec.ExtCmdSlurp)
 	if err != nil {
 		return cancelRecording(rec, "Cancelled screen selection.")
 	}
 
 	notify("Start recording.", "File '"+rec.video+"'.")
 
-	err = cmdx.Check("timeout", recordTimeout, "wf-recorder", "-g", coords, "-f", rec.video)
+	err = cmdx.Check(gexec.ExtCmdTimeout, recordTimeout, gexec.ExtCmdWfRecorder, "-g", coords, "-f", rec.video)
 	if err != nil {
 		return cancelRecording(rec, "Cancelled screen recording.", "-> timeout!")
 	}
 
 	notify("Recording saved.", "File '"+rec.video+"'.")
 
-	err = cmdx.Check("ffmpeg", "-i", rec.video,
+	err = cmdx.Check(gexec.ExtCmdFfmpeg, "-i", rec.video,
 		"-filter_complex", "palettegen=stats_mode=full",
 		rec.palette, "-y")
 	if err != nil {
 		return errors.AddContext(err, "computing palette from recording failed")
 	}
 
-	err = cmdx.Check("ffmpeg", "-i", rec.video, "-i", rec.palette,
+	err = cmdx.Check(gexec.ExtCmdFfmpeg, "-i", rec.video, "-i", rec.palette,
 		"-filter_complex", "paletteuse=dither=sierra2_4a",
 		rec.gif, "-y")
 	if err != nil {
@@ -143,14 +152,8 @@ func cancelRecording(rec recording, summary string, body ...string) error {
 
 // stopRecorder stops all running `wf-recorder` processes of the current user.
 func stopRecorder() error {
-	u, err := user.Current()
-	if err != nil {
-		return err
-	}
-
-	err = exec.NewCommandCtx(".").
-		Check("pkill", "--euid", u.Username, "--signal", "SIGINT", "wf-recorder")
-	if err != nil {
+	count, err := process.Signal(gexec.ExtCmdWfRecorder, os.Getuid(), syscall.SIGINT)
+	if err != nil || count == 0 {
 		notifyError("Could not stop wf-recorder.", "Is it running?")
 	}
 

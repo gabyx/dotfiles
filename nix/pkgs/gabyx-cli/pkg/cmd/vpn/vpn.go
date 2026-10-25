@@ -6,6 +6,7 @@ import (
 	"path"
 	"strings"
 
+	gexec "gabyx-cli/pkg/exec"
 	"gabyx-cli/pkg/interactive"
 	"gabyx-cli/pkg/prompt"
 
@@ -29,7 +30,7 @@ func AddCmd(root *cobra.Command) {
 			Args:  cobra.MinimumNArgs(1),
 			RunE: func(_cmd *cobra.Command, args []string) error {
 				return interactive.Run(nil,
-					append([]string{"protonvpn", "connect", "--country"}, args...)...)
+					append([]string{gexec.ExtCmdProtonvpn, "connect", "--country"}, args...)...)
 			},
 		},
 		&cobra.Command{
@@ -37,7 +38,7 @@ func AddCmd(root *cobra.Command) {
 			Short: "Disconnect the Proton VPN connection.",
 			Args:  cobra.NoArgs,
 			RunE: func(_cmd *cobra.Command, _args []string) error {
-				return interactive.Run(nil, "protonvpn", "disconnect")
+				return interactive.Run(nil, gexec.ExtCmdProtonvpn, "disconnect")
 			},
 		},
 		&cobra.Command{
@@ -50,7 +51,7 @@ func AddCmd(root *cobra.Command) {
 					name = args[0]
 				}
 
-				return interactive.Run(nil, "nmcli", "connection", "up", name, "--ask")
+				return interactive.Run(nil, gexec.ExtCmdNmcli, "connection", "up", name, "--ask")
 			},
 		},
 		&cobra.Command{
@@ -108,7 +109,7 @@ func connectAuto() error {
 			"GABYX_VPN_PASSWORD=" + password,
 			"GABYX_VPN_OTP=" + otp,
 		},
-		"expect", "-f", f.Name())
+		gexec.ExtCmdExpect, "-f", f.Name())
 }
 
 type ethzCredentials struct {

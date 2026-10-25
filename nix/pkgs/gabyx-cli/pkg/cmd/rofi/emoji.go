@@ -1,6 +1,8 @@
 package roficmd
 
 import (
+	gexec "gabyx-cli/pkg/exec"
+
 	"github.com/gabyx/quitsh/pkg/exec"
 	"github.com/spf13/cobra"
 )
@@ -12,8 +14,8 @@ func addEmojiCmd(parent *cobra.Command) {
 		Args:  cobra.NoArgs,
 		RunE: func(_cmd *cobra.Command, _args []string) error {
 			return exec.NewCommandCtx(".").
-				Check("rofimoji",
-					"--clipboarder", "wl-copy",
+				Check(gexec.ExtCmdRofimoji,
+					"--clipboarder", gexec.ExtCmdWlCopy,
 					"--action", "type", "copy",
 					"--keybinding-copy", "Ctrl-y")
 		},

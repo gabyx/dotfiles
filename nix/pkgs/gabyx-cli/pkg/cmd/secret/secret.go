@@ -5,6 +5,7 @@ import (
 	"path"
 	"strings"
 
+	gexec "gabyx-cli/pkg/exec"
 	"gabyx-cli/pkg/prompt"
 
 	"github.com/gabyx/quitsh/pkg/errors"
@@ -33,7 +34,7 @@ func ensureBitwardenSession() error {
 		return nil
 	}
 
-	bw := exec.NewCmdCtxBuilder().BaseCmd("bw").Build()
+	bw := exec.NewCmdCtxBuilder().BaseCmd(gexec.ExtCmdBw).Build()
 
 	loggedIn := false
 	err := bw.CheckWithEC(exec.ExitCode0And1SuccessVar(&loggedIn), "login", "--check")
@@ -47,7 +48,7 @@ func ensureBitwardenSession() error {
 	}
 
 	bwPass := exec.NewCmdCtxBuilder().
-		BaseCmd("bw").
+		BaseCmd(gexec.ExtCmdBw).
 		Env("PASSWORD=" + password).
 		Build()
 

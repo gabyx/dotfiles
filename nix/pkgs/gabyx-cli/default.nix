@@ -40,7 +40,7 @@ let
 
     # This hash defines the fixed-output derivation of the dependencies (FOD).
     # Set it to `""` and run `just gabyx-cli::package-nix` to get the new hash.
-    vendorHash = "sha256-FufTWAICMatjhSQyDx+FJ/y5yAGFUIE5vdsWscn83Ts=";
+    vendorHash = "sha256-u8XIY+KDn4emzDvAHNG4om61G5MEYbv6uBIuJ6R2XuM=";
 
     nativeBuildInputs = [
       installShellFiles

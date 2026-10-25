@@ -1,6 +1,8 @@
 package roficmd
 
 import (
+	gexec "gabyx-cli/pkg/exec"
+
 	"github.com/gabyx/quitsh/pkg/exec"
 	"github.com/spf13/cobra"
 )
@@ -12,8 +14,8 @@ func addPowerCmd(parent *cobra.Command) {
 		Args:  cobra.NoArgs,
 		RunE: func(_cmd *cobra.Command, _args []string) error {
 			return exec.NewCommandCtx(".").
-				Check("rofi", "-show", "menu",
-					"-modi", "menu:rofi-power-menu --symbols-font 'JetBrainsMono Nerd Font'")
+				Check(gexec.ExtCmdRofi, "-show", "menu",
+					"-modi", "menu:"+gexec.ExtCmdRofiPowerMenu+" --symbols-font 'JetBrainsMono Nerd Font'")
 		},
 	})
 }

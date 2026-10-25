@@ -5,6 +5,7 @@ import (
 	"path"
 	"runtime"
 
+	gexec "gabyx-cli/pkg/exec"
 	"gabyx-cli/pkg/sudo"
 
 	"github.com/gabyx/quitsh/pkg/errors"
@@ -26,7 +27,7 @@ func IsMounted(pool string, dataset string) (bool, error) {
 	out, err := exec.NewCmdCtxBuilder().
 		Quiet().
 		Build().
-		Get("zfs", "get", "mounted", path.Join(pool, dataset), "-o", "value", "-H")
+		Get(gexec.ExtCmdZfs, "get", "mounted", path.Join(pool, dataset), "-o", "value", "-H")
 	if err != nil {
 		return false, err
 	}
@@ -51,12 +52,12 @@ func Mount(pool string, dataset string, dir string) error {
 	log.Info("Mount ZFS dataset.", "dataset", ds, "mountpoint", mount)
 
 	sudox := sudo.NewCommandCtx(".")
-	err = sudox.Check("zfs", "set", "-u", "mountpoint="+mount, ds)
+	err = sudox.Check(gexec.ExtCmdZfs, "set", "-u", "mountpoint="+mount, ds)
 	if err != nil {
 		return err
 	}
 
-	err = sudox.WithStdin(os.Stdin).Check("zfs", "mount", "-l", ds)
+	err = sudox.WithStdin(os.Stdin).Check(gexec.ExtCmdZfs, "mount", "-l", ds)
 	if err != nil {
 		return errors.AddContext(err, "could not mount dataset '%s'", ds)
 	}
@@ -78,7 +79,7 @@ func Unmount(pool string, dataset string) error {
 	}
 
 	log.Info("Unmount ZFS dataset.", "dataset", ds)
-	err = sudo.NewCommandCtx(".").Check("zfs", "unmount", ds)
+	err = sudo.NewCommandCtx(".").Check(gexec.ExtCmdZfs, "unmount", ds)
 	if err != nil {
 		return errors.AddContext(err, "could not unmount dataset '%s'", ds)
 	}
@@ -90,7 +91,7 @@ func Unmount(pool string, dataset string) error {
 func ImportAll() error {
 	log.Info("Import all ZFS pools.")
 
-	return sudo.NewCommandCtx(".").Check("zpool", "import", "-f", "-a")
+	return sudo.NewCommandCtx(".").Check(gexec.ExtCmdZpool, "import", "-f", "-a")
 }
 
 // PoolExists returns `true` if the pool `pool` is imported.
@@ -98,7 +99,7 @@ func PoolExists(pool string) (exists bool, err error) {
 	err = exec.NewCmdCtxBuilder().
 		ExitCodeHandler(exec.ExitCode0And1SuccessVar(&exists)).
 		Build().
-		Check("zpool", "list", "-H", "-o", "name", pool)
+		Check(gexec.ExtCmdZpool, "list", "-H", "-o", "name", pool)
 
 	return exists, err
 }
@@ -107,7 +108,7 @@ func PoolExists(pool string) (exists bool, err error) {
 func Import(pool string) error {
 	log.Info("Import ZFS pool.", "pool", pool)
 
-	return sudo.NewCommandCtx(".").Check("zpool", "import", pool)
+	return sudo.NewCommandCtx(".").Check(gexec.ExtCmdZpool, "import", pool)
 }
 
 // CreatePool creates the pool `pool` on the vdevs `vdevs`.
@@ -115,7 +116,7 @@ func Import(pool string) error {
 func CreatePool(pool string, opts []string, vdevs ...string) error {
 	log.Info("Create ZFS pool.", "pool", pool, "vdevs", vdevs)
 
-	args := append([]string{"zpool", "create"}, opts...)
+	args := append([]string{gexec.ExtCmdZpool, "create"}, opts...)
 	args = append(args, pool)
 	args = append(args, vdevs...)
 
@@ -128,7 +129,7 @@ func DatasetExists(pool string, dataset string) (exists bool, err error) {
 		Quiet().
 		ExitCodeHandler(exec.ExitCode0And1SuccessVar(&exists)).
 		Build().
-		Check("zfs", "list", "-H", "-o", "name", path.Join(pool, dataset))
+		Check(gexec.ExtCmdZfs, "list", "-H", "-o", "name", path.Join(pool, dataset))
 
 	return exists, err
 }
@@ -139,7 +140,7 @@ func CreateDataset(pool string, dataset string, props ...string) error {
 	ds := path.Join(pool, dataset)
 	log.Info("Create ZFS dataset.", "dataset", ds, "properties", props)
 
-	args := []string{"zfs", "create"}
+	args := []string{gexec.ExtCmdZfs, "create"}
 	for _, p := range props {
 		args = append(args, "-o", p)
 	}
@@ -154,7 +155,7 @@ func MountAt(pool string, dataset string, mountpoint string) error {
 	ds := path.Join(pool, dataset)
 	sudox := sudo.NewCommandCtx(".")
 
-	err := sudox.Check("zfs", "set", "mountpoint="+mountpoint, ds)
+	err := sudox.Check(gexec.ExtCmdZfs, "set", "mountpoint="+mountpoint, ds)
 	if err != nil {
 		return err
 	}
@@ -166,5 +167,5 @@ func MountAt(pool string, dataset string, mountpoint string) error {
 
 	log.Info("Mount ZFS dataset.", "dataset", ds, "mountpoint", mountpoint)
 
-	return sudox.Check("zfs", "mount", ds)
+	return sudox.Check(gexec.ExtCmdZfs, "mount", ds)
 }

@@ -5,6 +5,8 @@ import (
 	"os"
 	"path"
 
+	gexec "gabyx-cli/pkg/exec"
+
 	"github.com/gabyx/quitsh/pkg/exec"
 	"github.com/spf13/cobra"
 )
@@ -52,11 +54,11 @@ func networkEditor() error {
 	appletDone := make(chan struct{})
 	go func() {
 		// The error is ignored, cancelling kills `nm-applet`.
-		_ = exec.NewCmdCtxBuilder().Context(ctx).Build().Check("nm-applet")
+		_ = exec.NewCmdCtxBuilder().Context(ctx).Build().Check(gexec.ExtCmdNmApplet)
 		close(appletDone)
 	}()
 
-	err := exec.NewCommandCtx(".").Check("nm-connection-editor")
+	err := exec.NewCommandCtx(".").Check(gexec.ExtCmdNmConnectionEditor)
 
 	cancel()
 	<-appletDone

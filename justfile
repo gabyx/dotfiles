@@ -437,7 +437,8 @@ start *args:
             ]
         } else if $remote_viewer == "false" {
             [
-                "-display" "gtk,gl=on"
+                "-device virtio-vga-gl"
+                "-display gtk,gl=on"
             ]
         } else {
             # Leave all options.

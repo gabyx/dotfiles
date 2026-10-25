@@ -1,6 +1,8 @@
 package roficmd
 
 import (
+	gexec "gabyx-cli/pkg/exec"
+
 	"github.com/gabyx/quitsh/pkg/exec"
 	"github.com/spf13/cobra"
 )
@@ -12,7 +14,7 @@ func addLauncherCmd(parent *cobra.Command) {
 		Args:  cobra.NoArgs,
 		RunE: func(_cmd *cobra.Command, _args []string) error {
 			return exec.NewCommandCtx(".").
-				Check("rofi", "-modi", "run,drun,window", "-show", "drun", "-show-icons")
+				Check(gexec.ExtCmdRofi, "-modi", "run,drun,window", "-show", "drun", "-show-icons")
 		},
 	})
 }

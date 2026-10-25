@@ -5,6 +5,8 @@ import (
 	"slices"
 	"strings"
 
+	gexec "gabyx-cli/pkg/exec"
+
 	"deedles.dev/xiter"
 	"github.com/gabyx/quitsh/pkg/exec"
 	"github.com/gabyx/quitsh/pkg/log"
@@ -53,7 +55,7 @@ func activeVPN() string {
 
 	// Check VPN over NetworkManager.
 	lines, err := exec.NewCommandCtx(".").
-		GetSplit("nmcli", "--fields", "NAME,TYPE", "connection", "show", "--active")
+		GetSplit(gexec.ExtCmdNmcli, "--fields", "NAME,TYPE", "connection", "show", "--active")
 	if err != nil {
 		log.ErrorE(err, "could not get connections")
 	} else {

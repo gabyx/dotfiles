@@ -1,6 +1,7 @@
 package windowingcmd
 
 import (
+	gexec "gabyx-cli/pkg/exec"
 	"gabyx-cli/pkg/interactive"
 
 	"github.com/gabyx/quitsh/pkg/errors"
@@ -35,28 +36,28 @@ func commands() []command {
 		gabyx("power-menu", "Show the power menu.", "rofi", "power"),
 		gabyx("wireless-menu", "Show the wireless menu.", "rofi", "network", "wireless"),
 		gabyx("network-menu", "Show the network editor.", "rofi", "network", "editor"),
-		exe("bluetooth-menu", "Show the bluetooth menu.", "rofi-bluetooth"),
+		exe("bluetooth-menu", "Show the bluetooth menu.", gexec.ExtCmdRofiBluetooth),
 		gabyx("emoji-menu", "Show the emoji menu.", "rofi", "emoji"),
 		gabyx("systemd-menu", "Show the systemd menu.", "rofi", "systemd"),
 		gabyx("passwdmgr-menu", "Show the password manager menu.", "rofi", "password"),
 		gabyx("procs-menu", "Show the process viewer.", "term", "start", "btop"),
-		exe("sound-menu", "Show the sound settings.", "pavucontrol"),
-		exe("calculator-menu", "Show the calculator.", "qalculate-gtk"),
+		exe("sound-menu", "Show the sound settings.", gexec.ExtCmdPavucontrol),
+		exe("calculator-menu", "Show the calculator.", gexec.ExtCmdQalculateGtk),
 		gabyx("screenshot-menu", "Show the screenshot menu.", "rofi", "screenshot"),
 		gabyx("screenrecord-menu", "Show the screen recording menu.", "rofi", "screenrecord"),
 		gabyx("color-picker-menu", "Show the color picker.", "rofi", "color-picker"),
-		exe("copy-menu", "Show the clipboard history.", "copyq", "toggle"),
+		exe("copy-menu", "Show the clipboard history.", gexec.ExtCmdCopyq, "toggle"),
 
-		exe("brightness-up", "Increase the brightness.", "brightnessctl", "set", "10%+"),
-		exe("brightness-down", "Decrease the brightness.", "brightnessctl", "set", "10%-"),
+		exe("brightness-up", "Increase the brightness.", gexec.ExtCmdBrightnessctl, "set", "10%+"),
+		exe("brightness-down", "Decrease the brightness.", gexec.ExtCmdBrightnessctl, "set", "10%-"),
 
-		exe("clipboard", "Start the clipboard manager.", "copyq", "--start-server"),
-		exe("clipboard-menu", "Show the clipboard history.", "copyq", "toggle"),
+		exe("clipboard", "Start the clipboard manager.", gexec.ExtCmdCopyq, "--start-server"),
+		exe("clipboard-menu", "Show the clipboard history.", gexec.ExtCmdCopyq, "toggle"),
 
-		exe("notifications", "Start the notification daemon.", "swaync"),
-		exe("notification-menu", "Show the notification center.", "swaync-client", "-t", "-sw"),
+		exe("notifications", "Start the notification daemon.", gexec.ExtCmdSwaync),
+		exe("notification-menu", "Show the notification center.", gexec.ExtCmdSwayncClient, "-t", "-sw"),
 
-		exe("nightshifter", "Start the night shift indicator.", "gammastep-indicator"),
+		exe("nightshifter", "Start the night shift indicator.", gexec.ExtCmdGammastepIndicator),
 	}
 }
 
