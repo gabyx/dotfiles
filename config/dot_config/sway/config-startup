@@ -17,5 +17,5 @@ exec $comm-matrix
 exec $comm-slack
 exec $creds
 
-exec ~/.config/sway/scripts/start-up.sh
+exec gabyx sway startup >~/.sway-startup.log 2>&1
 ### ===========================================================================

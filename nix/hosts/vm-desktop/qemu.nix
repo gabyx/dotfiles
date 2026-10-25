@@ -14,7 +14,7 @@ in
 
   services = {
     spice-vdagentd.enable = true;
-    qemuGuest.enable = true;
+    # qemuGuest.enable = true;
   };
 
   programs.sway = {
@@ -26,6 +26,10 @@ in
   virtualisation = {
     cores = 8;
     memorySize = memSize;
+    resolution = {
+      x = 1920;
+      y = 1080;
+    };
 
     # Three context types are available for the virtio-gpu device:
     #

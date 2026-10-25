@@ -59,6 +59,9 @@ const (
 	// Needed in: sudo (all commands run with root rights).
 	ExtCmdSudo = "sudo"
 
+	// Needed in: sway, tmux.
+	ExtCmdTmux = "tmux"
+
 	// Needed in: sway, windowing.
 	ExtCmdSwaymsg = "swaymsg"
 
@@ -66,7 +69,6 @@ const (
 	ExtCmdWezterm = "wezterm"
 
 	// Needed in: tmux.
-	ExtCmdTmux      = "tmux"
 	ExtCmdTmuxifier = "tmuxifier"
 
 	// Needed in: vpn.
