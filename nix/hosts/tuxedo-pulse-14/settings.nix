@@ -4,6 +4,7 @@
 
   settings = {
     user.chezmoi.workspace = "work";
+    user.profile = "home-gabyx-work";
 
     networking.wlan-profiles.enable = true;
 

@@ -60,6 +60,7 @@ func AddCmd(root *cobra.Command) {
 	)
 
 	addCommands(windowingCmd)
+	addStartupCmd(windowingCmd)
 	addDisplayManagerCmd(windowingCmd)
 	addWindowMgrExecCmd(windowingCmd)
 
@@ -67,7 +68,10 @@ func AddCmd(root *cobra.Command) {
 }
 
 func getWindowProperties() error {
-	out, err := exec.NewCmdCtxBuilder().Quiet().Build().Get(gexec.ExtCmdSwaymsg, "-t", "get_tree", "--raw")
+	out, err := exec.NewCmdCtxBuilder().
+		Quiet().
+		Build().
+		Get(gexec.ExtCmdSwaymsg, "-t", "get_tree", "--raw")
 	if err != nil {
 		return err
 	}
@@ -76,7 +80,10 @@ func getWindowProperties() error {
 }
 
 func getInputProperties(deviceType string) error {
-	out, err := exec.NewCmdCtxBuilder().Quiet().Build().Get(gexec.ExtCmdSwaymsg, "-t", "get_inputs", "--raw")
+	out, err := exec.NewCmdCtxBuilder().
+		Quiet().
+		Build().
+		Get(gexec.ExtCmdSwaymsg, "-t", "get_inputs", "--raw")
 	if err != nil {
 		return err
 	}

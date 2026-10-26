@@ -1,11 +1,11 @@
 spawn-at-startup "avizo-service"
 spawn-sh-at-startup "swaybg -i ~/.config/wallpapers/background-sand.jpg -m fill"
 spawn-at-startup "waybar"
-spawn-at-startup "gabyx" "windowing" "clipboard"
+spawn-at-startup "gabyx windowing clipboard"
 
 spawn-sh-at-startup "gabyx windowing display-manager 2>&1 > ~/.way-displays.log"
 
-spawn-at-startup "gabyx" "windowing" "notifications"
+spawn-at-startup "gabyx windowing notifications"
 
 spawn-at-startup "evolution"
 spawn-at-startup "google-chrome-stable"
@@ -14,4 +14,4 @@ spawn-at-startup "element-desktop"
 spawn-at-startup "slack"
 spawn-at-startup "bitwarden"
 
-spawn-sh-at-startup "~/.config/niri/scripts/start-up.sh"
+spawn-sh-at-startup "gabyx windowing startup >~/.window-mgr-startup.log 2>&1"

@@ -7,7 +7,7 @@ in
     (modulesPath + "/virtualisation/qemu-vm.nix")
   ];
 
-  services.qemuGuest.enable = true;
+  # services.qemuGuest.enable = true;
 
   # Log in as `nixos` on the console without a password.
   services.getty.autologinUser = "nixos";

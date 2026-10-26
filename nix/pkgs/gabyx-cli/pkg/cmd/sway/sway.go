@@ -12,7 +12,6 @@ func AddCmd(root *cobra.Command) {
 
 	addAssignWorkspacesCmd(swayCmd)
 	addRunInFocusedCwdCmd(swayCmd)
-	addStartupCmd(swayCmd)
 
 	root.AddCommand(swayCmd)
 }
