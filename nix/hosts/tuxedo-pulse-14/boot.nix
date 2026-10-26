@@ -2,10 +2,6 @@
   pkgs,
   ...
 }:
-let
-  # Use script: `scripts/compute-swap-offset.nix`.
-  swapConfig = import ./swap-offset.nix;
-in
 {
   boot = {
     # Bootloader ================================================================
@@ -24,6 +20,8 @@ in
             halt
           }
         '';
+
+        configurationLimit = 5;
       };
       efi = {
         canTouchEfiVariables = true;

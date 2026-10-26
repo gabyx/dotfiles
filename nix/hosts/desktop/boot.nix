@@ -3,7 +3,6 @@
 }:
 {
   boot = {
-
     # Bootloader ================================================================
     loader = {
       grub = {
@@ -20,6 +19,8 @@
             halt
           }
         '';
+
+        configurationLimit = 5;
       };
       efi = {
         canTouchEfiVariables = true;
