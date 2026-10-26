@@ -1,0 +1,10 @@
+## SwayFX Settings ============================================================
+# Only included (over `conf`) if the Sway package is SwayFX.
+corner_radius 10
+blur enable
+shadows enable
+titlebar_separator enable
+
+layer_effects "waybar" {
+    corner_radius 0
+}

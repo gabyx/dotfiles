@@ -48,6 +48,19 @@ let
     envs:
     (builtins.concatStringsSep "\n" (lib.mapAttrsToList (k: v: ''export ${k}="${toString v}";'') envs));
 
+  # The session environment of the window manager with desktop name `desktop`.
+  sessionEnvs = waylandEnvs // desktopEnvs;
+
+  # `/etc/niri/env.kdl`, included in `~/.config/niri/config.kdl`.
+  niriEnv = ''
+    environment {
+    ${lib.concatLines (lib.mapAttrsToList (k: v: "    ${k} \"${toString v}\"") sessionEnvs)}
+    }
+  '';
+
+  # `/etc/hypr/env.conf`, sourced in `~/.config/hypr/hyprland.conf`.
+  hyprEnv = "${lib.concatLines (lib.mapAttrsToList (k: v: "env = ${k},${toString v}") sessionEnvs)}";
+
   adjustKeyring = ''
     # Adds some more components to the gnome keyring daemon.
     # Only start stuff which is not owned by PAM.
@@ -191,21 +204,22 @@ in
 
       extraPackages = commonPkgs;
 
-      extraSessionCommands = (envToShell waylandEnvs) + (envToShell desktopEnvs) + adjustKeyring;
+      extraSessionCommands = (envToShell sessionEnvs) + adjustKeyring;
     };
     # ===========================================================================
 
     environment.systemPackages = lib.mkIf (isHyprland || isNiri) commonPkgs;
 
+    # Session environment for Niri and Hyprland (Sway sets it in `extraSessionCommands`).
+    environment.etc = {
+      "niri/env.kdl".text = niriEnv;
+      "hypr/env.conf".text = hyprEnv;
+    };
+
     environment.variables = {
       XDG_SESSION_TYPE = sessionType;
     }
     // desktopEnvs;
-
-    # Read by `gabyx windowing ...` commands.
-    environment.sessionVariables = {
-      GABYX_WINDOW_MANAGER = windowMgr;
-    };
 
     # To make screencasting work in Chrome and other Apps communicating
     # over DBus.

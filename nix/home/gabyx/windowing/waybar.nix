@@ -3,6 +3,11 @@ let
   windowMgr = lib.strings.toLower osConfig.settings.windowing.manager;
 in
 {
+  xdg.configFile."waybar/style.css" = {
+    force = true;
+    source = ../../config/waybar/style.css;
+  };
+
   xdg.configFile."waybar/config" = {
     force = true;
     text = lib.generators.toJSON { } {

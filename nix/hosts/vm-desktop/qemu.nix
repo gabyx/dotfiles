@@ -18,6 +18,7 @@ in
   };
 
   programs.sway = {
+    # Has GPU rendering troubles.
     package = lib.mkForce pkgsUnstable.sway;
   };
 

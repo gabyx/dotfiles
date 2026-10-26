@@ -1,4 +1,4 @@
-package swaycmd
+package windowingcmd
 
 import (
 	"os"

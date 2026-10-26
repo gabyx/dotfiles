@@ -20,7 +20,7 @@
     ./programs.nix
     ./services.nix
 
-    ./waybar/config.nix
+    ./windowing
     ./display.nix
 
     ./xdg.nix

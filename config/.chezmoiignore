@@ -24,11 +24,9 @@ docs
 .face
 .config/Bazecor
 .config/flashfocus
-.config/hypr
 .config/mako
 .config/rofi
 .config/avizo
-.config/sway
 .config/swaylock
 .config/swaync
 .config/wallpapers
@@ -37,8 +35,6 @@ docs
 .config/goa-1.0
 .config/evolution
 {{- end }}
-
-.config/nvim-old-to-delete
 
 {{- if eq .chezmoi.osRelease.id "nixos" }}
 # Ignore only on NixOS
@@ -51,10 +47,3 @@ docs
 
 # Google Chrome Bookmarks
 .config/google-chrome
-
-# Switch display settings depending on work
-{{- if eq .workspace "private" }}
-.config/sway/config-work
-{{- else }}
-.config/sway/config-private
-{{- end }}

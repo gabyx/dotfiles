@@ -2,6 +2,7 @@ package windowingcmd
 
 import (
 	"os"
+	"strings"
 
 	gexec "gabyx-cli/pkg/exec"
 	"gabyx-cli/pkg/interactive"
@@ -14,7 +15,7 @@ import (
 
 // Environment variable with the window manager (`sway`, `niri` or `hyprland`),
 // set in `nix/nixos/windowing.nix`.
-const envWindowManager = "GABYX_WINDOW_MANAGER"
+const envWindowManager = "XDG_SESSION_DESKTOP"
 
 const (
 	wmSway     = "sway"
@@ -29,7 +30,7 @@ func addDisplayManagerCmd(parent *cobra.Command) {
 		// All arguments are passed to the display manager.
 		DisableFlagParsing: true,
 		RunE: func(_cmd *cobra.Command, args []string) error {
-			wm := os.Getenv(envWindowManager)
+			wm := strings.ToLower(os.Getenv(envWindowManager))
 
 			switch wm {
 			case wmSway, wmNiri:
@@ -49,7 +50,7 @@ func addWindowMgrExecCmd(parent *cobra.Command) {
 		// All arguments are passed to the window manager.
 		DisableFlagParsing: true,
 		RunE: func(_cmd *cobra.Command, args []string) error {
-			wmArgs, err := windowMgrExecArgs(os.Getenv(envWindowManager))
+			wmArgs, err := windowMgrExecArgs(strings.ToLower(os.Getenv(envWindowManager)))
 			if err != nil {
 				return die("%s", err.Error())
 			}
@@ -62,7 +63,7 @@ func addWindowMgrExecCmd(parent *cobra.Command) {
 // windowMgrExecArgs returns the command of the window manager `wm`
 // to execute a command.
 func windowMgrExecArgs(wm string) ([]string, error) {
-	switch wm {
+	switch strings.ToLower(wm) {
 	case wmSway:
 		return []string{gexec.ExtCmdSwaymsg, "exec"}, nil
 	case wmNiri:
