@@ -59,7 +59,7 @@
     # Nixpkgs (stuff for the system.)
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     # Nixpkgs (unstable stuff for certain packages.)
-    nixpkgs-unstable.url = "github:nixos/nixpkgs?rev=56c02bc00adcf003215cc4bd996d6efaf4cff188";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs?rev=fe13242281a67641c0102cdb1087f0ebe586c7df";
     multiverse.url = "github:fzakaria/nixpkgs-multiverse";
 
     # The devenv module to create good development shells.

@@ -34,6 +34,9 @@
         "recursive-nix"
       ];
 
+      # Do not give up when building stuff just continue.
+      keep-going = true;
+
       use-xdg-base-directories = true;
 
       lint-url-literals = "fatal";

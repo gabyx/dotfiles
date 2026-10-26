@@ -160,7 +160,6 @@ in
     # Dictionaries
     pkgsUnstable.aspell
     pkgsUnstable.aspellDicts.en
-    pkgsUnstable.aspellDicts.en-computers
     pkgsUnstable.hunspell
     pkgsUnstable.hunspellDicts.en-us
   ];

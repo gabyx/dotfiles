@@ -5,11 +5,14 @@
 {
   perSystem =
     {
-      pkgs,
+      pkgsUnstable,
       inputs',
       self',
       ...
     }:
+    let
+      pkgs = pkgsUnstable;
+    in
     {
       repo.devenvModules =
         let
@@ -66,20 +69,20 @@
                 pkgs.direnv # Auto apply stuff on entering directory `cd`.
                 pkgs.just # Command executor like `make` but better.
                 pkgs.fd
-
+                pkgs.cachix
                 pkgs.nushell
               ];
             }
           ];
 
-          default = [
+          default = common ++ [
             {
               quitsh.toolchains = [ "general" ];
               packages = [
-                pkgs.nix-output-monitor
+                pkgsUnstable.nix-output-monitor
                 inputs'.multiverse.packages.mvs
-                pkgs.caligula
 
+                pkgsUnstable.caligula # Burn ISOs to USB.
                 self'.packages.gabyx-cli
               ];
 

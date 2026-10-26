@@ -10,9 +10,9 @@ let
   config = {
     allowUnfree = true;
 
-    permittedInsecurePackages = [
-      "electron-39.8.10"
-    ];
+    # permittedInsecurePackages = [
+    #   "electron-39.8.10"
+    # ];
 
     nvidia.acceptLicense = true;
   };
@@ -41,16 +41,18 @@ in
       pkgs = stable system;
       mvs = mkMultiverse system;
 
-      # Use a 7 days behind unstable for security reasons.
-      pkgsUnstableCooldown = mvs.daysBehind "34ab99075ac4f7e40cf037eef32cb1c360bb85e9" 7;
+      # Use a 7 days behind a pinned unstable for security reasons.
+      # To update run: `nix flake update multiverse` and `direnv reload`
+      # and check the assert below and take the unstable tip commit.
+      pkgsUnstableCooldown = mvs.daysBehind "3ec636362e1816bc2f0888fa0fa2c69f1bc9e504" 7;
 
       pkgsUnstable =
         assert lib.assertMsg (pkgsUnstableCooldown.multiverse.rev == inputs.nixpkgs-unstable.rev) ''
-          Input 'nixpkgs-unstable' must be
-          aligned with cooldown 7 days behind "${pkgsUnstableCooldown.multiverse.rev}".
+          Input 'nixpkgs' must be
+          aligned with cooldown 7 days behind: "${pkgsUnstableCooldown.multiverse.rev}".
           NixOS unstable tip: '${mvs.tip.multiverse.rev}'.
         '';
-        pkgsUnstableCooldown;
+        lib.trace "NixOS unstable tip: '${mvs.tip.multiverse.rev}'." pkgsUnstableCooldown;
     in
     {
       _module.args.pkgs = pkgs;

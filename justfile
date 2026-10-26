@@ -207,8 +207,7 @@ rebuild *args:
             print $"nixos-rebuild ($cmd | str join ' ')"
             print "----"
 
-            ^nixos-rebuild --sudo boot --flake $".#($host)"
-
+            ^nixos-rebuild ...$cmd
             $how = "test"
         }
 
@@ -239,11 +238,6 @@ history:
         if ("/nix/var/nix/profiles/system-profiles/test" | path exists) {
             print "History in 'test' profile:"
             ^nix profile history --profile /nix/var/nix/profiles/system-profiles/test
-        }
-
-        if ("/nix/var/nix/profiles/system-profiles/music" | path exists) {
-            print "History in 'music' profile:"
-            ^nix profile history --profile /nix/var/nix/profiles/system-profiles/music
         }
     }
 
@@ -362,10 +356,6 @@ gc:
         print "Remove test profile"
         rm-rf "/nix/var/nix/profiles/system-profiles/test"
         rm-rf "/nix/var/nix/profiles/system-profiles/test-*"
-
-        print "Remove steam profile"
-        rm-rf "/nix/var/nix/profiles/system-profiles/steam"
-        rm-rf "/nix/var/nix/profiles/system-profiles/steam-*"
 
         print "Remove all generations older than 60 days"
         ^sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 60d

@@ -24,7 +24,7 @@ let
           modules = [
             {
               mnw = {
-                appName = name;
+                appName = lib.mkForce name;
               };
 
               vim = {

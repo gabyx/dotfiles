@@ -116,7 +116,7 @@ s="$HOME/.config/zsh/.zshrc-tmux.zsh"
 # if command -v direnv &>/dev/null; then
 #     eval "$(direnv hook zsh)"
 # fi
-# Direnv-Instant.
+# Direnv-Instant. (only use one of both)
 if command -v direnv-instant &>/dev/null; then
     eval "$(direnv-instant hook zsh)"
 fi

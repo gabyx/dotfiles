@@ -6,6 +6,7 @@
   cmake,
   pkg-config,
   writableTmpDirAsHomeHook,
+  writeText,
   copyDesktopItems,
   makeDesktopItem,
   patchelf,
@@ -92,6 +93,12 @@ stdenv.mkDerivation (finalAttrs: {
     tag = "v${finalAttrs.version}";
     fetchSubmodules = true;
     hash = "sha256-eqytMDN727rAUFCWkr1eSYpPwTdjtgPKpl1iusL/oWs=";
+
+    # The original source has trouble.
+    gitConfigFile = writeText "gitconfig" ''
+      [url "https://github.com/eigen-mirror/eigen"]
+        insteadOf = https://gitlab.com/libeigen/eigen
+    '';
   };
 
   nativeBuildInputs = [
