@@ -208,9 +208,9 @@ in
 
       "custom/agenda" = {
         format = "{}";
-        exec = "gabyx waybar next-meeting --config ~/.config/khal/nextmeeting-conf.json";
+        exec = "gabyx waybar next-meeting";
         on-click-right = "kitty -- /usr/bin/env bash -c ikhal";
-        on-click = "gabyx waybar next-meeting --config ~/.config/khal/nextmeeting-conf.json --open-url";
+        on-click = "gabyx waybar next-meeting --open-url";
         interval = 59;
         return-type = "json";
         tooltip = "true";

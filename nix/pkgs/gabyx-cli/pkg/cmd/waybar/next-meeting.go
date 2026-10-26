@@ -8,6 +8,7 @@ import (
 	"math"
 	"net/url"
 	"os"
+	"path"
 	"regexp"
 	"slices"
 	"strings"
@@ -17,6 +18,7 @@ import (
 
 	"github.com/gabyx/quitsh/pkg/errors"
 	"github.com/gabyx/quitsh/pkg/exec"
+	fs "github.com/gabyx/quitsh/pkg/filesystem"
 	"github.com/gabyx/quitsh/pkg/log"
 	"github.com/spf13/cobra"
 )
@@ -76,8 +78,6 @@ func addNextMeetingCmd(parent *cobra.Command) {
 	}
 
 	cmd.Flags().
-		StringVar(&args.config, "config", "", "Config file to read (keys: 'calendars', 'max_title_length').")
-	cmd.Flags().
 		BoolVar(&args.openURL, "open-url", false, "Open the meeting URL of the next meeting.")
 
 	parent.AddCommand(cmd)
@@ -86,15 +86,22 @@ func addNextMeetingCmd(parent *cobra.Command) {
 func nextMeeting(args *nextMeetingArgs) error {
 	conf := nextMeetingConfig{Calendars: nil, MaxTitleLength: defaultMaxTitleLength}
 
-	if args.config != "" {
-		content, err := os.ReadFile(args.config)
-		if err != nil {
-			return err
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		return err
+	}
+
+	configFile := path.Join(homeDir, "khal/nextmeeting-conf.json")
+
+	if fs.Exists(configFile) {
+		content, e := os.ReadFile(configFile)
+		if e != nil {
+			return e
 		}
 
-		err = json.Unmarshal(content, &conf)
-		if err != nil {
-			return errors.AddContext(err, "could not read config '%s'", args.config)
+		e = json.Unmarshal(content, &conf)
+		if e != nil {
+			return errors.AddContext(e, "could not read config '%s'", args.config)
 		}
 	}
 
