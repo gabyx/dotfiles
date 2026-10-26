@@ -54,7 +54,6 @@
 
       trusted-users = [
         "root"
-        "@wheel"
       ];
     };
 
