@@ -14,6 +14,7 @@
 
   environment.systemPackages = [
     pkgsUnstable.ardour # Music recording.
+    pkgsUnstable.reaper # Music recording.
 
     pkgsUnstable.carla # Music plugins patchbar.
     pkgsUnstable.calf # Calf music plugins.
@@ -62,7 +63,7 @@
   };
 
   # Probably not super good to use memory for the temp. file system.
-  tmp.useTmpfs = lib.mkForce false;
+  boot.tmp.useTmpfs = lib.mkForce false;
 
   # The musnix sets only PAM loginLimits but this is not used when starting with
   # sway/(hyprland?) which starts over systemd which override PAM limits?.
