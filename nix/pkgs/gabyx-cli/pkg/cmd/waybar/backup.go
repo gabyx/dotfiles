@@ -6,9 +6,11 @@ import (
 	"path"
 	"strconv"
 	"strings"
+	"time"
 
 	gexec "gabyx-cli/pkg/exec"
 
+	qStr "github.com/gabyx/quitsh/pkg/common/strings"
 	"github.com/gabyx/quitsh/pkg/exec"
 	"github.com/gabyx/quitsh/pkg/log"
 	"github.com/spf13/cobra"
@@ -82,9 +84,10 @@ func backupStatus(reportDir string) error {
 	}
 
 	tooltip := strings.Builder{}
-	tooltip.WriteString("Backups:\n")
+	tooltip.WriteString("Backup Status:\n")
 	for _, l := range lines {
-		tooltip.WriteString(l + "\n")
+		tooltip.WriteString(l)
+		tooltip.WriteString("\n")
 	}
 
 	o := output{
@@ -104,13 +107,13 @@ func backupUnitStatus(reportDir string, name string, running bool) (backupState,
 		return backupRunning, "· 🏃🏽‍♀️ '" + name + "' ..."
 	}
 
-	status := lastStatus(reportDir, name)
+	state, msg := lastStatus(reportDir, name)
 
-	switch {
-	case strings.Contains(status, "success"):
-		return backupSuccess, "· " + status
-	case strings.Contains(status, "failure"):
-		return backupFailure, "· " + status
+	switch state {
+	case backupSuccess:
+		return state, Bullet + " " + msg
+	case backupFailure:
+		return state, Bullet + " " + msg
 	default:
 		log.Debug("Could not determine status.", "backup", name)
 
@@ -138,15 +141,31 @@ func unitRunning(unit string) bool {
 
 // lastStatus returns the last line of the status file of backup `name`
 // broken into lines of `backupStatusWidth` characters.
-func lastStatus(reportDir string, name string) string {
-	content, err := os.ReadFile(path.Join(reportDir, name, "status"))
+func lastStatus(reportDir string, name string) (state backupState, msg string) {
+	file := path.Join(reportDir, name, "status")
+	log.Infof("Reading '%s'", file)
+	state = backupNone
+
+	content, err := os.ReadFile(file)
 	if err != nil {
-		return ""
+		log.ErrorE(err, "could not read file")
+
+		return
 	}
 
-	lines := strings.Split(strings.TrimRight(string(content), "\n"), "\n")
+	lines := qStr.SplitLines(strings.TrimSpace(string(content)))
+	last := lines[len(lines)-1]
+	log.Infof("Last run: %v", last)
 
-	return breakLine(lines[len(lines)-1], backupStatusWidth)
+	if strings.Contains(last, backupSuccess.String()) {
+		state = backupSuccess
+	} else if strings.Contains(last, backupFailure.String()) {
+		state = backupFailure
+	}
+
+	msg = breakLine(last, backupStatusWidth)
+
+	return
 }
 
 // breakLine appends `\n  ` after every `width` characters of `s`.
@@ -155,7 +174,8 @@ func breakLine(s string, width int) string {
 	b := strings.Builder{}
 
 	for len(runes) >= width {
-		b.WriteString(string(runes[:width]) + "\n  ")
+		b.WriteString(string(runes[:width]))
+		b.WriteString("\n  ")
 		runes = runes[width:]
 	}
 	b.WriteString(string(runes))
@@ -166,19 +186,32 @@ func breakLine(s string, width int) string {
 // snapshotCount returns the line with the number of snapshots of backup `name`.
 // The snapshots file is the output of `restic snapshots --json`.
 func snapshotCount(reportDir string, name string) string {
-	var snapshots []json.RawMessage
+	file := path.Join(reportDir, name, "snapshots")
+	log.Infof("Reading '%s'", file)
 
-	content, err := os.ReadFile(path.Join(reportDir, name, "snapshots"))
-	if err == nil {
-		err = json.Unmarshal(content, &snapshots)
+	type D struct {
+		Time time.Time `json:"time"`
 	}
+	var snapshots []D
+
+	content, err := os.ReadFile(file)
+	if err != nil {
+		log.ErrorE(err, "could not read file")
+
+		return ""
+	}
+
+	err = json.Unmarshal(content, &snapshots)
 
 	switch {
 	case err != nil:
-		return "    · snapshots: not synced ⁉️"
+		return "    " + Bullet + " snapshots: not synced ⁉️"
 	case len(snapshots) > 0:
-		return "    · snapshots: " + strconv.Itoa(len(snapshots)) + " 😎"
+		msg := "    " + Bullet + " snapshots: " + strconv.Itoa(len(snapshots)) + " 😎"
+		msg += "    " + Bullet + " latest: " + snapshots[0].Time.Format(time.RFC1123)
+
+		return msg
 	default:
-		return "    · snapshots: 0 ❌"
+		return "    " + Bullet + " snapshots: 0 ❌"
 	}
 }
