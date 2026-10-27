@@ -260,6 +260,7 @@ in
             initialize = true;
 
             paths = [
+              (rootDir "/var/lib/sbctl/keys") # Secure boot keys.
               (rootDir "/var/lib/NetworkManager")
               (rootDir "/var/lib/AccountsService")
 

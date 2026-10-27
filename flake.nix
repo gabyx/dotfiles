@@ -62,6 +62,12 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs?rev=fe13242281a67641c0102cdb1087f0ebe586c7df";
     multiverse.url = "github:fzakaria/nixpkgs-multiverse";
 
+    # Secure Boot for NixOS.
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.2.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # The devenv module to create good development shells.
     # The `nixpkgs-devenv` must be aligned with the pinned version.
     devenv = {

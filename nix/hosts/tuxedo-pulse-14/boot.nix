@@ -1,31 +1,34 @@
 {
+  lib,
+  inputs,
   pkgs,
   ...
 }:
 {
+  imports = [
+    inputs.lanzaboote.nixosModules.lanzaboote
+  ];
+
+  environment.systemPackages = [ pkgs.sbctl ];
+
   boot = {
     # Bootloader ================================================================
     loader = {
-      grub = {
-        enable = true;
-        device = "nodev"; # The special value nodev means that a GRUB boot menu will be generated, but GRUB itself will not actually be installed. We use UEFI.
-        useOSProber = false; # Do not detect other operating systems.
-        efiSupport = true;
-        enableCryptodisk = true;
-        extraEntries = ''
-          menuentry "Reboot" {
-            reboot
-          }
-          menuentry "Poweroff" {
-            halt
-          }
-        '';
-
+      systemd-boot = {
+        # Lanzaboote replaces the systemd-boot module, which must stay disabled.
+        enable = lib.mkForce false;
         configurationLimit = 5;
       };
+
       efi = {
         canTouchEfiVariables = true;
       };
+    };
+
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+      configurationLimit = 5;
     };
     # ===========================================================================
 
