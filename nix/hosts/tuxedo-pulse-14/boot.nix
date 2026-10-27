@@ -17,19 +17,26 @@
       systemd-boot = {
         # Lanzaboote replaces the systemd-boot module, which must stay disabled.
         enable = lib.mkForce false;
-        configurationLimit = 5;
+        configurationLimit = 30;
       };
 
       efi = {
         canTouchEfiVariables = true;
       };
+
+      limine = {
+        enable = true;
+        maxGenerations = 30;
+        secureBoot.enable = true;
+      };
     };
 
     lanzaboote = {
-      enable = true;
+      enable = false; # Using limine now.
       pkiBundle = "/var/lib/sbctl";
-      configurationLimit = 5;
+      configurationLimit = 30;
     };
+
     # ===========================================================================
 
     initrd = {
