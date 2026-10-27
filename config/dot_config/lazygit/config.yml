@@ -1,10 +1,4 @@
 gui:
-  authorColors: {}
-  branchColors:
-    bugfix: "#3498eb"
-    feature: "#00ba3b"
-    main: "#bfd404"
-  branchColorPatterns: {}
   customIcons:
     filenames: {}
     extensions: {}
@@ -25,8 +19,8 @@ gui:
   expandedSidePanelWeight: 2
   mainPanelSplitMode: flexible
   enlargedSideViewLocation: left
-  wrapLinesInStagingView: true
-  useHunkModeInStagingView: true
+  wrapLinesInDiffView: true
+  useHunkModeInDiffView: true
   language: auto
   timeFormat: 02 Jan 06
   shortTimeFormat: 3:04PM
@@ -57,6 +51,11 @@ gui:
       - "#cf0202"
     defaultFgColor:
       - default
+    authorColors: {}
+    branchColorPatterns:
+      ^bugfix(/|$): "#3498eb"
+      ^feature(/|$): "#00ba3b"
+      ^main(/|$): "#bfd404"
   commitLength:
     show: true
   showListFooter: true
