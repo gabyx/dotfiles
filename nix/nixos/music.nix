@@ -12,6 +12,49 @@
     inputs.musnix.nixosModules.musnix
   ];
 
+  # NOTE: VST and LV2 Plugin search paths are
+  # in env variables:
+  # - `$LV2_PATH` and
+  # - `$VST3_PATH`
+
+  # NOTE: Latency: I use pipewire's jack implementation
+  # Use `pw-top` to see the settings, QUANT are the samples.
+  # Force 128 samples with.
+  # `pw-metadata -n settings 0 clock.force-quantum 128`
+  # Set starting values for the clock quantum and rate.
+  services.pipewire = {
+    # --- Graph-wide clock (PipeWire)
+    extraConfig.pipewire."92-low-latency" = {
+      "context.properties" = {
+        "default.clock.rate" = 48000;
+        "default.clock.allowed-rates" = [ 48000 ]; # don't switch to 44.1k behind your back
+        "default.clock.quantum" = 128;
+        "default.clock.min-quantum" = 64;
+        "default.clock.max-quantum" = 1024;
+      };
+    };
+
+    # --- M-Track device settings (WirePlumber)
+    # wireplumber.extraConfig."51-m-audio-m-track" = {
+    #   "monitor.alsa.rules" = [
+    #     {
+    #       matches = [
+    #         { "node.name" = "~alsa.*M-Audio.*"; }
+    #         { "node.name" = "~alsa.*M-Audio.*"; }
+    #       ];
+    #       actions.update-props = {
+    #         "audio.rate" = 48000;
+    #         "api.alsa.period-size" = 128; # ALSA buffer on the device itself
+    #         "api.alsa.headroom" = 0; # raise (e.g. 128, 256) if ERR keeps climbing in pw-top
+    #         "session.suspend-timeout-seconds" = 0; # never let the interface sleep
+    #         "priority.driver" = 3000; # prefer the M-Track as the graph clock
+    #         "priority.session" = 3000; # and as the default device
+    #       };
+    #     }
+    #   ];
+    # };
+  };
+
   environment.systemPackages = [
     pkgsUnstable.ardour # Music recording.
     pkgsUnstable.reaper # Music recording.
