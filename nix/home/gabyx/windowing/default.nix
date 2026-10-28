@@ -46,6 +46,7 @@ in
     xdg.configFile = {
       "sway" = {
         force = true;
+        recursive = true;
         source = mkConfigDir "sway" (confDir + "/sway") (
           lib.concatLines (
             [
