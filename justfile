@@ -596,6 +596,7 @@ cm *args:
                 let k = (
                     ^nix run $"{{root_dir}}#gabyx-cli" -- secret get
                         --bw-id "3cc1b9eb-2504-4cec-8dda-b17501145099"
+                        --bw-field "login.password"
                         --yubikey "{{yubikey_name}}"
                         --prompt "Chezmoi encryption age identity: "
                         --file $"($env.HOME)/.config/chezmoi/key"

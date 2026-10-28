@@ -72,7 +72,7 @@ func addGetCmd(parent *cobra.Command) {
 	cmd.Flags().
 		StringVarP(&args.bwID, "bw-id", "b", "", "Bitwarden item ID.")
 	cmd.Flags().
-		StringVarP(&args.bwField, "bw-field", "B", "password",
+		StringVarP(&args.bwField, "bw-field", "B", "login.password",
 			"Bitwarden item field to extract (nested fields with '.', e.g. 'login.password').")
 	cmd.Flags().
 		StringVarP(&args.yubikey, "yubikey", "y", os.Getenv("YUBIKEY_NAME"),
@@ -210,7 +210,7 @@ func getBitwardenOrPrompt(bwID string, bwField string, promptTitle string) (stri
 	if err == nil {
 		return secret, nil
 	}
-	log.Debug("Could not get secret from Bitwarden.", "error", err)
+	log.ErrorE(err, "Could not get secret from Bitwarden.")
 
 	if promptTitle == "" {
 		return "", errors.New("could not get secret from Bitwarden and no prompt given")
@@ -235,7 +235,7 @@ func getBitwarden(id string, field string) (string, error) {
 	}
 
 	log.Info("Getting secret from Bitwarden.", "id", id, "field", field)
-	out, err := exec.NewCmdCtxBuilder().Quiet().Build().Get(gexec.ExtCmdBw, "get", "item", id)
+	out, err := exec.NewCmdCtxBuilder().Build().Get(gexec.ExtCmdBw, "get", "item", id)
 	if err != nil {
 		return "", err
 	}
@@ -265,7 +265,7 @@ func extractField(item any, field string) (string, error) {
 
 		v, ok = m[key]
 		if !ok {
-			return "", errors.New("could not extract field '%s'", field)
+			return "", errors.New("could not extract field '%s' [key: '%v']", field, key)
 		}
 	}
 
