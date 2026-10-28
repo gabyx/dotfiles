@@ -104,7 +104,9 @@ func assignWorkspaces(r *report, swap bool) error {
 		return err
 	}
 
-	config, err := os.ReadFile(path.Join(home, ".config", "sway", "config"))
+	file := path.Join(home, ".config", "sway", "conf")
+	log.Infof("Reading '%v'.", file)
+	config, err := os.ReadFile(file)
 	if err != nil {
 		return errors.AddContext(err, "cannot assign workspaces")
 	}
@@ -271,7 +273,7 @@ func definedDisplay(
 
 	m := re.FindStringSubmatch(config)
 	if m == nil {
-		r.addf("- Display %s '%s' not defined in 'sway/config'.", which, typ)
+		r.addf("- Display %s '%s' not defined in '%v'.", which, typ)
 
 		return ""
 	}
