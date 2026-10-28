@@ -103,11 +103,14 @@ in
     pkgsUnstable.pandoc
 
     # Calendar/Mail (our version)
-    pkgs.khal # CLI Calendar
-    pkgs.protonmail-bridge-gui
+    pkgsUnstable.khal # CLI Calendar
+    pkgsUnstable.protonmail-bridge-gui
 
     # Trains
-    pkgs.sbb-tui # SBB TUI app.
+    pkgsUnstable.sbb-tui # SBB TUI app.
+
+    # Displays
+    pkgsUnstable.nwg-displays
 
     # MultiMedia
     pkgsUnstable.caligula # Like balena etcher but TUI.

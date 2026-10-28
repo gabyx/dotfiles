@@ -47,12 +47,18 @@ SCALE:
 # See https://github.com/alex-courtis/way-displays#known-issues-with-workarounds
 # for a possible workaround.
 MODE:
-  - NAME_DESC: "!^Philips.*PHL 275E2F.*UHB2307008083.*" # Home - External
+  # Home
+  - NAME_DESC: "!^Philips.*PHL 275E2F.*UHB2307008083.*"
+    WIDTH: 2560
+    HEIGHT: 1440
+    HZ: 60
+  - NAME_DESC: "!^Dell.*U2724DE.*4TPGCP3.*"
     WIDTH: 2560
     HEIGHT: 1440
     HZ: 60
 
-  - NAME_DESC: "!^Dell.*U2724DE.*4TPGCP3.*" # Home - External
+  # Work
+  - NAME_DESC: "!^Dell.*P2723QE.*"
     WIDTH: 2560
     HEIGHT: 1440
     HZ: 60
