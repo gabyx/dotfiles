@@ -45,6 +45,7 @@ in
     pkgsUnstable.poppler-utils # For image conversions.
     pkgsUnstable.ffmpegthumbnailer # For video thumbnails.
     pkgsUnstable.trash-cli # Trash command line to move stuff to trash.
+    pkgsUnstable.tailscale
 
     # Disk
     pkgsUnstable.dua # Disk Usage Analyzer.
@@ -96,8 +97,6 @@ in
     pkgsUnstable.dconf2nix # To generate the `dconf` settings.
     pkgsUnstable.comma # Run , jellyfin to quickly run a nix package.
 
-    ## Lua
-
     # Writing
     # pkgsUnstable.texlive.combined.scheme-full
     pkgsUnstable.pandoc
@@ -148,6 +147,7 @@ in
 
     # VPN
     pkgsUnstable.proton-vpn-cli
+    pkgsUnstable.tailscale
 
     # Networking
     pkgsUnstable.dig # DNS lookup tool.

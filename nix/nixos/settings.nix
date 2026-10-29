@@ -16,6 +16,10 @@ in
 
       networking = {
         wlan-profiles.enable = mkEnableOption "WLAN networking profiles.";
+
+        vpn.tailscale = {
+          client.enable = mkEnableOption "tailscale VPN client";
+        };
       };
 
       user = {
