@@ -39,7 +39,7 @@
   inputs = {
     self = {
       submodules = true;
-      lfs = true;
+      lfs = true; # You need .git as prefix of the Git remote origin.
     };
 
     import-tree = {
