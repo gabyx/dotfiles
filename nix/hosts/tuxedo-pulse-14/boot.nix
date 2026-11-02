@@ -72,9 +72,11 @@
     ];
     extraModulePackages = [ ];
 
-    # TODO: Check if this kernel works without running into
+    # NOTE: This kernel works without running into
     # amdgpu freezes.
     kernelPackages = pkgs.linuxPackages_xanmod;
+
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
 
     supportedFilesystems = [ "zfs" ];
     zfs.forceImportRoot = false;
