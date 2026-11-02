@@ -7,6 +7,9 @@
       package = pkgsUnstable.tailscale;
       enable = config.settings.networking.vpn.tailscale.client.enable;
 
+      # I dont want that other devices connect to this device.
+      extraSetFlags = [ "--shields-up" ];
+
       # Only needed if you want to use exit nodes or subnet routes advertised by
       # other machines. Also sets the reverse-path filter to "loose" for you.
       # useRoutingFeatures = "client";
