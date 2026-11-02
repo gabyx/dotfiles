@@ -19,10 +19,13 @@ ORDER:
   - "!^Dell.*U2724DE.*4TPGCP3.*" # External monitor.
 
   # Work.
-  # TODO
-  #
+  - "!^Dell.*P2723QE.*64DG964.*"
+  - "!^Dell.*P2723QE.*G6FR964.*"
+
   # Any other stupid monitor comes always before laptop.
-  - "!^DP-.*"
+  - "!^DP-1"
+  - "!^DP-2"
+
   - "!^Tianma.*TL140ADXP24.*" # Tuxedo: Laptop Monitor comes always last.
   - "!^eDP-*" # The laptop monitor.
 
