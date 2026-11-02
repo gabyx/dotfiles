@@ -8,6 +8,13 @@
       mode = "0400";
     };
 
+    age.secrets.nix-cache-conf = lib.mkIf config.settings.secrets.enable {
+      file = builtins.path {
+        path = ./secrets/nix-cache-conf.age;
+      };
+      mode = "0400";
+    };
+
     nix = {
       settings = {
         # Trusted substituters can be requested by the client.
@@ -29,7 +36,12 @@
         ];
 
         netrc-file = lib.mkIf config.settings.secrets.enable "${config.age.secrets.netrc-nix-cache.path}";
+
       };
+
+      extraOptions = lib.optionalString config.settings.secrets.enable ''
+        !include ${config.age.secrets.nix-cache-conf.path}
+      '';
     };
 
     # Nix Cache

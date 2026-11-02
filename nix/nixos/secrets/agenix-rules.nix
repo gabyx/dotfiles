@@ -51,6 +51,12 @@ let
       hostDesktop
       hostTuxedo
     ];
+
+    "nix-cache-conf.age".publicKeys = [
+      chezmoi
+      hostDesktop
+      hostTuxedo
+    ];
     "netrc-nix-cache.age".publicKeys = [
       chezmoi
       hostDesktop
