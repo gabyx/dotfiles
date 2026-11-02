@@ -34,7 +34,10 @@ func ensureBitwardenSession() error {
 		return nil
 	}
 
-	bw := exec.NewCmdCtxBuilder().BaseCmd(gexec.ExtCmdBw).Build()
+	bw := exec.NewCmdCtxBuilder().
+		BaseCmd(gexec.ExtCmdBw).
+		Quiet().
+		EnableCaptureError().Build()
 
 	loggedIn := false
 	err := bw.CheckWithEC(exec.ExitCode0And1SuccessVar(&loggedIn), "login", "--check")
@@ -49,6 +52,7 @@ func ensureBitwardenSession() error {
 
 	bwPass := exec.NewCmdCtxBuilder().
 		BaseCmd(gexec.ExtCmdBw).
+		Quiet().
 		Env("PASSWORD=" + password).
 		Build()
 

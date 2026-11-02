@@ -587,7 +587,7 @@ cm *args:
         mkdir $"($env.HOME)/.config/chezmoi"
 
         # Emulate `trap cleanup EXIT`: always remove the key on the way out.
-        let cleanup = {|| rm --force $key }
+        # let cleanup = {|| rm --force $key }
 
         try {
             if (($env.NO_ENCRYPTION_SETUP? | default "") == "true") {
@@ -613,11 +613,11 @@ cm *args:
                 ^just move-all-to-secrets
             }
         } catch {|err|
-            do $cleanup
+            # do $cleanup
             error make { msg: $"cm failed: ($err.msg)" }
         }
 
-        do $cleanup
+        # do $cleanup
     }
 
 # Like `cm` but with no encryption.

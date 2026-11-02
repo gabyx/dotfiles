@@ -137,7 +137,10 @@ func getSecret(args *getArgs) error {
 }
 
 func isYubikeyPresent() bool {
-	out, err := exec.NewCmdCtxBuilder().Quiet().Build().Get(gexec.ExtCmdYkman, "list")
+	out, err := exec.NewCmdCtxBuilder().
+		Quiet().
+		Build().
+		Get(gexec.ExtCmdYkman, "list")
 	if err != nil {
 		log.Debug("Could not list Yubikeys.", "error", err)
 
@@ -235,7 +238,11 @@ func getBitwarden(id string, field string) (string, error) {
 	}
 
 	log.Info("Getting secret from Bitwarden.", "id", id, "field", field)
-	out, err := exec.NewCmdCtxBuilder().Build().Get(gexec.ExtCmdBw, "get", "item", id)
+	out, err := exec.NewCmdCtxBuilder().
+		Quiet().
+		EnableCaptureError().
+		Build().
+		Get(gexec.ExtCmdBw, "get", "item", id)
 	if err != nil {
 		return "", err
 	}
