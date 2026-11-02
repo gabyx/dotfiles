@@ -48,7 +48,7 @@ in
 
       pkgsUnstable =
         assert lib.assertMsg (pkgsUnstableCooldown.multiverse.rev == inputs.nixpkgs-unstable.rev) ''
-          Input 'nixpkgs' must be
+          Input 'nixpkgs-unstable' must be
           aligned with cooldown 7 days behind: "${pkgsUnstableCooldown.multiverse.rev}".
           NixOS unstable tip: '${mvs.tip.multiverse.rev}'.
         '';
