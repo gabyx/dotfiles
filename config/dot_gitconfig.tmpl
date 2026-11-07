@@ -22,6 +22,11 @@
 [includeIf "hasconfig:remote.*.url:https://gitlab.com/**"]
     path = {{ .git.configPath }}/gitconfig-gitlab
 
+[includeIf "hasconfig:remote.*.url:ssh://git@codeberg.org/**"]
+    path = {{ .git.configPath }}/gitconfig-codeberg
+[includeIf "hasconfig:remote.*.url:https://codeberg.org/**"]
+    path = {{ .git.configPath }}/gitconfig-codeberg
+
 [commit]
     gpgsign = true
     template = {{ .git.configPath }}/commit-template.txt
