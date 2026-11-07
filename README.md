@@ -291,6 +291,7 @@ there.
 
 - [x] Upgrade to 26.11
   - [x] Remove `age-plugin-` own vendors.
+- [ ] Hardening: https://gitlab.com/cmdoret/homelab/-/merge_requests/11
 
 ### NVIM
 
