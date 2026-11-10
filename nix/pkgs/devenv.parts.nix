@@ -85,10 +85,6 @@
                 pkgsUnstable.caligula # Burn ISOs to USB.
                 self'.packages.gabyx-cli
               ];
-
-              enterShell = ''
-                just --list
-              '';
             }
           ];
 

@@ -17,5 +17,8 @@ in
 
     # ZSH plugin is disabled to download it.
     GITSTATUS_DAEMON = "${lib.getExe pkgsUnstable.gitstatus}";
+
+    # Use bitwarden as ssh agent.
+    SSH_AUTH_SOCK = "${config.home.homeDirectory}/.bitwarden-ssh-agent.sock";
   };
 }

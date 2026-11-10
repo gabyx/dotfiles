@@ -47,3 +47,11 @@ docs
 
 # Google Chrome Bookmarks
 .config/google-chrome
+
+# Ignore non-yubikey SSH Keys
+.ssh/gabyx_ed25519*
+!.ssh/gabyx_*ed25519_fido2*
+.ssh/gabyx_rsa*
+.ssh/codeberg*
+.ssh/github*
+!.ssh/*.pub
