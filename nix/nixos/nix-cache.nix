@@ -3,7 +3,7 @@
   config = {
     age.secrets.nix-cache-netrc = lib.mkIf config.settings.secrets.enable {
       file = builtins.path {
-        path = ./secrets/netrc-nix-cache.age;
+        path = ./secrets/nix-cache-netrc.age;
       };
       mode = "0400";
     };
