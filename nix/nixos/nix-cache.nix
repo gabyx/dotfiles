@@ -1,7 +1,7 @@
 { lib, config, ... }:
 {
   config = {
-    age.secrets.netrc-nix-cache = lib.mkIf config.settings.secrets.enable {
+    age.secrets.nix-cache-netrc = lib.mkIf config.settings.secrets.enable {
       file = builtins.path {
         path = ./secrets/netrc-nix-cache.age;
       };
@@ -35,8 +35,7 @@
           "nixos-jetson.cachix.org-1:tH3HqoxpZzF9tel7DgV2iOHFohD8swtQNrYK0XMBpRY="
         ];
 
-        netrc-file = lib.mkIf config.settings.secrets.enable "${config.age.secrets.netrc-nix-cache.path}";
-
+        netrc-file = lib.mkIf config.settings.secrets.enable config.age.secrets.nix-cache-netrc.path;
       };
 
       extraOptions = lib.optionalString config.settings.secrets.enable ''
