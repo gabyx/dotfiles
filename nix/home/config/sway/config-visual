@@ -24,7 +24,7 @@ gaps outer 2
 # smart_gaps on
 
 # Default wallpaper (more resolutions are available in /run/current-system/sw/share/backgrounds/sway/)
-output * bg ~/.config/wallpapers/background-sand.jpg fill
+output * bg ~/.config/wallpapers/background-glarus.jpg fill
 
 # SwayFX settings are in `config-swayfx` (included over `conf` if SwayFX is used).
 
