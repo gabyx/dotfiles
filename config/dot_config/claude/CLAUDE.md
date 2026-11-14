@@ -5,6 +5,7 @@
 Applies to all prose: explanations, summaries, commit messages, comments, docs.
 
 - Write simple and scientific English:
+  - Please remove all mannered prose.
   - State the conclusion first, then the evidence. Do NOT build toward a reveal.
   - Separate what was observed from what is inferred. For claims about
     behaviour, give the command that was run and its output.
