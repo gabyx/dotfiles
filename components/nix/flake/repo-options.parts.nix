@@ -36,7 +36,9 @@ in
       {
         options.repo = {
           devenvModules = lib.mkOption {
-            type = lib.types.attrsOf lib.types.anything;
+            # Lazy, such that modules can be composed from other entries
+            # in `repo'.devenvModules`.
+            type = lib.types.lazyAttrsOf lib.types.anything;
             description = "Attribute set of list of devenv modules.";
             default = { };
           };

@@ -87,15 +87,18 @@
               ];
             }
           ];
-
-          gabyx-cli = common ++ build-go ++ lint-go ++ dev-go;
         in
         {
           # Main shells:
-          inherit default gabyx-cli;
+          inherit default;
 
           # Toolchains:
-          inherit build-go lint-go dev-go;
+          inherit
+            common
+            build-go
+            lint-go
+            dev-go
+            ;
         };
     };
 }

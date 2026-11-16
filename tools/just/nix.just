@@ -10,7 +10,7 @@ develop *args:
     #!/usr/bin/env bash
     set -eu
     root_dir=$(git rev-parse --show-toplevel) || exit 1
-    flake_dir="$root_dir/tools/nix"
+    flake_dir="$root_dir"
 
     shell="$1"; shift 1;
     args=("$@") && [ "${#args[@]}" != 0 ] ||
@@ -31,7 +31,7 @@ repl *args:
     set -eu
 
     root_dir=$(git rev-parse --show-toplevel) || exit 1
-    flake_dir="$root_dir/tools/nix"
+    flake_dir="$root_dir"
     nix_args=("--no-pure-eval" "$@")
 
     nix repl \
@@ -45,7 +45,7 @@ run attrname *args:
     #!/usr/bin/env bash
     set -eu
     root_dir=$(git rev-parse --show-toplevel) || exit 1
-    flake_dir="$root_dir/tools/nix"
+    flake_dir="$root_dir"
     nix_args=("${@:2}")
 
     nix run \
@@ -60,7 +60,7 @@ package attrname *args:
     #!/usr/bin/env bash
     set -eu
     root_dir=$(git rev-parse --show-toplevel) || exit 1
-    flake_dir="$root_dir/tools/nix"
+    flake_dir="$root_dir"
     nix_args=("${@:2}")
 
     mkdir -p .output/package
@@ -77,7 +77,7 @@ show:
     #!/usr/bin/env bash
     set -eu
     root_dir=$(git rev-parse --show-toplevel) || exit 1
-    flake_dir="$root_dir/tools/nix"
+    flake_dir="$root_dir"
 
     # We cannot use `nix flake show` due to other systems where
     # IFD (import-from-derivation -> from-yaml Nix derivation)

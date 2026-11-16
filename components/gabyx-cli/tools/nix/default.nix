@@ -25,7 +25,6 @@ let
     expect
     util-linux # `lsblk`.
   ];
-
   self = buildGo126Module {
     inherit version;
     pname = "gabyx";
