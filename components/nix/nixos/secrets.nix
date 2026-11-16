@@ -1,8 +1,8 @@
 {
-  lib,
-  config,
-  system,
   inputs,
+  config,
+  lib,
+  system,
   ...
 }:
 {

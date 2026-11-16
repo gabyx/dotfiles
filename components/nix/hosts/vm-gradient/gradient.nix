@@ -2,9 +2,9 @@
 # Adapted from `nix/standalone/default.nix` in https://github.com/wavelens/gradient.
 # The web frontend is reachable on the host at `http://localhost:8080`.
 {
-  lib,
-  config,
   inputs,
+  config,
+  lib,
   pkgs,
   ...
 }:

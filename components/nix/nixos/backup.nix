@@ -1,9 +1,9 @@
 {
-  config,
   self,
-  system,
-  pkgs,
+  config,
   lib,
+  pkgs,
+  system,
   ...
 }:
 let
@@ -116,7 +116,7 @@ in
       };
     };
 
-  config = lib.mkIf (cfg.enable) (
+  config = lib.mkIf cfg.enable (
     let
       mkSysPath =
         vol: dir:
@@ -238,7 +238,7 @@ in
         }
       ];
 
-      age.secrets = lib.mkIf (cfg.enable) {
+      age.secrets = lib.mkIf cfg.enable {
         backup-password.file = builtins.path {
           path = ./secrets/backup-password.age;
         };
@@ -477,15 +477,11 @@ in
               // fetchService bk
             );
         in
-        lib.concatMapAttrs (name: bk: createServices bk) cfg.backups
+        lib.concatMapAttrs (name: createServices) cfg.backups
       );
 
       # Some timers for the fetch snapshots.
-      systemd.timers = lib.mkIf cfg.enable (
-        let
-        in
-        lib.concatMapAttrs (name: bk: fetchServiceTimer bk) cfg.backups
-      );
+      systemd.timers = lib.mkIf cfg.enable (lib.concatMapAttrs (name: fetchServiceTimer) cfg.backups);
 
       environment.systemPackages = [ ssh-backup ];
     }

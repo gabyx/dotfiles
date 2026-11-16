@@ -1,14 +1,14 @@
 {
   lib,
   buildGo126Module,
+  expect,
+  # Runtime deps.
+  git,
   installShellFiles,
   makeWrapper,
   testers,
-  # Runtime deps.
-  git,
-  zfs,
-  expect,
   util-linux,
+  zfs,
 }:
 let
   withRoot = p: ./../.. + ("/" + p);

@@ -1,8 +1,8 @@
 # Define different shells.
 {
-  lib,
   inputs,
   repo,
+  lib,
   ...
 }:
 {

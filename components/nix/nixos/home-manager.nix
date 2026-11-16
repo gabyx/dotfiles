@@ -1,14 +1,14 @@
 {
-  config,
-  inputs,
-  inputs',
   self,
   self',
-  system,
-  packages,
+  inputs,
+  inputs',
+  config,
   pkgs,
   pkgsUnstable,
+  system,
   mvs,
+  packages,
   ...
 }:
 {

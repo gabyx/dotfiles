@@ -171,6 +171,10 @@
     nixfmt-rs = {
       url = "github:Mic92/nixfmt-rs";
     };
+    pedantix = {
+      url = "github:swarsel/pedantix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     # Age Encryption Tool for NixOS.
     agenix = {

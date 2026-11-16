@@ -18,18 +18,16 @@ let
     };
   };
 
-  rofi-rbw = (
-    pkgs.buildEnv {
-      name = "rofi-rbw-env";
-      pname = "rofi-rbw-env";
-      version = "1.7.0";
-      paths = [
-        (mvs.versions.rbw."1.15.0") # Bitwarden alternative CLI stateless.
-        pkgs.pinentry-rofi
-        rofi-rbw-wrapped
-      ];
-    }
-  );
+  rofi-rbw = pkgs.buildEnv {
+    name = "rofi-rbw-env";
+    pname = "rofi-rbw-env";
+    version = "1.7.0";
+    paths = [
+      mvs.versions.rbw."1.15.0" # Bitwarden alternative CLI stateless.
+      pkgs.pinentry-rofi
+      rofi-rbw-wrapped
+    ];
+  };
 
 in
 [

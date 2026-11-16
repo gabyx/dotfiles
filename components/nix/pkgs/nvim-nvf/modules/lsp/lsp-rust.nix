@@ -31,7 +31,7 @@ in
       };
       checkOnSave = true;
       files = {
-        excludeDirs = cfg.excludeDirs;
+        inherit (cfg) excludeDirs;
       };
       inlayHints = {
         bindingModeHints.enable = false;

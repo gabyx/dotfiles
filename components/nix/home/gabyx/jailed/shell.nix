@@ -1,8 +1,8 @@
 {
   lib,
-  jail-nix,
   pkgs,
   pkgsUnstable,
+  jail-nix,
   ...
 }:
 let

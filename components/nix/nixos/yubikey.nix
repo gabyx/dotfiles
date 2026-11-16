@@ -8,9 +8,9 @@
 # available in Issue 14 https://github.com/EmergentMind/nix-config/issues/14
 {
   config,
+  lib,
   pkgs,
   pkgsUnstable,
-  lib,
   ...
 }:
 let

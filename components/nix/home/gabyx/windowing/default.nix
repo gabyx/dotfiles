@@ -3,9 +3,9 @@
 # generated file `conf` in the folder.
 {
   config,
-  osConfig,
   lib,
   pkgs,
+  osConfig,
   ...
 }:
 let
@@ -76,7 +76,7 @@ in
 
       "niri" = {
         force = true;
-        source = (confDir + "/niri");
+        source = confDir + "/niri";
       };
 
       # General Stuff

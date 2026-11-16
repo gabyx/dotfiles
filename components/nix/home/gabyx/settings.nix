@@ -1,11 +1,11 @@
 {
-  config,
-  osConfig,
-  lib,
   self,
   inputs',
+  config,
+  lib,
   pkgsUnstable,
   system,
+  osConfig,
   ...
 }:
 let

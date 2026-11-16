@@ -1,10 +1,10 @@
 {
   inputs,
   inputs',
-  system,
-  packages,
   pkgs,
   pkgsUnstable,
+  system,
+  packages,
   ...
 }:
 let

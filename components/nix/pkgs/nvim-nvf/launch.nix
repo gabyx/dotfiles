@@ -1,7 +1,7 @@
 {
   lib,
-  writeShellScriptBin,
   nvim,
+  writeShellScriptBin,
   name ? "nvim",
   nvimConfigName ? "",
 }:

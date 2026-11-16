@@ -1,0 +1,67 @@
+[extend]
+  useDefault = true
+
+[[allowlists]]
+  description = "Secrets should be ignored."
+  paths = [
+    '''components/secrets''',
+  ]
+
+[[allowlists]]
+  description = "Random stuff."
+  paths = [
+    '''components/config/.chezmoi.yaml.tmpl''',
+    '''.*/tone3000-plugin''',
+  ]
+
+[[allowlists]]
+  description = "Non-secret config + key fixtures"
+  paths = [
+    '''components/secrets''',
+  ]
+
+[[allowlists]]
+  description = "Documentation"
+  paths = [
+    '''docs/.*\.md''',
+  ]
+
+[[allowlists]]
+  description = "SOPS-encrypted values (ENC[AES256_GCM...]) are ciphertext"
+  regexTarget = "line"
+  regexes     = ['''ENC\[AES256_GCM''']
+
+# age recipients are public keys, safe to expose.
+[[allowlists]]
+  description = "age public keys are recipients, not secrets"
+  regexTarget = "match"
+  regexes     = ['''age1[0-9a-z]{58}''']
+
+[[allowlists]]
+  description = "NixOS default initialPassword"
+  regexTarget = "line"
+  regexes     = ['''\binitialPassword\s*=\s*"nixos"''']
+
+# Flag non-encrypted (non-ENC[]) value in *.sops.* files.
+[[rules]]
+  description = "Sensitive key with a plaintext (non-ENC[]) value; should be SOPS-encrypted"
+  id = "sops-plaintext-secret"
+  keywords = [
+    "auth",
+    "client",
+    "password",
+    "passwd",
+    "token",
+    "secret",
+    "api",
+    "key",
+    "access",
+    "private",
+  ]
+  regex = '''(?i)([\w-]*(client[_-]?id|client[_-]?secret|password|passwd|token|secret|api[_-]?key|access[_-]?key|private[_-]?key))\s*:\s*(\S.*)'''
+
+  # Excludes already-encrypted lines.
+  filter = '''
+  !filter.matchesAny(attributes["path"], [`\.sops(\.|$)`]) ||
+  filter.matchesAny(finding["line"], [`ENC\[AES256_GCM`])
+  '''

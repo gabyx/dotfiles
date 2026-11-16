@@ -7,9 +7,9 @@
     mkShell =
       {
         inputs,
-        modules ? [ ],
         pkgs ? null,
         system ? null,
+        modules ? [ ],
       }:
       inputs.quitsh.lib.mkShell {
         inherit inputs pkgs system;

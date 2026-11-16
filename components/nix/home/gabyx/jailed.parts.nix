@@ -6,10 +6,10 @@
 {
   perSystem =
     {
-      system,
+      inputs',
       pkgs,
       pkgsUnstable,
-      inputs',
+      system,
       ...
     }:
     let

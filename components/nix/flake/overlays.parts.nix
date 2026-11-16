@@ -7,7 +7,7 @@ let
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
     # We need a patched version with some dependencies (for the systemd service).
-    vdirsyncer = prev.callPackage ../pkgs/vdirsyncer { vdirsyncer = prev.vdirsyncer; };
+    vdirsyncer = prev.callPackage ../pkgs/vdirsyncer { inherit (prev) vdirsyncer; };
   };
 
 in

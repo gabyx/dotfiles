@@ -22,7 +22,7 @@ let
     exeName: bakedDrvOrPath:
     let
       bakedExe = getBaked bakedDrvOrPath;
-      resolve = (
+      resolve =
         pkgs.writeShellScriptBin "resolve"
           # Bash
           ''
@@ -40,8 +40,7 @@ let
             fi
 
             exit 1
-          ''
-      );
+          '';
     in
     "${pkgs.lib.getExe resolve}";
 

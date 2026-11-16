@@ -1,7 +1,7 @@
 {
-  lib,
   inputs,
   inputs',
+  lib,
   pkgs,
   pkgsUnstable,
   ...

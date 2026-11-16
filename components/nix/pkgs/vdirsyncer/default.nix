@@ -1,6 +1,6 @@
 {
-  vdirsyncer,
   coreutils,
+  vdirsyncer,
 }:
 # We need a patched version with some more dependencies.
 # We need `cat` in `vdirsyncer` available to extract secrets.

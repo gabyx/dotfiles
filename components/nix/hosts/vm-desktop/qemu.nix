@@ -1,7 +1,7 @@
 {
   lib,
-  modulesPath,
   pkgsUnstable,
+  modulesPath,
   ...
 }:
 let

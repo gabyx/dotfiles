@@ -1,9 +1,9 @@
 {
   lib,
   fetchFromGitHub,
-  python3,
   gcalcli,
   libnotify,
+  python3,
 }:
 # TODO: That should become our nextmeeting script.
 #       This is not used.

@@ -1,7 +1,7 @@
 {
+  self,
   inputs,
   withSystem,
-  self,
   ...
 }:
 let
@@ -12,13 +12,13 @@ let
     # Wrap flake-parts arguments into using `withSystem`...
     withSystem system (
       {
-        inputs',
         self',
+        inputs',
         pkgs,
         pkgsUnstable,
         mvs,
-        wrappersLib,
         mkNixOSSystem,
+        wrappersLib,
         ...
       }:
       mkNixOSSystem {

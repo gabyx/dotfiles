@@ -1,9 +1,9 @@
 {
   lib,
+  pkgsUnstable,
   system,
   agent-sandbox,
   claude-code,
-  pkgsUnstable,
   ...
 }:
 let

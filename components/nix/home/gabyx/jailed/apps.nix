@@ -10,11 +10,11 @@ let
 
   jailApp =
     {
+      args,
+      desktop,
+      jail,
       name,
       pkg,
-      args,
-      jail,
-      desktop,
     }:
     let
       jailed = jailIt name pkg jail;
@@ -52,25 +52,23 @@ let
       MimeType = "x-scheme-handler/sgnl;x-scheme-handler/signalcaptcha;";
       Categories = "Network;InstantMessaging;Chat;";
     };
-    jail = (
-      cs: [
-        cs.network
-        cs.gui
-        cs.gpu
-        cs.camera
-        cs.open-urls-in-browser
-        (cs.readwrite "/run/dbus/system_bus_socket")
-        (cs.readwrite (cs.noescape "~/.config/Signal"))
-        (cs.try-readwrite (cs.noescape "~/Downloads"))
+    jail = cs: [
+      cs.network
+      cs.gui
+      cs.gpu
+      cs.camera
+      cs.open-urls-in-browser
+      (cs.readwrite "/run/dbus/system_bus_socket")
+      (cs.readwrite (cs.noescape "~/.config/Signal"))
+      (cs.try-readwrite (cs.noescape "~/Downloads"))
 
-        (cs.dbus {
-          talk = [
-            "org.freedesktop.DBus"
-            "org.freedesktop.portal.*"
-          ];
-        })
-      ]
-    );
+      (cs.dbus {
+        talk = [
+          "org.freedesktop.DBus"
+          "org.freedesktop.portal.*"
+        ];
+      })
+    ];
   };
 in
 {

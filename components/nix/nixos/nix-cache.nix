@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ config, lib, ... }:
 {
   config = {
     age.secrets.nix-cache-netrc = lib.mkIf config.settings.secrets.enable {

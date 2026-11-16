@@ -5,9 +5,9 @@
 {
   perSystem =
     {
-      pkgsUnstable,
-      inputs',
       self',
+      inputs',
+      pkgsUnstable,
       ...
     }:
     let

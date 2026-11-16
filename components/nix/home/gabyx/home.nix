@@ -1,9 +1,9 @@
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 # Search for all options using: https://mipmip.github.io/home-manager-option-search
 {
-  osConfig,
-  inputs,
   self,
+  inputs,
+  osConfig,
   ...
 }:
 {

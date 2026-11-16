@@ -1,10 +1,10 @@
 {
   inputs,
-  lib,
   config,
-  packages,
+  lib,
   pkgs,
   pkgsUnstable,
+  packages,
   ...
 }:
 {

@@ -1,12 +1,12 @@
 {
   lib,
-  stdenv,
-  fetchFromGitHub,
-  makeWrapper,
   bash,
   coreutils,
+  fetchFromGitHub,
   findutils,
   gum,
+  makeWrapper,
+  stdenv,
   tz,
 }:
 let

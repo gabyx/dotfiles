@@ -1,7 +1,7 @@
 {
   lib,
-  osConfig,
   pkgsUnstable,
+  osConfig,
   ...
 }:
 {
