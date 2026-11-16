@@ -8,7 +8,7 @@ shell := env("SHELL", "zsh")
 
 mod vm "./tools/just/vm.just"
 mod nix "./tools/just/nix.just"
-mod gabyx-cli "./components/nix/pkgs/gabyx-cli/justfile"
+mod gabyx-cli "./components/gabyx-cli/justfile"
 
 # The host for which most commands work below.
 default_host := env("NIXOS_HOST", "not-defined")

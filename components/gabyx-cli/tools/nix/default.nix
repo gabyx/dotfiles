@@ -11,9 +11,11 @@
   util-linux,
 }:
 let
+  withRoot = p: ./../.. + ("/" + p);
+
   # The version from the `.component.yaml`.
   version = builtins.head (
-    builtins.match ".*\nversion: ([^\n]+)\n.*" (builtins.readFile ./.component.yaml)
+    builtins.match ".*\nversion: ([^\n]+)\n.*" (builtins.readFile (withRoot ".component.yaml"))
   );
 
   # Runtime dependencies appended to `PATH`.
@@ -29,13 +31,15 @@ let
     pname = "gabyx";
 
     src = lib.fileset.toSource {
-      root = ./.;
-      fileset = lib.fileset.unions [
-        ./go.mod
-        ./go.sum
-        ./cmd
-        ./pkg
-      ];
+      root = ./../..;
+      fileset = lib.fileset.unions (
+        lib.map withRoot [
+          "./go.mod"
+          "./go.sum"
+          "./cmd"
+          "./pkg"
+        ]
+      );
     };
 
     # This hash defines the fixed-output derivation of the dependencies (FOD).

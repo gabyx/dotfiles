@@ -19,7 +19,6 @@
       # Batman Timezone Converter.
       # batz = pkgs.callPackage ./batz { };
 
-      gabyx-cli = pkgsUnstable.callPackage ./gabyx-cli { };
       tone3000-plugin = pkgsUnstable.callPackage ./tone3000-plugin { };
       mt-powerdrumkit = pkgsUnstable.callPackage ./mt-powerdrumkit { };
 
@@ -49,8 +48,6 @@
           tone3000-plugin
           mt-powerdrumkit
           ;
-
-        inherit gabyx-cli;
       };
     };
 }
