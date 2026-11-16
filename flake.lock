@@ -3012,11 +3012,11 @@
     "systems_7": {
       "flake": false,
       "locked": {
-        "path": "./nix/flake/systems.nix",
+        "path": "./components/nix/flake/systems.nix",
         "type": "path"
       },
       "original": {
-        "path": "./nix/flake/systems.nix",
+        "path": "./components/nix/flake/systems.nix",
         "type": "path"
       },
       "parent": []

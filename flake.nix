@@ -48,7 +48,7 @@
 
     systems = {
       # Using `nix-systems` flake specification.
-      url = "path:./nix/flake/systems.nix";
+      url = "path:./components/nix/flake/systems.nix";
       flake = false;
     };
 

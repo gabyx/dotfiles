@@ -20,7 +20,7 @@ read -r
 sed -i -E \
     -e "s@^.config/evolution/sources@# .config/evolution/sources@" \
     -e "s@^.config/goa-1@# .config/goa-1@" \
-    "$ROOT_DIR/config/.chezmoiignore"
+    "$ROOT_DIR/components/config/.chezmoiignore"
 
 just cm init
 just cm apply
@@ -33,7 +33,7 @@ find ~/.config/evolution/sources -type f -name "*.source" -print0 |
 sed -i -E \
     -e "s@^# .config/evolution/sources@.config/evolution/sources@" \
     -e "s@^# .config/goa-1@.config/goa-1@" \
-    "$ROOT_DIR/config/.chezmoiignore"
+    "$ROOT_DIR/components/config/.chezmoiignore"
 
 echo "Restart dbus-broker (logout), press enter:"
 read -r
