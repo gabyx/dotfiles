@@ -1,8 +1,7 @@
 {
   config,
-  pkgs,
+  lib,
   pkgsUnstable,
-  packages,
   ...
 }:
 {
@@ -15,20 +14,7 @@
 
   # Docker =================================
   virtualisation.docker = {
-    enable = true;
-    package = pkgsUnstable.docker;
-    enableOnBoot = true;
-
-    rootless = {
-      enable = false;
-      setSocketVariable = true;
-    };
-
-    # Auto prune podman resources.
-    autoPrune = {
-      dates = "weekly";
-      flags = [ "--external" ];
-    };
+    enable = lib.mkForce false;
   };
 
   # =======================================
@@ -39,10 +25,9 @@
     package = pkgsUnstable.podman;
 
     # Create a `docker` alias for podman, to use it as a drop-in replacement
-    # dockerCompat = true;
-    # dockerSocket = {
-    #   enable = true;
-    # };
+    dockerSocket = {
+      enable = true;
+    };
 
     # Required for containers under podman-compose to be able to talk to each other.
     defaultNetwork.settings.dns_enabled = true;
