@@ -1,6 +1,7 @@
 set positional-arguments
 set shell := ["bash", "-cue"]
 root_dir := `git rev-parse --show-toplevel`
+comp_dir := root_dir / "components"
 build_dir := root_dir / "build/nixos-install"
 docs_dir := root_dir / "docs/nixos"
 env_file := docs_dir / ".env-vm"

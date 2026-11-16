@@ -34,7 +34,8 @@ cd ~
 function fake_secrets() {
     echo "Fake all secrets in '$PWD'."
 
-    cd config
+    local comp_dir="$PWD/components"
+    cd "$comp_dir/config"
     rm -rf .secrets && mkdir .secrets
 
     #shellcheck disable=SC2016

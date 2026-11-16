@@ -14,7 +14,7 @@ import (
 )
 
 // Environment variable with the window manager (`sway`, `niri` or `hyprland`),
-// set in `nix/nixos/windowing.nix`.
+// set in `components/nix/nixos/windowing.nix`.
 const envWindowManager = "XDG_SESSION_DESKTOP"
 
 const (

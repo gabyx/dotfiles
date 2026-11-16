@@ -18,7 +18,7 @@ import (
 
 const (
 	// Directory with the `<name>/status` and `<name>/snapshots` files
-	// written by the backup services (`nix/nixos/backup.nix`).
+	// written by the backup services (`components/nix/nixos/backup.nix`).
 	backupReportDir = "/var/lib/backups"
 
 	// Status lines are broken after this number of characters.
