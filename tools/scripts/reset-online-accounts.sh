@@ -5,6 +5,7 @@ set -e
 set -o pipefail
 
 ROOT_DIR=$(git rev-parse --show-toplevel)
+COMP_DIR="$ROOT_DIR/components"
 
 rm -rf ~/.config/evolution || true
 rm -rf ~/.local/share/evolution || true
@@ -20,7 +21,7 @@ read -r
 sed -i -E \
     -e "s@^.config/evolution/sources@# .config/evolution/sources@" \
     -e "s@^.config/goa-1@# .config/goa-1@" \
-    "$ROOT_DIR/config/.chezmoiignore"
+    "$COMP_DIR/config/.chezmoiignore"
 
 just cm init
 just cm apply
@@ -33,7 +34,7 @@ find ~/.config/evolution/sources -type f -name "*.source" -print0 |
 sed -i -E \
     -e "s@^# .config/evolution/sources@.config/evolution/sources@" \
     -e "s@^# .config/goa-1@.config/goa-1@" \
-    "$ROOT_DIR/config/.chezmoiignore"
+    "$COMP_DIR/config/.chezmoiignore"
 
 echo "Restart dbus-broker (logout), press enter:"
 read -r

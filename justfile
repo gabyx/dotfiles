@@ -2,12 +2,13 @@ set positional-arguments
 set dotenv-load := true
 set shell := ["nu", "--no-config-file", "-c"]
 root_dir := justfile_directory()
+comp_dir := root_dir / "components"
 build_dir := root_dir / "build"
 shell := env("SHELL", "zsh")
 
 mod vm "./tools/just/vm.just"
 mod nix "./tools/just/nix.just"
-mod gabyx-cli "./nix/pkgs/gabyx-cli/justfile"
+mod gabyx-cli "./components/gabyx-cli/justfile"
 
 # The host for which most commands work below.
 default_host := env("NIXOS_HOST", "not-defined")
@@ -524,6 +525,8 @@ decrypt-edit file:
 move-all-to-secrets:
     #!/usr/bin/env nu
     def main [] {
+        cd "{{comp_dir}}"
+
         # Remove all links, recreate them from secrets.
         ^fd '.*.age$' -E 'secrets/**' --type l --exec rm '{}'
 
@@ -538,6 +541,8 @@ move-all-to-secrets:
 move-to-secrets file:
     #!/usr/bin/env nu
     def main [file: string] {
+        cd "{{comp_dir}}"
+
         let raw_d = ($file | path dirname)
         let d = if ($raw_d | is-empty) { "." } else { $raw_d }
 
@@ -555,6 +560,8 @@ move-to-secrets file:
 create-links-from-secrets file:
     #!/usr/bin/env nu
     def main [file: string] {
+        cd "{{comp_dir}}"
+
         let file_rel = ($file | str replace --regex '^.*?secrets/' '')
         let link = $file_rel
 

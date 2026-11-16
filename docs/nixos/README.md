@@ -1,7 +1,8 @@
 <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/4c449b822779d9f3fca2e0eed36c95b07d623fd9/ng/out/nix.svg" style="margin-left: 20pt" align="right">
 <h1>NixOS Installation</h1>
 
-The file [`configuration.nix`](./../../nix/hosts/desktop/configuration.nix)
+The file
+[`configuration.nix`](./../../components/nix/hosts/desktop/configuration.nix)
 contains the whole NixOS configuration of a Desktop system and will be used to
 install the complete system. It was influenced by
 [`nixos-starter-configs`](https://github.com/Misterio77/nix-starter-configs/tree/main).
@@ -344,7 +345,7 @@ root partition.
 1. Copy the hardware configuration to the repo for the installation:
 
    ```shell
-   cp /mnt/etc/nixos/hardware-configuration.nix /mnt/persist/repos/dotfiles/nix/hosts/<host>/hardware-configuration.nix
+   cp /mnt/etc/nixos/hardware-configuration.nix /mnt/persist/repos/dotfiles/components/nix/hosts/<host>/hardware-configuration.nix
    ```
 
 1. **Finally run the install command** by doing:
@@ -388,7 +389,8 @@ root partition.
 ## Modify NixOS
 
 1. Modify the host configuration
-   [`nix/hosts/<host>/configuration.nix`](../../nix/hosts) in this repo and use
+   [`components/nix/hosts/<host>/configuration.nix`](../../components/nix/hosts)
+   in this repo and use
 
    ```shell
    just switch --host [desktop|tuxedo|vm]

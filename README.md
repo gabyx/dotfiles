@@ -1,7 +1,7 @@
 <h1 align="center">
     <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/4c449b822779d9f3fca2e0eed36c95b07d623fd9/ng/out/nix.svg" style="margin-left: 20pt; width: 150px" align="center"/>
     <span style="width:100px;display:inline-block;">+</span>
-    <img src="config/docs/logo.svg" style="margin-left: 20pt; width:150px" align="center"/>
+    <img src="components/config/docs/logo.svg" style="margin-left: 20pt; width:150px" align="center"/>
     <br>
     <br>
     Gabyx's Dotfiles & <br>NixOS Configuration
@@ -84,7 +84,8 @@ To deploy the configs you need the minimal stuff installed:
 ### Encryption
 
 Chezmoi is configured to use `age` as encryption tool with a secret private-key
-file [config/dot_config/chezmoi/key.age](config/dot_config/chezmoi/key.age)
+file
+[components/config/dot_config/chezmoi/key.age](components/config/dot_config/chezmoi/key.age)
 which was generated with:
 
 ```shell
@@ -99,9 +100,10 @@ encryption in this repository. The file is encoded in human-readable PEM format
 (`--armor`).
 
 The file `key.age` is decrypted when `chezmoi apply` is run in a
-[_before_ hook](config/run_before_decrypt-private-key.sh) such that all
-encrypted files can be decrypted in one go. The decrypted key is then again
-deleted in a _after_ hook](config/run_after_delete-decrypted-private-key.sh).
+[_before_ hook](components/config/run_before_decrypt-private-key.sh) such that
+all encrypted files can be decrypted in one go. The decrypted key is then again
+deleted in a _after_
+hook](components/config/run_after_delete-decrypted-private-key.sh).
 
 The "passphrase" `P` can be stored into the login keyring to make
 `just cm apply` **pass non-interactively**:
@@ -125,8 +127,8 @@ Generate an `age` identity for `normal`,`s1`, `s2` Yubikeys for the
 `age-plugin-fido2-hmac`. Useful for `gabyx secret get`.
 
 ```bash
-age-plugin-fido2-hmac -g > ./config/config/age/gabyx-s1-fido2-hmac.identity
-just cm add --encrypt ./config/config/age/gabyx-s1-fido2-hmac.identity
+age-plugin-fido2-hmac -g > ./components/config/config/age/gabyx-s1-fido2-hmac.identity
+just cm add --encrypt ./components/config/config/age/gabyx-s1-fido2-hmac.identity
 ```
 
 Get a scecret from bitwarden or prompt and encrypt it with Yubikey to `--file`
@@ -252,12 +254,12 @@ Skip to step 3 on a fresh system.
 #### Calendar Syncing for NextMeeting Script
 
 The script in
-[](./config/dot_config/waybar/scripts/executable_nextmeeting-khal.py) uses
-`khal` to read the synced calendar entries with `vdirsyncer` which runs
+[](./components/config/dot_config/waybar/scripts/executable_nextmeeting-khal.py)
+uses `khal` to read the synced calendar entries with `vdirsyncer` which runs
 periodically.
 
 It syncs google calendar and also the Outlook calendar over `davmail` which is
-[configured with this file](./config/dot_config/davmail/properties.tmpl).
+[configured with this file](./components/config/dot_config/davmail/properties.tmpl).
 Davmail will popup a window for the OAuth authentication if the token is not
 there.
 
