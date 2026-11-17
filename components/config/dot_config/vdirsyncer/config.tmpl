@@ -32,3 +32,23 @@ type = "google_calendar"
 token_file = "~/.local/state/vdirsyncer/google_remote"
 client_id.fetch = ["command", "cat", "~/.config/vdirsyncer/google-calendar-client-id"]
 client_secret.fetch = ["command", "cat", "~/.config/vdirsyncer/google-calendar-client-secret"]
+
+[pair google_work]
+a = "google_work_local"
+b = "google_work_remote"
+collections = ["from a", "from b"]
+# This is important because we do not want to
+# sync back any change to the server.
+conflict_resolution = "b wins"
+
+[storage google_work_local]
+type = "filesystem"
+path = "~/.local/share/khal/calendars/work"
+fileext = ".ics"
+
+[storage google_work_remote]
+read_only = true
+type = "google_calendar"
+token_file = "~/.local/state/vdirsyncer/google_work_remote"
+client_id.fetch = ["command", "cat", "~/.config/vdirsyncer/google-work-calendar-client-id"]
+client_secret.fetch = ["command", "cat", "~/.config/vdirsyncer/google-work-calendar-client-secret"]
