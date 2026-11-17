@@ -56,5 +56,7 @@ func AddCmd(root *cobra.Command) {
 		},
 	)
 
+	addConfigSetupCmd(nixosCmd)
+
 	root.AddCommand(nixosCmd)
 }

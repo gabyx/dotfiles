@@ -1,14 +1,16 @@
 {
+  self,
   config,
   lib,
   pkgs,
+  system,
   ...
 }:
 with lib;
 let
   cfg = config.chezmoi;
 
-  script = ./scripts/chezmoi/setup.sh;
+  gabyx = lib.getExe self.packages.${system}.gabyx-cli;
 
   chezmoiInitRepo = pkgs.writeShellApplication {
     name = "hm-chezmoi-init-repo";
@@ -18,13 +20,17 @@ let
       pkgs.gitFull
       pkgs.chezmoi
       pkgs.just
-      pkgs.fd
     ];
 
     text =
       # bash
       ''
-        ${script} "${cfg.url}" "${cfg.ref}" "${cfg.workspace}" "${cfg.store}" "$@"
+        ${gabyx} nixos config-setup \
+          --url "${cfg.url}" \
+          --ref "${cfg.ref}" \
+          --workspace "${cfg.workspace}" \
+          --store "${cfg.store}" \
+          "$@"
       '';
   };
 in

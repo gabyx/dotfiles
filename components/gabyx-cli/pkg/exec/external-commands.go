@@ -20,6 +20,8 @@ const (
 	ExtCmdLsblk = "lsblk"
 
 	// Needed in: nixos.
+	ExtCmdChezmoi    = "chezmoi"
+	ExtCmdCp         = "cp"
 	ExtCmdJournalctl = "journalctl"
 	ExtCmdLsmod      = "lsmod"
 
