@@ -8,6 +8,9 @@
   ];
 
   networking = {
+    nftables.enable = true;
+    enableIPv6 = true;
+
     ### Networking ==============================================================
     networkmanager = {
       enable = true;
@@ -16,39 +19,36 @@
         pkgs.networkmanager-openvpn
       ];
     };
-    # networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
 
     # The global useDHCP flag is deprecated, therefore explicitly set to false here.
     # Per-interface useDHCP will be mandatory in the future, so this generated config
     # replicates the default behaviour.
     useDHCP = false;
-    # interfaces.enp4s0.useDHCP = true;
-    # interfaces.wlp3s0.useDHCP = true;
-
-    # Configure network proxy if necessary
-    # proxy.default = "http://user:password@proxy:port/";
-    # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
     # ===========================================================================
 
     ### Firewall ================================================================
     # Open ports in the firewall.
     firewall = {
       enable = true;
-      allowedTCPPorts = [
-        # 50022
-        # 433
-      ];
-      # allowedUDPPorts = [ ... ];
+      allowedTCPPorts = [ ];
+      allowedUDPPorts = [ ];
     };
     # ===========================================================================
   };
 
   services.resolved = {
     enable = true;
-    settings.Resolve.FallbackDNS = [
+    settings.Resolve.FallbackDns = [
+      # Cloudflare
       "1.1.1.1"
+      "2606:4700:4700::1111"
+      "2606:4700:4700::1001"
+
+      # Google
       "8.8.8.8"
-    ]; # Example fallback DNS servers (Cloudflare, Google)
+      "2001:4860:4860::8888"
+      "2001:4860:4860::8844"
+    ];
   };
 
   environment.systemPackages = with pkgs; [
