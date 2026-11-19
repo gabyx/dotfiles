@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   pkgsUnstable,
   ...
 }:
@@ -14,7 +13,20 @@
 
   # Docker =================================
   virtualisation.docker = {
-    enable = lib.mkForce false;
+    enable = false;
+    package = pkgsUnstable.docker;
+    enableOnBoot = true;
+
+    rootless = {
+      enable = false;
+      setSocketVariable = true;
+    };
+
+    # Auto prune podman resources.
+    autoPrune = {
+      dates = "weekly";
+      flags = [ "--external" ];
+    };
   };
 
   # =======================================
@@ -25,6 +37,7 @@
     package = pkgsUnstable.podman;
 
     # Create a `docker` alias for podman, to use it as a drop-in replacement
+    dockerCompat = true;
     dockerSocket = {
       enable = true;
     };
