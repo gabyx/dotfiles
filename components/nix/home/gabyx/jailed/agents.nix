@@ -89,8 +89,15 @@ let
     };
 
     allowedDomains = {
+      "nixos.org" = "*";
+      "discourse.nixos.org" = "*";
+      "wiki.nixos.org" = "*";
+
       "anthropic.com" = "*";
       "claude.com" = "*";
+
+      "mender.io" = "*";
+
       "github.com" = [
         "GET"
         "HEAD"
