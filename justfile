@@ -57,9 +57,9 @@ eval *args:
             $".#nixosConfigurations.($host).config.system.build.toplevel"
         ] | append $args
 
-        print "----"
-        print $"nix ($cmd | str join ' ')"
-        print "----"
+        print -e "----"
+        print -e $"nix ($cmd | str join ' ')"
+        print -e "----"
 
         if "{{use_nom}}" == "true" {
             ^nix ...$cmd --log-format internal-json o+e>| nom --json
@@ -80,9 +80,9 @@ build *args:
             $".#nixosConfigurations.($host).config.system.build.toplevel"
         ] | append $args
 
-        print "----"
-        print $"nix ($cmd | str join ' ')"
-        print "----"
+        print -e "----"
+        print -e $"nix ($cmd | str join ' ')"
+        print -e "----"
 
         if "{{use_nom}}" == "true" {
             ^nix ...$cmd --log-format internal-json o+e>| nom --json
@@ -104,9 +104,9 @@ build-iso *args:
             $".#($package)"
         ] | append $args
 
-        print "----"
-        print $"nix ($cmd | str join ' ')"
-        print "----"
+        print -e "----"
+        print -e $"nix ($cmd | str join ' ')"
+        print -e "----"
 
         if "{{use_nom}}" == "true" {
             ^nix ...$cmd --log-format internal-json o+e>| nom --json
@@ -163,7 +163,7 @@ switch-visual *args:
     def --wrapped main [...args: string] {
         ^just use_nom=true build
 
-        print "============= SWITCHING ============="
+        print -e "============= SWITCHING ============="
         ^just rebuild switch --show-trace --verbose ...$args
 
         ^just diff
@@ -204,26 +204,26 @@ rebuild *args:
             # Always first rebuilt with boot and then
             # switch with test to not overwrite the default.
             let cmd = [ --sudo boot --flake $".#($host)" ] | append $args
-            print "----"
-            print $"nixos-rebuild ($cmd | str join ' ')"
-            print "----"
+            print -e "----"
+            print -e $"nixos-rebuild ($cmd | str join ' ')"
+            print -e "----"
 
             ^nixos-rebuild ...$cmd
             $how = "test"
         }
 
-        print "Checkout all LFS files."
+        print -e "Checkout all LFS files."
         ^git lfs checkout
-        print "Fetch all submodules."
+        print -e "Fetch all submodules."
         ^git submodule update --recursive --init
 
         mut cmd = [ --sudo $how --flake $".#($host)" ] | append $args
         if ($specialisation != "") {
             $cmd = $cmd | append [ --specialisation $specialisation ]
         }
-        print "----"
-        print $"nixos-rebuild ($cmd | str join ' ')"
-        print "----"
+        print -e "----"
+        print -e $"nixos-rebuild ($cmd | str join ' ')"
+        print -e "----"
 
         ^nixos-rebuild ...$cmd
     }
@@ -233,11 +233,11 @@ rebuild *args:
 history:
     #!/usr/bin/env nu
     def main [] {
-        print "History in 'system' profile:"
+        print -e "History in 'system' profile:"
         ^nix profile history --profile /nix/var/nix/profiles/system
 
         if ("/nix/var/nix/profiles/system-profiles/test" | path exists) {
-            print "History in 'test' profile:"
+            print -e "History in 'test' profile:"
             ^nix profile history --profile /nix/var/nix/profiles/system-profiles/test
         }
     }
@@ -263,7 +263,7 @@ diff *args:
             $".*/system-profiles/($profile_name)-[^/]+$"
         }
 
-        print $match
+        print -e $match
 
         (
             (do -i {ls /nix/var/nix/profiles/*} | default []) ++
@@ -290,7 +290,7 @@ diff *args:
         if ($profiles | is-empty) {
             error make $"No profiles with name '($profile_name)-*' found."
         } else {
-            print "Profiles found:" $profiles
+            print -e "Profiles found:" $profiles
         }
 
         mut $current = $current
@@ -329,7 +329,7 @@ diff-closure *args:
         --dest_ref: string = "/"
         --src_ref: string = "origin/main"
     ] {
-        print $"Diffing closures of host '($host)' from '($src_ref)' to '($dest_ref)'"
+        print -e $"Diffing closures of host '($host)' from '($src_ref)' to '($dest_ref)'"
 
         ^nix store diff-closures $".?ref=($src_ref)#nixosConfigurations.($host).config.system.build.toplevel" $".?ref=($dest_ref)#nixosConfigurations.($host).config.system.build.toplevel"
     }
@@ -354,15 +354,15 @@ gc:
     }
 
     def main [] {
-        print "Remove test profile"
+        print -e "Remove test profile"
         rm-rf "/nix/var/nix/profiles/system-profiles/test"
         rm-rf "/nix/var/nix/profiles/system-profiles/test-*"
 
-        print "Remove all generations older than 60 days"
+        print -e "Remove all generations older than 60 days"
         ^sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 60d
         ^sudo nix profile wipe-history --profile /nix/var/nix/profiles/music
 
-        print "Garbage collect all unused nix store entries"
+        print -e "Garbage collect all unused nix store entries"
         ^sudo nix store gc --debug
     }
 
@@ -406,20 +406,20 @@ start *args:
             $"($attr).diskoImages"
         ] | append $args
 
-        print "----"
-        print $"nix ($cmd | str join ' ')"
-        print "----"
+        print -e "----"
+        print -e $"nix ($cmd | str join ' ')"
+        print -e "----"
         ^nix ...$cmd o+e>| nom --json
 
-        print "----"
-        print $"nix ($cmdDisko | str join ' ')"
-        print "----"
+        print -e "----"
+        print -e $"nix ($cmdDisko | str join ' ')"
+        print -e "----"
         ^nix ...$cmdDisko o+e>| nom --json
 
         let qemu_args = if $remote_viewer == "true" {
-            print "IMPORTANT: ----------------------"
-            print $"IMPORTANT: Connect with 'remote-viewer spice+unix://($out_dir)/spice.sock'"
-            print "IMPORTANT: ----------------------"
+            print -e "IMPORTANT: ----------------------"
+            print -e $"IMPORTANT: Connect with 'remote-viewer spice+unix://($out_dir)/spice.sock'"
+            print -e "IMPORTANT: ----------------------"
             [
                 "-spice" $"unix=on,addr=($out_dir)/spice.sock,disable-ticketing=on"
                 "-device" "virtio-serial-pci"
@@ -445,18 +445,18 @@ start *args:
 
         let disk = $"($disk_dir)/root.qcow2"
         if $fresh {
-            print $"Deleting '($disk)' and '($efi_vars)'."
+            print -e $"Deleting '($disk)' and '($efi_vars)'."
             rm --force $disk $efi_vars
         }
 
         if not ($disk | path exists) {
-            print $"Creating disk '($disk)' from '($image)'."
+            print -e $"Creating disk '($disk)' from '($image)'."
             cp $image $disk
             chmod u+w $disk
         }
 
         let vm_bin = (glob $"($out_dir)/vm/bin/run-*-vm" | first)
-        print $"Starting with '($vm_bin)' and disk '($disk)'."
+        print -e $"Starting with '($vm_bin)' and disk '($disk)'."
 
         # The run script opens the root drive at `$tmp/root.qcow2` (set by
         # disko's `interactive-vm.nix`) and creates `NIX_EFI_VARS` if missing.
@@ -598,7 +598,7 @@ cm *args:
 
         try {
             if (($env.NO_ENCRYPTION_SETUP? | default "") == "true") {
-                print "Skip encryption setup."
+                print -e "Skip encryption setup."
             } else {
                 let k = (
                     ^nix run $"{{root_dir}}#gabyx-cli" -- secret get
@@ -611,12 +611,12 @@ cm *args:
                 $k | save --force --raw $key
             }
 
-            print "Running chezmoi ..."
+            print -e "Running chezmoi ..."
             ^chezmoi -S "." ...$args
-            print "Chezmoi done."
+            print -e "Chezmoi done."
 
             if ($args | any {|a| $a =~ "re-add" }) {
-                print "Re-add detected, running 'just move-all-to-secrets'"
+                print -e "Re-add detected, running 'just move-all-to-secrets'"
                 ^just move-all-to-secrets
             }
         } catch {|err|
