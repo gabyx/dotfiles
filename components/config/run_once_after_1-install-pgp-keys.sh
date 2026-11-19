@@ -43,9 +43,12 @@ for private_file in "${private_files[@]}"; do
     public_file="${private_file%%-private.asc.age}-public.asc"
     passphrase_file="${private_file%%.asc.age}.passphrase.age"
     echo "Use passphrase file '$passphrase_file'"
+
+    passphrase=$(just cm decrypt "$passphrase_file")
+
     # Import private key.
     gpg --import \
-        --passphrase-file <(just cm decrypt "$passphrase_file") \
+        --passphrase-file <(echo "$passphrase") \
         --pinentry-mode loopback --armor \
         <(just cm decrypt "$private_file") || {
         echo "WARNING: Import of PGP file '$private_file' failed." >&2
